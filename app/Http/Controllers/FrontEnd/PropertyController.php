@@ -439,7 +439,7 @@ class PropertyController extends Controller
 
     public function contact(Request $request)
     {
-        if (!Auth::guard('web')->check() && !Auth::guard('vendor')->check()) {
+        if (!Auth::guard('web')->check() && !Auth::guard('vendor')->check() && !Auth::guard('agent')->check()) {
             // if neither web nor vendor is logged in
             return redirect()->route('user.login')->with('error', 'Please login first');
         }
@@ -502,6 +502,7 @@ class PropertyController extends Controller
                 'property_id' => $request->property_id,
                 'inquiry_by_user'   => Auth::guard('web')->check() ? Auth::guard('web')->id() : null,
                 'inquiry_by_vendor' => Auth::guard('vendor')->check() ? Auth::guard('vendor')->id() : null,
+                'inquiry_by_agent' => Auth::guard('agent')->check() ? Auth::guard('agent')->id() : null,
                 'is_new' => '0',
                 'name' => $request->name,
                 'email' => $request->email,

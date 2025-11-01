@@ -549,31 +549,29 @@
                                 </div>
                             </div>
 
-                            <div class="widget widget-form radius-md mb-30 new-widgets-color" style="background: white !important;
-    border: 1px solid #ced4dd;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);">
+                            <div class="widget widget-form radius-md mb-30 new-widgets-color" style="background: white !important;border: 1px solid #ced4dd;box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);">
                                 <div class="user new-users mb-20">
                                     <h1 class="rigt-calss-cs">Contact Seller</h1>
                                     <div class="right-new-user-details">
                                         <div class="user-img new-user-right-img">
                                             <div class="lazy-container ratio ratio-1-1 rounded-pill">
                                                 @if (!empty($agent))
-                                                <a href="{{ route('frontend.agent.details', ['username' => $agent->username]) }}">
-                                                    <img class="lazyload" src="{{ asset('assets/img/blank-user.jpg') }}"
-                                                        data-src="{{ $agent->image ? asset('assets/img/agents/' . $agent->image) : asset('assets/img/blank-user.jpg') }}">
-                                                </a>
-                                                @elseif(!empty($vendor))
-                                                <a
-                                                    href="{{ route('frontend.vendor.details', ['username' => $vendor->username]) }}">
-                                                    <img class="lazyload" src="{{ asset('assets/img/blank-user.jpg') }}"
-                                                        data-src=" {{ $vendor->photo ? asset('assets/admin/img/vendor-photo/' . $vendor->photo) : asset('assets/img/blank-user.jpg') }}">
-                                                </a>
+													<a href="{{ route('frontend.agent.details', ['username' => $agent->username]) }}">
+														<img class="lazyload" src="{{ asset('assets/img/blank-user.jpg') }}"
+															data-src="{{ $agent->image ? asset('assets/img/agents/' . $agent->image) : asset('assets/img/blank-user.jpg') }}">
+													</a>
+													@elseif(!empty($vendor))
+													<a
+														href="{{ route('frontend.vendor.details', ['username' => $vendor->username]) }}">
+														<img class="lazyload" src="{{ asset('assets/img/blank-user.jpg') }}"
+															data-src=" {{ $vendor->photo ? asset('assets/admin/img/vendor-photo/' . $vendor->photo) : asset('assets/img/blank-user.jpg') }}">
+													</a>
                                                 @else
-                                                <a
-                                                    href="{{ route('frontend.vendor.details', ['username' => $admin->username, 'admin' => 'true']) }}">
-                                                    <img class="lazyload" src="{{ asset('assets/img/blank-user.jpg') }}"
-                                                        data-src=" {{ asset('assets/img/admins/' . $admin->image) }} ">
-                                                </a>
+													<a
+														href="{{ route('frontend.vendor.details', ['username' => $admin->username, 'admin' => 'true']) }}">
+														<img class="lazyload" src="{{ asset('assets/img/blank-user.jpg') }}"
+															data-src=" {{ asset('assets/img/admins/' . $admin->image) }} ">
+													</a>
                                                 @endif
 
                                             </div>
@@ -598,18 +596,18 @@
                                             @endif">
 
                                                 @php
-                                                $phone = '';
-                                                if (!empty($agent)) {
-                                                $phone = $agent->phone;
-                                                } elseif (!empty($vendor)) {
-                                                $phone = $vendor->phone;
-                                                } elseif ($admin->show_contact_form && !empty($admin->phone)) {
-                                                $phone = $admin->phone;
-                                                }
+													$phone = '';
+													if (!empty($agent)) {
+														$phone = $agent->phone;
+													} elseif (!empty($vendor)) {
+														$phone = $vendor->phone;
+													} elseif ($admin->show_contact_form && !empty($admin->phone)) {
+														$phone = $admin->phone;
+													}
                                                 @endphp
 
                                                 @if($phone)
-                                                {{ str_repeat('*', max(strlen($phone)-2,0)) . substr($phone, -2) }}
+													{{ str_repeat('*', max(strlen($phone)-2,0)) . substr($phone, -2) }}
                                                 @endif
                                             </a>
 
@@ -618,13 +616,13 @@
                                                 @elseif(!empty($vendor))
                                                     {{ $vendor->email }} @else {{ $admin->email }} @endif" class="right-em-ph">
                                                 @if (!empty($agent))
-                                                {{ $agent->email }}
+													{{ $agent->email }}
                                                 @elseif(!empty($vendor))
-                                                {{ $vendor->email }}
+													{{ $vendor->email }}
                                                 @else
-                                                @if ($admin->show_email_addresss)
-                                                {{ $admin->email }}
-                                                @endif
+													@if ($admin->show_email_addresss)
+														{{ $admin->email }}
+													@endif
                                                 @endif
                                             </a>
                                         </div>
@@ -634,10 +632,10 @@
                                 <form action="{{ route('property_contact') }}" method="POST">
                                     @csrf
                                     @if (!empty($agent))
-                                    <input type="hidden" name="vendor_id" value="{{ $agent->vendor_id }}">
-                                    <input type="hidden" name="agent_id" value="{{ !empty($agent) ? $agent->id : '' }}">
+										<input type="hidden" name="vendor_id" value="{{ $agent->vendor_id }}">
+										<input type="hidden" name="agent_id" value="{{ !empty($agent) ? $agent->id : '' }}">
                                     @elseif(!empty($vendor) && empty($agent))
-                                    <input type="hidden" name="vendor_id" value="{{ $vendor->id }}">
+										<input type="hidden" name="vendor_id" value="{{ $vendor->id }}">
                                     @else
                                     <input type="hidden" name="vendor_id" value="0">
                                     @endif
@@ -685,7 +683,7 @@
                                         @enderror
                                     </div>
                                     @endif
-                                    @if (!Auth::guard('vendor')->check() && !Auth::guard('web')->check())
+                                    @if (!Auth::guard('vendor')->check() && !Auth::guard('web')->check() && !Auth::guard('agent')->check())
                                         <button type="button"
                                           class="btn btn-md  w-100" style="background-color: #6c603c; color : white;" data-bs-toggle="modal" data-bs-target="#customerPhoneModal" data-action="login">{{ __('Send inquiry') }}</button>
                                     @else

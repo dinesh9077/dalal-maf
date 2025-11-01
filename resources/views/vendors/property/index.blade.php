@@ -51,9 +51,9 @@
                                         onchange="document.getElementById('carSearchForm').submit()">
                                         <option value="" selected>{{ __('All Category') }}</option>
                                         @foreach ($categotyConetnt as $category)
-                                        <option @selected($category->category_id == request()->input('category_id')) value="{{ $category->category_id }}">
-                                            {{ $category->name }}
-                                        </option>
+											<option @selected($category->category_id == request()->input('category_id')) value="{{ $category->category_id }}">
+												{{ $category->name }}
+											</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -128,7 +128,7 @@
                                         <th scope="col">{{ __('City') }}</th>
                                         <th scope="col">{{ __('Area') }}</th>
                                         <th scope="col">{{ __('Approval Status') }}</th>
-                                        <th scope="col">{{ __('Featured') }}</th>
+                                        <!--<th scope="col">{{ __('Featured') }}</th>-->
                                         <th scope="col">{{ __('Status') }}</th>
                                         <th scope="col">{{ __('Actions') }}</th>
                                     </tr>
@@ -195,92 +195,7 @@
                                             <span class="badge badge-danger">{{ __('Rejected') }}</span>
                                             @endif
                                         </td>
-                                        <td>
-                                            @php
-
-                                            $featuredProperty = $property
-                                            ->featuredProperties()
-                                            ->latest()
-                                            ->first();
-
-                                            $pendingfeatured = false;
-                                            $featuredExpired = false;
-                                            $featured = false;
-
-                                            if (
-                                            !empty($featuredProperty) &&
-                                            $featuredProperty->status == 0 &&
-                                            $featuredProperty->start_date == null &&
-                                            $featuredProperty->end_date == null
-                                            ) {
-                                            $pendingfeatured = true;
-                                            } elseif (
-                                            !empty($featuredProperty) &&
-                                            $featuredProperty->status == 1 &&
-                                            $featuredProperty->start_date != null &&
-                                            $featuredProperty->end_date != null
-                                            ) {
-                                            $featuredExpired = Carbon\Carbon::now()
-                                            ->timezone($settings->timezone)
-                                            ->gte(
-                                            \Carbon\Carbon::parse(
-                                            $featuredProperty->end_date,
-                                            ),
-                                            );
-                                            } else {
-                                            $featured = true;
-                                            }
-
-                                            @endphp
-                                            @if (empty($featuredProperty) ||
-                                            $featuredExpired ||
-                                            $featuredProperty->payment_status == 'rejected' ||
-                                            $featuredProperty?->status == 2)
-                                            <form class="d-inline-block" style="margin: 0px;">
-                                                <select id="featured{{ $property->id }}"
-                                                    onchange="featuredRequest(this)"
-                                                    class="form-control {{ !empty($featuredProperty) && !$featuredExpired && $featuredProperty->status == 1 ? 'bg-success' : 'bg-danger' }} form-control-sm"
-                                                    data-property="{{ $property->id }}">
-                                                    <option value="1"
-                                                        {{ empty($featuredProperty) || (!$featuredExpired && $featuredProperty->status == 1) ? 'selected' : '' }}>
-                                                        {{ __('Yes') }}
-                                                    </option>
-                                                    <option value="0"
-                                                        {{ $featuredProperty?->status == 2 || empty($featuredProperty) || $featuredExpired || $featuredProperty->payment_status == 'rejected' ? 'selected' : '' }}>
-                                                        {{ __('No') }}
-                                                    </option>
-                                                </select>
-                                            </form>
-                                            @elseif ($pendingfeatured)
-                                            <span class="badge badge-warning btn-sm mr-1  mt-1"
-                                                href="#"> Pending </span>
-                                            @elseif(!empty($featuredProperty) && !$featuredExpired && !$pendingfeatured)
-                                            <form id="featureForm{{ $property->id }}"
-                                                class="d-inline-block"
-                                                 style="margin: 0px;"
-                                                action="{{ route('vendor.property_management.update_featured') }}"
-                                                method="post">
-                                                @csrf
-                                                <input type="hidden" name="requestId"
-                                                    value="{{ $featuredProperty->id }}">
-
-                                                <select
-                                                    class="form-control {{ $featuredProperty->status == 1 ? 'bg-success' : 'bg-danger' }} form-control-sm"
-                                                    name="status"
-                                                    onchange="document.getElementById('featureForm{{ $property->id }}').submit();">
-                                                    <option value="1"
-                                                        {{ $featuredProperty->status == 1 ? 'selected' : '' }}>
-                                                        {{ __('Yes') }}
-                                                    </option>
-                                                    <option value="0"
-                                                        {{ $featuredProperty->status == 0 ? 'selected' : '' }}>
-                                                        {{ __('No') }}
-                                                    </option>
-                                                </select>
-                                            </form>
-                                            @endif
-
-                                        </td>
+                                         
                                         <td>
                                             <form id="statusForm{{ $property->id }}" class="d-inline-block"  style="margin: 0px;"
                                                 action="{{ route('vendor.property_management.update_status') }}"

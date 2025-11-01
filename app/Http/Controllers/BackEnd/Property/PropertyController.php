@@ -104,6 +104,7 @@
 			Session::flash('success', 'Property Settings Updated Successfully!');
 			return back();
 		}
+		
 		public function index(Request $request)
 		{
 			$data['langs'] = Language::all();
@@ -240,9 +241,10 @@
 			$information['unitTypes'] = Unit::get();
 			return view('backend.property.create', $information);
 		}
+		
 		public function updateFeatured(Request $request)
 		{
-			$property = FeaturedProperty::findOrFail($request->requestId);
+			/* $property = FeaturedProperty::findOrFail($request->requestId);
 			$property->delete();
 			Session::flash('success', 'Property remove from featured successfully!');
 			// if ($request->status == 1) {
@@ -253,7 +255,22 @@
 			//     Session::flash('success', 'Property remove from featured successfully!');
 			// }
 			
-			return redirect()->back();
+			return redirect()->back(); */
+			
+			$validated = $request->validate([
+				'property_id' => 'required|integer',
+				'field' => 'required|string|in:is_featured,is_recommended,is_hot,is_fast_selling',
+				'status' => 'required|in:0,1',
+			]);
+
+			$property = Property::findOrFail($validated['property_id']);
+			$property->{$validated['field']} = $validated['status'];
+			$property->save();
+
+			return response()->json([
+				'status' => 'success',
+				'message' => ucfirst($validated['field']).' status updated successfully!',
+			]);
 		}
 		
 		public function imagesstore(Request $request)

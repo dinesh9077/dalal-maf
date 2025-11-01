@@ -108,6 +108,8 @@
     const secret_login = "{{ Session::get('secret_login') }}";
     const kyc_approved = 1;
     const kycUrl = "{{ route('become-a-vendor') }}";
+	
+	$("#myTable").DataTable();
 </script>
 
 {{-- select2 js --}}

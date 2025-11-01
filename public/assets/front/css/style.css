@@ -6118,7 +6118,7 @@ p.cookie-consent__message * {
 }
 
 .city-card img {
-    max-height: 100px;
+    height: 100px;
     object-fit: cover;
     margin-bottom: 10px;
     border-radius: 10px;
@@ -6923,6 +6923,7 @@ p.cookie-consent__message * {
     overflow: hidden;
     transition: all 0.3s ease-in-out;
     padding: 15px;
+    height: 100%;
 }
 
 .blog-img {
@@ -7177,6 +7178,87 @@ p.cookie-consent__message * {
     justify-content: center;
     z-index: 10;
 }
+
+.LP-new-left-btn{
+  position: absolute;
+    top: 45%;
+    left: -25px;
+    transform: translateY(-50%);
+    background: white;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.LP-new-right-btn {
+    position: absolute;
+    top: 45%;
+    right: -25px;
+    transform: translateY(-50%);
+    background: white;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+
+
+.verify-f-s-left-btn {
+    position: absolute;
+    top: 45%;
+    left: -25px;
+    transform: translateY(-50%);
+    background: white;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.verify-f-s-right-btn {
+    position: absolute;
+    top: 45%;
+    right: -25px;
+    transform: translateY(-50%);
+    background: white;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+
+
 
 .fren-new-right-btn {
     position: absolute;
@@ -8453,4 +8535,18 @@ button:hover {
 
 .toast-close-button{
    display: none !important;
+}
+
+.desss{
+    width: 76%;
+    margin: auto;
+}
+
+@media(max-width : 767px) {
+    .desss {
+        width: 90%;
+    }
+}
+.phpdebugbar-restore-btn{
+    display: none !important;
 }
