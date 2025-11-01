@@ -136,20 +136,19 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                             <div class="grid-item home-des-border">
                                 <div class="form-group">
                                     <label for="search1">{{ __('Location') }}</label>
-                                    <input type="text" id="search1" name="location" class="form-control searchBar"
+                                    <input type="text" id="search1" name="listArea" class="form-control searchBar"
 									placeholder="{{ __('Enter Location') }}" style="box-shadow : none;">
 								</div>
 							</div>
                             <div class="grid-item home-des-border">
                                 <div class="form-group">
                                     <label for="type" class="icon-end">City</label>
-                                    <select aria-label="#" name="type" class="form-control select2 type select2-hidden-accessible" id="type" data-select2-id="select2-data-type" tabindex="-1" aria-hidden="true">
-                                        <option selected="" disabled="" value="" data-select2-id="select2-data-2-00xq">Select City
+                                    <select name="city" class="form-control select2" id="city">
+                                        <option value="">Select City
 										</option>
-                                        <option value="all" data-select2-id="select2-data-21-5nn2">All</option>
-                                        <option value="residential" data-select2-id="select2-data-22-xtxj">Surat</option>
-                                        <option value="commercial" data-select2-id="select2-data-23-xppr">Ahmedabad</option>
-                                        <option value="industrial" data-select2-id="select2-data-24-6p4y">Baroda</option>
+										@foreach ($cities as $city)
+											<option value="{{ $city->name }}">{{ $city->name }}</option> 
+										@endforeach
 									</select>
 								</div>
 							</div>
@@ -520,7 +519,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 						<div class="section-title text-center mb-40 new-titles" data-aos="fade-up"  style="position: relative;">
 							<h2 class="title" style="text-align : center;">Featured Properties</h2>
 							<p class="mt-4">Handpicked and premium listings showcased for you. Explore top-rated homes, offices, and commercial spaces that stand out.</p>
-							<a href="{{ route('frontend.properties.featured.all') }}" class="vs-btn vs-new-set-btn" style="padding: 10px 20px;">View All</a>
+							<a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn" style="padding: 10px 20px;">View All</a>
 
 						</div>
 					</div>
@@ -537,7 +536,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                                 <p class="card-text">
                                     We are Surat’s most trusted and best-selling real estate agency, specializing in luxury residences, premium commercial spaces, and profitable investment properties. With years of expertise, a wide property portfolio, and strong market knowledge, we’ve helped countless families and investors find exactly what they’re looking for.
                                 </p>
-                                <a href="{{ route('frontend.properties.featured.all') }}" class="vs-btn" style="padding: 10px 20px;">View All</a>
+                              
                                 
                             </div>
                         </div> -->
@@ -570,29 +569,19 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 @if($hotProperties->isNotEmpty())
 	<section class="product-area featured-product pt-100 pb-70">
-		<div class="container-fulid ">
+		<div class="container-fulid new-padding-des-res">
 			<div class="row">
 				<div class="container">
 					<div class="col-12">
-						<div class="section-title text-center mb-40 new-titles" data-aos="fade-up">
+						<div class="section-title text-center mb-40 new-titles" data-aos="fade-up"  style="position: relative;">
 							<h2 class="title" style="text-align : center;">Hot Properties</h2>
 							<p class="mt-4">Handpicked and premium listings showcased for you. Explore top-rated homes, offices, and commercial spaces that stand out.</p>
+							<a href="{{ url('properties/is_hot/all') }}" class="vs-btn vs-new-set-btn" style="padding: 10px 20px;">View All</a>
 						</div>
 					</div>
 				</div>
 				
-				<div class="row align-items-stretch">
-					<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 d-flex" style="margin-bottom : 20px; " data-aos="fade-up">
-						<div class="custom-card w-100">
-							<img src="{{ asset('assets/front/images/new-images/citykrugy-about.png') }}" alt="citykrugy-about">
-							<h3 class="card-title"> Hot Properties In Surat</h3>
-							<p class="card-text">
-								We are Surat’s most trusted and best-selling real estate agency, specializing in luxury residences, premium commercial spaces, and profitable investment properties. With years of expertise, a wide property portfolio, and strong market knowledge, we’ve helped countless families and investors find exactly what they’re looking for.
-							</p>
-							<a href="{{ route('frontend.properties.featured.all') }}" class="vs-btn" style="padding: 10px 20px;">View All</a>
-							
-						</div>
-					</div>
+				 <div class="row align-items-stretch new-my-div"> 
 					<div class="col-xl-9 col-lg-8 col-md-6 col-sm-6 d-flex new-my-div" style="position: relative;" data-aos="fade-up">
 						<div class="swiper product-slider w-100">
 							<div class="swiper-wrapper">
@@ -620,29 +609,19 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 @if($recommendedProperties->isNotEmpty())
 	<section class="product-area featured-product pt-100 pb-70">
-		<div class="container-fulid">
+		<div class="container-fulid new-padding-des-res">
 			<div class="row">
 				<div class="container">
 					<div class="col-12">
-						<div class="section-title text-center mb-40 new-titles" data-aos="fade-up">
+						<div class="section-title text-center mb-40 new-titles" data-aos="fade-up"  style="position: relative;">
 							<h2 class="title" style="text-align : center;">Recommended Properties</h2>
 							<p class="mt-4">Handpicked and premium listings showcased for you. Explore top-rated homes, offices, and commercial spaces that stand out.</p>
+							<a href="{{ url('properties/is_recommended/all') }}" class="vs-btn vs-new-set-btn" style="padding: 10px 20px;">View All</a>
 						</div>
 					</div>
 				</div>
 				
-				<div class="row align-items-stretch">
-					<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 d-flex" style="margin-bottom : 20px; " data-aos="fade-up">
-						<div class="custom-card w-100">
-							<img src="{{ asset('assets/front/images/new-images/citykrugy-about.png') }}" alt="citykrugy-about">
-							<h3 class="card-title"> Recommended Properties In Surat</h3>
-							<p class="card-text">
-								We are Surat’s most trusted and best-selling real estate agency, specializing in luxury residences, premium commercial spaces, and profitable investment properties. With years of expertise, a wide property portfolio, and strong market knowledge, we’ve helped countless families and investors find exactly what they’re looking for.
-							</p>
-							<a href="{{ route('frontend.properties.featured.all') }}" class="vs-btn" style="padding: 10px 20px;">View All</a>
-							
-						</div>
-					</div>
+				<div class="row align-items-stretch new-my-div"> 
 					<div class="col-xl-9 col-lg-8 col-md-6 col-sm-6 d-flex new-my-div" style="position: relative;" data-aos="fade-up">
 						<div class="swiper product-slider w-100">
 							<div class="swiper-wrapper">
@@ -670,29 +649,20 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 @if($fastSellingProperties->isNotEmpty())
 	<section class="product-area featured-product pt-100 pb-70">
-		<div class="container-fulid">
+		<div class="container-fulid new-padding-des-res">
 			<div class="row">
 				<div class="container">
 					<div class="col-12">
-						<div class="section-title text-center mb-40 new-titles" data-aos="fade-up">
+						<div class="section-title text-center mb-40 new-titles" data-aos="fade-up"  style="position: relative;">
 							<h2 class="title" style="text-align : center;">Fast Selling Properties</h2>
 							<p class="mt-4">Handpicked and premium listings showcased for you. Explore top-rated homes, offices, and commercial spaces that stand out.</p>
+							<a href="{{ url('properties/is_fast_selling/all') }}" class="vs-btn vs-new-set-btn" style="padding: 10px 20px;">View All</a>
 						</div>
 					</div>
 				</div>
 				
-				<div class="row align-items-stretch">
-					<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 d-flex" style="margin-bottom : 20px; " data-aos="fade-up">
-						<div class="custom-card w-100">
-							<img src="{{ asset('assets/front/images/new-images/citykrugy-about.png') }}" alt="citykrugy-about">
-							<h3 class="card-title"> Fast Selling Properties In Surat</h3>
-							<p class="card-text">
-								We are Surat’s most trusted and best-selling real estate agency, specializing in luxury residences, premium commercial spaces, and profitable investment properties. With years of expertise, a wide property portfolio, and strong market knowledge, we’ve helped countless families and investors find exactly what they’re looking for.
-							</p>
-							<a href="{{ route('frontend.properties.featured.all') }}" class="vs-btn" style="padding: 10px 20px;">View All</a>
-							
-						</div>
-					</div>
+				<div class="row align-items-stretch new-my-div">
+					 
 					<div class="col-xl-9 col-lg-8 col-md-6 col-sm-6 d-flex new-my-div" style="position: relative;" data-aos="fade-up">
 						<div class="swiper product-slider w-100">
 							<div class="swiper-wrapper">
@@ -1801,7 +1771,7 @@ return asset('assets/img/hero/static/' . $img);
                         response($.map(data, function(item) {
                             return {
                                 label: item.text, // what to show
-                                value: item.text, // what fills input
+                                value: item.id, // what fills input
                                 id: item.id // area id
 							};
 						}));

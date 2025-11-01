@@ -168,12 +168,9 @@
 					
 				</svg>
 			</div>
-			
-			<div class="percent">Loading <strong id="percentText">0%</strong></div>
-			
 			<img src="{{ asset('assets/img/image.png') }}" alt="" style="width: 200px;">
-			
-			
+			<div class="percent">Loading <strong id="percentText">0%</strong></div> 
+			 
 		</div>
 		
 		@includeIf('frontend.partials.header.header-v1')
@@ -199,80 +196,131 @@
 		<!-- WhatsApp Chat Button -->
 		<div id="WAButton"></div>
 		<script>
-			(function () {
-			const steps = [
-				{ id: 'p-foundation', start: 0, end: 8, fillId: null },
-				{ id: 'p-walls', start: 8, end: 40, fillId: 'f-walls' },
-				{ id: 'p-roof', start: 40, end: 62, fillId: 'f-roof' },
-				{ id: 'p-chimney', start: 62, end: 68, fillId: null },
-				{ id: 'p-eave', start: 68, end: 74, fillId: null },
-				{ id: 'p-door', start: 74, end: 84, fillId: 'f-door' },
-				{ id: 'p-win1', start: 84, end: 92, fillId: 'f-win1' },
-				{ id: 'p-win2', start: 92, end: 100, fillId: 'f-win2' }
-			];
+(function () {
+  const steps = [
+    { id: 'p-foundation', start: 0, end: 8, fillId: null },
+    { id: 'p-walls', start: 8, end: 40, fillId: 'f-walls' },
+    { id: 'p-roof', start: 40, end: 62, fillId: 'f-roof' },
+    { id: 'p-chimney', start: 62, end: 68, fillId: null },
+    { id: 'p-eave', start: 68, end: 74, fillId: null },
+    { id: 'p-door', start: 74, end: 84, fillId: 'f-door' },
+    { id: 'p-win1', start: 84, end: 92, fillId: 'f-win1' },
+    { id: 'p-win2', start: 92, end: 100, fillId: 'f-win2' }
+  ];
 
-			const percentText = document.getElementById('percentText');
-			const loader = document.getElementById('loader');
+  const percentText = document.getElementById('percentText');
+  const loader = document.getElementById('loader');
 
-			steps.forEach(s => {
-				const el = document.getElementById(s.id);
-				if (!el) return;
-				const len = (el.getTotalLength && el.getTotalLength()) || 0;
-				el.style.strokeDasharray = len;
-				el.style.strokeDashoffset = len;
-				el.dataset.total = len;
-				el.classList.remove('reveal');
-			});
+  // prepare SVG paths (if present)
+  steps.forEach(s => {
+    const el = document.getElementById(s.id);
+    if (!el) return;
+    const len = (el.getTotalLength && el.getTotalLength()) || 0;
+    el.style.strokeDasharray = len;
+    el.style.strokeDashoffset = len;
+    el.dataset.total = len;
+    el.classList.remove('reveal');
+  });
 
-			const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
-			window.updateLoaderProgress = function (percentage) {
-				const p = clamp(Number(percentage) || 0, 0, 100);
-				percentText.textContent = Math.round(p) + '%';
+  window.updateLoaderProgress = function (percentage) {
+    const p = clamp(Number(percentage) || 0, 0, 100);
+    if (percentText) percentText.textContent = Math.round(p) + '%';
 
-				steps.forEach(s => {
-					const el = document.getElementById(s.id);
-					if (!el) return;
+    steps.forEach(s => {
+      const el = document.getElementById(s.id);
+      if (!el) return;
 
-					const segStart = s.start, segEnd = s.end;
-					let local = 0;
-					if (p <= segStart) local = 0;
-					else if (p >= segEnd) local = 1;
-					else local = (p - segStart) / (segEnd - segStart);
+      const segStart = s.start, segEnd = s.end;
+      let local = 0;
+      if (p <= segStart) local = 0;
+      else if (p >= segEnd) local = 1;
+      else local = (p - segStart) / (segEnd - segStart);
 
-					const len = Number(el.dataset.total) || 0;
-					const offset = Math.round(len * (1 - local));
-					el.style.strokeDashoffset = offset;
+      const len = Number(el.dataset.total) || 0;
+      const offset = Math.round(len * (1 - local));
+      el.style.strokeDashoffset = offset;
 
-					if (local > 0) el.classList.add('reveal');
-					else el.classList.remove('reveal');
+      if (local > 0) el.classList.add('reveal'); else el.classList.remove('reveal');
 
-					if (local === 1 && s.fillId) {
-						const f = document.getElementById(s.fillId);
-						if (f) f.classList.add('done');
-					} else if (s.fillId) {
-						const f = document.getElementById(s.fillId);
-						if (f) f.classList.remove('done');
-					}
-				});
+      if (local === 1 && s.fillId) {
+        const f = document.getElementById(s.fillId);
+        if (f) f.classList.add('done');
+      } else if (s.fillId) {
+        const f = document.getElementById(s.fillId);
+        if (f) f.classList.remove('done');
+      }
+    });
 
-				if (p >= 100) {
-					loader.classList.add('hidden');
-					setTimeout(() => { loader.style.display = 'none'; }, 300);
-				}
-			};
+    if (p >= 100) {
+      loader.classList.add('hidden');
+      setTimeout(() => { loader.style.display = 'none'; }, 300);
+    }
+  };
 
-			// 🚀 When page fully loaded → instantly hide loader
-			window.addEventListener('load', () => {
-				updateLoaderProgress(100);
-				loader.classList.add('hidden');
-				setTimeout(() => {
-					loader.style.display = 'none';
-				}, 300);
-			});
-		})();
-			
-		</script>
+  // --- Simulation while page loads ---
+  let simulated = 0;
+  let simInterval = null;
+
+  function startSimulation() {
+    // only start if not already at 100
+    if (simInterval) return;
+    simInterval = setInterval(() => {
+      // advance by a random small amount; slow down as it approaches 90-95
+      const step = (Math.random() * 5) + 2; // 2..7
+      simulated = Math.min(simulated + step, 95); // cap at 95 so final fill happens on load
+      updateLoaderProgress(simulated);
+    }, 150);
+  }
+
+  function stopSimulation() {
+    if (simInterval) {
+      clearInterval(simInterval);
+      simInterval = null;
+    }
+  }
+
+  // Smoothly animate from current value to target (uses requestAnimationFrame)
+  function animateTo(target, duration = 400) {
+    const start = performance.now();
+    const from = Number((percentText && parseInt(percentText.textContent)) || simulated) || 0;
+    const delta = target - from;
+    return new Promise(resolve => {
+      function frame(now) {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = t < 0.5 ? 2*t*t : -1 + (4 - 2*t)*t; // easeInOut quad-ish
+        const value = from + delta * eased;
+        updateLoaderProgress(value);
+        if (t < 1) requestAnimationFrame(frame);
+        else resolve();
+      }
+      requestAnimationFrame(frame);
+    });
+  }
+
+  // start simulation immediately
+  startSimulation();
+
+  // When page fully loaded => stop sim, animate to 100 and hide loader
+  window.addEventListener('load', async () => {
+    stopSimulation();
+
+    // ensure we show a little of the progress before finishing
+    // animate from current to 100 quickly so user sees the final change
+    await animateTo(100, 450);
+
+    // small delay for 100% to be readable
+    setTimeout(() => {
+      loader.classList.add('hidden');
+      setTimeout(() => {
+        loader.style.display = 'none';
+      }, 300);
+    }, 160);
+  });
+})();
+</script>
+
 		@includeIf('frontend.partials.scripts.scripts-v1')
 		@includeIf('frontend.partials.toastr')
 	</body>

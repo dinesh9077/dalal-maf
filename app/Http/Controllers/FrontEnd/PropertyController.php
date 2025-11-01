@@ -714,7 +714,7 @@ class PropertyController extends Controller
         $suggestions = [];
         foreach ($results as $row) {
             $suggestions[] = [
-                'id'   => $row->area_id,
+                'id'   => $row->area_name,
                 'text' => trim(
                     $row->area_name . ', ' .
                     ($row->city_name ?? '') . ', ' .
