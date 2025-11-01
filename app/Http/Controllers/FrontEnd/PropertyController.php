@@ -333,19 +333,21 @@ class PropertyController extends Controller
         return view('frontend.property.index', $information);
     }
 
-    public function featuredAll()
-    {
+    public function featuredAll($type)
+    { 
         $property_contents = Property::where([['properties.status', 1], ['properties.approve_status', 1]])
-            ->join('property_contents', 'properties.id', 'property_contents.property_id')
-            ->whereExists(function ($query) {
-                $query->select(DB::raw(1))
-                    ->from('featured_properties')
-                    ->whereRaw('featured_properties.property_id = properties.id');
-            })
-            ->get();
-
-       return view('frontend.property.featured',compact('property_contents'));
-
+		->join('property_contents', 'properties.id', 'property_contents.property_id')
+		->where($type, 1)
+		->get(); 
+		
+		$title = match ($type) {
+			'is_featured' => 'Featured Properties',
+			'is_hot' => 'Hot Properties',
+			'is_recommended' => 'Recommended Properties',
+			'is_fast_selling' => 'Fast Selling Properties',
+			default => 'Properties',
+		};
+        return view('frontend.property.featured',compact('property_contents', 'title')); 
     }
 
     public function details($slug)

@@ -1,300 +1,280 @@
 <!DOCTYPE html>
 <html lang="xxx" dir="{{ $currentLanguageInfo->direction == 1 ? 'rtl' : '' }}">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="KreativDev">
-
-    <meta name="keywords" content="@yield('metaKeywords')">
-    <meta name="description" content="@yield('metaDescription')">
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <meta property="og:type" content="website">
-    @yield('og:tag')
-    {{-- title --}}
-    <title>@yield('pageHeading') {{ '| ' . $websiteInfo->website_title }}</title>
-    {{-- fav icon --}}
-    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/' . $websiteInfo->favicon) }}">
-    <link rel="apple-touch-icon" href="{{ asset('assets/img/' . $websiteInfo->favicon) }}">
-    @php
+	
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="KreativDev">
+		
+		<meta name="keywords" content="@yield('metaKeywords')">
+		<meta name="description" content="@yield('metaDescription')">
+		<meta name="csrf-token" content="{{ csrf_token() }}" />
+		<meta property="og:type" content="website">
+		@yield('og:tag')
+		{{-- title --}}
+		<title>@yield('pageHeading') {{ '| ' . $websiteInfo->website_title }}</title>
+		{{-- fav icon --}}
+		<link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/' . $websiteInfo->favicon) }}">
+		<link rel="apple-touch-icon" href="{{ asset('assets/img/' . $websiteInfo->favicon) }}">
+		@php
         $primaryColor = 'F57F4B';
         $secoundaryColor = '255056';
         // check, whether color has '#' or not, will return 0 or 1
         function checkColorCode($color)
         {
-            return preg_match('/^#[a-f0-9]{6}/i', $color);
+		return preg_match('/^#[a-f0-9]{6}/i', $color);
         }
-
+		
         // if, primary color value does not contain '#', then add '#' before color value
         if (isset($primaryColor) && checkColorCode($primaryColor) == 0 && checkColorCode($secoundaryColor) == 0) {
-            $primaryColor = '#' . $primaryColor;
-            $secoundaryColor = '#' . $secoundaryColor;
+		$primaryColor = '#' . $primaryColor;
+		$secoundaryColor = '#' . $secoundaryColor;
         }
-
+		
         // change decimal point into hex value for opacity
         function rgb($color = null)
         {
-            if (!$color) {
-                echo '';
-            }
-            $hex = htmlspecialchars($color);
-            [$r, $g, $b] = sscanf($hex, '#%02x%02x%02x');
-            echo "$r, $g, $b";
+		if (!$color) {
+		echo '';
+		}
+		$hex = htmlspecialchars($color);
+		[$r, $g, $b] = sscanf($hex, '#%02x%02x%02x');
+		echo "$r, $g, $b";
         }
-    @endphp
-    @includeIf('frontend.partials.styles.styles-v1')
-    <style>
-        :root {
+		@endphp
+		@includeIf('frontend.partials.styles.styles-v1')
+		<style>
+			:root {
             --color-primary: {{ $primaryColor }};
             --color-primary-rgb: {{ rgb(htmlspecialchars($primaryColor)) }};
             --color-secondary: {{ $secoundaryColor }};
             --color-secondary-rgb: {{ rgb(htmlspecialchars($secoundaryColor)) }};
-        }
-		
-		.loader {
-		  position: fixed;
-		  top: 0;
-		  left: 0;
-		  width: 100%;
-		  height: 100%;
-		  background: #fff;
-		  display: flex;
-		  justify-content: center;
-		  align-items: center;
-		  z-index: 9999;
-		}
-		.spinner {
-		  border: 6px solid #f3f3f3;
-		  border-top: 6px solid #3498db;
-		  border-radius: 50%;
-		  width: 50px;
-		  height: 50px;
-		  animation: spin 1s linear infinite;
-		}
-		@keyframes spin {
-		  0% { transform: rotate(0deg); }
-		  100% { transform: rotate(360deg); }
-		}
-
-
-		 :root{
-      --bg:#0f1724; /* dark */
-      --accent:#ffb86b; /* warm builder color */
-      --muted:#9aa4b2;
-    }
-    .loader-wrap{
-      position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
-     background:rgba(0, 0, 0, 0.8);
-      z-index:9999;flex-direction:column;gap:18px;padding:24px;
-    }
-    .stage{
-      width:340px;max-width:90%;height:240px;display:grid;place-items:center;
-    }
-    svg{width:100%;height:100%;overflow:visible}
-
-    .percent{
-      font-family: Inter, system-ui, sans-serif; color:var(--muted);font-size:14px;
-    }
-    .percent strong{color:var(--accent);font-size:20px;margin-left:8px}
-
-    /* small shadowed card behind svg */
-    .card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:14px;padding:18px;box-shadow:0 8px 30px rgba(2,6,23,0.6);backdrop-filter: blur(6px);
-    }
-
-    /* path base style */
-    .house-path{fill:none;stroke:var(--muted);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
-    .house-path.reveal{stroke:var(--accent)}
-    .fill-when-done{fill:transparent}
-
-    /* subtle builder animation for complete parts */
-    .done{fill:var(--accent);opacity:.15;transition:opacity .4s ease}
-
-    /* loader small label */
-    .label{color:var(--muted);font-size:13px}
-
-    /* hide when complete - user may remove this in integration */
-    .hidden{opacity:0;pointer-events:none;transform:translateY(-6px);transition:all .5s ease}
-
-
-    </style>
-</head>
-
-
-<body dir="{{ $currentLanguageInfo->direction == 1 ? 'rtl' : '' }}">
-	<!-- <div id="loader" class="loader">
-	  <div class="spinner"></div>
-	</div> -->
-
-	<div class="loader-wrap" id="loader">
-
-
-
-	<div style="width : 50px;">
-			<!-- SVG house: composed of multiple paths so we can "draw" them step-by-step -->
-			<svg viewBox="0 0 200 140" id="houseSVG" aria-hidden>
-			<!-- foundation / ground line -->
-			<path id="p-foundation" class="house-path" d="M10 130 H190" />
-
-			<!-- walls rectangle -->
-			<path id="p-walls" class="house-path" d="M40 90 H160 V40 H40 Z" />
-
-			<!-- roof -->
-			<path id="p-roof" class="house-path" d="M20 55 L100 10 L180 55 Z" />
-
-			<!-- chimney -->
-			<path id="p-chimney" class="house-path" d="M130 18 V2" />
-
-			<!-- door -->
-			<path id="p-door" class="house-path" d="M92 90 V60 H108 V90" />
-
-			<!-- left window -->
-			<path id="p-win1" class="house-path" d="M52 60 H76 V76 H52 Z" />
-
-			<!-- right window -->
-			<path id="p-win2" class="house-path" d="M124 60 H148 V76 H124 Z" />
-
-			<!-- decorative outline for the roof edge -->
-			<path id="p-eave" class="house-path" d="M30 64 H170" />
-
-			<!-- large fill groups (invisible fill shapes) that will fade in when part is done -->
-			<rect id="f-walls" class="fill-when-done" x="40" y="40" width="120" height="50" rx="2" />
-			<polygon id="f-roof" class="fill-when-done" points="20,55 100,10 180,55" />
-			<rect id="f-door" class="fill-when-done" x="92" y="60" width="16" height="30" />
-			<rect id="f-win1" class="fill-when-done" x="52" y="60" width="24" height="16" />
-			<rect id="f-win2" class="fill-when-done" x="124" y="60" width="24" height="16" />
-
-			</svg>
-	</div>
-
-	<div class="percent">Loading <strong id="percentText">0%</strong></div>
-
-		<img src="{{ asset('assets/img/image.png') }}" alt="" style="width: 200px;">
-
-
-</div>
-
-    @includeIf('frontend.partials.header.header-v1')
-
-    @if (request()->routeIs('index'))
-    @endif
-
-    @yield('breadcrumb')
-
-    @yield('content')
-
-    @includeIf('frontend.partials.popups')
-    @includeIf('frontend.partials.footer.footer-v1')
-    {{-- cookie alert --}}
-    @if (!is_null($cookieAlertInfo) && $cookieAlertInfo->cookie_alert_status == 1)
-        @include('cookie-consent::index')
-    @endif
+			}
+			
+			.loader {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: #fff;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 9999;
+			}
+			.spinner {
+			border: 6px solid #f3f3f3;
+			border-top: 6px solid #3498db;
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			animation: spin 1s linear infinite;
+			}
+			@keyframes spin {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+			}
+			
+			
+			:root{
+			--bg:#0f1724; /* dark */
+			--accent:#ffb86b; /* warm builder color */
+			--muted:#9aa4b2;
+			}
+			.loader-wrap{
+			position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+			background:rgba(0, 0, 0, 0.8);
+			z-index:9999;flex-direction:column;gap:18px;padding:24px;
+			}
+			.stage{
+			width:340px;max-width:90%;height:240px;display:grid;place-items:center;
+			}
+			svg{width:100%;height:100%;overflow:visible}
+			
+			.percent{
+			font-family: Inter, system-ui, sans-serif; color:var(--muted);font-size:14px;
+			}
+			.percent strong{color:var(--accent);font-size:20px;margin-left:8px}
+			
+			/* small shadowed card behind svg */
+			.card{
+			background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+			border-radius:14px;padding:18px;box-shadow:0 8px 30px rgba(2,6,23,0.6);backdrop-filter: blur(6px);
+			}
+			
+			/* path base style */
+			.house-path{fill:none;stroke:var(--muted);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+			.house-path.reveal{stroke:var(--accent)}
+			.fill-when-done{fill:transparent}
+			
+			/* subtle builder animation for complete parts */
+			.done{fill:var(--accent);opacity:.15;transition:opacity .4s ease}
+			
+			/* loader small label */
+			.label{color:var(--muted);font-size:13px}
+			
+			/* hide when complete - user may remove this in integration */
+			.hidden{opacity:0;pointer-events:none;transform:translateY(-6px);transition:all .5s ease}
+			
+			
+		</style>
+	</head>
 	
-    <!-- Go to Top -->
-    <div class="go-top"><i class="fal fa-angle-double-up"></i></div>
-
-
-    <!-- WhatsApp Chat Button -->
-    <div id="WAButton"></div>
-    <script>
-		(function(){
-	// elements in build order (A → Z visual) with the percentage window each occupies
-  const steps = [
-    {id:'p-foundation', start:0, end:8, fillId:null},
-    {id:'p-walls', start:8, end:40, fillId:'f-walls'},
-    {id:'p-roof', start:40, end:62, fillId:'f-roof'},
-    {id:'p-chimney', start:62, end:68, fillId:null},
-    {id:'p-eave', start:68, end:74, fillId:null},
-    {id:'p-door', start:74, end:84, fillId:'f-door'},
-    {id:'p-win1', start:84, end:92, fillId:'f-win1'},
-    {id:'p-win2', start:92, end:100, fillId:'f-win2'}
-  ];
-
-  // cache DOM
-  const svg = document.getElementById('houseSVG');
-  const percentText = document.getElementById('percentText');
-  const loader = document.getElementById('loader');
-
-  // prepare each path: set stroke-dasharray to path length and hide it initially
-  steps.forEach(s=>{
-    const el = document.getElementById(s.id);
-    if(!el) return;
-    const len = (el.getTotalLength && el.getTotalLength()) || 0;
-    el.style.strokeDasharray = len;
-    el.style.strokeDashoffset = len;
-    el.dataset.total = len;
-    el.classList.remove('reveal');
-  });
-
-  // helper: clamp
-  const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
-
-  // update function (call with 0..100)
-  window.updateLoaderProgress = function(percentage){
-    const p = clamp(Number(percentage) || 0, 0, 100);
-    percentText.textContent = Math.round(p) + '%';
-
-    // for each step compute local progress
-    steps.forEach(s=>{
-      const el = document.getElementById(s.id);
-      if(!el) return;
-      const segStart = s.start, segEnd = s.end;
-      let local = 0;
-      if(p <= segStart) local = 0;
-      else if(p >= segEnd) local = 1;
-      else local = (p - segStart) / (segEnd - segStart);
-
-      // reveal stroke accordingly
-      const len = Number(el.dataset.total) || 0;
-      const offset = Math.round(len * (1 - local));
-      el.style.strokeDashoffset = offset;
-
-      // accent the stroke when any progress on that part
-      if(local > 0) el.classList.add('reveal'); else el.classList.remove('reveal');
-
-      // when fully done, add fill effect if provided
-      if(local === 1 && s.fillId){
-        const f = document.getElementById(s.fillId);
-        if(f) f.classList.add('done');
-      } else if(s.fillId){
-        const f = document.getElementById(s.fillId);
-        if(f) f.classList.remove('done');
-      }
-    });
-
-    // optional: hide loader a bit after 100
-    if(p >= 100){
-      loader.classList.add('hidden');
-      setTimeout(()=>{ loader.style.display = 'none' }, 600);
-    } else {
-      loader.classList.remove('hidden');
-      loader.style.display = '';
-    }
-  };
-
-  // example simulation (remove in production and call updateLoaderProgress from your real loading code)
-  function simulate(){
-    let v=0;
-    const iv = setInterval(()=>{
-      v += Math.random()*6 + 3; // random step
-      if(v>=100){ v=100; updateLoaderProgress(v); clearInterval(iv); }
-      else updateLoaderProgress(v);
-    }, 220);
-  }
-
-  // auto-run sim for demo; comment out when integrating
-  simulate();
-
-})();
-
-
+	
+	<body dir="{{ $currentLanguageInfo->direction == 1 ? 'rtl' : '' }}">
+		<!-- <div id="loader" class="loader">
+			<div class="spinner"></div>
+		</div> -->
 		
-		 
-    </script>
-    @includeIf('frontend.partials.scripts.scripts-v1')
-    @includeIf('frontend.partials.toastr')
-</body>
+		<div class="loader-wrap" id="loader">
+			
+			
+			
+			<div style="width : 50px;">
+				<!-- SVG house: composed of multiple paths so we can "draw" them step-by-step -->
+				<svg viewBox="0 0 200 140" id="houseSVG" aria-hidden>
+					<!-- foundation / ground line -->
+					<path id="p-foundation" class="house-path" d="M10 130 H190" />
+					
+					<!-- walls rectangle -->
+					<path id="p-walls" class="house-path" d="M40 90 H160 V40 H40 Z" />
+					
+					<!-- roof -->
+					<path id="p-roof" class="house-path" d="M20 55 L100 10 L180 55 Z" />
+					
+					<!-- chimney -->
+					<path id="p-chimney" class="house-path" d="M130 18 V2" />
+					
+					<!-- door -->
+					<path id="p-door" class="house-path" d="M92 90 V60 H108 V90" />
+					
+					<!-- left window -->
+					<path id="p-win1" class="house-path" d="M52 60 H76 V76 H52 Z" />
+					
+					<!-- right window -->
+					<path id="p-win2" class="house-path" d="M124 60 H148 V76 H124 Z" />
+					
+					<!-- decorative outline for the roof edge -->
+					<path id="p-eave" class="house-path" d="M30 64 H170" />
+					
+					<!-- large fill groups (invisible fill shapes) that will fade in when part is done -->
+					<rect id="f-walls" class="fill-when-done" x="40" y="40" width="120" height="50" rx="2" />
+					<polygon id="f-roof" class="fill-when-done" points="20,55 100,10 180,55" />
+					<rect id="f-door" class="fill-when-done" x="92" y="60" width="16" height="30" />
+					<rect id="f-win1" class="fill-when-done" x="52" y="60" width="24" height="16" />
+					<rect id="f-win2" class="fill-when-done" x="124" y="60" width="24" height="16" />
+					
+				</svg>
+			</div>
+			
+			<div class="percent">Loading <strong id="percentText">0%</strong></div>
+			
+			<img src="{{ asset('assets/img/image.png') }}" alt="" style="width: 200px;">
+			
+			
+		</div>
+		
+		@includeIf('frontend.partials.header.header-v1')
+		
+		@if (request()->routeIs('index'))
+		@endif
+		
+		@yield('breadcrumb')
+		
+		@yield('content')
+		
+		@includeIf('frontend.partials.popups')
+		@includeIf('frontend.partials.footer.footer-v1')
+		{{-- cookie alert --}}
+		@if (!is_null($cookieAlertInfo) && $cookieAlertInfo->cookie_alert_status == 1)
+        @include('cookie-consent::index')
+		@endif
+		
+		<!-- Go to Top -->
+		<div class="go-top"><i class="fal fa-angle-double-up"></i></div>
+		
+		
+		<!-- WhatsApp Chat Button -->
+		<div id="WAButton"></div>
+		<script>
+			(function () {
+			const steps = [
+				{ id: 'p-foundation', start: 0, end: 8, fillId: null },
+				{ id: 'p-walls', start: 8, end: 40, fillId: 'f-walls' },
+				{ id: 'p-roof', start: 40, end: 62, fillId: 'f-roof' },
+				{ id: 'p-chimney', start: 62, end: 68, fillId: null },
+				{ id: 'p-eave', start: 68, end: 74, fillId: null },
+				{ id: 'p-door', start: 74, end: 84, fillId: 'f-door' },
+				{ id: 'p-win1', start: 84, end: 92, fillId: 'f-win1' },
+				{ id: 'p-win2', start: 92, end: 100, fillId: 'f-win2' }
+			];
 
+			const percentText = document.getElementById('percentText');
+			const loader = document.getElementById('loader');
+
+			steps.forEach(s => {
+				const el = document.getElementById(s.id);
+				if (!el) return;
+				const len = (el.getTotalLength && el.getTotalLength()) || 0;
+				el.style.strokeDasharray = len;
+				el.style.strokeDashoffset = len;
+				el.dataset.total = len;
+				el.classList.remove('reveal');
+			});
+
+			const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+			window.updateLoaderProgress = function (percentage) {
+				const p = clamp(Number(percentage) || 0, 0, 100);
+				percentText.textContent = Math.round(p) + '%';
+
+				steps.forEach(s => {
+					const el = document.getElementById(s.id);
+					if (!el) return;
+
+					const segStart = s.start, segEnd = s.end;
+					let local = 0;
+					if (p <= segStart) local = 0;
+					else if (p >= segEnd) local = 1;
+					else local = (p - segStart) / (segEnd - segStart);
+
+					const len = Number(el.dataset.total) || 0;
+					const offset = Math.round(len * (1 - local));
+					el.style.strokeDashoffset = offset;
+
+					if (local > 0) el.classList.add('reveal');
+					else el.classList.remove('reveal');
+
+					if (local === 1 && s.fillId) {
+						const f = document.getElementById(s.fillId);
+						if (f) f.classList.add('done');
+					} else if (s.fillId) {
+						const f = document.getElementById(s.fillId);
+						if (f) f.classList.remove('done');
+					}
+				});
+
+				if (p >= 100) {
+					loader.classList.add('hidden');
+					setTimeout(() => { loader.style.display = 'none'; }, 300);
+				}
+			};
+
+			// 🚀 When page fully loaded → instantly hide loader
+			window.addEventListener('load', () => {
+				updateLoaderProgress(100);
+				loader.classList.add('hidden');
+				setTimeout(() => {
+					loader.style.display = 'none';
+				}, 300);
+			});
+		})();
+			
+		</script>
+		@includeIf('frontend.partials.scripts.scripts-v1')
+		@includeIf('frontend.partials.toastr')
+	</body>
+	
 </html>

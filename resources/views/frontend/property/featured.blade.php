@@ -14,7 +14,7 @@ $version = $basicInfo->theme_version;
 <div style="margin-top: 150px ; margin-bottom: 80px;">
   <div class="container" data-aos="fade-up">
     <div class="section-title title-inline mb-40 aos-init aos-animate d-flex justify-content-center" data-aos="fade-up">
-      <h2 class="title">Featured Properties</h2>
+      <h2 class="title">{{ $title }} Properties</h2>
     </div>
   </div>
 
