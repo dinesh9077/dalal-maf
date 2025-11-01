@@ -200,12 +200,10 @@
 			// ------------------------------------------------------------
 			// 4️⃣ Featured Properties
 			// ------------------------------------------------------------
-			$queryResult['featured_properties'] = (clone $baseQuery)
-				->leftJoin('featured_properties', 'featured_properties.property_id', '=', 'properties.id')
-				->where('featured_properties.status', 1)
+			$queryResult['featured_properties'] = (clone $baseQuery) 
+				->where('properties.is_featured', 1)
 				->select(
-					'properties.*',
-					'featured_properties.id as featured_id',
+					'properties.*', 
 					'property_contents.slug',
 					'property_contents.title',
 					'property_contents.address',

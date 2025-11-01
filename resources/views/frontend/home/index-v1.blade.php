@@ -635,8 +635,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 	</div>
 	</div>
 @endif -->
-
-@if ($secInfo->featured_properties_section_status == 1)
+ 
 <section class="product-area featured-product pt-70 pb-70">
     <div class="container-fulid">
         <div class="row">
@@ -665,13 +664,13 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                     <div class="swiper product-slider w-100">
                         <div class="swiper-wrapper">
                             @forelse ($featured_properties as $property)
-                            <div class="swiper-slide">
-                                <x-property :property="$property" />
-							</div>
+								<div class="swiper-slide">
+									<x-property :property="$property" />
+								</div>
                             @empty
-                            <div class="p-3 text-center mb-30 w-100">
-                                <h3 class="mb-0">{{ __('No Featured Property Found') }}</h3>
-							</div>
+								<div class="p-3 text-center mb-30 w-100">
+									<h3 class="mb-0">{{ __('No Featured Property Found') }}</h3>
+								</div>
                             @endforelse
 						</div>
                         <div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
@@ -683,8 +682,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 			</div>
 		</div>
 	</div>
-</section>
-@endif
+</section> 
 
 <!-- @if ($secInfo->about_section_status == 1)
 	<section class="about-area pb-70 pt-30">

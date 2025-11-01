@@ -112,7 +112,7 @@ class AuthController extends Controller
 			$guard = $userType === 'vendor' ? 'vendor_api' : ($userType === "agent"  ? 'agent_api' : 'api'); 
 			
 			// Determine redirect route
-			if (empty($user->email) && !$withoutLogin) {
+			if (empty($user->email)) {
 				$route = "signup";  
 				$user->token = null;
 			} 

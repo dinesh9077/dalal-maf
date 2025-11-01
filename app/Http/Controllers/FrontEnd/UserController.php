@@ -610,104 +610,184 @@
 		}
 		
 		
-		//add_to_wishlist
-		
+		//add to wishlist 
 		public function add_to_wishlist(Request $request, $id)
 		{
-			// Determine guard type
-			$guard = Auth::guard('web')->check() ? 'web' : (Auth::guard('vendor')->check() ? 'vendor' : null);
+			try {
+				// 🔹 Determine logged-in guard type
+				if (Auth::guard('web')->check()) {
+					$guard = 'web';
+				} elseif (Auth::guard('vendor')->check()) {
+					$guard = 'vendor';
+				} elseif (Auth::guard('agent')->check()) {
+					$guard = 'agent';
+				} else {
+					$guard = null;
+				}
 
-			if (!$guard) {
-				// Not logged in
+				// 🔹 Not logged in → handle accordingly
+				if (!$guard) {
+					if ($request->ajax()) {
+						return response()->json([
+							'status' => 'error',
+							'message' => 'Please login to add items to wishlist.'
+						]);
+					}
+					return redirect()->route('user.login');
+				}
+
+				// 🔹 Identify user/vendor/agent ID
+				$userId = Auth::guard($guard)->user()->id;
+
+				// 🔹 Check if already in wishlist
+				$query = Wishlist::where('property_id', $id);
+
+				if ($guard === 'web') {
+					$query->where('user_id', $userId);
+				} elseif ($guard === 'vendor') {
+					$query->where('vendor_id', $userId);
+				} elseif ($guard === 'agent') {
+					$query->where('agent_id', $userId);
+				}
+
+				$exists = $query->exists();
+
+				if ($exists) {
+					$message = 'You already added this property to your wishlist!';
+					$status = 'error';
+				} else {
+					// 🔹 Create new wishlist record
+					$wishlist = new Wishlist();
+					$wishlist->property_id = $id;
+
+					if ($guard === 'web') {
+						$wishlist->user_id = $userId;
+					} elseif ($guard === 'vendor') {
+						$wishlist->vendor_id = $userId;
+					} elseif ($guard === 'agent') {
+						$wishlist->agent_id = $userId;
+					}
+
+					$wishlist->save();
+
+					$message = 'Added to your wishlist successfully!';
+					$status = 'success';
+				}
+
+				// 🔹 Handle AJAX vs normal request
 				if ($request->ajax()) {
 					return response()->json([
-						'status' => 'error',
-						'message' => 'Please login to add items to wishlist.'
+						'status' => $status,
+						'message' => $message,
 					]);
 				}
 
-				return redirect()->route('user.login');
-			}
-
-			// Identify user/vendor ID
-			$userId = Auth::guard($guard)->user()->id;
-
-			// Check if property already exists in wishlist
-			$query = Wishlist::where('property_id', $id);
-			$guard === 'web' ? $query->where('user_id', $userId) : $query->where('vendor_id', $userId);
-			$exists = $query->exists();
-
-			if ($exists) {
-				$message = 'You already added this property to your wishlist!';
-				$status = 'error';
-			} else {
-				$wishlist = new Wishlist();
-				$wishlist->property_id = $id;
-				if ($guard === 'web') {
-					$wishlist->user_id = $userId;
-				} else {
-					$wishlist->vendor_id = $userId;
-				}
-				$wishlist->save();
-
-				$message = 'Added to your wishlist successfully!';
-				$status = 'success';
-			}
-
-			// If AJAX request, return JSON
-			if ($request->ajax()) {
-				return response()->json([
-					'status' => $status,
+				return back()->with([
 					'message' => $message,
+					'alert-type' => $status,
+				]);
+
+			} catch (\Exception $e) {
+				// 🔹 Handle unexpected exceptions safely
+				if ($request->ajax()) {
+					return response()->json([
+						'status' => 'error',
+						'message' => 'Something went wrong.',
+						'error' => $e->getMessage(),
+					], 500);
+				}
+
+				return back()->with([
+					'message' => 'Something went wrong.',
+					'alert-type' => 'error',
 				]);
 			}
-
-			// Otherwise, use session flash + redirect
-			return back()->with([
-				'message' => $message,
-				'alert-type' => $status,
-			]);
 		}
+
 		
 		//remove_wishlist
 		public function remove_wishlist($id)
 		{
-			// Detect guard (web or vendor)
-			$guard = Auth::guard('web')->check() ? 'web' : (Auth::guard('vendor')->check() ? 'vendor' : null);
-
-			if (!$guard) {
-				// Not logged in
-				if (request()->ajax()) {
-					return response()->json(['status' => 'error', 'message' => 'Login required.'], 401);
+			try {
+				// 🔹 Detect which guard is logged in
+				if (Auth::guard('web')->check()) {
+					$guard = 'web';
+				} elseif (Auth::guard('vendor')->check()) {
+					$guard = 'vendor';
+				} elseif (Auth::guard('agent')->check()) {
+					$guard = 'agent';
+				} else {
+					$guard = null;
 				}
-				return redirect()->route('user.login');
+
+				// 🔹 If no one is logged in
+				if (!$guard) {
+					if (request()->ajax()) {
+						return response()->json([
+							'status' => 'error',
+							'message' => 'Login required.'
+						], 401);
+					}
+					return redirect()->route('user.login');
+				}
+
+				$userId = Auth::guard($guard)->id();
+
+				// 🔹 Build query dynamically based on guard
+				$query = Wishlist::where('property_id', $id);
+
+				if ($guard === 'web') {
+					$query->where('user_id', $userId);
+				} elseif ($guard === 'vendor') {
+					$query->where('vendor_id', $userId);
+				} elseif ($guard === 'agent') {
+					$query->where('agent_id', $userId);
+				}
+
+				$wishlist = $query->first();
+
+				if ($wishlist) {
+					$wishlist->delete();
+					$response = [
+						'status' => 'success',
+						'message' => 'Removed from wishlist successfully!'
+					];
+				} else {
+					$response = [
+						'status' => 'error',
+						'message' => 'Item not found in wishlist.'
+					];
+				}
+
+				// 🔹 Return JSON if AJAX request
+				if (request()->ajax()) {
+					return response()->json($response);
+				}
+
+				// 🔹 Otherwise redirect with session message
+				$alertType = $response['status'] === 'success' ? 'info' : 'danger';
+				return back()->with([
+					'message' => $response['message'],
+					'alert-type' => $alertType
+				]);
+
+			} catch (\Exception $e) {
+				// 🔹 Handle exceptions gracefully
+				if (request()->ajax()) {
+					return response()->json([
+						'status' => 'error',
+						'message' => 'Something went wrong.',
+						'error' => $e->getMessage()
+					], 500);
+				}
+
+				return back()->with([
+					'message' => 'Something went wrong.',
+					'alert-type' => 'danger'
+				]);
 			}
+		}
 
-			$user_id = Auth::guard($guard)->id();
-
-			// Build query dynamically
-			$query = Wishlist::where('property_id', $id);
-			$guard === 'vendor'
-				? $query->where('vendor_id', $user_id)
-				: $query->where('user_id', $user_id);
-
-			$wishlist = $query->first();
-
-			if ($wishlist) {
-				$wishlist->delete();
-				$response = ['status' => 'success', 'message' => 'Removed from wishlist successfully!'];
-			} else {
-				$response = ['status' => 'error', 'message' => 'Something went wrong or item not found.'];
-			}
-
-			// ✅ If AJAX, return JSON; else redirect with flash message
-			if (request()->ajax()) {
-				return response()->json($response);
-			}
-
-			$alertType = $response['status'] === 'success' ? 'info' : 'danger';
-			return back()->with(['message' => $response['message'], 'alert-type' => $alertType]);
-		} 
 		
 		public function wishListCount()
 		{
@@ -716,6 +796,8 @@
 				$count = Wishlist::where('user_id', Auth::guard('web')->id())->count(); 
 			} elseif (Auth::guard('vendor')->check()) {
 				$count = Wishlist::where('vendor_id', Auth::guard('vendor')->id())->count(); 
+			}elseif (Auth::guard('agent')->check()) {
+				$count = Wishlist::where('agent_id', Auth::guard('agent')->id())->count(); 
 			}
  
 			return response()->json([

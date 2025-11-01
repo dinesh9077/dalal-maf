@@ -198,7 +198,25 @@
 						@endif
 					</div>
 					
-					 
+					{{-- Wishlist Icon --}}
+					<div class="item position-relative">
+						@if ($authType != 'guest') 
+							 <a 
+								href="{{ 
+									$authType === 'user' 
+										? route('user.wishlist') 
+										: ($authType === 'agent' 
+											? route('vendor.wishlist') 
+											: route('vendor.wishlist')) 
+								}}" 
+								class="btn-wishlist-header position-relative" 
+								title="{{ __('My Wishlist') }}"
+							>
+								<i class="fas fa-heart text-danger"></i>
+								<span class="wishlist-count-html">0</span>
+							</a>
+						@endif
+					</div>
 				</div>
 
 				{{-- Small CSS for better UI --}}

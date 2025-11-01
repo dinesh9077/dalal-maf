@@ -143,6 +143,9 @@
                                         <th scope="col">{{ __('Area') }}</th>
                                         <th scope="col" style="width: 150px;">{{ __('Approval Status') }}</th>
                                         <th scope="col">{{ __('Featured') }}</th>
+										<th scope="col">{{ __('Recommended') }}</th>
+										<th scope="col">{{ __('Hot') }}</th>
+										<th scope="col">{{ __('Fast Selling') }}</th> 
                                         <th scope="col"  style="width: 150px;">{{ __('Status') }}</th>
                                         <th scope="col">{{ __('Actions') }}</th>
 									</tr>
@@ -226,89 +229,44 @@
 												</select>
 											</form>
 										</td>
-                                        <td>
-											
-                                            @php
-											
-                                            $featuredProperty = $property
-                                            ->featuredProperties()
-                                            ->latest()
-                                            ->first();
-											
-                                            $pendingfeatured = false;
-                                            $featuredExpired = false;
-                                            $featured = false;
-											
-                                            if (
-                                            !empty($featuredProperty) &&
-                                            $featuredProperty->status == 0 &&
-                                            $featuredProperty->start_date == null &&
-                                            $featuredProperty->end_date == null
-                                            ) {
-                                            $pendingfeatured = true;
-                                            } elseif (
-                                            !empty($featuredProperty) &&
-                                            $featuredProperty->status == 1 &&
-                                            $featuredProperty->start_date != null &&
-                                            $featuredProperty->end_date != null
-                                            ) {
-                                            $featuredExpired = Carbon\Carbon::now()
-                                            ->timezone($settings->timezone)
-                                            ->gte(
-                                            \Carbon\Carbon::parse(
-                                            $featuredProperty->end_date,
-                                            ),
-                                            );
-                                            } else {
-                                            $featured = true;
-                                            }
-											
-                                            @endphp
-                                            @if (empty($featuredProperty) || $featuredExpired || $featuredProperty->payment_status == 'rejected')
-                                            <form class="d-inline-block">
-                                                <select id="featured{{ $property->id }}"
-												onchange="updateFeatured(this)"
-												class="form-control {{ !empty($featuredProperty) && !$featuredExpired && $featuredProperty->status == 1 ? 'bg-success' : 'bg-danger' }} form-control-sm"
-												data-property="{{ $property->id }}">
-                                                    <option value="1"
-													{{ empty($featuredProperty) || (!$featuredExpired && $featuredProperty->status == 1) ? 'selected' : '' }}>
-                                                        {{ __('Yes') }}
-													</option>
-                                                    <option value="0"
-													{{ empty($featuredProperty) || $featuredExpired || $featuredProperty->payment_status == 'rejected' ? 'selected' : '' }}>
-                                                        {{ __('No') }}
-													</option>
+										<td>
+											<div class="d-inline-block">
+												<select class="form-control {{ $property->is_featured == 1 ? 'bg-success' : 'bg-danger' }} form-control-sm"
+													data-id="{{ $property->id }}" data-field="is_featured" onchange="updatePropertyStatus(this)">
+													<option value="0" {{ $property->is_featured == 0 ? 'selected' : '' }}>No</option>
+													<option value="1" {{ $property->is_featured == 1 ? 'selected' : '' }}>Yes</option>
 												</select>
-											</form>
-                                            @elseif ($pendingfeatured)
-                                            <span class="badge badge-warning btn-sm mr-1  mt-1"
-											href="#"> Pending </span>
-                                            @elseif(!empty($featuredProperty) && !$featuredExpired && !$pendingfeatured)
-                                            <form id="featureForm{{ $property->id }}"
-											class="d-inline-block"
-											action="{{ route('admin.property_management.update_featured') }}"
-											method="post">
-                                                @csrf
-                                                <input type="hidden" name="requestId"
-												value="{{ $featuredProperty->id }}">
-												
-                                                <select
-												class="form-control {{ $featuredProperty->status == 1 ? 'bg-success' : 'bg-danger' }} form-control-sm"
-												name="status"
-												onchange="document.getElementById('featureForm{{ $property->id }}').submit();">
-                                                    <option value="1"
-													{{ $featuredProperty->status == 1 ? 'selected' : '' }}>
-                                                        {{ __('Yes') }}
-													</option>
-                                                    <option value="0"
-													{{ $featuredProperty->status == 0 ? 'selected' : '' }}>
-                                                        {{ __('No') }}
-													</option>
+											</div>
+										</td>
+
+										<td>	
+											<div class="d-inline-block">
+												<select class="form-control {{ $property->is_recommended == 1 ? 'bg-success' : 'bg-danger' }} form-control-sm"
+													data-id="{{ $property->id }}" data-field="is_recommended" onchange="updatePropertyStatus(this)">
+													<option value="0" {{ $property->is_recommended == 0 ? 'selected' : '' }}>No</option>
+													<option value="1" {{ $property->is_recommended == 1 ? 'selected' : '' }}>Yes</option>
 												</select>
-											</form>
-                                            @endif
-											
-											
+											</div>
+										</td>
+
+										<td>
+											<div class="d-inline-block">
+												<select class="form-control {{ $property->is_hot == 1 ? 'bg-success' : 'bg-danger' }} form-control-sm"
+													data-id="{{ $property->id }}" data-field="is_hot" onchange="updatePropertyStatus(this)">
+													<option value="0" {{ $property->is_hot == 0 ? 'selected' : '' }}>No</option>
+													<option value="1" {{ $property->is_hot == 1 ? 'selected' : '' }}>Yes</option>
+												</select>
+											</div>
+										</td>
+
+										<td>
+											<div class="d-inline-block">
+												<select class="form-control {{ $property->is_fast_selling == 1 ? 'bg-success' : 'bg-danger' }} form-control-sm"
+													data-id="{{ $property->id }}" data-field="is_fast_selling" onchange="updatePropertyStatus(this)">
+													<option value="0" {{ $property->is_fast_selling == 0 ? 'selected' : '' }}>No</option>
+													<option value="1" {{ $property->is_fast_selling == 1 ? 'selected' : '' }}>Yes</option>
+												</select>
+											</div>
 										</td>
 										
                                         <td>
@@ -515,6 +473,33 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 </script> 
 <script src="{{ asset('assets/js/feature-payment.js') }}"></script> 
 <script>
+	function updatePropertyStatus(el) {
+		let propertyId = $(el).data("id");
+		let field = $(el).data("field"); // 👈 dynamic field name
+		let status = $(el).val();
+
+		$.ajax({
+			url: "{{ route('admin.property_management.update_featured') }}",
+			method: "POST",
+			data: {
+				_token: "{{ csrf_token() }}",
+				property_id: propertyId,
+				field: field,
+				status: status
+			},
+			success: function(res) {  
+				if (status == 1) {
+					$(el).removeClass('bg-danger').addClass('bg-success');
+				} else {
+					$(el).removeClass('bg-success').addClass('bg-danger');
+				}
+			},
+			error: function(xhr) {
+				toastr.error("Something went wrong!");
+			}
+		});
+	}
+
 	
 	$('.bulk-delete').on('click', function (e) {
 		e.preventDefault();

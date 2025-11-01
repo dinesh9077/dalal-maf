@@ -186,8 +186,8 @@
                                                 <option selected disabled>{{ __('Select Area') }}
                                                 </option>
                                                     @foreach ($areas as $area)
-                                                        <option value="{{ $areas->id }}">
-                                                            {{ $areas->name }}</option>
+                                                        <option value="{{ $area->id }}">
+                                                            {{ $area->name }}</option>
                                                     @endforeach
                                             </select>
                                         </div>
