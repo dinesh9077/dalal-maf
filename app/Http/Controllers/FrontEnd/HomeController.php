@@ -212,6 +212,45 @@
 				->inRandomOrder()
 				->take(10)
 				->get();
+				
+			$queryResult['hotProperties'] = (clone $baseQuery) 
+				->where('properties.is_hot', 1)
+				->select(
+					'properties.*', 
+					'property_contents.slug',
+					'property_contents.title',
+					'property_contents.address',
+					'property_contents.language_id'
+				)
+				->inRandomOrder()
+				->take(10)
+				->get();
+				
+			$queryResult['fastSellingProperties'] = (clone $baseQuery) 
+				->where('properties.is_fast_selling', 1)
+				->select(
+					'properties.*', 
+					'property_contents.slug',
+					'property_contents.title',
+					'property_contents.address',
+					'property_contents.language_id'
+				)
+				->inRandomOrder()
+				->take(10)
+				->get();
+				
+			$queryResult['recommendedProperties'] = (clone $baseQuery) 
+				->where('properties.is_recommended', 1)
+				->select(
+					'properties.*', 
+					'property_contents.slug',
+					'property_contents.title',
+					'property_contents.address',
+					'property_contents.language_id'
+				)
+				->inRandomOrder()
+				->take(10)
+				->get();
  
 			
 			if ($themeVersion == 1 && $secInfo->project_section_status == 1) {

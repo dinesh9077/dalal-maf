@@ -1,4 +1,4 @@
-@if($property->property_type == 'partial')
+
 <div {{ $attributes }} style="position : relative">
 	<div class="product-default mb-30 new-shadow-box" style="border-radius: 20px;" {{ $animation ? 'data-aos="fade-up" data-aos-delay="100"' : '' }}>
 		<!-- <figure class="product-img">
@@ -104,5 +104,4 @@
 	</div>
 	<span class="label new-lables">{{ ucwords(str_replace('_', ' ', $property->purpose)) }}</span>
 	<!-- <span class="round-new"></span> -->
-</div>
-@endif 
+</div> 

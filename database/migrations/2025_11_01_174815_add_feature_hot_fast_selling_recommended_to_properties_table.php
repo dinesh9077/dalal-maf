@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::table('properties', function (Blueprint $table) {
-            $table->boolean('is_featured')->default(false);
-            $table->boolean('is_hot')->default(false);
-            $table->boolean('is_fast_selling')->default(false);
-            $table->boolean('is_recommended')->default(false);
+            $table->boolean('is_featured')->index()->default(false);
+            $table->boolean('is_hot')->index()->default(false);
+            $table->boolean('is_fast_selling')->index()->default(false);
+            $table->boolean('is_recommended')->index()->default(false);
         });
     }
 
