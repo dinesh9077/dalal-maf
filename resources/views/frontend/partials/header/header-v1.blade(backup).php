@@ -61,7 +61,7 @@
                             @else
                                 <li class="nav-item">
                                     <a class="nav-link toggle" href="{{ $href }}">{{ $menuData->text }}<i
-                                            class="fal fa-plus"></i></a>
+                                            class="fal fa-angle-down"></i></a>
                                     <ul class="menu-dropdown">
                                         @php $childMenuDatas = $menuData->children; @endphp
                                         @foreach ($childMenuDatas as $childMenuData)

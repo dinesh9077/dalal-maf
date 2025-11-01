@@ -267,6 +267,20 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
 				</li>
 				@endif
 				
+				<li class="nav-item @if (request()->routeIs('aagent.inquiry')) active @endif">
+                    <a href="{{ route('agent.inquiry') }}">
+                        <i class="fas fa-comment"></i>
+                        <p>{{ __('Sent Inquiery') }}</p>
+					</a>
+				</li>
+				
+				<li class="nav-item @if (request()->routeIs('agent.wishlist')) active @endif">
+                    <a href="{{ route('agent.wishlist') }}">
+                        <i class="fas fa-heart"></i>
+                        <p>{{ __('My Wishlists') }}</p>
+					</a>
+				</li> 
+				
 				{{-- Project Management end  --}}
                 @endif
                 {{-- <li class="nav-item @if (request()->routeIs('agent.edit.profile')) active @endif">

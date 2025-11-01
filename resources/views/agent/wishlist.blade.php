@@ -1,28 +1,34 @@
-@php
-    $version = $basicInfo->theme_version;
-@endphp
-@extends("frontend.layouts.layout-v$version")
-@section('pageHeading')
-    {{ __('Wishlist') }}
-@endsection
+@extends('agent.layout')
 
+@includeIf('backend.partials.rtl_style')
 
 @section('content')
+    <div class="page-header">
+        <h4 class="page-title">{{ __('Wishlist') }}</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a href="{{ route('admin.dashboard') }}">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a href="#">{{ __('Wishlist') }}</a>
+            </li> 
+        </ul>
+    </div>
 
-
-
-    <!--====== Start Dashboard Section ======-->
-    <div class="user-dashboard  pb-60"  style="margin-top: 150px;">
-        <div class="container">
-            <div class="row gx-xl-5">
-                @includeIf('frontend.user.side-navbar')
-                <div class="col-lg-9">
-                    <div class="account-info radius-md mb-40">
-                        <div class="title">
-                            <h4>{{ __('Wishlists') }}</h4>
-                        </div>
-                        <div class="main-info">
-                            <div class="main-table">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">   
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @if (count($wishlists) == 0)
+                                <h3 class="text-center">{{ __('NO WISHLIST FOUND!') }}</h3>
+                            @else
                                 <div class="table-responsive">
                                     <table id="myTable" class="table table-striped w-100">
                                         <thead>
@@ -63,12 +69,12 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
-                </div>
+                </div>      
             </div>
         </div>
     </div>
-    <!--====== End Dashboard Section ======--> 
+
 @endsection

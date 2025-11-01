@@ -9,7 +9,9 @@ use App\Models\Agent;
 use App\Models\AgentInfo;
 use App\Models\BasicSettings\Basic;
 use App\Models\BasicSettings\MailTemplate;
+use App\Models\Property\PropertyContact;
 use App\Models\Language;
+use App\Models\Property\Wishlist;
 use App\Models\Project\Project;
 use App\Models\Property\Property;
 use App\Rules\MatchEmailRule;
@@ -491,4 +493,42 @@ class AgentController extends Controller
         Session::put('agent_theme_version', $request->agent_theme_version);
         return redirect()->back();
     }
+	
+	//wishlist
+	public function wishlist()
+	{
+		$misc = new MiscellaneousController();
+		$bgImg = $misc->getBreadcrumb();
+		$language = $misc->getLanguage();
+		$information['language'] = $language;
+		$information['pageHeading'] = $misc->getPageHeading($language);
+		
+		$queryResult['language'] = $language;
+		$agent_id = Auth::guard('agent')->user()->id;
+		$wishlists = Wishlist::where('agent_id', $agent_id)->paginate(10);
+		$information['bgImg'] = $bgImg;
+		$information['wishlists'] = $wishlists;
+		
+		//Front side user edit
+		// return view('frontend.user.wishlist', $information);
+		
+		//User Panel edit User
+		return view('agent.wishlist', $information);
+	}
+	
+	public function inquiry()
+	{
+		$misc = new MiscellaneousController();
+		$bgImg = $misc->getBreadcrumb();
+		$language = $misc->getLanguage();
+		$information['language'] = $language;
+		$information['pageHeading'] = $misc->getPageHeading($language);
+		
+		$queryResult['language'] = $language;
+		$agent_id = Auth::guard('agent')->user()->id;
+		$inquiry = PropertyContact::where('inquiry_by_agent', $agent_id)->get();
+		$information['bgImg'] = $bgImg;
+		$information['inquiries'] = $inquiry;
+		return view('agent.inquiry', $information);
+	}
 }

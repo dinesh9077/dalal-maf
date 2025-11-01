@@ -14,7 +14,7 @@
                 <img src="{{ asset('assets/img/' . $websiteInfo->logo) }}" style="width : 170px;">
             </a>
             @endif
-            <div class="mobile-menu-wrapper" s>
+            <div class="mobile-menu-wrapper" >
             </div>
         </div>
     </div>
@@ -87,7 +87,7 @@
 
 								<li class="nav-item {{ $parentActive }}">
 									<a class="nav-link toggle {{ $parentActive }}" href="{{ $href }}">
-										{{ $menuData->text }} <i class="fal fa-plus"></i>
+										{{ $menuData->text }} <i class="fal fa-angle-down"></i>
 									</a>
 									<ul class="menu-dropdown">
 										@foreach ($childMenuDatas as $childMenuData)
@@ -198,7 +198,25 @@
 						@endif
 					</div>
 					
-					 
+					{{-- Wishlist Icon --}}
+					<div class="item position-relative">
+						@if ($authType != 'guest') 
+							 <a 
+								href="{{ 
+									$authType === 'user' 
+										? route('user.wishlist') 
+										: ($authType === 'agent' 
+											? route('vendor.wishlist') 
+											: route('vendor.wishlist')) 
+								}}" 
+								class="btn-wishlist-header position-relative" 
+								title="{{ __('My Wishlist') }}"
+							>
+								<i class="fas fa-heart text-danger"></i>
+								<span class="wishlist-count-html">0</span>
+							</a>
+						@endif
+					</div>
 				</div>
 
 				{{-- Small CSS for better UI --}}

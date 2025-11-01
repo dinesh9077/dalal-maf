@@ -241,6 +241,9 @@
 
 			if ($type === 'vendor') {
 				$query->where('vendor_id', $user_id);
+			}
+			elseif ($type === 'agent') {
+				$query->where('agent_id', $user_id);
 			} else {
 				$query->where('user_id', $user_id);
 			}
