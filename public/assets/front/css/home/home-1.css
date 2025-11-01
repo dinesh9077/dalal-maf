@@ -270,12 +270,25 @@
   padding: 0px 0px 0px 0px;
 }
 
-@media(max-width : 576px){
+@media(max-width : 1400px){
   .new-my-div{
-  padding: 0px 0px 0px 25px;
+  padding: 0px 110px;
 }
 }
 
+
+
+@media(max-width : 1200px){
+  .new-my-div{
+  padding: auto;
+}
+}
+
+@media(max-width : 767px){
+  .new-my-div{
+  padding: 0px 50px;
+}
+}
 
 
 .home-hero-inq-btn{
@@ -302,5 +315,20 @@
 .new-banner-filters-width{
   width: 80% !important;
   margin: auto;
+}
+}
+
+.vs-new-set-btn{
+
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+@media(max-width : 991px){
+  
+.vs-new-set-btn{
+
+  position: static;
+
 }
 }
