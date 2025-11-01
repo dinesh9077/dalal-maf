@@ -145,7 +145,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group mb-20">
                                                 <select aria-label="#" name="type" class="form-control select2 type"
-                                                    id="type1">
+                                                    id="type_sale">
                                                     <option selected disabled>{{ __('Select Property') }}</option>
                                                     <option selected value="all">{{ __('All') }}</option>
                                                     <option value="residential">{{ __('Residential') }}</option>
@@ -157,7 +157,7 @@
                                         <div class="  col-sm-6">
                                             <div class="form-group mb-20">
                                                 <select aria-label="#" class="form-control select2 bringCategory"
-                                                    id="category1" name="category">
+                                                    id="category_sale" name="category">
                                                     <option selected disabled>{{ __('Select Category') }}</option>
                                                     <option value="all">{{ __('All') }}</option>
                                                     @foreach ($all_proeprty_categories as $category)

@@ -65,7 +65,7 @@
                 @endphp
                 <div class="col-lg col-md-3 col-sm-12">
                     <div class="footer-widget">
-                        <h4>{{ __('Solutions') }}</h4>
+                        <h4>{{ __('Legal & Compliance') }}</h4>
                         <ul class="footer-links">
                             <li>
                                 <a
@@ -113,7 +113,7 @@
                             @if (!empty($basicInfo->email_address))
                             <li>
 
-                                <h1 class="my-2 mew-lines-add">Existing Clients</h1>
+                                <h1 class="my-2 mew-lines-add">Support Email</h1>
                                 <a
                                     href="mailto:{{ $basicInfo->email_address }}">{{ $basicInfo->email_address }}</a>
                             </li>
@@ -123,11 +123,14 @@
                 </div>
                 <div class="col-lg col-md-6 col-sm-12">
                     <div class="footer-widget">
-                        <h4>{{ __('Join our Community') }}</h4>
-                        <div class="footer-right-logo sub-sec">
-                            <input type="text" name="" placeholder="Enter Your mail ">
-                            <button class="sub-btn">Subscribe</button>
-                        </div>
+                      <div class="app-logos" style="display : flex; gap: 15px;">
+                        <a href="https://play.google.com/store" target="_blank">
+                            <img src="{{ asset('assets/front/images/acrs-imag/playstore (1).png') }}" alt="playstore">
+                        </a>
+                        <a href="https://play.google.com/store" target="_blank">
+                            <img src="{{ asset('assets/front/images/acrs-imag/appstore.png') }}" alt="appstore" style="    height: 45px;">
+                        </a>
+                    </div>
                     </div>
                     <div class="social-links mx-2">
                         <h1 class="SL-links-title">keep in touch</h1>
@@ -143,18 +146,7 @@
 
                 </div>
             </div>
-            <div class="row mt-4">
-                <div class="col-lg-12 col-md-4 col-sm-12 new-footer-appy">
-                    <div class="app-logos mt-4" style="display : flex; gap: 15px;">
-                        <a href="https://play.google.com/store" target="_blank">
-                            <img src="{{ asset('assets/front/images/acrs-imag/playstore (1).png') }}" alt="playstore">
-                        </a>
-                        <a href="https://play.google.com/store" target="_blank">
-                            <img src="{{ asset('assets/front/images/acrs-imag/appstore.png') }}" alt="appstore" style="    height: 45px;">
-                        </a>
-                    </div>
-                </div>
-            </div>
+        
         </div>
     </div>
     <div class="copy-right-area ">
