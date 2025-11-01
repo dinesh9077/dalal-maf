@@ -511,53 +511,55 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 	</div>
 </section>
  
-<section class="product-area featured-product pt-100 pb-70">
-	<div class="container-fulid">
-		<div class="row">
-			<div class="container">
-				<div class="col-12">
-					<div class="section-title text-center mb-40 new-titles" data-aos="fade-up">
-						<h2 class="title" style="text-align : center;">Featured Properties</h2>
-						<p class="mt-4">Handpicked and premium listings showcased for you. Explore top-rated homes, offices, and commercial spaces that stand out.</p>
-					</div>
-				</div>
-			</div>
-			
-			<div class="row align-items-stretch">
-				<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 d-flex" style="margin-bottom : 20px; " data-aos="fade-up">
-					<div class="custom-card w-100">
-						<img src="{{ asset('assets/front/images/new-images/citykrugy-about.png') }}" alt="citykrugy-about">
-						<h3 class="card-title"> Featured Properties In Surat</h3>
-						<p class="card-text">
-							We are Surat’s most trusted and best-selling real estate agency, specializing in luxury residences, premium commercial spaces, and profitable investment properties. With years of expertise, a wide property portfolio, and strong market knowledge, we’ve helped countless families and investors find exactly what they’re looking for.
-						</p>
-						<a href="{{ route('frontend.properties.featured.all') }}" class="vs-btn" style="padding: 10px 20px;">View All</a>
-						
-					</div>
-				</div>
-				<div class="col-xl-9 col-lg-8 col-md-6 col-sm-6 d-flex new-my-div" style="position: relative;" data-aos="fade-up">
-					<div class="swiper product-slider w-100">
-						<div class="swiper-wrapper">
-							@forelse ($featured_properties as $property)
-							<div class="swiper-slide">
-								<x-property :property="$property" />
-							</div>
-							@empty
-							<div class="p-3 text-center mb-30 w-100">
-								<h3 class="mb-0">{{ __('No Featured Property Found') }}</h3>
-							</div>
-							@endforelse
+@if($featured_properties->isNotEmpty()) 
+	<section class="product-area featured-product pt-100 pb-70">
+		<div class="container-fulid">
+			<div class="row">
+				<div class="container">
+					<div class="col-12">
+						<div class="section-title text-center mb-40 new-titles" data-aos="fade-up">
+							<h2 class="title" style="text-align : center;">Featured Properties</h2>
+							<p class="mt-4">Handpicked and premium listings showcased for you. Explore top-rated homes, offices, and commercial spaces that stand out.</p>
 						</div>
-						<div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
 					</div>
-					
-					<div class="swiper-button-prev first-left custom-swiper-btn"></div>
-					<div class="swiper-button-next first-right custom-swiper-btn"></div>
+				</div>
+				
+				<div class="row align-items-stretch">
+					<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 d-flex" style="margin-bottom : 20px; " data-aos="fade-up">
+						<div class="custom-card w-100">
+							<img src="{{ asset('assets/front/images/new-images/citykrugy-about.png') }}" alt="citykrugy-about">
+							<h3 class="card-title"> Featured Properties In Surat</h3>
+							<p class="card-text">
+								We are Surat’s most trusted and best-selling real estate agency, specializing in luxury residences, premium commercial spaces, and profitable investment properties. With years of expertise, a wide property portfolio, and strong market knowledge, we’ve helped countless families and investors find exactly what they’re looking for.
+							</p>
+							<a href="{{ route('frontend.properties.featured.all') }}" class="vs-btn" style="padding: 10px 20px;">View All</a>
+							
+						</div>
+					</div>
+					<div class="col-xl-9 col-lg-8 col-md-6 col-sm-6 d-flex new-my-div" style="position: relative;" data-aos="fade-up">
+						<div class="swiper product-slider w-100">
+							<div class="swiper-wrapper">
+								@forelse ($featured_properties as $property)
+								<div class="swiper-slide">
+									<x-property :property="$property" />
+								</div>
+								@empty
+								<div class="p-3 text-center mb-30 w-100">
+									<h3 class="mb-0">{{ __('No Featured Property Found') }}</h3>
+								</div>
+								@endforelse
+							</div>
+							<div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
+						</div>
+						
+						<div class="swiper-button-prev first-left custom-swiper-btn"></div>
+						<div class="swiper-button-next first-right custom-swiper-btn"></div>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</section> 
+	</section> 
+@endif
 
 @if($hotProperties->isNotEmpty())
 	<section class="product-area featured-product pt-100 pb-70">
