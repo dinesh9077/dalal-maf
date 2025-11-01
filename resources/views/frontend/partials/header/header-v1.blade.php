@@ -14,7 +14,7 @@
                 <img src="{{ asset('assets/img/' . $websiteInfo->logo) }}" style="width : 170px;">
             </a>
             @endif
-            <div class="mobile-menu-wrapper" s>
+            <div class="mobile-menu-wrapper" >
             </div>
         </div>
     </div>
@@ -87,7 +87,7 @@
 
 								<li class="nav-item {{ $parentActive }}">
 									<a class="nav-link toggle {{ $parentActive }}" href="{{ $href }}">
-										{{ $menuData->text }} <i class="fal fa-plus"></i>
+										{{ $menuData->text }} <i class="fal fa-angle-down"></i>
 									</a>
 									<ul class="menu-dropdown">
 										@foreach ($childMenuDatas as $childMenuData)

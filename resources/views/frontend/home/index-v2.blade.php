@@ -154,9 +154,9 @@
                                         </div>
                                         <div class="grid-item">
                                             <div class="form-group">
-                                                <label for="type1" class="icon-end">{{ __('Property Type') }}</label>
+                                                <label for="type_sale" class="icon-end">{{ __('Property Type') }}</label>
                                                 <select aria-label="#" name="type" class="form-control select2 type"
-                                                    id="type1">
+                                                    id="type_sale">
                                                     <option selected disabled value="">{{ __('Select Property') }}
                                                     </option>
                                                     <option value="all">{{ __('All') }}</option>
@@ -168,9 +168,9 @@
                                         </div>
                                         <div class="grid-item">
                                             <div class="form-group">
-                                                <label for="category1" class="icon-end">{{ __('Categories') }}</label>
+                                                <label for="category_sale" class="icon-end">{{ __('Categories') }}</label>
                                                 <select aria-label="#" class="form-control select2 bringCategory"
-                                                    id="category1" name="category">
+                                                    id="category_sale" name="category">
                                                     <option selected disabled value="">{{ __('Select Category') }}
                                                     </option>
                                                     <option value="all">{{ __('All') }}</option>
