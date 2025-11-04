@@ -123,11 +123,11 @@
 			->orderBy('serial_number', 'asc')
 			->get();
 			
-			$allCities = City::where('status', 1)->with(['cityContent' => function ($q) use ($language) {
+			/* $allCities = City::where('status', 1)->with(['cityContent' => function ($q) use ($language) {
 				$q->where('language_id', $language->id);
 			}])->get();
 			
-			$queryResult['all_cities'] = $allCities; 
+			$queryResult['all_cities'] = $allCities;  */
 			/* $queryResult['all_states'] = State::with(['stateContent' => function ($q) use ($language) {
 				$q->where('language_id', $language->id);
 			}])->get();

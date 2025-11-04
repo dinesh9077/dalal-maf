@@ -261,32 +261,21 @@ $version = $basicInfo->theme_version;
 
                             </div>
                         </div>
-                    </div>
-
-                    @endforeach
-
-
-
-                </div>
-
-
-
+                    </div> 
+                    @endforeach 
+                </div> 
 
                 <div class="pagination mb-30 justify-content-center">
-                    {{ $vendors->links() }}
-
-                </div>
-
+                    {{ $vendors->links() }} 
+                </div> 
             </div>
             <!-- <div class="col-lg-3 mt-4">
                 <aside class="sidebar-widget-area" data-aos="fade-up">
                     <div class="widget widget-form radius-md mb-30">
                         <form action="{{ route('frontend.vendors') }}" method="GET">
                             <h3 class="title mb-20">{{ __('Find Vendor') }}</h3>
-                            <div class="form-group mb-20">
-
-                                <input type="text" name="name" value="{{ request()->input('name') }}"
-                                    class="form-control " placeholder="{{ __('Vendor name/username') }}">
+                            <div class="form-group mb-20"> 
+                                <input type="text" name="name" value="{{ request()->input('name') }}" class="form-control " placeholder="{{ __('Vendor name/username') }}">
                             </div>
                             <div class="form-group mb-20">
                                 <select class="nice-select" aria-label="#" id="type" name="type">
@@ -300,9 +289,7 @@ $version = $basicInfo->theme_version;
                                     <option value="commercial"
                                         {{ request()->input('type') == 'commercial' ? 'selected' : '' }}>
                                         {{ __('Commercial') }}
-                                    </option>
-
-
+                                    </option> 
                                 </select>
                             </div>
                             <div class="form-group mb-20">

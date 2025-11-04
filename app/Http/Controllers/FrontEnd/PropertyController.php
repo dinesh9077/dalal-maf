@@ -38,8 +38,7 @@ use View;
 class PropertyController extends Controller
 {
     public function index(Request $request)
-    {
-
+    { 
         $misc = new MiscellaneousController();
         $language = $misc->getLanguage();
         $information['seoInfo'] = $language->seoInfo()->select('meta_keyword_properties', 'meta_description_properties')->first();
@@ -53,8 +52,7 @@ class PropertyController extends Controller
                 $q->where('language_id', $language->id);
             }, 'properties'])->where('status', 1)->get();
         }
-
-
+ 
         $information['bgImg'] = $misc->getBreadcrumb();
         $information['pageHeading'] = $misc->getPageHeading($language);
         $information['amenities'] = Amenity::where('status', 1)->with(['amenityContent' => function ($q) use ($language) {

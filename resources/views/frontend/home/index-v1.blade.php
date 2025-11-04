@@ -92,497 +92,206 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 		
         <!-- <img src="{{ asset('assets/front/images/acrs-imag/HOUSE-1.png') }}" class="home-hero-imahes-new" alt=""> -->
 		
-        <div class="banner-filter-form new-banner-filters-width" data-aos="fade-up">
-			
-            <div class="tab-content form-wrapper">
-                <div style="
-				border-bottom: 1px solid #dcdcdc;">
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#buy"
-							type="button">{{ __('Buy') }}</button>
+        @php
+		$tabs = [
+		'buy' => 'Buy',
+		'sale' => 'Sale',
+		'rent' => 'Rent',
+		'lease' => 'Lease',
+		];
+		@endphp
+		
+		<div class="banner-filter-form new-banner-filters-width" data-aos="fade-up">
+			<div class="tab-content form-wrapper">
+				
+				{{-- Tabs --}}
+				<div style="border-bottom: 1px solid #dcdcdc;">
+					<ul class="nav nav-tabs">
+						@foreach($tabs as $key => $label)
+						<li class="nav-item">
+							<button class="nav-link {{ $loop->first ? 'active' : '' }}"
+							data-bs-toggle="tab"
+							data-bs-target="#{{ $key }}"
+							type="button">{{ __($label) }}</button>
 						</li>
-                        <li class="nav-item">
-                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#sale"
-							type="button">{{ __('Sale') }}</button>
-						</li>
-                        <li class="nav-item">
-                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#rent"
-							type="button">{{ __('Rent') }}</button>
-						</li>
-						
-                        <li class="nav-item">
-                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#lease"
-							type="button">{{ __('Lease') }}</button>
-						</li>
+						@endforeach
 					</ul>
-					
 				</div>
 				
+				{{-- Common Hidden Fields --}}
+				<input type="hidden" value="{{ $min }}" id="min">
+				<input type="hidden" value="{{ $max }}" id="max">
+				<input type="hidden" id="currency_symbol" value="{{ $basicInfo->base_currency_symbol }}">
+				<input class="form-control" type="hidden" value="{{ $min }}" id="o_min">
+				<input class="form-control" type="hidden" value="{{ $max }}" id="o_max">
 				
-                <input type="hidden" value="{{ $min }}" id="min">
-                <input type="hidden" value="{{ $max }}" id="max">
-				
-                <input type="hidden" id="currency_symbol" value="{{ $basicInfo->base_currency_symbol }}">
-                <input class="form-control" type="hidden" value="{{ $min }}" id="o_min">
-                <input class="form-control" type="hidden" value="{{ $max }}" id="o_max">
-				
-                <div class="tab-pane fade mt-3 active show" id="buy">
-                    <form action="{{ route('frontend.properties') }}" method="get">
-                        <input type="hidden" name="purposre" value="rent">
-                        <input type="hidden" name="min" value="{{ $min }}" id="min1">
-                        <input type="hidden" name="max" value="{{ $max }}" id="max1">
-                        <div class="grid">
-                            <div class="grid-item home-des-border">
-                                <div class="form-group">
-                                    <label for="search1">{{ __('Location') }}</label>
-                                    <input type="text" id="search1" name="listArea" class="form-control searchBar"
-									placeholder="{{ __('Enter Location') }}" style="box-shadow : none;">
-								</div>
-							</div>
-                            <div class="grid-item home-des-border">
-                                <div class="form-group">
-                                    <label for="type" class="icon-end">City</label>
-                                    <select name="city" class="form-control select2" id="city">
-                                        <option value="">Select City
-										</option>
-										@foreach ($cities as $city)
-											<option value="{{ $city->name }}">{{ $city->name }}</option> 
-										@endforeach
-									</select>
-								</div>
-							</div>
-                            <div class="grid-item home-des-border">
-                                <div class="form-group">
-                                    <label for="type" class="icon-end">{{ __('Property Type') }}</label>
-                                    <select aria-label="#" name="type" class="form-control select2 type"
-									id="type">
-                                        <option selected disabled value="">{{ __('Select Property') }}
-										</option>
-                                        <option value="all">{{ __('All') }}</option>
-                                        <option value="residential">{{ __('Residential') }}</option>
-                                        <option value="commercial">{{ __('Commercial') }}</option>
-                                        <option value="industrial">{{ __('Industrial') }}</option>
-									</select>
-								</div>
-							</div>
-                            <div class="grid-item home-des-border">
-                                <div class="form-group">
-                                    <label for="category" class="icon-end">{{ __('Categories') }}</label>
-                                    <select aria-label="#" class="form-control select2 bringCategory"
-									id="category" name="category">
-                                        <option selected disabled value="">{{ __('Select Category') }}
-										</option>
-                                        <option value="all">{{ __('All') }}</option>
-                                        @foreach ($all_proeprty_categories as $category)
-                                        <option value="{{ @$category->categoryContent->slug }}">
-                                            {{ @$category->categoryContent->name }}
-										</option>
-                                        @endforeach
-										
-									</select>
-								</div>
-							</div>
-                            <div class="grid-item home-des-border">
-                                <label class="price-value">{{ __('Price') }}: <br>
-                                    <span data-range-value="filterPriceSliderValue" style="margin-top : 10px;">{{ symbolPrice($min) }}
-                                        -
-									{{ symbolPrice($max) }}</span>
-								</label>
-                                <div data-range-slider="filterPriceSlider"></div>
-							</div>
-                            <div class="">
-                                <button type="submit"
-								class="btn btn-primary bg-secondary icon-start new-search-btn"
-								style="background-color: #6c603c !important;">
-                                    <img src="{{ asset('assets/front/images/new-images/search.png') }}" alt="Search" class="new-icons-search">
-								</button>
-                                <!-- ==== P -->
-                                <!-- <button type="submit"
-									class="btn btn-lg btn-primary bg-secondary icon-start w-100">
-									{{ __('Search') }}
-								</button> -->
-							</div>
-						</div>
-					</form>
-				</div>
-                <div class="tab-pane fade mt-3" id="sale">
-                    <form action="{{ route('frontend.properties') }}" method="get">
-                        <input type="hidden" name="purposre" value="sale">
-                        <input type="hidden" name="min" value="{{ $min }}" id="min2">
-                        <input type="hidden" name="max" value="{{ $max }}" id="max2">
-                        <div class="grid">
-                            <div class="grid-item home-des-border">
-                                <div class="form-group">
-                                    <label for="search1">{{ __('Location') }}</label>
-                                    <input type="text" id="search1" name="location"
-									class="form-control searchBar" placeholder="{{ __('Enter Location') }}">
-								</div>
-							</div>
-							
-                            <div class="grid-item home-des-border">
-                                <div class="form-group">
-                                    <label for="type" class="icon-end">City</label>
-                                    <select aria-label="#" name="type" class="form-control select2 type select2-hidden-accessible" id="type" data-select2-id="select2-data-type" tabindex="-1" aria-hidden="true">
-                                        <option selected="" disabled="" value="" data-select2-id="select2-data-2-00xq">Select City
-										</option>
-                                        <option value="all" data-select2-id="select2-data-21-5nn2">All</option>
-                                        <option value="residential" data-select2-id="select2-data-22-xtxj">Surat</option>
-                                        <option value="commercial" data-select2-id="select2-data-23-xppr">Ahmedabad</option>
-                                        <option value="industrial" data-select2-id="select2-data-24-6p4y">Baroda</option>
-									</select>
-								</div>
-							</div>
-							
-							
-                            <div class="grid-item home-des-border">
-                                <div class="form-group">
-                                    <label for="type_sale" class="icon-end">{{ __('Property Type') }}</label>
-                                    <select aria-label="#" name="type" class="form-control select2 type"
-									id="type_sale">
-                                        <option selected disabled value="">{{ __('Select Property') }}
-										</option>
-                                        <option value="all">{{ __('All') }}</option>
-                                        <option value="residential">{{ __('Residential') }}</option>
-                                        <option value="commercial">{{ __('Commercial') }}</option>
-                                        <option value="industrial">{{ __('Industrial') }}</option>
-										
-									</select>
-								</div>
-							</div>
-                            <div class="grid-item home-des-border">
-                                <div class="form-group">
-                                    <label for="category_sale" class="icon-end">{{ __('Categories') }}</label>
-                                    <select aria-label="#" class="form-control select2 bringCategory"
-									id="category_sale" name="category">
-                                        <option selected disabled value="">{{ __('Select Category') }}
-										</option>
-                                        <option value="all">{{ __('All') }}</option>
-                                        @foreach ($all_proeprty_categories as $category)
-                                        <option value="{{ @$category->categoryContent->slug }}">
-                                            {{ @$category->categoryContent->name }}
-										</option>
-                                        @endforeach
-										
-									</select>
-								</div>
-							</div>
-							
-                            {{-- <div class="grid-item home-des-border city">
-                                <div class="form-group">
-                                    <label for="city1" class="icon-end">{{ __('City') }}</label>
-									<select aria-label="#" name="city"
-									class="form-control select2 city_id" id="city1">
-										<option selected disabled value="">{{ __('Select City') }}
-										</option>
-										<option value="all">{{ __('All') }}</option>
-										
-										@foreach ($all_cities as $city)
-										<option data-id="{{ $city->id }}"
-										value="{{ @$city->cityContent->name }}">
-											{{ @$city->cityContent->name }}
-										</option>
-										@endforeach
-										
-									</select>
-								</div>
-							</div> --}}
+				{{-- Tab Content --}}
+				@foreach($tabs as $key => $label)
+				<div class="tab-pane fade mt-3 {{ $loop->first ? 'active show' : '' }}" id="{{ $key }}">
+					<form action="{{ route('frontend.properties') }}" method="get" id="{{ $key }}Form">
+						<input type="hidden" name="purpose" value="{{ strtolower($label) }}">
+						<input type="hidden" name="min" value="{{ $min }}" id="min_{{ $key }}">
+						<input type="hidden" name="max" value="{{ $max }}" id="max_{{ $key }}">
+						
+						<div class="grid">
+							{{-- Location --}}
 							<div class="grid-item home-des-border">
-								<label class="price-value">{{ __('Price') }}: <br>
-									<span data-range-value="filterPriceSlider2Value">{{ symbolPrice($min) }}
-										-
-									{{ symbolPrice($max) }}</span>
-								</label>
-								<div data-range-slider="filterPriceSlider2"></div>
+								<div class="form-group">
+									<label for="search_{{ $key }}">{{ __('Location') }}</label>
+									<input type="text"
+									id="search_{{ $key }}"
+									name="location"
+									class="form-control searchBar"
+									placeholder="{{ __('Enter Location') }}"
+									style="box-shadow: none;">
+								</div>
 							</div>
-							<div class="">
+							
+							{{-- City --}}
+							<div class="grid-item home-des-border">
+								<div class="form-group">
+									<label for="city_{{ $key }}" class="icon-end">City</label>
+									<select name="city"
+									id="city_{{ $key }}"
+									class="form-control select2">
+										<option value="">{{ __('Select City') }}</option>
+										@foreach ($cities as $city)
+										<option value="{{ $city->name }}">{{ $city->name }}</option>
+										@endforeach
+									</select>
+								</div>
+							</div>
+							
+							{{-- Property Type --}}
+							<div class="grid-item home-des-border">
+								<div class="form-group">
+									<label for="type_{{ $key }}" class="icon-end">{{ __('Property Type') }}</label>
+									<select name="type"
+									id="type_{{ $key }}"
+									class="form-control select2">
+										<option selected disabled value="">{{ __('Select Property') }}</option>
+										<option value="all">{{ __('All') }}</option>
+										<option value="residential">{{ __('Residential') }}</option>
+										<option value="commercial">{{ __('Commercial') }}</option>
+										<option value="industrial">{{ __('Industrial') }}</option>
+									</select>
+								</div>
+							</div>
+							
+							{{-- Categories --}}
+							<div class="grid-item home-des-border">
+								<div class="form-group">
+									<label for="category_{{ $key }}" class="icon-end">{{ __('Categories') }}</label>
+									<select name="category"
+									id="category_{{ $key }}"
+									class="form-control select2 bringCategory">
+										<option selected disabled value="">{{ __('Select Category') }}</option>
+										<option value="all">{{ __('All') }}</option>
+										@foreach ($all_proeprty_categories as $category)
+										<option value="{{ @$category->categoryContent->slug }}">
+											{{ @$category->categoryContent->name }}
+										</option>
+										@endforeach
+									</select>
+								</div>
+							</div>
+							
+							{{-- Price Slider --}}
+							<div class="grid-item home-des-border">
+								<label class="price-value">{{ __('Price') }}:<br>
+									<span data-range-value="filterPriceSlider_{{ $key }}_value">
+										{{ symbolPrice($min) }} - {{ symbolPrice($max) }}
+									</span>
+								</label>
+								
+								<div data-range-slider="filterPriceSlider_{{ $key }}"></div>
+							</div>
+							
+							{{-- Submit Button --}}
+							<div>
 								<button type="submit"
 								class="btn btn-primary bg-secondary icon-start new-search-btn"
 								style="background-color:#6c603c !important;">
-									<img src="{{ asset('assets/front/images/new-images/search.png') }}" alt="Search" class="new-icons-search">
+									<img src="{{ asset('assets/front/images/new-images/search.png') }}"
+									alt="Search" class="new-icons-search">
 								</button>
 							</div>
 						</div>
 					</form>
 				</div>
-				<div class="tab-pane fade mt-3" id="rent">
-					<form action="{{ route('frontend.properties') }}" method="get">
-						<input type="hidden" name="purposre" value="sale">
-						<input type="hidden" name="min" value="{{ $min }}" id="min2">
-						<input type="hidden" name="max" value="{{ $max }}" id="max2">
-						<div class="grid">
-							<div class="grid-item home-des-border">
-								<div class="form-group">
-									<label for="search1">{{ __('Location') }}</label>
-									<input type="text" id="search1" name="location"
-									class="form-control searchBar" placeholder="{{ __('Enter Location') }}">
-								</div>
-							</div>
-							
-							
-							<div class="grid-item home-des-border">
-								<div class="form-group">
-									<label for="type" class="icon-end">City</label>
-									<select aria-label="#" name="type" class="form-control select2 type select2-hidden-accessible" id="type" data-select2-id="select2-data-type" tabindex="-1" aria-hidden="true">
-										<option selected="" disabled="" value="" data-select2-id="select2-data-2-00xq">Select City
-										</option>
-										<option value="all" data-select2-id="select2-data-21-5nn2">All</option>
-										<option value="residential" data-select2-id="select2-data-22-xtxj">Surat</option>
-										<option value="commercial" data-select2-id="select2-data-23-xppr">Ahmedabad</option>
-										<option value="industrial" data-select2-id="select2-data-24-6p4y">Baroda</option>
-									</select>
-								</div>
-							</div>
-							
-							
-							<div class="grid-item home-des-border">
-								<div class="form-group">
-									<label for="type_rent" class="icon-end">{{ __('Property Type') }}</label>
-									<select aria-label="#" name="type" class="form-control select2 type"
-									id="type_rent">
-										<option selected disabled value="">{{ __('Select Property') }}
-										</option>
-										<option value="all">{{ __('All') }}</option>
-										<option value="residential">{{ __('Residential') }}</option>
-										<option value="commercial">{{ __('Commercial') }}</option>
-										<option value="industrial">{{ __('Industrial') }}</option>
-										
-									</select>
-								</div>
-							</div>
-							<div class="grid-item home-des-border">
-								<div class="form-group">
-									<label for="category_rent" class="icon-end">{{ __('Categories') }}</label>
-									<select aria-label="#" class="form-control select2 bringCategory"
-									id="category_rent" name="category">
-										<option selected disabled value="">{{ __('Select Category') }}
-										</option>
-										<option value="all">{{ __('All') }}</option>
-										@foreach ($all_proeprty_categories as $category)
-										<option value="{{ @$category->categoryContent->slug }}">
-											{{ @$category->categoryContent->name }}
-										</option>
-										@endforeach
-										
-									</select>
-								</div>
-							</div>
-							
-							{{-- <div class="grid-item home-des-border city">
-                                <div class="form-group">
-                                    <label for="city1" class="icon-end">{{ __('City') }}</label>
-									<select aria-label="#" name="city"
-									class="form-control select2 city_id" id="city1">
-										<option selected disabled value="">{{ __('Select City') }}
-										</option>
-										<option value="all">{{ __('All') }}</option>
-										
-										@foreach ($all_cities as $city)
-										<option data-id="{{ $city->id }}"
-										value="{{ @$city->cityContent->name }}">
-											{{ @$city->cityContent->name }}
-										</option>
-										@endforeach
-										
-									</select>
-								</div>
-							</div> --}}
-							<div class="grid-item home-des-border">
-								<label class="price-value">{{ __('Price') }}: <br>
-									<span data-range-value="filterPriceSlider2Value">{{ symbolPrice($min) }}
-										-
-									{{ symbolPrice($max) }}</span>
-								</label>
-								<div data-range-slider="filterPriceSlider2"></div>
-							</div>
-							<div class="">
-								<button type="submit"
-								class="btn btn-primary bg-secondary icon-start new-search-btn"
-								style="background-color:#6c603c  !important;">
-									<img src="{{ asset('assets/front/images/new-images/search.png') }}" alt="Search" class="new-icons-search">
-								</button>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="tab-pane fade mt-3" id="lease">
-					<form action="{{ route('frontend.properties') }}" method="get">
-						<input type="hidden" name="purposre" value="sale">
-						<input type="hidden" name="min" value="{{ $min }}" id="min2">
-						<input type="hidden" name="max" value="{{ $max }}" id="max2">
-						<div class="grid">
-							<div class="grid-item home-des-border">
-								<div class="form-group">
-									<label for="search1">{{ __('Location') }}</label>
-									<input type="text" id="search1" name="location"
-									class="form-control searchBar" placeholder="{{ __('Enter Location') }}">
-								</div>
-							</div>
-							
-							<div class="grid-item home-des-border">
-								<div class="form-group">
-									<label for="type" class="icon-end">City</label>
-									<select aria-label="#" name="type" class="form-control select2 type select2-hidden-accessible" id="type" data-select2-id="select2-data-type" tabindex="-1" aria-hidden="true">
-										<option selected="" disabled="" value="" data-select2-id="select2-data-2-00xq">Select City
-										</option>
-										<option value="all" data-select2-id="select2-data-21-5nn2">All</option>
-										<option value="residential" data-select2-id="select2-data-22-xtxj">Surat</option>
-										<option value="commercial" data-select2-id="select2-data-23-xppr">Ahmedabad</option>
-										<option value="industrial" data-select2-id="select2-data-24-6p4y">Baroda</option>
-									</select>
-								</div>
-							</div>
-							
-							
-							<div class="grid-item home-des-border">
-								<div class="form-group">
-									<label for="type_lease" class="icon-end">{{ __('Property Type') }}</label>
-									<select aria-label="#" name="type" class="form-control select2 type"
-									id="type_lease">
-										<option selected disabled value="">{{ __('Select Property') }}
-										</option>
-										<option value="all">{{ __('All') }}</option>
-										<option value="residential">{{ __('Residential') }}</option>
-										<option value="commercial">{{ __('Commercial') }}</option>
-										<option value="industrial">{{ __('Industrial') }}</option>
-										
-									</select>
-								</div>
-							</div>
-							<div class="grid-item home-des-border">
-								<div class="form-group">
-									<label for="category_lease" class="icon-end">{{ __('Categories') }}</label>
-									<select aria-label="#" class="form-control select2 bringCategory"
-									id="category_lease" name="category">
-										<option selected disabled value="">{{ __('Select Category') }}
-										</option>
-										<option value="all">{{ __('All') }}</option>
-										@foreach ($all_proeprty_categories as $category)
-										<option value="{{ @$category->categoryContent->slug }}">
-											{{ @$category->categoryContent->name }}
-										</option>
-										@endforeach
-									</select>
-								</div>
-							</div>
-							
-							{{-- <div class="grid-item home-des-border city">
-                                <div class="form-group">
-                                    <label for="city1" class="icon-end">{{ __('City') }}</label>
-									<select aria-label="#" name="city"
-									class="form-control select2 city_id" id="city1">
-										<option selected disabled value="">{{ __('Select City') }}
-										</option>
-										<option value="all">{{ __('All') }}</option>
-										
-										@foreach ($all_cities as $city)
-										<option data-id="{{ $city->id }}"
-										value="{{ @$city->cityContent->name }}">
-											{{ @$city->cityContent->name }}
-										</option>
-										@endforeach
-										
-									</select>
-								</div>
-							</div> --}}
-							<div class="grid-item home-des-border">
-								<label class="price-value">{{ __('Price') }}: <br>
-									<span data-range-value="filterPriceSlider2Value">{{ symbolPrice($min) }}
-										-
-									{{ symbolPrice($max) }}</span>
-								</label>
-								<div data-range-slider="filterPriceSlider2"></div>
-							</div>
-							<div class="">
-								<button type="submit"
-								class="btn btn-primary bg-secondary icon-start new-search-btn"
-								style="background-color:#6c603c  !important;">
-									<img src="{{ asset('assets/front/images/new-images/search.png') }}" alt="Search" class="new-icons-search">
-								</button>
-							</div>
-						</div>
-					</form>
-				</div>
-				
+				@endforeach
 			</div>
-		</div>
-		
+		</div> 
 	</div>
 </section>
- 
-@if($featured_properties->isNotEmpty()) 
-	<section class="product-area featured-product pt-100 pb-70">
-		<div class="container-fulid new-padding-des-res">
-			<div class="row">
-				<div class="container" >
-					<div class="col-12">
-						<div class="section-title text-center mb-40 new-titles" data-aos="fade-up"  style="position: relative;">
-							<h2 class="title" style="text-align : center;">Featured Properties</h2>
-							<p class="mt-4">Handpicked and premium listings showcased for you. Explore top-rated homes, offices, and commercial spaces that stand out.</p>
-							<a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn" style="padding: 10px 20px;">View All</a>
 
-						</div>
+@if($featured_properties->isNotEmpty()) 
+<section class="product-area featured-product pt-100 pb-70">
+	<div class="container-fulid new-padding-des-res">
+		<div class="row">
+			<div class="container" >
+				<div class="col-12">
+					<div class="section-title text-center mb-40 new-titles" data-aos="fade-up"  style="position: relative;">
+						<h2 class="title" style="text-align : center;">Featured Properties</h2>
+						<p class="mt-4">Handpicked and premium listings showcased for you. Explore top-rated homes, offices, and commercial spaces that stand out.</p>
+						<a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn" style="padding: 10px 20px;">View All</a> 
 					</div>
 				</div>
-				
-                <div class="container ">
-
-              
-                    <div class="row align-items-stretch new-my-div">
-                        <!-- <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 d-flex" style="margin-bottom : 20px; " data-aos="fade-up">
-                            <div class="custom-card w-100">
-                                <img src="{{ asset('assets/front/images/new-images/citykrugy-about.png') }}" alt="citykrugy-about">
-                                <h3 class="card-title"> Featured Properties In Surat</h3>
-                                <p class="card-text">
-                                    We are Surat’s most trusted and best-selling real estate agency, specializing in luxury residences, premium commercial spaces, and profitable investment properties. With years of expertise, a wide property portfolio, and strong market knowledge, we’ve helped countless families and investors find exactly what they’re looking for.
-                                </p>
-                              
-                                
-                            </div>
-                        </div> -->
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex " style="position: relative;" data-aos="fade-up">
-                            <div class="swiper product-slider w-100">
-                                <div class="swiper-wrapper">
-                                    @forelse ($featured_properties as $property)
-                                    <div class="swiper-slide">
-                                        <x-property :property="$property" />
-                                    </div>
-                                    @empty
-                                    <div class="p-3 text-center mb-30 w-100">
-                                        <h3 class="mb-0">{{ __('No Featured Property Found') }}</h3>
-                                    </div>
-                                    @endforelse
-                                </div>
-                                <div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
-                            </div>
-                            
-                            <div class="swiper-button-prev first-left custom-swiper-btn"></div>
-                            <div class="swiper-button-next first-right custom-swiper-btn"></div>
-                        </div>
-                    </div>
-
-                  </div>
+			</div>
+			
+			<div class="container ">  
+				<div class="row align-items-stretch new-my-div">
+					<!-- <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 d-flex" style="margin-bottom : 20px; " data-aos="fade-up">
+						<div class="custom-card w-100">
+						<img src="{{ asset('assets/front/images/new-images/citykrugy-about.png') }}" alt="citykrugy-about">
+						<h3 class="card-title"> Featured Properties In Surat</h3>
+						<p class="card-text">
+						We are Surat’s most trusted and best-selling real estate agency, specializing in luxury residences, premium commercial spaces, and profitable investment properties. With years of expertise, a wide property portfolio, and strong market knowledge, we’ve helped countless families and investors find exactly what they’re looking for.
+						</p> 
+						</div>
+					</div> -->
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex " style="position: relative;" data-aos="fade-up">
+						<div class="swiper product-slider w-100">
+							<div class="swiper-wrapper">
+								@forelse ($featured_properties as $property)
+								<div class="swiper-slide">
+									<x-property :property="$property" />
+								</div>
+								@empty
+								<div class="p-3 text-center mb-30 w-100">
+									<h3 class="mb-0">{{ __('No Featured Property Found') }}</h3>
+								</div>
+								@endforelse
+							</div>
+							<div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
+						</div> 
+						<div class="swiper-button-prev first-left custom-swiper-btn"></div>
+						<div class="swiper-button-next first-right custom-swiper-btn"></div>
+					</div>
+				</div> 
 			</div>
 		</div>
-	</section> 
+	</div>
+</section> 
 @endif
 
 @if($hotProperties->isNotEmpty())
-	<section class="product-area featured-product pt-100 pb-70">
-		<div class="container-fulid new-padding-des-res">
-			<div class="row">
-				<div class="container">
-					<div class="col-12">
-						<div class="section-title text-center mb-40 new-titles" data-aos="fade-up"  style="position: relative;">
-							<h2 class="title" style="text-align : center;">Hot Properties</h2>
-							<p class="mt-4">Handpicked and premium listings showcased for you. Explore top-rated homes, offices, and commercial spaces that stand out.</p>
-							<a href="{{ url('properties/is_hot/all') }}" class="vs-btn vs-new-set-btn" style="padding: 10px 20px;">View All</a>
-						</div>
+<section class="product-area featured-product pt-100 pb-70">
+	<div class="container-fulid new-padding-des-res">
+		<div class="row">
+			<div class="container" >
+				<div class="col-12">
+					<div class="section-title text-center mb-40 new-titles" data-aos="fade-up"  style="position: relative;">
+						<h2 class="title" style="text-align : center;">Hot Properties</h2>
+						<p class="mt-4">Handpicked and premium listings showcased for you. Explore top-rated homes, offices, and commercial spaces that stand out.</p>
+						<a href="{{ url('properties/is_hot/all') }}" class="vs-btn vs-new-set-btn" style="padding: 10px 20px;">View All</a> 
 					</div>
 				</div>
-				
-				 <div class="row align-items-stretch new-my-div"> 
-					<div class="col-xl-9 col-lg-8 col-md-6 col-sm-6 d-flex new-my-div" style="position: relative;" data-aos="fade-up">
+			</div>
+			
+			<div class="container ">   
+				<div class="row align-items-stretch new-my-div">  
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex " style="position: relative;" data-aos="fade-up">
 						<div class="swiper product-slider w-100">
 							<div class="swiper-wrapper">
 								@forelse ($hotProperties as $property)
@@ -602,27 +311,31 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 						<div class="swiper-button-next first-right custom-swiper-btn"></div>
 					</div>
 				</div>
+				
 			</div>
 		</div>
-	</section>
+	</div>
+</section>  
 @endif
 
 @if($recommendedProperties->isNotEmpty())
-	<section class="product-area featured-product pt-100 pb-70">
-		<div class="container-fulid new-padding-des-res">
-			<div class="row">
-				<div class="container">
-					<div class="col-12">
-						<div class="section-title text-center mb-40 new-titles" data-aos="fade-up"  style="position: relative;">
-							<h2 class="title" style="text-align : center;">Recommended Properties</h2>
-							<p class="mt-4">Handpicked and premium listings showcased for you. Explore top-rated homes, offices, and commercial spaces that stand out.</p>
-							<a href="{{ url('properties/is_recommended/all') }}" class="vs-btn vs-new-set-btn" style="padding: 10px 20px;">View All</a>
-						</div>
+<section class="product-area featured-product pt-100 pb-70">
+	<div class="container-fulid new-padding-des-res">
+		<div class="row">
+			<div class="container" >
+				<div class="col-12">
+					<div class="section-title text-center mb-40 new-titles" data-aos="fade-up"  style="position: relative;">
+						<h2 class="title" style="text-align : center;">Recommended Properties</h2>
+						<p class="mt-4">Handpicked and premium listings showcased for you. Explore top-rated homes, offices, and commercial spaces that stand out.</p>
+						<a href="{{ url('properties/is_recommended/all') }}" class="vs-btn vs-new-set-btn" style="padding: 10px 20px;">View All</a>
+						
 					</div>
 				</div>
-				
-				<div class="row align-items-stretch new-my-div"> 
-					<div class="col-xl-9 col-lg-8 col-md-6 col-sm-6 d-flex new-my-div" style="position: relative;" data-aos="fade-up">
+			</div>
+			
+			<div class="container "> 
+				<div class="row align-items-stretch new-my-div">  
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex " style="position: relative;" data-aos="fade-up">
 						<div class="swiper product-slider w-100">
 							<div class="swiper-wrapper">
 								@forelse ($recommendedProperties as $property)
@@ -636,34 +349,34 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 								@endforelse
 							</div>
 							<div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
-						</div>
-						
+						</div> 
 						<div class="swiper-button-prev first-left custom-swiper-btn"></div>
 						<div class="swiper-button-next first-right custom-swiper-btn"></div>
 					</div>
-				</div>
+				</div> 
 			</div>
 		</div>
-	</section> 
+	</div>
+</section> 
 @endif
 
 @if($fastSellingProperties->isNotEmpty())
-	<section class="product-area featured-product pt-100 pb-70">
-		<div class="container-fulid new-padding-des-res">
-			<div class="row">
-				<div class="container">
-					<div class="col-12">
-						<div class="section-title text-center mb-40 new-titles" data-aos="fade-up"  style="position: relative;">
-							<h2 class="title" style="text-align : center;">Fast Selling Properties</h2>
-							<p class="mt-4">Handpicked and premium listings showcased for you. Explore top-rated homes, offices, and commercial spaces that stand out.</p>
-							<a href="{{ url('properties/is_fast_selling/all') }}" class="vs-btn vs-new-set-btn" style="padding: 10px 20px;">View All</a>
-						</div>
+<section class="product-area featured-product pt-100 pb-70">
+	<div class="container-fulid new-padding-des-res">
+		<div class="row">
+			<div class="container" >
+				<div class="col-12">
+					<div class="section-title text-center mb-40 new-titles" data-aos="fade-up"  style="position: relative;">
+						<h2 class="title" style="text-align : center;">Fast Selling Properties</h2>
+						<p class="mt-4">Handpicked and premium listings showcased for you. Explore top-rated homes, offices, and commercial spaces that stand out.</p>
+						<a href="{{ url('properties/is_fast_selling/all') }}" class="vs-btn vs-new-set-btn" style="padding: 10px 20px;">View All</a>
 					</div>
 				</div>
-				
-				<div class="row align-items-stretch new-my-div">
-					 
-					<div class="col-xl-9 col-lg-8 col-md-6 col-sm-6 d-flex new-my-div" style="position: relative;" data-aos="fade-up">
+			</div>
+			
+			<div class="container "> 
+				<div class="row align-items-stretch new-my-div">  
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex " style="position: relative;" data-aos="fade-up">
 						<div class="swiper product-slider w-100">
 							<div class="swiper-wrapper">
 								@forelse ($fastSellingProperties as $property)
@@ -677,110 +390,66 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 								@endforelse
 							</div>
 							<div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
-						</div>
-						
+						</div> 
 						<div class="swiper-button-prev first-left custom-swiper-btn"></div>
 						<div class="swiper-button-next first-right custom-swiper-btn"></div>
 					</div>
-				</div>
+				</div> 
 			</div>
 		</div>
-	</section> 
+	</div>
+</section> 
 @endif
 
 @if ($secInfo->property_section_status == 1)
-	<section class="product-area popular-product product-1 pt-70 pb-70 relative" style="background : #F8F7F1;">
-		<img src="{{ asset('assets/front/images/new-images/new-primume-properties.png') }}" alt="" class="new-primume-prop-img">
-		<div class="container" style="margin-top: 50px;">
-			<div class="row">
-				<div class="col-12">
-					<div class="section-title text-center mb-40" data-aos="fade-up">
-						<h2 class="title">{{ $propertySecInfo->title }}</h2>
-						<p class="mt-4">Stay updated with the newest property listings. Discover fresh options for buying, selling, or renting in just a few clicks.
-						</p>
-						
-					</div>
+<section class="product-area popular-product product-1 pt-70 pb-70 relative" style="background : #F8F7F1;">
+	<img src="{{ asset('assets/front/images/new-images/new-primume-properties.png') }}" alt="" class="new-primume-prop-img">
+	<div class="container" style="margin-top: 50px;">
+		<div class="row">
+			<div class="col-12">
+				<div class="section-title text-center mb-40" data-aos="fade-up">
+					<h2 class="title">{{ $propertySecInfo->title }}</h2>
+					<p class="mt-4">Stay updated with the newest property listings. Discover fresh options for buying, selling, or renting in just a few clicks.
+					</p>
+					
 				</div>
-				<div class="col-12">
-					<div class="tab-content" data-aos="fade-up">
-						<div class="row new-padding-width-res" style="position: relative;">
-							<!-- Slider wrapper -->
-							<div class="swiper LP-new-slider">
-								<div class="swiper-wrapper">
-									@forelse ($properties as $property)
-										@if($property->property_type == 'partial')
-											<div class="swiper-slide">
-												<x-property :property="$property" class="col-12" />
-											</div>
-										@endif
-									@empty
-										<div class="p-3 text-center mb-30">
-											<h3 class="mb-0">{{ __('No Properties Found') }}</h3>
-										</div>
-									@endforelse
+			</div>
+			<div class="col-12">
+				<div class="tab-content" data-aos="fade-up">
+					<div class="row new-padding-width-res" style="position: relative;">
+						<!-- Slider wrapper -->
+						<div class="swiper LP-new-slider">
+							<div class="swiper-wrapper">
+								@forelse ($properties as $property)
+								@if($property->property_type == 'partial')
+								<div class="swiper-slide">
+									<x-property :property="$property" class="col-12" />
 								</div>
+								@endif
+								@empty
+								<div class="p-3 text-center mb-30">
+									<h3 class="mb-0">{{ __('No Properties Found') }}</h3>
+								</div>
+								@endforelse
 							</div>
-							
-							<!-- Navigation arrows -->
-							<div class="LP-new-left-btn">
-								<img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
-							</div>
-							<div class="LP-new-right-btn">
-								<img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
-							</div>
+						</div>
+						
+						<!-- Navigation arrows -->
+						<div class="LP-new-left-btn">
+							<img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
+						</div>
+						<div class="LP-new-right-btn">
+							<img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</section>
-@endif
-
-
-
-<section class="product-area popular-product product-1 pt-70 pb-70 relative">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="section-title text-center mb-40 aos-init aos-animate" data-aos="fade-up">
-                    <h2 class="title">Verified property </h2>
-                    <p class="mt-4 desss">Explore a diverse collection of verified real estate listings. From residential spaces to commercial investments, find trusted properties that meet your goals with complete peace of mind.
-					</p>
-				</div>
-				
-				
-			</div>
-		</div>
-		
-        <div class="row new-padding-width-res" style="position: relative;">
-            <!-- Slider wrapper -->
-            <div class="swiper verify-f-s-slider">
-                <div class="swiper-wrapper">
-                    @forelse ($business_for_sale as $sale)
-                    <div class="swiper-slide">
-                        <x-property :property="$sale" class="col-12" />
-					</div>
-                    @empty
-                    <div class="p-3 text-center mb-30">
-                        <h3 class="mb-0">{{ __('No Properties Found') }}</h3>
-					</div>
-                    @endforelse
-				</div>
-			</div>
-			
-            <!-- Navigation arrows -->
-            <div class="verify-f-s-left-btn">
-                <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
-			</div>
-            <div class="verify-f-s-right-btn">
-                <img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
-			</div>
-		</div>
-		
-		
 	</div>
 </section>
+@endif
 
+  
 
 <section class="product-area popular-product product-1 pt-70 pb-70 relative">
     <div class="container">
@@ -868,54 +537,54 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 
 <div class="container my-5 upcoming-projects" data-aos="fade-up">
-
+	
     <div class="row">
         <div class="col-12">
             <div class="section-title title-center mb-40" data-aos="fade-up">
                 <h2 class="title">Upcoming Project</h2>
-            </div>
-        </div>
-    </div>
-
+			</div>
+		</div>
+	</div>
+	
     <!-- Slider Wrapper -->
     <div class="up-comming-slide-wrapper mt-4" data-aos="fade-up">
-
+		
         <!-- Left Arrow -->
         <button class="arrow-button-pro arrow-left-pro hidden" id="up-comming-prev">
             <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="Prev">
-        </button>
-
+		</button>
+		
         <!-- Slider -->
         <div class="up-comming-project" style="height: fit-content;">
             @foreach($projects as $project)
             <a href="{{ route('frontend.projects.details', ['slug' => $project->slug]) }}" style="height : auto;">
                 <div class="new-up-cards">
-
+					
                     <img src="{{ asset('assets/img/project/featured/' . $project->featured_image) }}" alt="Project" class="upcoming-projects-img">
-
+					
                     <div class="upcomming-card-body">
                         <h5>{{ $project->title }}</h5>
                         <p class="text-muted">{{ $project->address }}</p>
                         <h6 class="up-price">
                             {{ symbolPrice($project->min_price) }}
                             <small class="text-muted">Starting</small>
-                        </h6>
-                    </div>
-
-                </div>
-
-            </a>
-
+						</h6>
+					</div>
+					
+				</div>
+				
+			</a>
+			
             @endforeach
-        </div>
-
+		</div>
+		
         <!-- Right Arrow -->
         <button class="arrow-button-pro arrow-right-pro hidden" id="up-comming-next">
             <img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="Next">
-        </button>
-    </div>
-
-
+		</button>
+	</div>
+	
+	
 </div>
 
 <section class="city-section">
@@ -1006,105 +675,9 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 					
 				</div>
 			</div>
-		</div>
-		
-		
+		</div>  
 	</div>
-</section>
-
-<!-- @if ($secInfo->counter_section_status == 1)
-	<div class="counter-area pt-100 pb-70">
-	<div class="container">
-	<div class="row gx-xl-5" data-aos="fade-up">
-	@forelse ($counters as $counter)
-	<div class="col-sm-6 col-lg-3">
-	<div class="card mb-30">
-	<div class="d-flex align-items-center justify-content-center mb-10">
-	<div class="card-icon me-2 color-secondary"><i class="{{ $counter->icon }}"></i>
-	</div>
-	<h2 class="m-0 color-secondary"><span class="counter">{{ $counter->amount }}</span>+
-	</h2>
-	</div>
-	<p class="card-text text-center">{{ $counter->title }}</p>
-	</div>
-	</div>
-	@empty
-	<div class="col-12">
-	<h3 class="text-center mt-20"> {{ __('No Counter Information Found') }} </h3>
-	</div>
-	@endforelse
-	</div>
-	</div>
-	</div>
-@endif -->
-
-
-
-<!-- @if ($secInfo->about_section_status == 1)
-	<section class="about-area pb-70 pt-30">
-    <div class="container">
-	<div class="row gx-xl-5">
-	<div class="col-lg-6">
-	<div class="img-content mb-30" data-aos="fade-up">
-	<div class="image">
-	<img class="lazyload blur-up"
-	data-src="{{ asset('assets/img/about_section/' . $aboutImg->about_section_image1) }}">
-	
-	<img class="lazyload blur-up"
-	data-src="{{ asset('assets/img/about_section/' . $aboutImg->about_section_image2) }}">
-	</div>
-	<div class="absolute-text bg-secondary">
-	<div class="center-text">
-	<span class="h2 color-primary">{{ $aboutInfo?->years_of_expricence }}+</span>
-	<span>{{ __('Years') }}</span>
-	</div>
-	<div id="curveText">{{ __('We are highly experience') }}</div>
-	</div>
-	</div>
-	</div>
-	<div class="col-lg-6">
-	<div class="content mb-30" data-aos="fade-up">
-	<div class="content-title">
-	<span class="subtitle"><span class="line"></span>
-	{{ $aboutInfo->title }}</span>
-	<h2>{{ $aboutInfo?->sub_title }}</h2>
-	</div>
-	<div class="text summernote-content">{!! $aboutInfo?->description !!}</div>
-	
-	<div class="d-flex align-items-center flex-wrap gap-15">
-	@if (!empty($aboutInfo->btn_url))
-	<a href="{{ $aboutInfo->btn_url }}"
-	class="btn btn-lg btn-primary bg-secondary">{{ $aboutInfo?->btn_name }}</a>
-	@endif
-	@if (!empty($aboutInfo->client_text))
-	<div class="clients d-flex align-items-center flex-wrap gap-2">
-	<div class="client-img">
-	<img class="lazyload"
-	data-src="  {{ asset('assets/front/images/client/client-1.jpg') }}">
-	<img class="lazyload"
-	data-src="  {{ asset('assets/front/images/client/client-2.jpg') }}">
-	<img class="lazyload"
-	data-src="  {{ asset('assets/front/images/client/client-3.jpg') }}">
-	<img class="lazyload"
-	data-src="  {{ asset('assets/front/images/client/client-4.jpg') }}">
-	</div>
-	@endif
-	<span>{{ $aboutInfo?->client_text }}</span>
-	</div>
-	</div>
-	</div>
-	</div>
-	</div>
-    </div>
-	</section>
-@endif -->
-
-
-
-
-
-
-
+</section> 
 
 <section class="why-dlal-dection">
     <div class="container">
@@ -1158,18 +731,8 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 <section class="about-section-new">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6 about-lrft-sections-new">
-                <!-- <div class="new-ace-about-section-property-card">
-					<img src="https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?cs=srgb&dl=pexels-anjana-c-169994-674010.jpg&fm=jpg" alt="Main Property" class="new-ace-about-section-property-main-img">
-					
-					
-					<div class="new-ace-about-section-property-video-thumb">
-					<img src="https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-118143566.jpg" alt="Video Preview">
-					</div>
-				</div>-->
-                <img src="{{ asset('assets/front/images/acrs-imag/about-right.png') }}" alt="" class="about-llrs-img">
-				
-				
+            <div class="col-lg-6 about-lrft-sections-new"> 
+                <img src="{{ asset('assets/front/images/acrs-imag/about-right.png') }}" alt="" class="about-llrs-img"> 
 			</div>
             <div class="col-lg-6">
                 <h1 class="ab-le-title">About The Story Behind Us</h1>
@@ -1281,11 +844,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 	</div>
 </section> --}}
 
-
-
-
-
-
+ 
 
 @if ($secInfo->vendor_section_status == 1)
 <section class="pt-70">
@@ -2183,6 +1742,28 @@ return asset('assets/img/hero/static/' . $img);
             nextBtnLP.classList.remove('hidden');
 		}
 	});
+	
+	var min = @json($min);
+	var max = @json($max);
+	['buy', 'sale', 'rent', 'lease'].forEach(key => {
+		const slider = document.querySelector(`[data-range-slider="filterPriceSlider_${key}"]`);
+		const valueEl = document.querySelector(`[data-range-value="filterPriceSlider_${key}_value"]`);
+		
+		if (slider && valueEl) {
+			// Initialize your price range slider logic here
+			// Example (if using noUiSlider or similar):
+			noUiSlider.create(slider, {
+				start: [min, max],
+				connect: true,
+				range: { min: min, max: max }
+			});
+			
+			slider.noUiSlider.on('update', (values) => {
+				valueEl.textContent = `${values[0]} - ${values[1]}`;
+			});
+		}
+	});
+	
 </script>
 
 

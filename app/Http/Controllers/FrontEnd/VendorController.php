@@ -101,9 +101,10 @@ class VendorController extends Controller
             ->with(['properties', 'projects', 'agents'])
             ->select('vendors.*')
             ->orderBy('id', 'ASC')
-            ->paginate(9);
+            ->paginate(8);
 
         $queryResult['admin'] = Admin::where('role_id', null)->first();
+	 
         return view('frontend.vendor.index', $queryResult);
     }
     //details 

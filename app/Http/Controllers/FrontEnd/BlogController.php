@@ -85,9 +85,7 @@ class BlogController extends Controller
     $queryResult['disqusInfo'] = Basic::select('disqus_status', 'disqus_short_name')->firstOrFail();
 
     $queryResult['categories'] = $this->getCategories($language);
-
-    $queryResult['allBlogs'] = $language->blogInformation()->count();
-
+ 
     return view('frontend.journal.blog-details', $queryResult);
   }
 
