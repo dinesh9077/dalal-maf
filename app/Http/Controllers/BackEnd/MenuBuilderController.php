@@ -5,6 +5,7 @@ namespace App\Http\Controllers\BackEnd;
 use App\Http\Controllers\Controller;
 use App\Models\Language;
 use App\Models\MenuBuilder;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -37,13 +38,13 @@ class MenuBuilderController extends Controller
       ->get();
 
     // also, get all the languages from db
-    $information['langs'] = Language::all();
-
+    $information['langs'] = Language::all(); 
     return view('backend.menu-builder', $information);
   }
 
   public function update(Request $request)
   {
+    
     MenuBuilder::query()->updateOrCreate(
       ['language_id' => $request['languageId']],
       [
@@ -53,5 +54,15 @@ class MenuBuilderController extends Controller
     );
 
     return response()->json(['message' => 'Website menus updated successfully.'], 200);
+  }
+
+  public function loadBuilder(Request $request)
+  {
+      $items = Vendor::where([['id', '!=', 0], ['status', 1]])->get();
+      $base = url('/projects');
+
+      return response()->json([
+        'items' => $items,
+        'base' => $base]);
   }
 }

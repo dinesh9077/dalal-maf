@@ -70,7 +70,9 @@ function enableWithoutUrl() {
         content.message = data.message;
         content.title = 'Success';
         content.icon = 'fa fa-bell';
-
+        $("#menu-builder-form").find(".project-group").hide();
+        $("#menu-builder-form").find(".text-group").show();
+        
         $.notify(content, {
           type: 'success',
           placement: {

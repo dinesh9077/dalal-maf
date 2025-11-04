@@ -38,6 +38,7 @@ Route::prefix('/admin')->middleware('auth:admin')->group(function () {
   // menu-builder route start
   Route::prefix('/menu-builder')->middleware('permission:Menu Builder')->group(function () {
     Route::get('', 'BackEnd\MenuBuilderController@index')->name('admin.menu_builder');
+    Route::get('load-builder', 'BackEnd\MenuBuilderController@loadBuilder')->name('admin.menu_builder.load-builder');
 
     Route::post('/update-menus', 'BackEnd\MenuBuilderController@update')->name('admin.menu_builder.update_menus');
   });

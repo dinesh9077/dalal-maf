@@ -4,6 +4,7 @@ namespace App\Http\Controllers\FrontEnd;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Vendor;
 use App\Models\Project\Project;
 use App\Models\Project\ProjectAmenities;
 use App\Models\Project\ProjectContent;
@@ -21,13 +22,16 @@ class ProjectController extends Controller
         $information['seoInfo'] = $language->seoInfo()->select('meta_keyword_projects', 'meta_description_projects')->first();
         $information['bgImg'] = $misc->getBreadcrumb();
         $information['pageHeading'] = $misc->getPageHeading($language);
-
-        $title = $location =   null;
+        $information['vendor'] = Vendor::where([['id', '!=', 0], ['status', 1]])->get();
+        $title = $location = $vendorId = null;
         if ($request->filled('title') && $request->filled('title')) {
             $title =  $request->title;
         }
         if ($request->filled('location') && $request->filled('location')) {
             $location =  $request->location;
+        } 
+        if ($request->filled('vendor_id') && $request->filled('vendor_id')) {
+            $vendorId = $request->vendor_id;
         }
         if ($request->filled('sort')) {
             if ($request['sort'] == 'new') {
@@ -72,6 +76,10 @@ class ProjectController extends Controller
             ->where('project_contents.language_id', $language->id)
             ->when($title, function ($query) use ($title) {
                 return $query->where('project_contents.title', 'LIKE', '%' . $title . '%');
+            })
+            ->when($vendorId, function ($query) use ($vendorId)
+             {
+                return $query->where('projects.vendor_id', $vendorId);
             })
             ->when($location, function ($query) use ($location) {
                 return $query->where('project_contents.address', 'LIKE', '%' . $location . '%');

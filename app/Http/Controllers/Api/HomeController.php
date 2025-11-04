@@ -433,7 +433,7 @@ class HomeController extends Controller
 
 	public function viewAllBlogs(Request $request)
 	{
-		$limit = $request->get('limit', 9); // default 9
+		$limit = $request->get('limit', 10);  
 		$offset = $request->get('offset', 0); 
 		
 		$blogTitle = $blogCategory = null; 
@@ -530,26 +530,12 @@ class HomeController extends Controller
 	
 	public function properties(Request $request)
     { 
+		$limit = $request->get('limit', 10);  
+		$offset = $request->get('offset', 0);
+		
         $misc = new MiscellaneousController();
         $language = $misc->getLanguage();
-        $information['seoInfo'] = $language->seoInfo()->select('meta_keyword_properties', 'meta_description_properties')->first();
-
-        if ($request->has('type') && ($request->type == 'commercial' || $request->type == 'residential')) {
-            $information['categories'] = PropertyCategory::with(['categoryContent' => function ($q) use ($language) {
-                $q->where('language_id', $language->id);
-            }, 'properties'])->where([['status', 1], ['type', $request->type]])->get();
-        } else {
-            $information['categories'] = PropertyCategory::with(['categoryContent' => function ($q) use ($language) {
-                $q->where('language_id', $language->id);
-            }, 'properties'])->where('status', 1)->get();
-        }
- 
-        $information['bgImg'] = $misc->getBreadcrumb();
-        $information['pageHeading'] = $misc->getPageHeading($language);
-        $information['amenities'] = Amenity::where('status', 1)->with(['amenityContent' => function ($q) use ($language) {
-            $q->where('language_id', $language->id);
-        }])->orderBy('serial_number')->get();
-
+         
         $propertyCategory = null;
         $category = null;
         if ($request->filled('category') && $request->category != 'all') {
@@ -658,168 +644,220 @@ class HomeController extends Controller
         }
 
         $property_contents = Property::where('property_type','partial')->where([['properties.status', 1], ['properties.approve_status', 1]])
-            ->join('property_contents', 'properties.id', 'property_contents.property_id')
-            ->join('property_categories', 'property_categories.id', 'properties.category_id')
-            ->where('property_contents.language_id', $language->id)
-            ->leftJoin('vendors', 'properties.vendor_id', '=', 'vendors.id')
-            ->leftJoin('areas', 'properties.area_id', '=', 'areas.id')
-            ->leftJoin('property_city_contents', function ($join) use ($language) {
-                $join->on('properties.city_id', '=', 'property_city_contents.city_id')
-                    ->where('property_city_contents.language_id', $language->id);
-            })
-            ->leftJoin('property_state_contents', function ($join) use ($language) {
-                $join->on('properties.state_id', '=', 'property_state_contents.state_id')
-                    ->where('property_state_contents.language_id', $language->id);
-            })
-            ->leftJoin('property_country_contents', function ($join) use ($language) {
-                $join->on('properties.country_id', '=', 'property_country_contents.country_id')
-                    ->where('property_country_contents.language_id', $language->id);
-            })
-            ->leftJoin('memberships', function ($join) {
-                $join->on('properties.vendor_id', '=', 'memberships.vendor_id')
-                    ->where('memberships.status', '=', 1)
-                    ->where('memberships.start_date', '<=', Carbon::now()->format('Y-m-d'))
-                    ->where('memberships.expire_date', '>=', Carbon::now()->format('Y-m-d'));
-            })
+		->join('property_contents', 'properties.id', 'property_contents.property_id')
+		->join('property_categories', 'property_categories.id', 'properties.category_id')
+		->where('property_contents.language_id', $language->id)
+		->leftJoin('vendors', 'properties.vendor_id', '=', 'vendors.id')
+		->leftJoin('areas', 'properties.area_id', '=', 'areas.id')
+		->leftJoin('property_city_contents', function ($join) use ($language) {
+			$join->on('properties.city_id', '=', 'property_city_contents.city_id')
+				->where('property_city_contents.language_id', $language->id);
+		})
+		->leftJoin('property_state_contents', function ($join) use ($language) {
+			$join->on('properties.state_id', '=', 'property_state_contents.state_id')
+				->where('property_state_contents.language_id', $language->id);
+		})
+		->leftJoin('property_country_contents', function ($join) use ($language) {
+			$join->on('properties.country_id', '=', 'property_country_contents.country_id')
+				->where('property_country_contents.language_id', $language->id);
+		})
+		->leftJoin('memberships', function ($join) {
+			$join->on('properties.vendor_id', '=', 'memberships.vendor_id')
+				->where('memberships.status', '=', 1)
+				->where('memberships.start_date', '<=', Carbon::now()->format('Y-m-d'))
+				->where('memberships.expire_date', '>=', Carbon::now()->format('Y-m-d'));
+		})
 
-            ->where(function ($query) {
-                $query->where('properties.vendor_id', '=', 0)
-                    ->orWhere(function ($query) {
-                        $query->where('vendors.status', '=', 1)->whereNotNull('memberships.id');
-                    });
-            })
+		->where(function ($query) {
+			$query->where('properties.vendor_id', '=', 0)
+				->orWhere(function ($query) {
+					$query->where('vendors.status', '=', 1)->whereNotNull('memberships.id');
+				});
+		})
 
-            ->when($type, function ($query) use ($type) {
-                return $query->where('properties.type', $type);
-            })
-            ->when($purpose, function ($query) use ($purpose) 
-			{
-                return $query->whereIn('properties.purpose', $purpose);
-            })
-            ->when($countryId, function ($query) use ($countryId) {
-                return $query->where('properties.country_id', $countryId);
-            })
-            ->when($stateId, function ($query) use ($stateId) {
-                return $query->where('properties.state_id', $stateId);
-            })
-            ->when($cityId, function ($query) use ($cityId) {
-                return $query->where('properties.city_id', $cityId);
-            })
-            ->when($listAreaId, function ($query) use ($listAreaId) {
-                return $query->where('properties.area_id', $listAreaId);
-            })
-            ->when($category && $propertyCategory, function ($query) use ($propertyCategory) {
-                return $query->where('properties.category_id', $propertyCategory->category_id);
-            })
+		->when($type, function ($query) use ($type) {
+			return $query->where('properties.type', $type);
+		})
+		->when($purpose, function ($query) use ($purpose) 
+		{
+			return $query->whereIn('properties.purpose', $purpose);
+		})
+		->when($countryId, function ($query) use ($countryId) {
+			return $query->where('properties.country_id', $countryId);
+		})
+		->when($stateId, function ($query) use ($stateId) {
+			return $query->where('properties.state_id', $stateId);
+		})
+		->when($cityId, function ($query) use ($cityId) {
+			return $query->where('properties.city_id', $cityId);
+		})
+		->when($listAreaId, function ($query) use ($listAreaId) {
+			return $query->where('properties.area_id', $listAreaId);
+		})
+		->when($category && $propertyCategory, function ($query) use ($propertyCategory) {
+			return $query->where('properties.category_id', $propertyCategory->category_id);
+		})
 
-            ->when(!empty($amenityInContentId), function ($query) use ($amenityInContentId) {
-                $query->whereHas(
-                    'proertyAmenities',
-                    function ($q) use ($amenityInContentId) {
-                        $q->whereIn('amenity_id', $amenityInContentId);
-                    },
-                    '=',
-                    count($amenityInContentId)
-                );
-            })
-            ->when($price, function ($query) use ($price) {
-                if ($price == 'negotiable') {
-                    return $query->where('properties.price', null);
-                } elseif ($price == 'fixed') {
+		->when(!empty($amenityInContentId), function ($query) use ($amenityInContentId) {
+			$query->whereHas(
+				'proertyAmenities',
+				function ($q) use ($amenityInContentId) {
+					$q->whereIn('amenity_id', $amenityInContentId);
+				},
+				'=',
+				count($amenityInContentId)
+			);
+		})
+		->when($price, function ($query) use ($price) {
+			if ($price == 'negotiable') {
+				return $query->where('properties.price', null);
+			} elseif ($price == 'fixed') {
 
-                    return $query->where('properties.price', '!=', null);
-                } else {
-                    return $query;
-                }
-            })
+				return $query->where('properties.price', '!=', null);
+			} else {
+				return $query;
+			}
+		})
 
-            ->when($min, function ($query) use ($min, $max, $price) {
-                if ($price == 'fixed' || empty($price)) {
-                    return $query->where('properties.price', '>=', $min)
-                        ->where('properties.price', '<=', $max);
-                } else {
-                    return $query;
-                }
-            })
-            ->when($beds, function ($query) use ($beds) {
-                return $query->where('properties.beds', $beds);
-            })
-            ->when($baths, function ($query) use ($baths) {
-                return $query->where('properties.bath', $baths);
-            })
-            ->when($area, function ($query) use ($area) {
-                return $query->where('properties.area', $area);
-            })
-            ->when($title, function ($query) use ($title) {
-                return $query->where('property_contents.title', 'LIKE', '%' . $title . '%');
-            })
-            ->when($location, function ($query) use ($location) {
-                // Split by comma
-                $parts = array_map('trim', explode(',', $location));
+		->when($min, function ($query) use ($min, $max, $price) {
+			if ($price == 'fixed' || empty($price)) {
+				return $query->where('properties.price', '>=', $min)
+					->where('properties.price', '<=', $max);
+			} else {
+				return $query;
+			}
+		})
+		->when($beds, function ($query) use ($beds) {
+			return $query->where('properties.beds', $beds);
+		})
+		->when($baths, function ($query) use ($baths) {
+			return $query->where('properties.bath', $baths);
+		})
+		->when($area, function ($query) use ($area) {
+			return $query->where('properties.area', $area);
+		})
+		->when($title, function ($query) use ($title) {
+			return $query->where('property_contents.title', 'LIKE', '%' . $title . '%');
+		})
+		->when($location, function ($query) use ($location) {
+			// Split by comma
+			$parts = array_map('trim', explode(',', $location));
 
-                $areaName   = $parts[0] ?? null; // e.g. "Pasodara Patiya" or "Surat"
-                $cityName   = $parts[1] ?? null; // e.g. "Surat"
-                $stateName  = $parts[2] ?? null; // e.g. "Gujarat"
-                $countryName= $parts[3] ?? null;
+			$areaName   = $parts[0] ?? null; // e.g. "Pasodara Patiya" or "Surat"
+			$cityName   = $parts[1] ?? null; // e.g. "Surat"
+			$stateName  = $parts[2] ?? null; // e.g. "Gujarat"
+			$countryName= $parts[3] ?? null;
 
-                return $query->where(function ($q) use ($areaName, $cityName, $stateName, $countryName) {
-                    if ($areaName && $cityName) {
-                        // user searched Area + City → restrict by area only
-                        $q->where('areas.name', 'LIKE', "%{$areaName}%");
-                    } elseif ($cityName) {
-                        // only city searched
-                        $q->where('property_city_contents.name', 'LIKE', "%{$cityName}%");
-                    } elseif ($stateName) {
-                        $q->where('property_state_contents.name', 'LIKE', "%{$stateName}%");
-                    } elseif ($countryName) {
-                        $q->where('property_country_contents.name', 'LIKE', "%{$countryName}%");
-                    } else {
-                        // fallback: search anywhere
-                        $q->where('areas.name', 'LIKE', "%{$areaName}%")
-                          ->orWhere('property_city_contents.name', 'LIKE', "%{$areaName}%")
-                          ->orWhere('property_state_contents.name', 'LIKE', "%{$areaName}%")
-                          ->orWhere('property_country_contents.name', 'LIKE', "%{$areaName}%");
-                    }
-                });
-            })
-            ->with(['categoryContent' => function ($q) use ($language) {
-                $q->where('language_id', $language->id);
-            }])
+			return $query->where(function ($q) use ($areaName, $cityName, $stateName, $countryName) {
+				if ($areaName && $cityName) {
+					// user searched Area + City → restrict by area only
+					$q->where('areas.name', 'LIKE', "%{$areaName}%");
+				} elseif ($cityName) {
+					// only city searched
+					$q->where('property_city_contents.name', 'LIKE', "%{$cityName}%");
+				} elseif ($stateName) {
+					$q->where('property_state_contents.name', 'LIKE', "%{$stateName}%");
+				} elseif ($countryName) {
+					$q->where('property_country_contents.name', 'LIKE', "%{$countryName}%");
+				} else {
+					// fallback: search anywhere
+					$q->where('areas.name', 'LIKE', "%{$areaName}%")
+					  ->orWhere('property_city_contents.name', 'LIKE', "%{$areaName}%")
+					  ->orWhere('property_state_contents.name', 'LIKE', "%{$areaName}%")
+					  ->orWhere('property_country_contents.name', 'LIKE', "%{$areaName}%");
+				}
+			});
+		})
+		->with(['categoryContent' => function ($q) use ($language) {
+			$q->where('language_id', $language->id);
+		}])
 
-            ->select('properties.*', 'property_categories.id as categoryId', 'property_contents.title', 'property_contents.slug', 'property_contents.address', 'property_contents.description', 'property_contents.language_id',
-                    'areas.name as area_name',
-                    'property_city_contents.name as city_name',
-                    'property_state_contents.name as state_name',
-                    'property_country_contents.name as country_name')
-            ->orderBy($order_by_column, $order)
-            ->paginate(12);
+		->select('properties.*',
+			DB::raw("CONCAT('" . URL::to('/') . "/assets/img/property/featureds/', properties.featured_image) as featured_image_url"),
+			'property_categories.id as categoryId', 'property_contents.title', 'property_contents.slug', 'property_contents.address', 'property_contents.description', 'property_contents.language_id',
+			'areas.name as area_name',
+			'property_city_contents.name as city_name',
+			'property_state_contents.name as state_name',
+			'property_country_contents.name as country_name')
+		->orderBy($order_by_column, $order)
+		->offset($offset)
+		->limit($limit)
+		->get();
 
-        $information['property_contents'] = $property_contents;
-        $information['contents'] = $property_contents;
-
-        $information['all_areas'] = Area::where('status', 1)->get();
-        $information['all_cities'] = City::where('status', 1)->with(['cityContent' => function ($q) use ($language) {
-            $q->where('language_id', $language->id);
-        }])->get();
-        $information['all_states'] = State::with(['stateContent' => function ($q) use ($language) {
-            $q->where('language_id', $language->id);
-        }])->get();
-        $information['all_countries'] = Country::with(['countryContent' => function ($q) use ($language) {
-            $q->where('language_id', $language->id);
-        }])->get();
-
+        $information['property_contents'] = $property_contents; 
+ 
         $min = Property::where([['status', 1], ['approve_status', 1]])->min('price');
         $max = Property::where([['status', 1], ['approve_status', 1]])->max('price');
         $information['min'] = intval($min);
         $information['max'] = intval($max);
-        if ($request->ajax()) {
-            $viewContent = View::make('frontend.property.property',  $information);
-            $viewContent = $viewContent->render();
-
-            return response()->json(['propertyContents' => $viewContent, 'properties' => $property_contents])->header('Cache-Control', 'no-cache, no-store, must-revalidate');
-        }
-
+         
         return $this->successResponse($information);
     }
+	
+	public function cities()
+	{
+		$misc = new MiscellaneousController();
+        $language = $misc->getLanguage();
+		
+		$allCities = City::where('status', 1)->with(['cityContent' => function ($q) use ($language) {
+            $q->where('language_id', $language->id);
+        }])->get();
+		
+		return $this->successResponse($allCities);
+	}
+	
+	public function areas()
+	{ 
+		$allAreas = Area::where('status', 1)->get(); 
+		return $this->successResponse($allAreas);
+	}
+	
+	public function states()
+	{ 
+		$misc = new MiscellaneousController();
+        $language = $misc->getLanguage();
+		
+		$allStates = State::with(['stateContent' => function ($q) use ($language) {
+            $q->where('language_id', $language->id);
+        }])->get(); 
+		
+		return $this->successResponse($allStates);
+	}
+	
+	public function countries()
+	{  
+		$misc = new MiscellaneousController();
+        $language = $misc->getLanguage();
+		
+        $allCountries = Country::with(['countryContent' => function ($q) use ($language) {
+            $q->where('language_id', $language->id);
+        }])->get();
+		
+		return $this->successResponse($allCountries);
+	}
+	
+	public function categories()
+	{  
+		$misc = new MiscellaneousController();
+        $language = $misc->getLanguage();
+		
+        $categories = PropertyCategory::with(['categoryContent' => function ($q) use ($language) {
+			$q->where('language_id', $language->id);
+		}, 'properties'])->where('status', 1)->get();
+		
+		return $this->successResponse($categories);
+	}
+	
+	public function amenities()
+	{  
+		$misc = new MiscellaneousController();
+        $language = $misc->getLanguage();
+		
+        $amenities = Amenity::where('status', 1)->with(['amenityContent' => function ($q) use ($language) {
+            $q->where('language_id', $language->id);
+        }])->orderBy('serial_number')->get();
+		
+		return $this->successResponse($amenities);
+	}
   
 }

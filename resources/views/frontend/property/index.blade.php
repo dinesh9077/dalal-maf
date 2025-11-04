@@ -447,14 +447,14 @@ input[type="checkbox"]:checked + label .animits-div-tab {
                                                 onclick="updateURL('category=all')">
                                                 {{ __('All') }} </a>
                                             @foreach ($categories as $category)
-                                            @if ($category->categoryContent)
+												@if ($category->categoryContent)
 
 
-                                            <a class="new-round-category-des {{ request()->filled('category') && request()->input('category') == $category->categoryContent?->slug ? 'active' : '' }}"
-                                                onclick="updateURL('category={{ $category->categoryContent?->slug }}');">
-                                                {{ $category->categoryContent?->name }}</a>
+												<a class="new-round-category-des {{ request()->filled('category') && request()->input('category') == $category->categoryContent?->slug ? 'active' : '' }}"
+													onclick="updateURL('category={{ $category->categoryContent?->slug }}');">
+													{{ $category->categoryContent?->name }}</a>
 
-                                            @endif
+												@endif
                                             @endforeach
                                             <!-- <ul class="list-group">
 

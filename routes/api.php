@@ -24,6 +24,11 @@ Route::prefix('front')->group(function ()
     Route::get('blog/{slug}', [HomeController::class, 'blogDetails']);
     Route::get('properties', [HomeController::class, 'properties']);
     Route::get('cities', [HomeController::class, 'cities']);
+    Route::get('areas', [HomeController::class, 'areas']);
+    Route::get('states', [HomeController::class, 'states']);
+    Route::get('countries', [HomeController::class, 'countries']);
+    Route::get('categories', [HomeController::class, 'categories']);
+    Route::get('amenities', [HomeController::class, 'amenities']);
 }); 
 
 // User routes 

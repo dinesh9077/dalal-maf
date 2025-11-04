@@ -126,16 +126,24 @@ $version = $basicInfo->theme_version;
                             <form action="{{ route('frontend.projects') }}" method="GET">
                                 <div class="project-filter-form radius-md pb-10">
                                     <div class="row">
-                                        <div class="col-lg-4 mb-10">
+                                        <div class="col-lg-3 mb-10">
                                             <input type="search" name="title" class="form-control"
                                                 placeholder="{{ __('Search By Title') }}"
                                                 value="{{ request()->input('title') }}">
                                         </div>
-                                        <div class="col-lg-4 mb-10">
+                                        <div class="col-lg-3 mb-10">
                                             <input type="search" name="location" class="form-control"
                                                 placeholder="{{ __('Search By Location') }}"
                                                 value="{{ request()->input('location') }}">
                                         </div>
+                                         <div class="col-lg-3 mb-10">
+                                             <select class="form-control" name="vendor_id">
+                                                 <option value="">{{ __('Select Vendor') }}</option>
+                                                 @foreach($vendor as $vendors)
+                                                 <option value="{{ $vendors->id }}" {{ request()->input('vendor_id') == $vendors->id ? 'selected' : '' }}>{{ $vendors->username }}</option>
+                                                 @endforeach
+                                             </select>
+                                        </div> 
                                         <div class="col-lg-3 mb-10">
                                             <button class="btn btn-lg btn-primary w-100" style="background : #6c603c;" type="submit">
                                                 <i class="far fa-search"></i> {{ __('Search') }}

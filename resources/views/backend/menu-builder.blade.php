@@ -69,7 +69,7 @@
                                                 data-type="contact"
                                                 class="addToMenus btn btn-primary btn-sm float-right">{{ __('Add To Menus') }}</a>
                                         </li>
-
+ 
 
                                         <li class="list-group-item">
                                             {{ __('Partner') }} <a href="" data-text="{{ __('Partner') }}"
@@ -77,11 +77,7 @@
                                                 class="addToMenus btn btn-primary btn-sm float-right">{{ __('Add To Menus') }}</a>
                                         </li>
 
-
-
-
-
-
+ 
                                         <li class="list-group-item">
                                             {{ __('Blog') }} <a href="" data-text="{{ __('Blog') }}"
                                                 data-type="blog"
@@ -93,10 +89,7 @@
                                                 data-type="faq"
                                                 class="addToMenus btn btn-primary btn-sm float-right">{{ __('Add To Menus') }}</a>
                                         </li>
-
-
-
-
+ 
 
                                         <li class="list-group-item">
                                             {{ __('About Us') }} <a href="" data-text="{{ __('About Us') }}"
@@ -129,8 +122,25 @@
 
                                         <div id="withUrl">
                                             <div class="form-group">
+                                                <label for="target">{{ __('Target') }}</label>
+                                                <select name="target" id="target" class="form-control item-menu">
+                                                    <option value="_self">{{ __('Self') }}</option>
+                                                    <option value="_blank">{{ __('Blank') }}</option>
+                                                    <option value="_top">{{ __('Top') }}</option>
+                                                    <option value="_project">{{ __('Project') }}</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group project-group" style="display: none;">
+                                                <label for="projectEntity">Entity</label>
+                                                <select id="projectEntity" name="vendor_id" class="form-control item-menu" disabled>
+                                                <option value="">-- Select Developer/Partner --</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group text-group">
                                                 <label for="text">{{ __('Text') }}</label>
-                                                <input type="text" class="form-control item-menu" name="text"
+                                                <input type="text" type="text" class="form-control item-menu" name="text"
                                                     placeholder="Enter Menu Name">
                                             </div>
 
@@ -138,16 +148,7 @@
                                                 <label for="href">{{ __('URL') }}</label>
                                                 <input type="url" class="form-control item-menu ltr" name="href"
                                                     placeholder="Enter Menu URL">
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="target">{{ __('Target') }}</label>
-                                                <select name="target" id="target" class="form-control item-menu">
-                                                    <option value="_self">{{ __('Self') }}</option>
-                                                    <option value="_blank">{{ __('Blank') }}</option>
-                                                    <option value="_top">{{ __('Top') }}</option>
-                                                </select>
-                                            </div>
+                                            </div>  
                                         </div>
 
                                         <div id="withoutUrl" class="dis-none">
@@ -213,6 +214,120 @@
         let allMenus = {!! json_encode($menuData) !!};
         let langId = {{ $language->id }};
         const menuBuilderUrl = "{{ route('admin.menu_builder.update_menus') }}";
+
+
+        $(function () { 
+            var menuBuilderForm = $('#menu-builder-form');
+            var $target         = menuBuilderForm.find('#target');
+            var $projectEntity  = menuBuilderForm.find('#projectEntity');
+
+            function showProjectMode()
+            {
+                menuBuilderForm.find('.text-group').hide();
+                menuBuilderForm.find('.project-group').show();
+
+                // Reset + disable while loading
+                $projectEntity.prop('disabled', true)
+                .empty()
+                .append('<option value="">Loading...</option>');
+
+                $.ajax({
+                    url: "{{ route('admin.menu_builder.load-builder') }}",
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (res) {
+                        $projectEntity.empty().append('<option value="">-- Select Developer/Partner --</option>');
+                        if (res.items && res.items.length) {
+                        res.items.forEach(function (item) {
+                            // value = id, label = username (adjust if you use name instead)
+                            $projectEntity.append(
+                            $('<option>', { value: item.id, text: item.username })
+                            );
+                        });
+                        $projectEntity.prop('disabled', false);
+                        } else {
+                        $projectEntity.append('<option value="">No items found</option>').prop('disabled', true);
+                        }
+                    },
+                    error: function (xhr) {
+                        console.error(xhr.responseText || xhr.statusText);
+                        $projectEntity.prop('disabled', true).empty().append('<option value="">Load failed</option>');
+                    }
+                });
+            }
+
+            function showManualMode() {
+                menuBuilderForm.find('.project-group').hide();
+                menuBuilderForm.find('.text-group').show();
+            }
+
+            // Handle target change
+            $target.on('change', function () {
+                const selectedValue = $(this).val();
+                if (selectedValue === '_project') {
+                  showProjectMode();
+                } else {
+                    showManualMode(); 
+                    menuBuilderForm.find('input[name="text"]').val('');
+                    menuBuilderForm.find('input[name="href"]').val('');
+                }
+            });
+
+            // When a project entity is chosen → set Text + URL
+            $projectEntity.on('change', function () {
+                const selectedId   = $(this).val(); // the ID
+                const entityName   = $(this).find('option:selected').text(); // the label
+
+                if (!selectedId) {
+                    // nothing chosen
+                    menuBuilderForm.find('input[name="text"]').val('');
+                    menuBuilderForm.find('input[name="href"]').val('');
+                    return;
+                }
+
+                // Fill underlying inputs (even if the group is hidden)
+                menuBuilderForm.find('input[name="text"]').val(entityName);
+                menuBuilderForm.find('input[name="href"]').val("{{ url('/projects') }}?vendor_id=" + encodeURIComponent(selectedId));
+            });
+
+            // Initialize state on load (in case the select already has a value)
+            if ($target.val() === '_project') {
+                showProjectMode();
+            } else {
+                showManualMode();
+            }
+
+            // $('.btnEdit').click(function()
+            // {
+            //     setTimeout(() => {
+            //         var target = menuBuilderForm.find("#target").val();
+            //        if (target === '_project') {
+            //         showProjectMode();
+            //         }
+
+            //     }, 1000);   
+            // });
+
+            $(document).on("click", ".btnEdit", function (e) {
+                e.preventDefault();
+
+                var $li = $(this).closest("li");
+                var t   = $li.data();    
+                if(t.target === "_project")  
+                {
+                    showProjectMode();
+                    setTimeout(() => {
+                        $projectEntity.val(t.vendor_id).trigger('change');
+                    }, 500);    
+                }
+                else
+                {
+                    showManualMode(); 
+                }
+             
+            });
+        });
+
     </script>
 
     <script type="text/javascript" src="{{ asset('assets/js/menu-builder.js') }}"></script>
