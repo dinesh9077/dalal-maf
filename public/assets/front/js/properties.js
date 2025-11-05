@@ -1,398 +1,321 @@
-function updateURL(data) {
-  $('.request-loader').addClass('show');
-  let name = data.split('=')[0];
-
-  if (name == 'type') {
-    reset();
-    getCategories(data.split('=')[1]);
-
-  } else if (name == 'category') {
-    let currentURLq = window.location.href;
-    let mainUrl = currentURLq.split('?')[0];
-    let prevUrlq = currentURLq.split('?')[1];
-    let newUrlArrayq = prevUrlq ? prevUrlq.split('&') : [];
-    reset();
-
-
-    newUrlArrayq.forEach((url, index) => {
-
-      let urlNq = url.split('=');
-      if (urlNq[0] == 'type') {
-        var updatedURLq = mainUrl + '?' + url;
-        window.history.pushState({
-          path: updatedURLq
-        }, '', updatedURLq);
-        getCategories(urlNq[1])
-      }
-
-
-    });
-
-
-  } else if (name == 'country') {
-
-    let currentURLq = window.location.href;
-    let mainUrl = currentURLq.split('?')[0];
-    let prevUrlq = currentURLq.split('?')[1];
-    let newUrlArrayq = prevUrlq ? prevUrlq.split('&') : [];
-
-    newUrlArrayq.forEach((url, index) => {
-      let urlNq = url.split('=');
-      if (urlNq[0] == 'state') {
-        newUrlArrayq.splice(index, 1);
-
-      }
-    });
-
-    newUrlArrayq.forEach((url, index) => {
-      let urlNq = url.split('=');
-      if (urlNq[0] == 'city') {
-        newUrlArrayq.splice(index, 1);
-      }
-
-    });
-
-    newUrlArrayq.forEach((url, index) => {
-      let urlNq = url.split('=');
-      if (urlNq[0] == 'listArea') {
-        newUrlArrayq.splice(index, 1);
-      }
-
-    });
-
-    let newUrl = newUrlArrayq.join("&")
-    var updatedURLq = mainUrl + '?' + newUrl;
-    window.history.pushState({
-      path: updatedURLq
-    }, '', updatedURLq);
-
-  } else if (name == 'state') {
-    requestArrayRmvfromUrl('city')
-
-  } else if (name == 'min' || name == 'max') {
-    requestArrayRmvfromUrl('price')
-    $('#pricetype input:radio[value="all"]').prop('checked', true);
-  } else if (name == 'price') {
-    requestArrayRmvfromUrl('min')
-    requestArrayRmvfromUrl('max')
-  } else if (name == 'sort') {
-    if (data.split('=')[1] == 'high-to-low' || data.split('=')[1] == 'low-to-high') {
-      $('#pricetype input:radio[value="fixed"]').prop('checked', true);
-      requestArrayRmvfromUrl('min')
-      requestArrayRmvfromUrl('max')
-      this.updateURL('price=fixed');
-    }
-
-  }
-
-  var currentURL = window.location.href;
-  if (currentURL.indexOf('?') != -1) {
-
-    if (data) {
-      let prevUrl = currentURL.split('?')[1];
-      let newUrlArray = prevUrl.split('&');
-      let found = false;
-      let replace = false;
-      newUrlArray.forEach((url, index) => {
-        if (url == data) {
-          found = true;
-        } else {
-          let urlN = url.split('=');
-          let dataN = data.split('=');
-          if (urlN[0] == dataN[0]) {
-            newUrlArray[index] = data;
-            replace = true;
-          }
-        }
-
-      });
-
-      if (!found && !replace) {
-        var updatedURL = currentURL + '&' + data;
-        window.history.pushState({
-          path: updatedURL
-        }, '', updatedURL);
-      } else {
-        let joined = newUrlArray.join('&')
-        let mainUrl = currentURL.split('?')[0];
-        var updatedURL = mainUrl + '?' + joined;
-        window.history.pushState({
-          path: updatedURL
-        }, '', updatedURL);
-      }
-
-    }
-
-  } else {
-    var updatedURL = currentURL + '?' + data;
-    window.history.pushState({
-      path: updatedURL
-    }, '', updatedURL);
-  }
-  getData(updatedURL);
+// -----------------------------
+// URL helpers (DRY + safe)
+// -----------------------------
+function getURL() {
+  return new URL(window.location.href);
+}
+function pushURL(url) {
+  window.history.pushState({ path: url.toString() }, "", url.toString());
+}
+function setParam(url, name, value) {
+  url.searchParams.set(name, value);
+}
+function addParam(url, name, value) {
+  url.searchParams.append(name, value);
+}
+function removeParam(url, name) {
+  url.searchParams.delete(name);
+}
+function removeParams(url, names = []) {
+  names.forEach((n) => url.searchParams.delete(n));
 }
 
+// Fetch wrapper
+function pushAndFetch(url) {
+  pushURL(url);
+  getData(url.toString());
+}
+
+// -----------------------------
+// Main update handlers
+// -----------------------------
+function updateURL(data)
+{
+  $(".request-loader").addClass("show");
+
+  const [rawName, rawVal = ""] = String(data).split("=");
+  const name = decodeURIComponent(rawName);
+  const value = decodeURIComponent(rawVal);
+
+  let url = getURL();
+
+  if (name === "type") {
+    reset(); // preserves original behavior
+    getCategories(value);
+  } else if (name === "category") {
+    // keep type, reset others (as your original logic intended)
+    reset();
+    const current = getURL();
+    const typeVal = current.searchParams.get("type");
+    url = new URL(current.origin + current.pathname);
+    if (typeVal) setParam(url, "type", typeVal);
+  } else if (name === "country") {
+    // remove dependent filters: state, city, listArea
+    removeParams(url, ["state", "city", "listArea"]);
+  } else if (name === "state") {
+    requestArrayRmvfromUrl("city");
+  } else if (name === "min" || name === "max") {
+    requestArrayRmvfromUrl("price");
+    $('#pricetype input:radio[value="all"]').prop("checked", true);
+  } else if (name === "price") {
+    requestArrayRmvfromUrl("min");
+    requestArrayRmvfromUrl("max");
+  } else if (name === "sort") {
+    if (value === "high-to-low" || value === "low-to-high") {
+      $('#pricetype input:radio[value="fixed"]').prop("checked", true);
+      requestArrayRmvfromUrl("min");
+      requestArrayRmvfromUrl("max");
+      // Ensure price=fixed in URL
+      const u = getURL();
+      setParam(u, "price", "fixed");
+      pushURL(u);
+    }
+  }
+
+  // Apply/replace the incoming param
+  if (name && rawVal !== undefined) {
+    setParam(url, name, value);
+  }
+
+  pushAndFetch(url);
+}
+
+// Remove a single query param everywhere and push state
 function requestArrayRmvfromUrl(requestName) {
-  let currentURLq = window.location.href;
-  let mainUrl = currentURLq.split('?')[0];
-  let prevUrlq = currentURLq.split('?')[1];
-  let newUrlArrayq = prevUrlq ? prevUrlq.split('&') : [];
-
-  newUrlArrayq.forEach((url, index) => {
-    let urlNq = url.split('=');
-    if (urlNq[0] == requestName) {
-      newUrlArrayq.splice(index, 1);
-
-    }
-    let newUrl = newUrlArrayq.join("&")
-    var updatedURLq = mainUrl + '?' + newUrl;
-    window.history.pushState({
-      path: updatedURLq
-    }, '', updatedURLq);
-  });
+  const url = getURL();
+  removeParam(url, requestName);
+  pushURL(url);
 }
+
+// Amenities toggler (multi-value, idempotent)
 function updateAmenities(data, checkbox) {
+  const url = getURL();
+  const [rawName, rawVal = ""] = String(data).split("=");
+  const name = decodeURIComponent(rawName);
+  const value = decodeURIComponent(rawVal);
 
-  var currentURL = window.location.href;
-  if (currentURL.indexOf('?') != -1) {
+  // Collect current values
+  const existing = url.searchParams.getAll(name).filter(Boolean);
 
-    if (data) {
-      let prevUrl = currentURL.split('?')[1];
-      let newUrlArray = prevUrl.split('&');
-      let found = false;
-
-
-      newUrlArray.forEach((url, index) => {
-        let durl = decodeURIComponent(url);
-        if (durl == data) {
-          found = true;
-          if ($('#' + checkbox.id + ':checkbox:checked').length <= 0) {
-            newUrlArray.splice(index, 1);
-            var updatedURL = currentURL + '&' + newUrlArray;
-            window.history.pushState({
-              path: updatedURL
-            }, '', updatedURL);
-          }
-        }
-
-      });
-      if (!found) {
-        var updatedURL = currentURL + '&' + data;
-
-        window.history.pushState({
-          path: updatedURL
-        }, '', updatedURL);
-      } else {
-        let joined = newUrlArray.join('&')
-        let mainUrl = currentURL.split('?')[0];
-        var updatedURL = mainUrl + '?' + joined;
-        window.history.pushState({
-          path: updatedURL
-        }, '', updatedURL);
-      }
-
+  if (checkbox.checked) {
+    // add if missing
+    if (!existing.includes(value)) {
+      addParam(url, name, value);
     }
-
   } else {
-    var updatedURL = currentURL + '?' + data;
-    window.history.pushState({
-      path: updatedURL
-    }, '', updatedURL);
+    // remove only this value
+    const next = existing.filter((v) => v !== value);
+    removeParam(url, name);
+    next.forEach((v) => addParam(url, name, v));
   }
-  $('.request-loader').addClass('show');
-  getData(updatedURL);
+
+  $(".request-loader").addClass("show");
+  pushAndFetch(url);
 }
 
+// -----------------------------
+// Data + dependent fetchers
+// -----------------------------
 function getData(currentURL, page) {
-  var n = $('.properties')
   $.ajax({
-    type: 'GET',
+    type: "GET",
     url: currentURL,
-    data: {
-      page: page,
-    },
+    data: { page: page },
     success: function (data) {
+      // Replace properties HTML
+      $(".properties").html(data.propertyContents);
 
-      $('.properties').html();
-      $('.properties').html(data.propertyContents);
-
-      var property_contents = data.properties;
-      properties = property_contents.data;
-      // mapInitialize(property_contents.data);
-
-
+      // If you need the list:
+      // const properties = data?.properties?.data || [];
+      // mapInitialize(properties); // kept commented as in original
     },
     complete: function () {
-      $(".request-loader").removeClass('show'); $("html, body").animate({ scrollTop: 0 })
-
-    }
-
-
-
-
+      $(".request-loader").removeClass("show");
+      $("html, body").animate({ scrollTop: 0 });
+    },
   });
 }
 
 function getCategories(type) {
   $.ajax({
-    type: 'GET',
-    url: baseURL + '/categories?type=' + type,
-
+    type: "GET",
+    url: baseURL + "/categories",
+    data: { type: type },
     success: function (data) {
-      let ul = $("#catogoryul");
-      $('#catogoryul').empty();
+      const ul = $("#catogoryul");
+      ul.empty();
 
-      $('#categories .list-item a').removeClass('active');
+      $("#categories .list-item a").removeClass("active");
 
-      let urlParams = new URLSearchParams(window.location.search);
-      let scategory = urlParams.get('category');
-      if (scategory == 'all') {
-        $('#categories .list-item a').addClass('active')
+      const urlParams = new URLSearchParams(window.location.search);
+      const scategory = urlParams.get("category");
+
+      if (scategory === "all") {
+        $("#categories .list-item a").addClass("active");
       }
 
-      data.categories.forEach(item => {
+      data.categories.forEach((item) => {
+        const slug = item.category_content.slug;
+        const name = item.category_content.name;
 
-        ul.append(`<li class="list-item">
-
-                <a class="${item.category_content.slug == scategory ? 'active' : ''}"
-                    onclick="updateURL('category=${item.category_content.slug}')">
-                    ${item.category_content.name} </a>
-            </li>`);
+        ul.append(
+          `<li class="list-item">
+            <a class="${slug === scategory ? "active" : ""}"
+               onclick="updateURL('category=${encodeURIComponent(slug)}')">
+              ${name}
+            </a>
+          </li>`
+        );
       });
-
-
-    }, complete: function () {
-      $(".request-loader").removeClass('show');
-    }
+    },
+    complete: function () {
+      $(".request-loader").removeClass("show");
+    },
   });
 }
+
+// -----------------------------
+// Resets (keep original behavior)
+// -----------------------------
 function resetURL() {
-  var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-  checkboxes.forEach(function (checkbox) {
-    checkbox.checked = false;
-  });
+  // Uncheck all checkboxes
+  document
+    .querySelectorAll('input[type="checkbox"]')
+    .forEach((cb) => (cb.checked = false));
 
-  document.getElementById('searchForm').reset();
+  // Reset form + price UI
+  document.getElementById("searchForm").reset();
   priceRest();
-  var currentURL = window.location.href;
-  if (currentURL.indexOf('?') != -1) {
-    let updatedURL = currentURL.split('?')[0];
-    window.history.pushState({
-      path: updatedURL
-    }, '', updatedURL);
-    getData(updatedURL)
-  }
-}
-function reset() {
-  var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-  checkboxes.forEach(function (checkbox) {
-    checkbox.checked = false;
-  });
 
-  document.getElementById('searchForm').reset();
+  $('.state, .city, .area').hide();
+  const url = getURL();
+  const clean = new URL(url.origin + url.pathname);
+  pushAndFetch(clean);
+}
+
+function reset() {
+  // Uncheck all checkboxes
+  document
+    .querySelectorAll('input[type="checkbox"]')
+    .forEach((cb) => (cb.checked = false));
+
+  // Reset form + price UI + sort
+  document.getElementById("searchForm").reset();
   priceRest();
   $('select[name="sort"]').val($('select[name="sort"] option:first').val());
 
-  var currentURL = window.location.href;
-  if (currentURL.indexOf('?') != -1) {
-    let updatedURL = currentURL.split('?')[0];
-    window.history.pushState({
-      path: updatedURL
-    }, '', updatedURL);
+  // Reset URL without fetching (your original reset did not fetch here)
+  const url = getURL();
+  const clean = new URL(url.origin + url.pathname);
+  pushURL(clean);
+}
 
+function priceRest() {
+  const omin = document.getElementById("o_min")?.value;
+  const omax = document.getElementById("o_max")?.value;
+  const slider = document.querySelector("[data-range-slider='priceSlider']");
+  if (slider?.noUiSlider && omin != null && omax != null) {
+    slider.noUiSlider.set([omin, omax]);
   }
 }
-function priceRest() {
-  let omin = document.getElementById("o_min").value;
-  let omax = document.getElementById("o_max").value;
-  let slider = document.querySelector("[data-range-slider='priceSlider']");
-  slider.noUiSlider.set([omin, omax]);
-}
 
-
+// -----------------------------
+// Dependent selects (cities/areas)
+// -----------------------------
 function getCities(e) {
-  $('.request-loader').addClass('show');
-  let addedCity = "city_id";
-  let id = $(e).find(':selected').data('id');
-  let cityUrl = baseURL + '/cities'
+  $(".request-loader").addClass("show");
+  const addedCity = "city_id";
+  const id = $(e).find(":selected").data("id");
   $.ajax({
-    type: 'GET',
-    url: cityUrl,
-    data: {
-      state_id: id,
-    },
+    type: "GET",
+    url: baseURL + "/cities",
+    data: { state_id: id },
     success: function (data) {
       if (data.cities.length > 0) {
-        $('.city').show();
-        $('.' + addedCity).find('option').remove().end();
-        $('.' + addedCity).append($(
-          `<option data-id="0"></option>`).val('all').html('All'));
-        $.each(data.cities, function (key, value) {
-          $('.' + addedCity).append(
-            $(
-              `<option data-id="${value.id}"></option>`).val(value
-                .city_content.name).html(value.city_content.name));
+        $(".city").show();
+        const $target = $("." + addedCity);
+        $target
+          .empty()
+          .append($('<option data-id="0"></option>').val("all").text("All"));
+        data.cities.forEach((v) => {
+          $target.append(
+            $("<option></option>")
+              .attr("data-id", v.id)
+              .val(v.city_content.name)
+              .text(v.city_content.name)
+          );
         });
       } else {
-        $('.' + addedCity).find('option').remove().end();
-        $('.city').hide();
+        $("." + addedCity).empty();
+        $(".city").hide();
       }
-      $('.request-loader').removeClass('show');
-    }
+    },
+    complete: function () {
+      $(".request-loader").removeClass("show");
+    },
   });
 }
 
 function getAreas(e) {
-  $('.request-loader').addClass('show');
-  let addedArea = "area_id";
-  let id = $(e).find(':selected').data('id');
-  let areaUrl = baseURL + '/areas'
+  $(".request-loader").addClass("show");
+  const addedArea = "area_id";
+  const id = $(e).find(":selected").data("id");
   $.ajax({
-    type: 'GET',
-    url: areaUrl,
-    data: {
-      city_id: id,
-    },
+    type: "GET",
+    url: baseURL + "/areas",
+    data: { city_id: id },
     success: function (data) {
-      console.log(data.areas);
       if (data.areas.length > 0) {
-        $('.area').show();
-        $('.' + addedArea).find('option').remove().end();
-        $('.' + addedArea).append($(
-          `<option data-id="0"></option>`).val('all').html('All'));
-        $.each(data.areas, function (key, value) {
-          $('.' + addedArea).append(
-            $(
-              `<option data-id="${value.id}"></option>`).val(value.name).html(value.name));
+        $(".area").show();
+        const $target = $("." + addedArea);
+        $target
+          .empty()
+          .append($('<option data-id="0"></option>').val("all").text("All"));
+        data.areas.forEach((v) => {
+          $target.append(
+            $("<option></option>")
+              .attr("data-id", v.id)
+              .val(v.name)
+              .text(v.name)
+          );
         });
       } else {
-        $('.' + addedArea).find('option').remove().end();
-        $('.area').hide();
+        $("." + addedArea).empty();
+        $(".area").hide();
       }
-      $('.request-loader').removeClass('show');
-    }
+    },
+    complete: function () {
+      $(".request-loader").removeClass("show");
+    },
   });
 }
 
+// -----------------------------
+// DOM Ready
+// -----------------------------
 $(document).ready(function () {
-  'use strict';
-  $('#categories li a').on('click', function () {
-    $('#categories li a').removeClass('active');
-    $(this).addClass('active');
+  "use strict";
 
-  })
-
-
-
-  $('body').on('click', '.customPaginagte a', function (event) {
-    event.preventDefault();
-    let page = $(this).attr('href').split('page=')[1];
-    let currentURL = window.location.href;
-    getData(currentURL, page);
+  // Category active state
+  $("#categories").on("click", "li a", function () {
+    $("#categories li a").removeClass("active");
+    $(this).addClass("active");
   });
 
+  // AJAX pagination (preserves current filters)
+  $("body").on("click", ".customPaginagte a", function (event) {
+    event.preventDefault();
+    const page = ($(this).attr("href") || "").split("page=")[1];
+    if (!page) return;
+    const url = getURL();
+    // keep all current params, set page
+    setParam(url, "page", page);
+    pushAndFetch(url);
+  });
+
+  // Prevent back navigation (as in your original)
   history.pushState(null, document.title, location.href);
-  window.addEventListener('popstate', function (event) {
+  window.addEventListener("popstate", function () {
     history.pushState(null, document.title, location.href);
   });
 });

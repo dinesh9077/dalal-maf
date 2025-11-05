@@ -14,6 +14,15 @@ class Project extends Model
     protected $guarded = [];
     // protected $table = 'projects';
 
+    protected $appends = [
+        'featured_image_url',
+    ];
+    
+    public function getFeaturedImageUrlAttribute()
+    {
+        return $this->featured_image ? url('/') . '/assets/img/project/featured/' . $this->featured_image : null;
+    }
+
     public function proejctContents()
     {
         return $this->hasMany(ProjectContent::class);

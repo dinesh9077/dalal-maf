@@ -59,27 +59,41 @@ class PropertyController extends Controller
             $q->where('language_id', $language->id);
         }])->orderBy('serial_number')->get();
 
-        $propertyCategory = null;
-        $category = null;
-        if ($request->filled('category') && $request->category != 'all') {
-            $category = $request->category;
-            $propertyCategory = PropertyCategoryContent::where([['language_id', $language->id], ['slug', $category]])->first();
-        }
-
-        $amenities = [];
-        $amenityInContentId = [];
-        if ($request->filled('amenities')) {
-            $amenities = $request->amenities;
-            foreach ($amenities as $amenity) {
-                $amenConId = AmenityContent::where('name', $amenity)->where('language_id', $language->id)->pluck('amenity_id')->first();
-                array_push($amenityInContentId, $amenConId);
+        // Categories: request 'category' is an array of slugs -> fetch category_ids in one query
+        $categoryIds = [];
+        if ($request->filled('category')) {
+            $slugs = array_filter((array) $request->input('category', []));   // e.g. ['residential','villa']
+            if (!empty($slugs)) {
+                $categoryIds = PropertyCategoryContent::query()
+                    ->where('language_id', $language->id)
+                    ->whereIn('slug', $slugs)
+                    ->pluck('category_id')
+                    ->filter()
+                    ->unique()
+                    ->values()
+                    ->all();
             }
         }
-
-        $amenityInContentId = array_unique($amenityInContentId);
-        $type = null;
-        if ($request->filled('type') && $request->type != 'all') {
-            $type = $request->type;
+         
+        // Amenities: request 'amenities' is an array of names -> fetch amenity_ids in one query
+        $amenityIds = [];
+        if ($request->filled('amenities')) {
+            $names = array_filter((array) $request->input('amenities', []));  // e.g. ['Gym','Pool']
+            if (!empty($names)) {
+                $amenityIds = AmenityContent::query()
+                    ->where('language_id', $language->id)
+                    ->whereIn('name', $names)
+                    ->pluck('amenity_id')
+                    ->filter()
+                    ->unique()
+                    ->values()
+                    ->all();
+            }
+        }
+ 
+        $type = [];
+        if ($request->filled('type')) {
+            $type = $request->type ?? [];
         }
 
         $price = null;
@@ -144,7 +158,8 @@ class PropertyController extends Controller
             $listAreaId =  $getArea->id;
         }
 
-        if ($request->filled('sort')) {
+        if ($request->filled('sort')) 
+        {
             if ($request['sort'] == 'new') {
                 $order_by_column = 'properties.id';
                 $order = 'desc';
@@ -199,7 +214,7 @@ class PropertyController extends Controller
             })
 
             ->when($type, function ($query) use ($type) {
-                return $query->where('properties.type', $type);
+                return $query->whereIn('properties.type', $type);
             })
             ->when($purpose, function ($query) use ($purpose) 
 			{
@@ -216,19 +231,18 @@ class PropertyController extends Controller
             })
             ->when($listAreaId, function ($query) use ($listAreaId) {
                 return $query->where('properties.area_id', $listAreaId);
+            }) 
+            ->when(!empty($categoryIds), function ($query) use ($categoryIds) {
+                return $query->whereIn('properties.category_id', $categoryIds);
             })
-            ->when($category && $propertyCategory, function ($query) use ($propertyCategory) {
-                return $query->where('properties.category_id', $propertyCategory->category_id);
-            })
-
-            ->when(!empty($amenityInContentId), function ($query) use ($amenityInContentId) {
+            ->when(!empty($amenityIds), function ($query) use ($amenityIds) {
                 $query->whereHas(
                     'proertyAmenities',
-                    function ($q) use ($amenityInContentId) {
-                        $q->whereIn('amenity_id', $amenityInContentId);
+                    function ($q) use ($amenityIds) {
+                        $q->whereIn('amenity_id', $amenityIds);
                     },
                     '=',
-                    count($amenityInContentId)
+                    count($amenityIds)
                 );
             })
             ->when($price, function ($query) use ($price) {
@@ -347,7 +361,7 @@ class PropertyController extends Controller
 		};
         return view('frontend.property.featured',compact('property_contents', 'title')); 
     }
-
+ 
     public function details($slug)
     {
 		
@@ -400,17 +414,8 @@ class PropertyController extends Controller
         }])->find($property->vendor_id);
 
         $information['admin']  = Admin::where('role_id', null)->first();
-
-
-        $categories = PropertyCategory::where('status', 1)->with(['categoryContent' => function ($q) use ($language) {
-            $q->where('language_id', $language->id);
-        }])->get();
-        $categories->map(function ($category) {
-            $category['propertiesCount'] = $category->properties()->where([['status', 1], ['approve_status', 1]])->count();
-        });
-        $information['categories'] = $categories;
-
-
+ 
+ 
         $information['relatedProperty'] = Property::where([['properties.status', 1], ['properties.approve_status', 1]])->leftJoin('property_contents', 'properties.id', 'property_contents.property_id')
             ->leftJoin('vendors', 'properties.vendor_id', '=', 'vendors.id')
             ->leftJoin('memberships', function ($join) {
@@ -438,7 +443,7 @@ class PropertyController extends Controller
     }
 
     public function contact(Request $request)
-    {
+    {  
         if (!Auth::guard('web')->check() && !Auth::guard('vendor')->check() && !Auth::guard('agent')->check()) {
             // if neither web nor vendor is logged in
             return redirect()->route('user.login')->with('error', 'Please login first');
@@ -521,7 +526,7 @@ class PropertyController extends Controller
         return back()->with('success', 'Inquiry sent successfully');
     }
     public function contactUser(Request $request)
-    {
+    { 
         $rules = [
             'name' => 'required',
             'email' => 'required|email:rfc,dns',

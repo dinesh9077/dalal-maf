@@ -42,6 +42,14 @@ class Admin extends Model implements AuthenticatableContract
    */
   protected $hidden = ['password'];
 
+  protected $appends = [
+    'full_image',
+  ];
+  public function getFullImageAttribute()
+  {
+    return $this->image ? url('/') . '/assets/img/admins/' . $this->image : null;
+  }
+  
   public function role()
   {
     return $this->belongsTo(RolePermission::class, 'role_id', 'id');

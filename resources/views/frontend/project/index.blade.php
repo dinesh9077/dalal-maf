@@ -146,7 +146,7 @@ $version = $basicInfo->theme_version;
                                         </div> 
                                         <div class="col-lg-3 mb-10">
                                             <button class="btn btn-lg btn-primary w-100" style="background : #6c603c;" type="submit">
-                                                <i class="far fa-search"></i> {{ __('Search') }}
+                                                <i class="fal fa-search"></i> {{ __('Search') }}
                                             </button>
                                         </div>
                                     </div>

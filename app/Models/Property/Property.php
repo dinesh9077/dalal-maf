@@ -17,6 +17,26 @@ class Property extends Model
 
     protected $guarded = [];
 
+    protected $appends = [
+        'featured_image_url',
+        'floor_planning_image_url',
+        'video_image_url',
+    ];
+    public function getFeaturedImageUrlAttribute()
+    {
+        return $this->featured_image ? url('/') . '/assets/img/property/featureds/' . $this->featured_image : null;
+    } 
+
+    public function getFloorPlanningImageUrlAttribute()
+    {
+        return $this->floor_planning_image ? url('/') . '/assets/img/property/plannings/' . $this->floor_planning_image : null;
+    } 
+
+    public function getVideoImageUrlAttribute()
+    {
+        return $this->video_image ? url('/') . '/assets/img/property/video/' . $this->video_image : null;
+    }
+
     protected function isCountryActive(): Attribute
     {
         return Attribute::make(

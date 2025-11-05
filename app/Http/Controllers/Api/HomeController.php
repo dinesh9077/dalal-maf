@@ -18,8 +18,10 @@ use App\Models\Prominence\FeatureSection;
 use App\Models\Property\{
     Area, City, CityContent, Content, Country, CountryContent,
     FeaturedProperty, Property, PropertyAmenity, PropertyCategory,
-    PropertyCategoryContent, PropertyContact, State, StateContent
+    PropertyCategoryContent, PropertyContact, State, StateContent,
+	Wishlist
 };
+use App\Models\Project\ProjectContent;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Traits\ApiResponseTrait;
@@ -535,29 +537,43 @@ class HomeController extends Controller
 		
         $misc = new MiscellaneousController();
         $language = $misc->getLanguage();
-         
-        $propertyCategory = null;
-        $category = null;
-        if ($request->filled('category') && $request->category != 'all') {
-            $category = $request->category;
-            $propertyCategory = PropertyCategoryContent::where([['language_id', $language->id], ['slug', $category]])->first();
-        }
 
-        $amenities = [];
-        $amenityInContentId = [];
-        if ($request->filled('amenities')) {
-            $amenities = $request->amenities;
-            foreach ($amenities as $amenity) {
-                $amenConId = AmenityContent::where('name', $amenity)->where('language_id', $language->id)->pluck('amenity_id')->first();
-                array_push($amenityInContentId, $amenConId);
-            }
-        }
+		// Categories: request 'category' is an array of slugs -> fetch category_ids in one query
+		$categoryIds = [];
+		if ($request->filled('category')) {
+			$slugs = array_filter((array) $request->input('category', []));   // e.g. ['residential','villa']
+			if (!empty($slugs)) {
+				$categoryIds = PropertyCategoryContent::query()
+					->where('language_id', $language->id)
+					->whereIn('slug', $slugs)
+					->pluck('category_id')
+					->filter()
+					->unique()
+					->values()
+					->all();
+			}
+		}
 
-        $amenityInContentId = array_unique($amenityInContentId);
-        $type = null;
-        if ($request->filled('type') && $request->type != 'all') {
-            $type = $request->type;
-        }
+		// Amenities: request 'amenities' is an array of names -> fetch amenity_ids in one query
+		$amenityIds = [];
+		if ($request->filled('amenities')) {
+			$names = array_filter((array) $request->input('amenities', []));  // e.g. ['Gym','Pool']
+			if (!empty($names)) {
+				$amenityIds = AmenityContent::query()
+					->where('language_id', $language->id)
+					->whereIn('name', $names)
+					->pluck('amenity_id')
+					->filter()
+					->unique()
+					->values()
+					->all();
+			}
+		}
+
+		$type = [];
+		if ($request->filled('type')) {
+			$type = $request->type ?? [];
+		}
 
         $price = null;
         if ($request->filled('price') && $request->price != 'all') {
@@ -643,7 +659,7 @@ class HomeController extends Controller
             $order = 'desc';
         }
 
-        $property_contents = Property::where('property_type','partial')->where([['properties.status', 1], ['properties.approve_status', 1]])
+		$property_contents = Property::where('property_type', 'partial')->where([['properties.status', 1], ['properties.approve_status', 1]])
 		->join('property_contents', 'properties.id', 'property_contents.property_id')
 		->join('property_categories', 'property_categories.id', 'properties.category_id')
 		->where('property_contents.language_id', $language->id)
@@ -676,10 +692,9 @@ class HomeController extends Controller
 		})
 
 		->when($type, function ($query) use ($type) {
-			return $query->where('properties.type', $type);
+			return $query->whereIn('properties.type', $type);
 		})
-		->when($purpose, function ($query) use ($purpose) 
-		{
+		->when($purpose, function ($query) use ($purpose) {
 			return $query->whereIn('properties.purpose', $purpose);
 		})
 		->when($countryId, function ($query) use ($countryId) {
@@ -694,18 +709,17 @@ class HomeController extends Controller
 		->when($listAreaId, function ($query) use ($listAreaId) {
 			return $query->where('properties.area_id', $listAreaId);
 		})
-		->when($category && $propertyCategory, function ($query) use ($propertyCategory) {
-			return $query->where('properties.category_id', $propertyCategory->category_id);
+		->when(!empty($categoryIds), function ($query) use ($categoryIds) {
+			return $query->whereIn('properties.category_id', $categoryIds);
 		})
-
-		->when(!empty($amenityInContentId), function ($query) use ($amenityInContentId) {
+		->when(!empty($amenityIds), function ($query) use ($amenityIds) {
 			$query->whereHas(
 				'proertyAmenities',
-				function ($q) use ($amenityInContentId) {
-					$q->whereIn('amenity_id', $amenityInContentId);
+				function ($q) use ($amenityIds) {
+					$q->whereIn('amenity_id', $amenityIds);
 				},
 				'=',
-				count($amenityInContentId)
+				count($amenityIds)
 			);
 		})
 		->when($price, function ($query) use ($price) {
@@ -743,10 +757,10 @@ class HomeController extends Controller
 			// Split by comma
 			$parts = array_map('trim', explode(',', $location));
 
-			$areaName   = $parts[0] ?? null; // e.g. "Pasodara Patiya" or "Surat"
-			$cityName   = $parts[1] ?? null; // e.g. "Surat"
-			$stateName  = $parts[2] ?? null; // e.g. "Gujarat"
-			$countryName= $parts[3] ?? null;
+			$areaName = $parts[0] ?? null; // e.g. "Pasodara Patiya" or "Surat"
+			$cityName = $parts[1] ?? null; // e.g. "Surat"
+			$stateName = $parts[2] ?? null; // e.g. "Gujarat"
+			$countryName = $parts[3] ?? null;
 
 			return $query->where(function ($q) use ($areaName, $cityName, $stateName, $countryName) {
 				if ($areaName && $cityName) {
@@ -762,23 +776,31 @@ class HomeController extends Controller
 				} else {
 					// fallback: search anywhere
 					$q->where('areas.name', 'LIKE', "%{$areaName}%")
-					  ->orWhere('property_city_contents.name', 'LIKE', "%{$areaName}%")
-					  ->orWhere('property_state_contents.name', 'LIKE', "%{$areaName}%")
-					  ->orWhere('property_country_contents.name', 'LIKE', "%{$areaName}%");
+						->orWhere('property_city_contents.name', 'LIKE', "%{$areaName}%")
+						->orWhere('property_state_contents.name', 'LIKE', "%{$areaName}%")
+						->orWhere('property_country_contents.name', 'LIKE', "%{$areaName}%");
 				}
 			});
 		})
-		->with(['categoryContent' => function ($q) use ($language) {
-			$q->where('language_id', $language->id);
-		}])
+		->with([
+			'categoryContent' => function ($q) use ($language) {
+				$q->where('language_id', $language->id);
+			}
+		])
 
-		->select('properties.*',
-			DB::raw("CONCAT('" . URL::to('/') . "/assets/img/property/featureds/', properties.featured_image) as featured_image_url"),
-			'property_categories.id as categoryId', 'property_contents.title', 'property_contents.slug', 'property_contents.address', 'property_contents.description', 'property_contents.language_id',
+		->select(
+			'properties.*',
+			'property_categories.id as categoryId',
+			'property_contents.title',
+			'property_contents.slug',
+			'property_contents.address',
+			'property_contents.description',
+			'property_contents.language_id',
 			'areas.name as area_name',
 			'property_city_contents.name as city_name',
 			'property_state_contents.name as state_name',
-			'property_country_contents.name as country_name')
+			'property_country_contents.name as country_name'
+		)
 		->orderBy($order_by_column, $order)
 		->offset($offset)
 		->limit($limit)
@@ -859,5 +881,451 @@ class HomeController extends Controller
 		
 		return $this->successResponse($amenities);
 	}
-  
+	
+	public function propertyDetails($slug)
+	{
+		$misc = new MiscellaneousController();
+		$language = $misc->getLanguage();  
+		$propertyContent = Content::where('slug', $slug)->firstOrFail(); 
+
+		$property = Content::query()
+		->where('property_contents.language_id', $language->id)
+		->where('property_contents.property_id', $propertyContent->property_id)
+		->leftJoin('properties', 'property_contents.property_id', 'properties.id')
+		->where([['properties.status', 1]])
+		->when('properties.vendor_id' != 0, function ($query) {
+
+			$query->leftJoin('memberships', 'properties.vendor_id', '=', 'memberships.vendor_id')
+				->where(function ($query) {
+					$query->where([
+						['memberships.status', '=', 1],
+						['memberships.start_date', '<=', now()->format('Y-m-d')],
+						['memberships.expire_date', '>=', now()->format('Y-m-d')],
+					])->orWhere('properties.vendor_id', '=', 0);
+				});
+		})
+		->when('properties.vendor_id' != 0, function ($query) {
+			return $query->leftJoin('vendors', 'properties.vendor_id', '=', 'vendors.id')
+				->where(function ($query) {
+					$query->where('vendors.status', '=', 1)->orWhere('properties.vendor_id', '=', 0);
+				});
+		}) 
+		->with(['propertySpacifications', 'galleryImages'])
+		->select('properties.*','property_contents.*', 'properties.id as propertyId', 'property_contents.id as contentId')->firstOrFail();
+
+		$information['propertyContent'] = $property;
+		$information['sliders'] = $property->galleryImages;
+		$information['amenities'] = PropertyAmenity::with([
+			'amenityContent' => function ($q) use ($language) {
+				$q->where('language_id', $language->id);
+			}
+		])->where('property_id', $property->property_id)->get();
+		$information['agent'] = Agent::with([
+			'agent_info' => function ($q) use ($language) {
+				$q->where('language_id', $language->id);
+			}
+		])->find($property->agent_id);
+
+
+		$information['vendor'] = Vendor::with([
+			'vendor_info' => function ($q) use ($language) {
+				$q->where('language_id', $language->id);
+			}
+		])->find($property->vendor_id);
+
+		$information['admin'] = Admin::where('role_id', null)->first();
+
+   
+		$information['relatedProperty'] = Property::where([['properties.status', 1], ['properties.approve_status', 1]])->leftJoin('property_contents', 'properties.id', 'property_contents.property_id')
+			->leftJoin('vendors', 'properties.vendor_id', '=', 'vendors.id')
+			->leftJoin('memberships', function ($join) {
+				$join->on('properties.vendor_id', '=', 'memberships.vendor_id')
+					->where('memberships.status', '=', 1)
+					->where('memberships.start_date', '<=', Carbon::now()->format('Y-m-d'))
+					->where('memberships.expire_date', '>=', Carbon::now()->format('Y-m-d'));
+			})
+			->where(function ($query) {
+				$query->where('properties.vendor_id', '=', 0)
+					->orWhere(function ($query) {
+						$query->where([
+							['vendors.status', '=', 1],
+
+						]);
+					});
+			})->where([['properties.id', '!=', $property->property_id], ['properties.category_id', $property->category_id]])
+			->where('property_contents.language_id', $language->id)->latest('properties.created_at')
+			->select('properties.*', 'property_contents.title', 'property_contents.slug', 'property_contents.address', 'property_contents.language_id')
+			->take(5)->get();
+ 
+		return $this->successResponse($information);
+	}
+
+	public function propertyEnquiry(Request $request)
+	{ 
+		$validator = Validator::make($request->all(), [
+			'auth_type' => 'required|in:user,agent,vendor',
+			"auth_id" => 'required|integer',
+			'name' => 'required|string|max:255',
+			'email' => 'required|email|max:255',
+			'phone' => 'required|string|max:255',
+			'message' => 'required|string',
+			'property_id' => 'required|integer|exists:properties,id',
+		]);
+
+		if ($validator->fails()) {
+			return $this->errorResponse($validator->errors()->first(), 422);
+		}
+
+		$authType = $request->auth_type;
+		$guard = $authType == 'vendor' ? 'vendor_api' : ($authType === "agent" ? 'agent_api' : 'api'); 
+		$authUser = Auth::guard($guard)->user(); 
+		if (!$authUser) {
+			return $this->errorResponse('Please login first');
+		}
+
+		$request['to_mail'] = $authUser->email ?? (Admin::where('role_id', null)->first()->email ?? null);
+		   
+		try {
+			PropertyContact::create([
+				'vendor_id' => $authType == "vendor" ? $authUser->id : null,
+				'agent_id' => $authType == "agent" ? $authUser->id : null,
+				'property_id' => $request->property_id,
+				'inquiry_by_user' => $authType == "user" ? $authUser->id : null,
+				'inquiry_by_vendor' => $authType == "vendor" ? $authUser->id : null,
+				'inquiry_by_agent' => $authType == "agent" ? $authUser->id : null,
+				'is_new' => '0',
+				'name' => $request->name,
+				'email' => $request->email,
+				'phone' => $request->phone,
+				'message' => $request->message,
+				'status' => 'in-progress', 
+			]);
+
+			if($request['to_mail'])
+			{
+				$this->sendMail($request);
+			}
+			return $this->successResponse([],'Your inquiry has been sent successfully.');
+		} catch (\Exception $e) {
+			return $this->errorResponse('Something went wrong. Please try again.'.$e->getMessage()); 
+		} 
+	}
+
+	public function sendMail($request)
+	{
+
+		$info = DB::table('basic_settings')
+			->select('website_title', 'smtp_status', 'smtp_host', 'smtp_port', 'encryption', 'smtp_username', 'smtp_password', 'from_mail', 'from_name', 'to_mail')
+			->first();
+		$name = $request->name;
+		$to = $request->to_mail;
+
+		$subject = 'Contact for property';
+
+		$message = '<p>A new message has been sent.<br/><strong>Client Name: </strong>' . $name . '<br/><strong>Client Mail: </strong>' . $request->email . '<br/><strong>Client Phone: </strong>' . $request->phone . '</p><p>Message : ' . $request->message . '</p>';
+
+		if ($info->smtp_status == 1) {
+			try {
+				$smtp = [
+					'transport' => 'smtp',
+					'host' => $info->smtp_host,
+					'port' => $info->smtp_port,
+					'encryption' => $info->encryption,
+					'username' => $info->smtp_username,
+					'password' => $info->smtp_password,
+					'timeout' => null,
+					'auth_mode' => null,
+				]; 
+			} catch (\Exception $e) {  
+				return;
+			}
+		}
+		$data = [
+			'to' => $to,
+			'subject' => $subject,
+			'message' => $message,
+		];
+		try {
+			Mail::send([], [], function (Message $message) use ($data, $info) {
+				$fromMail = $info->from_mail;
+				$fromName = $info->from_name;
+				$message->to($data['to'])
+					->subject($data['subject'])
+					->from($fromMail, $fromName)
+					->html($data['message'], 'text/html');
+			});
+		} catch (\Exception $e) { 
+			return;
+		}
+	}
+
+	public function addToWishlist(Request $request)
+	{
+		try {
+			// ✅ Step 1: Validate Request
+			$validator = Validator::make($request->all(), [
+				'auth_type' => 'required|in:user,vendor,agent',
+				'property_id' => 'required|integer|min:1',
+			]);
+
+			if ($validator->fails()) {
+				return $this->errorResponse($validator->errors()->first());
+			}
+
+			// ✅ Step 2: Map auth type → guard + column
+			$map = [
+				'user' => ['guard' => 'api', 'column' => 'user_id'],
+				'vendor' => ['guard' => 'vendor_api', 'column' => 'vendor_id'],
+				'agent' => ['guard' => 'agent_api', 'column' => 'agent_id'],
+			];
+
+			$authType = $request->input('auth_type');
+			$guard = $map[$authType]['guard'];
+			$column = $map[$authType]['column'];
+
+			// ✅ Step 3: Check Authentication
+			if (!Auth::guard($guard)->check()) {
+				return $this->errorResponse('Please login to add items to wishlist.');
+			}
+
+			$userId = Auth::guard($guard)->id();
+			$propertyId = (int) $request->input('property_id');
+
+			// ✅ Step 4: Create Wishlist Entry (idempotent)
+			$wishlist = Wishlist::firstOrCreate(
+				['property_id' => $propertyId, $column => $userId],
+				[] // No extra attributes
+			);
+
+			// ✅ Step 5: Count Wishlist Items
+			$count = Wishlist::where($column, $userId)->count();
+
+			// ✅ Step 6: Build Response
+			$message = $wishlist->wasRecentlyCreated
+				? 'Added to your wishlist successfully!'
+				: 'You already added this property to your wishlist!';
+
+			return $this->successResponse(['count' => $count], $message);
+
+		} catch (\Throwable $e) {
+			return $this->errorResponse('Something went wrong: ' . $e->getMessage());
+		}
+	} 
+	public function removeToWishlist(Request $request)
+	{
+		try {
+			// 1) Validate input
+			$validator = Validator::make($request->all(), [
+				'auth_type' => 'required|in:user,vendor,agent',
+				'property_id' => 'required|integer|min:1',
+			]);
+
+			if ($validator->fails()) {
+				return $this->errorResponse($validator->errors()->first());
+			}
+
+			// 2) Map auth_type -> guard + column
+			$map = [
+				'user' => ['guard' => 'api', 'column' => 'user_id'],
+				'vendor' => ['guard' => 'vendor_api', 'column' => 'vendor_id'],
+				'agent' => ['guard' => 'agent_api', 'column' => 'agent_id'],
+			];
+
+			$authType = $request->input('auth_type');
+			$guard = $map[$authType]['guard'];
+			$column = $map[$authType]['column'];
+
+			// 3) Must be authenticated for that guard
+			if (!Auth::guard($guard)->check()) {
+				return $this->errorResponse('Please login to remove items from wishlist.');
+			}
+
+			$userId = Auth::guard($guard)->id();
+			$propertyId = (int) $request->input('property_id');
+
+			// 4) Single-query delete (fast + safe)
+			$deleted = Wishlist::where('property_id', $propertyId)
+				->where($column, $userId)
+				->delete();
+
+			if (!$deleted) {
+				return $this->errorResponse('Item not found in wishlist.');
+			}
+
+			// 5) Return updated count (helps update UI badges instantly)
+			$count = Wishlist::where($column, $userId)->count();
+
+			return $this->successResponse(['count' => $count], 'Removed from wishlist successfully!');
+		} catch (\Throwable $e) {
+			return $this->errorResponse('Something went wrong: ' . $e->getMessage());
+		}
+	} 
+
+	public function wishlistCount(Request $request)
+	{
+		// Map incoming auth_type -> guard + wishlist column
+		$map = [
+			'user' => ['guard' => 'api', 'column' => 'user_id'],
+			'vendor' => ['guard' => 'vendor_api', 'column' => 'vendor_id'],
+			'agent' => ['guard' => 'agent_api', 'column' => 'agent_id'],
+		];
+
+		$authType = $request->string('auth_type')->lower()->toString(); // 'user' | 'vendor' | 'agent'
+		if (!isset($map[$authType])) {
+			return $this->errorResponse('Invalid auth type.');
+		}
+
+		$guard = $map[$authType]['guard'];
+		$column = $map[$authType]['column'];
+
+		// Must be authenticated on that guard
+		if (!Auth::guard($guard)->check()) {
+			return $this->errorResponse('Please login to view wishlist count.');
+		}
+
+		$id = Auth::guard($guard)->id(); 
+		$count = Wishlist::where($column, $id)->count();
+
+		return $this->successResponse(['count' => $count]);
+	}
+
+	public function projects(Request $request)
+	{
+		$limit = $request->get('limit', 10);  
+		$offset = $request->get('offset', 0);
+		
+		$misc = new MiscellaneousController();
+		$language = $misc->getLanguage();
+		   
+		$title = $location = $vendorId = null;
+		if ($request->filled('title') && $request->filled('title')) {
+			$title = $request->title;
+		}
+		if ($request->filled('location') && $request->filled('location')) {
+			$location = $request->location;
+		}
+		if ($request->filled('vendor_id') && $request->filled('vendor_id')) {
+			$vendorId = $request->vendor_id;
+		}
+		if ($request->filled('sort')) {
+			if ($request['sort'] == 'new') {
+				$order_by_column = 'projects.id';
+				$order = 'desc';
+			} elseif ($request['sort'] == 'old') {
+				$order_by_column = 'projects.id';
+				$order = 'asc';
+			} elseif ($request['sort'] == 'high-to-low') {
+				$order_by_column = 'projects.min_price';
+				$order = 'desc';
+			} elseif ($request['sort'] == 'low-to-high') {
+				$order_by_column = 'projects.min_price';
+				$order = 'asc';
+			} else {
+				$order_by_column = 'projects.id';
+				$order = 'desc';
+			}
+		} else {
+			$order_by_column = 'projects.id';
+			$order = 'desc';
+		}
+
+		$projects = Project::where('projects.approve_status', 1)
+			->join('project_contents', 'projects.id', 'project_contents.project_id')
+			->when('projects.vendor_id' != 0, function ($query) {
+
+				$query->leftJoin('memberships', 'projects.vendor_id', '=', 'memberships.vendor_id')
+					->where(function ($query) {
+						$query->where([
+							['memberships.status', '=', 1],
+							['memberships.start_date', '<=', now()->format('Y-m-d')],
+							['memberships.expire_date', '>=', now()->format('Y-m-d')],
+						])->orWhere('projects.vendor_id', '=', 0);
+					});
+			})
+			->when('projects.vendor_id' != 0, function ($query) {
+				return $query->leftJoin('vendors', 'projects.vendor_id', '=', 'vendors.id')
+					->where(function ($query) {
+						$query->where('vendors.status', '=', 1)->orWhere('projects.vendor_id', '=', 0);
+					});
+			})
+			->where('project_contents.language_id', $language->id)
+			->when($title, function ($query) use ($title) {
+				return $query->where('project_contents.title', 'LIKE', '%' . $title . '%');
+			})
+			->when($vendorId, function ($query) use ($vendorId) {
+				return $query->where('projects.vendor_id', $vendorId);
+			})
+			->when($location, function ($query) use ($location) {
+				return $query->where('project_contents.address', 'LIKE', '%' . $location . '%');
+			})
+			->with(['vendor:id,username,email,photo'])
+			->select('projects.*', 'project_contents.title', 'project_contents.slug', 'project_contents.address') 
+			->orderBy($order_by_column, $order)
+			->offset($offset)
+			->limit($limit)
+			->get();;
+
+		$information['projects'] = $projects;  
+
+		return $this->successResponse($information);
+	}
+
+	public function projectDetails($slug)
+	{
+		$misc = new MiscellaneousController();
+		$language = $misc->getLanguage(); 
+
+		$projectContent = ProjectContent::where('slug', $slug)->firstOrFail();
+		$project = Project::query()
+			//->where('projects.approve_status', 1)
+			->where('projects.id', $projectContent->project_id)
+			->where('project_contents.language_id', $language->id)
+			->join('project_contents', 'projects.id', 'project_contents.project_id')
+			->when('projects.vendor_id' != 0, function ($query) {
+
+				$query->leftJoin('memberships', 'projects.vendor_id', '=', 'memberships.vendor_id')
+					->where(function ($query) {
+						$query->where([
+							['memberships.status', '=', 1],
+							['memberships.start_date', '<=', now()->format('Y-m-d')],
+							['memberships.expire_date', '>=', now()->format('Y-m-d')],
+						])->orWhere('projects.vendor_id', '=', 0);
+					});
+			})
+			->when('projects.vendor_id' != 0, function ($query) {
+				return $query->leftJoin('vendors', 'projects.vendor_id', '=', 'vendors.id')
+					->where(function ($query) {
+						$query->where('vendors.status', '=', 1)->orWhere('projects.vendor_id', '=', 0);
+					});
+			})
+
+			->select('projects.*', 'project_contents.id as contentId', 'project_contents.title', 'project_contents.slug', 'project_contents.address', 'project_contents.language_id', 'project_contents.description', 'project_contents.meta_keyword', 'project_contents.meta_description')
+
+			->with([
+				'projectTypes',
+				'galleryImages',
+				'projectTypeContents' => function ($q) use ($language) {
+					$q->where('language_id', $language->id);
+				},
+				'floorplanImages',
+				'specifications.specificationContents'
+			])
+			->firstOrFail();
+			
+		if ($project->vendor_id == 0) { 
+			$vendor = Admin::where('role_id', null)->select('username')->first();
+			$information['username'] = $vendor->username;
+		}
+		$information['project'] = $project;
+		$information['floorPlanImages'] = $information['project']->floorplanImages;
+		$information['galleryImages'] = $information['project']->galleryImages;
+ 
+		return $this->successResponse($information);
+	}
+
+	public function vendors()
+	{    
+		$vendors = Vendor::where([['id', '!=', 0], ['status', 1]])->get();
+		return $this->successResponse($vendors);
+	}
 }

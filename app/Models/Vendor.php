@@ -37,7 +37,15 @@
 			'show_phone_number',
 			'show_contact_form',
 		];
+
+		protected $appends = [
+			'full_photo',
+		];
 		
+		public function getFullPhotoAttribute()
+		{
+			return $this->photo ? url('/') . '/assets/admin/img/vendor-photo/' . $this->photo : null;
+		}
 		public function vendor_infos()
 		{
 			return $this->hasMany(VendorInfo::class);

@@ -16,7 +16,7 @@ class JwtMiddleware
     public function handle($request, Closure $next)
     {   
         try {
-            return $next($request);  
+            $user = JWTAuth::parseToken()->authenticate();
         } catch (TokenExpiredException $e) {
 			return $this->errorResponse('Token has expired.', 401); 
         } catch (TokenInvalidException $e) {

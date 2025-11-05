@@ -22,13 +22,26 @@ Route::prefix('front')->group(function ()
     Route::post('view-all-partners', [HomeController::class, 'viewAllPartners']);
     Route::post('view-all-blogs', [HomeController::class, 'viewAllBlogs']);
     Route::get('blog/{slug}', [HomeController::class, 'blogDetails']);
+
+    //Properties
     Route::get('properties', [HomeController::class, 'properties']);
     Route::get('cities', [HomeController::class, 'cities']);
-    Route::get('areas', [HomeController::class, 'areas']);
+    Route::get('areas', [HomeController::class, 'areas']);
     Route::get('states', [HomeController::class, 'states']);
     Route::get('countries', [HomeController::class, 'countries']);
     Route::get('categories', [HomeController::class, 'categories']);
     Route::get('amenities', [HomeController::class, 'amenities']);
+    Route::get('property/details/{slug}', [HomeController::class, 'propertyDetails']);
+    Route::post('property/enquiry', [HomeController::class, 'propertyEnquiry'])->middleware('jwt.verify');
+
+    //Wishlist
+    Route::post('property/add-to-wishlist', [HomeController::class, 'addToWishlist'])->middleware('jwt.verify');
+    Route::post('property/remove-to-wishlist', [HomeController::class, 'removeToWishlist'])->middleware('jwt.verify');
+    Route::post('property/wishlist-count', [HomeController::class, 'wishlistCount'])->middleware('jwt.verify');
+
+    Route::get('projects', [HomeController::class, 'projects']);
+    Route::get('projects/{slug}', [HomeController::class, 'projectDetails']);
+    Route::get('vendors', [HomeController::class, 'vendors']);
 }); 
 
 // User routes 

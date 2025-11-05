@@ -94,10 +94,10 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 		
         @php
 		$tabs = [
-		'buy' => 'Buy',
-		'sale' => 'Sale',
-		'rent' => 'Rent',
-		'lease' => 'Lease',
+			'buy' => 'Buy',
+			'sale' => 'Sale',
+			'rent' => 'Rent',
+			'lease' => 'Lease',
 		];
 		@endphp
 		
@@ -118,9 +118,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 					</ul>
 				</div>
 				
-				{{-- Common Hidden Fields --}}
-				<input type="hidden" value="{{ $min }}" id="min">
-				<input type="hidden" value="{{ $max }}" id="max">
+				{{-- Common Hidden Fields --}} 
 				<input type="hidden" id="currency_symbol" value="{{ $basicInfo->base_currency_symbol }}">
 				<input class="form-control" type="hidden" value="{{ $min }}" id="o_min">
 				<input class="form-control" type="hidden" value="{{ $max }}" id="o_max">
@@ -166,7 +164,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 							<div class="grid-item home-des-border">
 								<div class="form-group">
 									<label for="type_{{ $key }}" class="icon-end">{{ __('Property Type') }}</label>
-									<select name="type"
+									<select name="type[]"
 									id="type_{{ $key }}"
 									class="form-control select2">
 										<option selected disabled value="">{{ __('Select Property') }}</option>
@@ -182,7 +180,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 							<div class="grid-item home-des-border">
 								<div class="form-group">
 									<label for="category_{{ $key }}" class="icon-end">{{ __('Categories') }}</label>
-									<select name="category"
+									<select name="category[]"
 									id="category_{{ $key }}"
 									class="form-control select2 bringCategory">
 										<option selected disabled value="">{{ __('Select Category') }}</option>
@@ -1748,7 +1746,8 @@ return asset('assets/img/hero/static/' . $img);
 	['buy', 'sale', 'rent', 'lease'].forEach(key => {
 		const slider = document.querySelector(`[data-range-slider="filterPriceSlider_${key}"]`);
 		const valueEl = document.querySelector(`[data-range-value="filterPriceSlider_${key}_value"]`);
-		
+		const minInput = document.getElementById(`min_${key}`);
+		const maxInput = document.getElementById(`max_${key}`);
 		if (slider && valueEl) {
 			// Initialize your price range slider logic here
 			// Example (if using noUiSlider or similar):
@@ -1758,7 +1757,10 @@ return asset('assets/img/hero/static/' . $img);
 				range: { min: min, max: max }
 			});
 			
-			slider.noUiSlider.on('update', (values) => {
+			slider.noUiSlider.on('update', (values) =>
+			{ 
+				minInput.value = Math.round(values[0]);
+				maxInput.value = Math.round(values[1]);
 				valueEl.textContent = `${values[0]} - ${values[1]}`;
 			});
 		}

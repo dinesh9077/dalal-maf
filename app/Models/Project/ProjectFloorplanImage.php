@@ -10,4 +10,13 @@ class ProjectFloorplanImage extends Model
     use HasFactory;
     
     protected $guarded= [];
+ 
+    protected $appends = [
+        'image_url',
+    ];
+
+    public function getImageUrlAttribute()
+    {
+        return $this->image ? url('/') . '/assets/img/project/floor-paln-images/' . $this->image : null;
+    }
 }

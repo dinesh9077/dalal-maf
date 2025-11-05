@@ -87,8 +87,7 @@ class ProjectController extends Controller
             ->select('projects.*',  'project_contents.title', 'project_contents.slug', 'project_contents.address')
             ->orderBy($order_by_column, $order)
             ->paginate(6);
-        $information['projects'] = $projects;
-        $information['contents'] = $projects;
+        $information['projects'] = $projects; 
 
 
         return view('frontend.project.index', $information);
