@@ -22,8 +22,36 @@ $version = $basicInfo->theme_version;
 @section('content')
 
 <style>
-            .new-main-navbar {
+.new-main-navbar {
     background-color: #6c603c;
+}
+
+@media(min-width:320px) and (max-width:760px) {
+    .new-contect-design-frame-5 {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 20px 0px;
+        gap: 20px;
+    }
+
+    .new-contect-design-frame-6 {
+        margin-top: 0 !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .new-contect-design-frame-5 {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        margin: 20px 0px;
+        gap: 50px;
+    }
+
+    .new-contect-design-frame-6 {
+        margin-top: 0 !important;
+    }
 }
 </style>
 
@@ -166,7 +194,7 @@ $version = $basicInfo->theme_version;
 </div> -->
 
 
-<div class="contact-area  ptb-100" style="margin-top: 100px;">
+<div class="contact-area  pt-60 pb-60" style="margin-top: 100px;">
 
     <a href="https://wa.me/9925133440" target="_blank">
         <div class="whatsapp-btn" data-aos="fade-up">
@@ -319,8 +347,10 @@ $version = $basicInfo->theme_version;
 
                         <div class="new-contect-design-div">
                             <p class="new-contect-design-lorem">
-                                We’d love to hear from you. Reach out with questions, ideas, or collaboration opportunities today.
-                                 We’d love to hear from you. Reach out with questions, ideas, or collaboration opportunities today.
+                                We’d love to hear from you. Reach out with questions, ideas, or collaboration
+                                opportunities today.
+                                We’d love to hear from you. Reach out with questions, ideas, or collaboration
+                                opportunities today.
                             </p>
                         </div>
 
@@ -329,7 +359,8 @@ $version = $basicInfo->theme_version;
 
                             @if (!empty($info->contact_number))
                             <div class="new-contect-design-frame-6 d-flex" style="gap : 20px; margin-top : 70px;">
-                                <img class="new-contect-design-img" src="{{ asset('assets/front/images/acrs-imag/phone-call.png') }}" alt="Call Icon" />
+                                <img class="new-contect-design-img"
+                                    src="{{ asset('assets/front/images/acrs-imag/phone-call.png') }}" alt="Call Icon" />
                                 <div class="new-contect-design-frame-7">
                                     <div class="new-contect-design-text-2">CALL US</div>
                                     <div class="new-contect-design-text-4">
@@ -342,7 +373,8 @@ $version = $basicInfo->theme_version;
 
                             @if (!empty($info->email_address))
                             <div class="new-contect-design-frame-6 d-flex" style="gap : 20px; margin-top : 60px;">
-                                <img class="new-contect-design-img" src="{{ asset('assets/front/images/acrs-imag/email (1).png') }}" alt="Email Icon" />
+                                <img class="new-contect-design-img"
+                                    src="{{ asset('assets/front/images/acrs-imag/email (1).png') }}" alt="Email Icon" />
                                 <div class="new-contect-design-frame-7">
                                     <div class="new-contect-design-text-2">EMAIL</div>
                                     <div class="new-contect-design-text-4">
@@ -358,8 +390,8 @@ $version = $basicInfo->theme_version;
                     </div>
                 </div>
 
-                <div class="col-lg-6">
-                    <span class="sec-subtitle style-2 text-25 sm:text-24 fw-600"> Send a message</span>
+                <div class="col-lg-6 ">
+                    <span class="sec-subtitle style-2 text-25 sm:text-24 fw-600 contact-pad"> Send a message</span>
 
 
                     {{-- Success / Error Messages --}}
@@ -382,7 +414,8 @@ $version = $basicInfo->theme_version;
 
                                 {{-- Name --}}
                                 <div class="new-contect-design-frame-2">
-                                    <label for="" style="color: black; margin-bottom : 5px;">{{ __('Full Name') }}</label>
+                                    <label for=""
+                                        style="color: black; margin-bottom : 5px;">{{ __('Full Name') }}</label>
                                     <input class="new-contect-design-input" name="name" id="name" type="text"
                                         value="{{ old('name') }}" required />
                                     @error('name')
@@ -412,8 +445,8 @@ $version = $basicInfo->theme_version;
                                 {{-- Message --}}
                                 <div class="new-contect-design-frame-2">
                                     <label for="" style="color: black; margin-bottom : 5px;">{{ __('Message') }}</label>
-                                    <textarea class="new-contect-design-input" name="message" id="message" style="min-height: 70px !important;"
-                                        required>{{ old('message') }}</textarea>
+                                    <textarea class="new-contect-design-input" name="message" id="message"
+                                        style="min-height: 70px !important;" required>{{ old('message') }}</textarea>
                                     @error('message')
                                     <div class="help-block with-errors text-danger">{{ $message }}</div>
                                     @enderror
@@ -432,7 +465,8 @@ $version = $basicInfo->theme_version;
 
                                 {{-- Submit Button --}}
                                 <div class="new-contect-design-send-wrapper">
-                                    <button type="submit" class="new-contect-design-send" title="{{ __('Send message') }}">
+                                    <button type="submit" class="new-contect-design-send"
+                                        title="{{ __('Send message') }}">
                                         {{ __('Send') }}
                                     </button>
                                 </div>

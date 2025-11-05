@@ -925,7 +925,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 <section class="new-aps-sections pt-70 pb-70">
     <div class="container">
-        <div class="section-title title-inline mb-40 aos-init aos-animate d-flex justify-content-center" data-aos="fade-up">
+        <div class="section-title title-inline mb-40 aos-init aos-animate d-flex" data-aos="fade-up">
             <h2 class="title">Explore Apartment Types</h2>
         </div>
 
@@ -958,7 +958,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 
 @if ($secInfo->vendor_section_status == 1)
-<section class="pt-70">
+<section class="pt-100 pb-100">
     <div class="container">
 
         <div class="row">
@@ -1013,7 +1013,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 @if ($secInfo->cities_section_status == 1)
 
-<section class="new-gellary-area pt-70 pb-70 relative ">
+<section class="new-gellary-area pt-100 pb-100 relative ">
 
     <img src="http://127.0.0.1:8000/assets/front/images/new-images/new-primume-properties.png" alt="" class="exp-img">
 

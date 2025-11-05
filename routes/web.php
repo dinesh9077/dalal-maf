@@ -31,6 +31,8 @@
 		});
 		
 		// Properties route
+		Route::get('/properties/filters', 'FrontEnd\PropertyController@filters')->name('frontend.properties.filter');
+
 		Route::get('/location-search', 'FrontEnd\PropertyController@locationSearch')->name('frontend.location.search');
 		Route::get('/properties', 'FrontEnd\PropertyController@index')->name('frontend.properties');
 		Route::get('/properties/{type}/all', 'FrontEnd\PropertyController@featuredAll');

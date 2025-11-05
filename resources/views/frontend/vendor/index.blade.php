@@ -28,11 +28,11 @@ $version = $basicInfo->theme_version;
 ])
 
 
-<div class=" header-next " style="margin-top: 84px;">
+<div class=" header-next ">
 
 
 
-<div class="agent-grid  pb-70">
+<div class="agent-grid">
     <div class="container">
 
 

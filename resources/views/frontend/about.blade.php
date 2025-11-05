@@ -83,37 +83,37 @@ $version = $basicInfo->theme_version;
 
 
 
-<section class="about-section">
+<section class="about-section" style="padding:0px 0px;">
     <div class="container">
 
         <!-- <div class="section-title title-center title-inline mb-40 aos-init aos-animate" data-aos="fade-up">
                         <h2 class="title">About Us</h2>
             </div> -->
 
-        <p class="subtitle" data-aos="fade-up">
+        <p class="subtitle" data-aos="fade-up" style="margin-bottom:0px !important;">
             We are Surat’s most reliable real estate experts, dedicated to helping you find the perfect home, office, or investment property. With deep knowledge of Surat’s property market and a client-first approach, we make buying, selling, and investing simple, secure, and successful.
         </p>
 
         <div class="row d-flex align-items-center">
             <!-- Left Content -->
             <div class="col-lg-6" data-aos="fade-right">
-                <div class="row">
-                    <div class="col-md-6 about-box mt-5">
+                <div class="row mt-2">
+                    <div class="col-md-6 about-box">
                         <span>1.</span>
                         <h4>Who We Are</h4>
                         <p>We are Surat’s trusted real estate experts, connecting people with dream homes and investments.</p>
                     </div>
-                    <div class="col-md-6 about-box mt-5">
+                    <div class="col-md-6 about-box ">
                         <span>2.</span>
                         <h4>What Do We Do</h4>
                         <p>We simplify property buying, selling, and investing with expert guidance and verified options.</p>
                     </div>
-                    <div class="col-md-6 about-box mt-5">
+                    <div class="col-md-6 about-box ">
                         <span>3.</span>
                         <h4>How Do We Help</h4>
                         <p>We provide transparent deals, legal support, and personalized property solutions tailored to clients.</p>
                     </div>
-                    <div class="col-md-6 about-box mt-5">
+                    <div class="col-md-6 about-box">
                         <span>4.</span>
                         <h4>Create Success Story</h4>
                         <p>We turn dreams into addresses, helping clients achieve profitable investments and lifelong happiness.</p>
@@ -139,9 +139,9 @@ $version = $basicInfo->theme_version;
 </div>
 
 
-<div class="container py-5 ">
+<div class="container ">
     <!-- Welcome Section -->
-    <section class="row align-items-center gy-4 pb-70">
+    <section class="row align-items-center pb-5">
         <!-- Image -->
         <div class="col-lg-5 text-center" data-aos="fade-right">
             <div class="image-wrapper">
@@ -172,9 +172,9 @@ $version = $basicInfo->theme_version;
 </div>
 
 
-<div class="container py-5">
+<div class="container">
     <!-- Mission & Vision Section -->
-    <section class="row text-center gy-4  pb-70">
+    <section class="row text-center gy-4 py-3">
         <div class="col-md-6  mv-s" data-aos="fade-right">
             <img src="{{ asset('assets/front/images/new-images/mission.png') }}" alt="Mission Icon" class="mb-3" width="100">
             <h3 class="h5 ms-title">Our Mission</h3>
@@ -283,7 +283,7 @@ $version = $basicInfo->theme_version;
         </section>
     @endif -->
 
-<section class="work-process pt-100 pb-70 blur-up lazyloaded" style="background-image: url(&quot;http://127.0.0.1:8000/assets/front/images/2548hg445t5464676.png&quot;); background-size: cover; background-position: center center; display: block;">
+<section class="work-process pt-20 pb-10 blur-up lazyloaded" style="background-image: url(&quot;http://127.0.0.1:8000/assets/front/images/2548hg445t5464676.png&quot;); background-size: cover; background-position: center center; display: block;">
 
     <img class="lazyload bg-img" src="" style="display: none;">
     <div class="container">

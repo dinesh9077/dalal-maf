@@ -180,7 +180,7 @@ input[type="checkbox"]:checked + label .animits-div-tab {
 
 
 <!-- Listing Start -->
-<div class="listing-grid header-next pb-70" style="margin-top: 100px; " data-aos="fade-up">
+<div class="listing-grid header-next pb-10" style="margin-top: 100px; " data-aos="fade-up">
     <div class="container">
         <div class="row gx-xl-5">
             <div class="col-xl-3">

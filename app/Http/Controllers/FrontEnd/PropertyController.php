@@ -726,4 +726,9 @@ class PropertyController extends Controller
 
     }
 
+    public function filters()
+    {
+        return view('frontend.property.filter');
+    }
+
 }
