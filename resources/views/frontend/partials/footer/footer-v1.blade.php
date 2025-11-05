@@ -2,7 +2,7 @@
 @if ($footerSectionStatus == 1)
 
 <footer class="footer-area" style="background-color : #F9F6EE;">
-    <div class="footer-top">
+    <div class=" pt-40 pb-40">
         <div class="container">
 
             <div class="row">

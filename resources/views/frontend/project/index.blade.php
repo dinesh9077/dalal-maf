@@ -2,6 +2,8 @@
 $version = $basicInfo->theme_version;
 @endphp
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 <style>
     .blog-card {
         border: 1px solid #e5e5e5;
@@ -108,7 +110,7 @@ $version = $basicInfo->theme_version;
 'subtitle' => __('Projects'),
 ])
 
-<div class="projects-area" style="padding: 50px 0px;">
+<div class="projects-area" style="padding: 10px 0px;">
 
 <a href="https://wa.me/9925133440" target="_blank">
     <div class="whatsapp-btn" data-aos="fade-up">
@@ -120,7 +122,7 @@ $version = $basicInfo->theme_version;
     <div class="container" data-aos="fade-up">
         <div class="row">
             <div class="col-12">
-                <div class="product-sort-area mb-20" data-aos="fade-up">
+                <div class="product-sort-area mb-0" data-aos="fade-up">
                     <div class="row align-items-center">
                         <div class="col-lg-8">
                             <form action="{{ route('frontend.projects') }}" method="GET">
@@ -153,7 +155,7 @@ $version = $basicInfo->theme_version;
                                 </div>
                             </form>
                         </div>
-                        <div class="col-lg-4 mb-20">
+                        <div class="col-lg-4 mb-0">
                             <ul class="product-sort-list text-lg-end list-unstyled">
                                 <li class="item">
                                     <form action="{{ route('frontend.projects') }}" method="GET" onchange="submit();">
@@ -350,7 +352,7 @@ $version = $basicInfo->theme_version;
                     @endforelse
                 </div>
 
-                <div class="pagination mb-30 justify-content-center">
+                <div class="pagination mb-10 justify-content-center">
                     {{ $projects->links() }}
 
                 </div>

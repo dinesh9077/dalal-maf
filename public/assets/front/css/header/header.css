@@ -587,10 +587,14 @@ width: 38%;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);
+    width: 308px;
 }
-
-
- /* Post Property style button */
+@media(max-width:320px){
+    .new-color-ngs-property{
+        width: 288px;
+    }
+}
+/* Post Property style button */
 .style__postContainerTab {
   display: flex;
   justify-content: center;

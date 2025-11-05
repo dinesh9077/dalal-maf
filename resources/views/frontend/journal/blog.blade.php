@@ -30,7 +30,7 @@
         'subtitle' => __('Blog'),
     ])
 
-    <div class="blog-area pt-100 pb-70">
+    <div class="blog-area pt-20">
         <div class="container">
             <div class="row justify-content-center">
                 @if (count($blogs) == 0)
@@ -80,7 +80,7 @@
                     </div>
                 @endif -->
             </div>
-            <div class="pagination mb-30 justify-content-center" data-aos="fade-up">
+            <div class="pagination justify-content-center" data-aos="fade-up">
                 {{ $blogs->links() }}
             </div>
         </div>
