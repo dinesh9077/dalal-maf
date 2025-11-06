@@ -297,6 +297,7 @@ class PropertyController extends Controller
                 'floor_planning_image' => $floorPlanningImage,
                 'video_image' => $videoImage,
                 'price' => $request->price,
+                'address' => $request->address,
                 'purpose' => $request->purpose,
                 'type' => $request->type,
                 'beds' => $request->beds,
@@ -344,7 +345,7 @@ class PropertyController extends Controller
                 $propertyContent->title = $request[$language->code . '_title'];
                 $propertyContent->slug = createSlug($request[$language->code . '_title']);
 
-                $propertyContent->address = $request[$language->code . '_address'];
+                $propertyContent->address = $request->address;
                 $propertyContent->description = Purifier::clean($request[$language->code . '_description'], 'youtube');
                 $propertyContent->meta_keyword = $request[$language->code . '_meta_keyword'];
                 $propertyContent->meta_description = $request[$language->code . '_meta_description'];
@@ -451,8 +452,7 @@ class PropertyController extends Controller
 
                 if ($request->hasFile('video_image')) {
                     $videoImage = UploadFile::update(public_path('assets/img/property/video/'), $request->video_image, $property->video_image);
-                }
-
+                } 
 
                 $property->update([
                     'agent_id' => $request->agent_id,
@@ -466,6 +466,7 @@ class PropertyController extends Controller
                     'video_image' => $videoImage,
                     'price' => $request->price,
                     'purpose' => $request->purpose,
+                    'address' => $request->address,
                     'type' => $request->type,
                     'beds' => $request->beds,
                     'bath' => $request->bath,
@@ -515,7 +516,7 @@ class PropertyController extends Controller
                     $propertyContent->property_id = $property->id;
                     $propertyContent->title = $request[$language->code . '_title'];
                     $propertyContent->slug = createSlug($request[$language->code . '_title']);
-                    $propertyContent->address = $request[$language->code . '_address'];
+                    $propertyContent->address = $request->address;
                     $propertyContent->description = Purifier::clean($request[$language->code . '_description'], 'youtube');
                     $propertyContent->meta_keyword = $request[$language->code . '_meta_keyword'];
                     $propertyContent->meta_description = $request[$language->code . '_meta_description'];

@@ -447,7 +447,7 @@
                                     <div class="pb-20"></div>
                                 @endif
 
-
+ 
                                 <div class="product-desc">
                                     <h3 class="mb-20 mt-20 new-title-pps">{{ __('Property Description') }}</h3>
                                     <p class="summernote-content">{!! $propertyContent->description !!}</p>

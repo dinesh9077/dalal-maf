@@ -50,7 +50,8 @@ class StoreRequest extends FormRequest
             'status' => 'required',
             // 'amenities' => 'required',
             'category_id' => 'required',
-            'city_id' => 'required'
+            'city_id' => 'required',
+            'address'=>'required|max:255',
             // 'latitude' => ['required', 'numeric', 'regex:/^[-]?((([0-8]?[0-9])\.(\d+))|(90(\.0+)?))$/'],
             // 'longitude' => ['required', 'numeric', 'regex:/^[-]?((([1]?[0-7]?[0-9])\.(\d+))|([0-9]?[0-9])\.(\d+)|(180(\.0+)?))$/']
 
@@ -71,8 +72,7 @@ class StoreRequest extends FormRequest
         $languages = Language::all();
 
         foreach ($languages as $language) {
-            $rules[$language->code . '_title'] = 'required|max:255';
-            $rules[$language->code . '_address'] = 'required';
+            $rules[$language->code . '_title'] = 'required|max:255'; 
             $rules[$language->code . '_description'] = 'required|min:15';
             if ((Auth::guard('agent')->check() && Auth::guard('agent')->user()->vendor_id == 0)) {
                 $rules[$language->code . '_label'] = 'array';

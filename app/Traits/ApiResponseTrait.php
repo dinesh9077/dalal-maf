@@ -63,5 +63,5 @@ trait ApiResponseTrait
     protected function validationErrorResponse($errors, string $message = 'Validation failed'): JsonResponse
     {
         return $this->errorResponse($message, 422, $errors);
-    }
+    }  
 }

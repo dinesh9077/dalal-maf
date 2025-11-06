@@ -12,6 +12,7 @@
 	use App\Models\Property\Wishlist;
 	use App\Models\User;
 	use App\Models\Agent;
+	use App\Models\SupportTicket;
 	use App\Rules\MatchEmailRule;
 	use App\Rules\MatchOldPasswordRule;
 	use Carbon\Carbon;
@@ -488,8 +489,7 @@
 		}
 		
 		public function updateProfile(Request $request)
-		{
-			
+		{ 
 			$request->validate([
 			'name' => 'required',
 			'username' => [
@@ -943,13 +943,16 @@
 					'error' => config('app.debug') ? $e->getMessage() : null
 				], 500);
 			}
-		}
-
+		} 
 		
 		public function dashboard()
 		{
 			$user_id = Auth::guard('web')->user()->id;
 			$information['totalProperties'] = Property::query()->where('user_id', $user_id)->count();
+			$information['totalInquiry'] = PropertyContact::query()->where('inquiry_by_user', $user_id)->count();
+		    $information['totalTickets'] = SupportTicket::where([['user_id', Auth::guard('web')->user()->id], ['user_type', 'user']])->count();
+			$information['totalWishlist'] = Wishlist::where([['user_id', Auth::guard('web')->user()->id]])->count();
+
 			
 			$totalProperties = DB::table('properties')
 			->select(DB::raw('month(created_at) as month'), DB::raw('count(id) as total'))

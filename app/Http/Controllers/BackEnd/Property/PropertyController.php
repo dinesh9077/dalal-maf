@@ -391,6 +391,7 @@
                 'price' => $request->price,
                 'purpose' => $request->purpose,
                 'type' => $request->type,
+				'address' => $request->address,
                 'beds' => $request->beds,
                 'bath' => $request->bath,
                 'area' => $request->area,
@@ -434,7 +435,7 @@
 					$propertyContent->property_id = $property->id;
 					$propertyContent->title = $request[$language->code . '_title'];
 					$propertyContent->slug = createSlug($request[$language->code . '_title']);
-					$propertyContent->address = $request[$language->code . '_address'];
+					$propertyContent->address = $request->address;
 					$propertyContent->description = Purifier::clean($request[$language->code . '_description'], 'youtube');
 					$propertyContent->meta_keyword = $request[$language->code . '_meta_keyword'];
 					$propertyContent->meta_description = $request[$language->code . '_meta_description'];
@@ -577,6 +578,7 @@
                 'video_image' => $videoImage,
                 'price' => $request->price,
                 'purpose' => $request->purpose,
+				'address' => $request->address,
                 'type' => $request->type,
                 'beds' => $request->beds,
                 'bath' => $request->bath,
@@ -629,7 +631,7 @@
 					$propertyContent->title = $request[$language->code . '_title'];
 					$propertyContent->slug = createSlug($request[$language->code . '_title']);
 					
-					$propertyContent->address = $request[$language->code . '_address'];
+					$propertyContent->address = $request->address;
 					$propertyContent->description = Purifier::clean($request[$language->code . '_description'], 'youtube');
 					$propertyContent->meta_keyword = $request[$language->code . '_meta_keyword'];
 					$propertyContent->meta_description = $request[$language->code . '_meta_description'];

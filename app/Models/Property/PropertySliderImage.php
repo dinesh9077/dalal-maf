@@ -10,6 +10,11 @@ class PropertySliderImage extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'property_id',
+        'image',
+    ];
+    
     protected $appends = ['full_image_url'];
 
     public function getFullImageUrlAttribute()

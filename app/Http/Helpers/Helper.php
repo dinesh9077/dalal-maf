@@ -6,7 +6,7 @@
 	use App\Models\Car\Brand;
 	use App\Models\Car\CarModel;
 	use App\Models\Car\Category;
-	use App\Models\Language;
+	use App\Models\Language; 
 	
 	if (!function_exists('createSlug')) {
 		function createSlug($string)
@@ -304,5 +304,19 @@
 		{
 			$brand  = Brand::where('id', $id)->first();
 			return  $brand ? $brand->name : '';
+		}
+	}
+	if (!function_exists('authGuard')) {
+		function authGuard($authType)
+		{ 
+			$map = [
+				'user' => ['guard' => 'api', 'column' => 'user_id', 'inquiry' => 'inquiry_by_user'],
+				'vendor' => ['guard' => 'vendor_api', 'column' => 'vendor_id', 'inquiry' => 'inquiry_by_vendor'],
+				'agent' => ['guard' => 'agent_api', 'column' => 'agent_id', 'inquiry' => 'inquiry_by_agent'],
+			];
+ 
+			$guard = $map[$authType]['guard'] ?? null;
+			 
+			return [$guard, $map[$authType]['column'], $map[$authType]['inquiry']]; 
 		}
 	}

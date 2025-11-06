@@ -64,8 +64,7 @@
                             </div>
 
 
-                            <form id="carForm"
-                                action=" {{ $agent->vendor_id != 0 ? route($url) : route($admin_url) }} "
+                            <form id="carForm" action=" {{ $agent->vendor_id != 0 ? route($url) : route($admin_url) }} "
                                 method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="type" value="{{ request()->type }}">
@@ -164,7 +163,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                     <div class="col-lg-3">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label for="">{{ __('Amenities') }}</label>
                                             <select name="amenities[]" class="form-control js-example-basic-single2"
@@ -186,11 +185,11 @@
                                             <label>{{ __('Area') }} *</label>
                                             <select name="area_id" class="form-control area_id js-example-basic-single3">
                                                 <option selected disabled>{{ __('Select Area') }}
-                                                </option> 
-												@foreach ($areas as $area)
-													<option value="{{ $area->id }}">
-														{{ $area->name }}</option>
-												@endforeach 
+                                                </option>
+                                                @foreach ($areas as $area)
+                                                    <option value="{{ $area->id }}">
+                                                        {{ $area->name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -200,7 +199,8 @@
 
 
                                             <label>{{ __('City') }} *</label>
-                                            <select onchange="getAreas(event)" name="city_id" class="form-control city_id js-example-basic-single3">
+                                            <select onchange="getAreas(event)" name="city_id"
+                                                class="form-control city_id js-example-basic-single3">
                                                 <option selected disabled>{{ __('Select City') }}
                                                 </option>
                                                 @if ($settings->property_state_status == 0 && $settings->property_country_status == 0)
@@ -213,44 +213,48 @@
                                         </div>
                                     </div>
 
-                                    @if ($settings->property_state_status == 1)
-                                        <div class="col-lg-3 state">
-                                            <div class="form-group  ">
+                                    <div class="col-lg-3 state">
+                                        <div class="form-group  ">
 
-                                                <label>{{ __('State') }} *</label>
-                                                <select onchange="getCities(event)" name="state_id"
-                                                    class="form-control state_id states js-example-basic-single3">
-                                                    <option selected disabled>{{ __('Select State') }}
-                                                    </option>
-                                                    @foreach ($states as $state)
-                                                        <option value="{{ $state->id }}">
-                                                            {{ $state->stateContent->name }}</option>
-                                                    @endforeach
+                                            <label>{{ __('State') }} *</label>
+                                            <select onchange="getCities(event)" name="state_id"
+                                                class="form-control state_id states js-example-basic-single3">
+                                                <option selected disabled>{{ __('Select State') }}
+                                                </option>
+                                                @foreach ($states as $state)
+                                                    <option value="{{ $state->id }}">
+                                                        {{ $state->stateContent->name }}</option>
+                                                @endforeach
 
-                                                </select>
-                                            </div>
+                                            </select>
                                         </div>
-                                    @endif
+                                    </div>
 
-                                    @if ($settings->property_country_status == 1)
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
 
 
-                                                <label>{{ __('Country') }} *</label>
-                                                <select name="country_id"
-                                                    class="form-control country js-example-basic-single3">
-                                                    <option disabled selected>{{ __('Select Country') }}
-                                                    </option>
+                                            <label>{{ __('Country') }} *</label>
+                                            <select name="country_id"
+                                                class="form-control country js-example-basic-single3">
+                                                <option disabled selected>{{ __('Select Country') }}
+                                                </option>
 
-                                                    @foreach ($propertyCountries as $country)
-                                                        <option value="{{ $country->id }}">
-                                                            {{ $country->countryContent->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                                @foreach ($propertyCountries as $country)
+                                                    <option value="{{ $country->id }}">
+                                                        {{ $country->countryContent->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
-                                    @endif
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>{{ __('Address') }} *</label>
+                                            <input type="text" class="form-control" name="address"
+                                                placeholder="Enter Address">
+
+                                        </div>
+                                    </div>
 
                                     <div class="col-lg-3">
                                         <div class="form-group">
@@ -289,18 +293,20 @@
                                     </div>
 
                                     <div class="col-lg-3">
-                                      <div class="form-group">
-                                        <label class="modal-label">Unit Type *</label>
-                                        <div class="d-flex align-items-center add-property-type">
-                                          <select class="modal-input select2" id="unit_type" name="unit_type[]" multiple >
-                                            @foreach($unitTypes as $unitType)
-                                              <option value="{{$unitType->id}}">{{$unitType->unit_name}}</option>
-                                            @endforeach
-                                          </select>
-                                          {{-- <a href="javascript:;" onclick="addUnitType()" class="main-btn add-image-btn add-pro-modal btn btn-sm btn-success"><i class="fas fa-plus-circle"></i> --}}
-                                          </a>
+                                        <div class="form-group">
+                                            <label class="modal-label">Unit Type *</label>
+                                            <div class="d-flex align-items-center add-property-type">
+                                                <select class="modal-input select2" id="unit_type" name="unit_type[]"
+                                                    multiple>
+                                                    @foreach ($unitTypes as $unitType)
+                                                        <option value="{{ $unitType->id }}">{{ $unitType->unit_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                {{-- <a href="javascript:;" onclick="addUnitType()" class="main-btn add-image-btn add-pro-modal btn btn-sm btn-success"><i class="fas fa-plus-circle"></i> --}}
+                                                </a>
+                                            </div>
                                         </div>
-                                      </div>
                                     </div>
 
                                     <div class="col-lg-3">
@@ -340,7 +346,8 @@
                                         <div class="form-group">
                                             <label for="">{{ __('Furnishing') }}</label>
                                             <select name="furnishing" class="form-control js-example-basic-single2">
-                                                <option value="" selected>{{ __('Please Select a furnishing') }} </option>
+                                                <option value="" selected>{{ __('Please Select a furnishing') }}
+                                                </option>
                                                 <option value="Unfurnished">Unfurnished</option>
                                                 <option value="Semi-Furnished">Semi-Furnished</option>
                                                 <option value="Fully-Furnished">Fully-Furnished </option>
@@ -373,20 +380,10 @@
                                                         <div class="col-lg-12">
                                                             <div
                                                                 class="form-group {{ $language->direction == 1 ? 'rtl text-right' : '' }}">
-                                                                <label>{{ __('Title') }} *</label>
+                                                                <label>{{ __('Property Name') }} *</label>
                                                                 <input type="text" class="form-control"
                                                                     name="{{ $language->code }}_title"
-                                                                    placeholder="Enter Title">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-lg-12">
-                                                            <div
-                                                                class="form-group {{ $language->direction == 1 ? 'rtl text-right' : '' }}">
-                                                                <label>{{ __('Address') . '*' }}</label>
-                                                                <input type="text"
-                                                                    name="{{ $language->code }}_address"
-                                                                    class="form-control" placeholder="Enter Address">
+                                                                    placeholder="Enter Property Name">
                                                             </div>
                                                         </div>
                                                     </div>

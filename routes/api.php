@@ -4,7 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route; 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HomeController;
-use App\Http\Controllers\Api\VendorAuthController;
+use App\Http\Controllers\Api\UserDashboardController;
+use App\Http\Controllers\Api\PropertyController;
 
 
 Route::post('send-otp', [AuthController::class, 'sendOtp']);
@@ -30,6 +31,7 @@ Route::prefix('front')->group(function ()
     Route::get('states', [HomeController::class, 'states']);
     Route::get('countries', [HomeController::class, 'countries']);
     Route::get('categories', [HomeController::class, 'categories']);
+    Route::get('unit-types', [HomeController::class, 'unitTypes']);
     Route::get('amenities', [HomeController::class, 'amenities']);
     Route::get('property/details/{slug}', [HomeController::class, 'propertyDetails']);
     Route::post('property/enquiry', [HomeController::class, 'propertyEnquiry'])->middleware('jwt.verify');
@@ -44,10 +46,31 @@ Route::prefix('front')->group(function ()
     Route::get('vendors', [HomeController::class, 'vendors']);
 }); 
 
+Route::post('inquiry', [UserDashboardController::class, 'userInquiry'])->middleware('jwt.verify');
+Route::post('wishlist', [UserDashboardController::class, 'userWishlist'])->middleware('jwt.verify');
+
+Route::prefix('support-ticket')->middleware(['jwt.verify'])->group(function () {
+    Route::post('list', [UserDashboardController::class, 'listTicket']);   
+    Route::post('create', [UserDashboardController::class, 'createTicket']); 
+    Route::get('message/{id}', [UserDashboardController::class, 'messageTicket']);
+    Route::post('reply', [UserDashboardController::class, 'replyTicket']);
+}); 
+
+Route::prefix('property-management')->middleware(['jwt.verify'])->group(function () {
+    Route::post('list', [PropertyController::class, 'index']);
+    Route::post('create', [PropertyController::class, 'createProperty']);
+    Route::get('edit/{id}', [PropertyController::class, 'editProperty']);
+    Route::post('update', [PropertyController::class, 'updateProperty']);
+    Route::post('remove-slider-image', [PropertyController::class, 'removeSliderImage']);
+    Route::get('delete/{id}', [PropertyController::class, 'deleteProperty']);
+    Route::post('bulk-delete', [PropertyController::class, 'deleteBulkProperty']);
+});
+
 // User routes 
-Route::prefix('user')->middleware(['auth:api', 'jwt.verify'])->group(function () 
-{   
-		
+Route::prefix('user')->middleware(['jwt.verify'])->group(function () 
+{
+    Route::get('dashboard', [UserDashboardController::class, 'dashboard']);
+    Route::post('profile-update', [UserDashboardController::class, 'profileUpdate']);
 });
 
 // Vendor routes

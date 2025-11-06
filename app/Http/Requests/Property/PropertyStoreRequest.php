@@ -49,7 +49,8 @@ class PropertyStoreRequest extends FormRequest
             'status' => 'required',
             // 'amenities' => 'required',
             'category_id' => 'required',
-            'city_id' => 'required'
+            'city_id' => 'required',
+            'address'=>'required|max:255',
 
         ];
 
@@ -65,8 +66,7 @@ class PropertyStoreRequest extends FormRequest
         $languages = Language::all();
 
         foreach ($languages as $language) {
-            $rules[$language->code . '_title'] = 'required|max:255';
-            $rules[$language->code . '_address'] = 'required';
+            $rules[$language->code . '_title'] = 'required|max:255'; 
             $rules[$language->code . '_description'] = 'required|min:15';
             if ($this->vendor_id != 0) {
                 $rules[$language->code . '_label'] = 'array|max:' . $vendorCurrentPackage->number_of_property_adittionl_specifications;

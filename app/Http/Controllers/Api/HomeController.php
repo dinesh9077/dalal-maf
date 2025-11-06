@@ -19,7 +19,7 @@ use App\Models\Property\{
     Area, City, CityContent, Content, Country, CountryContent,
     FeaturedProperty, Property, PropertyAmenity, PropertyCategory,
     PropertyCategoryContent, PropertyContact, State, StateContent,
-	Wishlist
+	Wishlist, Unit
 };
 use App\Models\Project\ProjectContent;
 use App\Models\User;
@@ -870,6 +870,12 @@ class HomeController extends Controller
 		return $this->successResponse($categories);
 	}
 	
+	public function unitTypes()
+	{
+		$unitTypes = Unit::Where('status', 1)->get(); 
+		return $this->successResponse($unitTypes);
+	}
+	
 	public function amenities()
 	{  
 		$misc = new MiscellaneousController();
@@ -887,7 +893,6 @@ class HomeController extends Controller
 		$misc = new MiscellaneousController();
 		$language = $misc->getLanguage();  
 		$propertyContent = Content::where('slug', $slug)->firstOrFail(); 
-
 		$property = Content::query()
 		->where('property_contents.language_id', $language->id)
 		->where('property_contents.property_id', $propertyContent->property_id)
@@ -918,14 +923,20 @@ class HomeController extends Controller
 		$information['amenities'] = PropertyAmenity::with([
 			'amenityContent' => function ($q) use ($language) {
 				$q->where('language_id', $language->id);
-			}
+			}, 'amenityContent.amenity'
 		])->where('property_id', $property->property_id)->get();
+
 		$information['agent'] = Agent::with([
 			'agent_info' => function ($q) use ($language) {
 				$q->where('language_id', $language->id);
 			}
 		])->find($property->agent_id);
 
+		$information['user'] = User::with([
+			'agent_info' => function ($q) use ($language) {
+				$q->where('language_id', $language->id);
+			}
+		])->find($property->agent_id); 
 
 		$information['vendor'] = Vendor::with([
 			'vendor_info' => function ($q) use ($language) {

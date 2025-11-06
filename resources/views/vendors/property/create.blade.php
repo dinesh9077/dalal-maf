@@ -206,45 +206,50 @@
                                             </select>
                                         </div>
                                     </div>
+ 
+                                    <div class="col-lg-3 state">
+                                        <div class="form-group  ">
 
-                                    @if ($settings->property_state_status == 1)
-                                        <div class="col-lg-3 state">
-                                            <div class="form-group  ">
+                                            <label>{{ __('State') }} *</label>
+                                            <select onchange="getCities(event)" name="state_id"
+                                                class="form-control state_id states js-example-basic-single3">
+                                                <option selected disabled>{{ __('Select State') }}
+                                                </option>
+                                                @foreach ($states as $state)
+                                                    <option value="{{ $state->id }}">
+                                                        {{ $state->stateContent->name }}</option>
+                                                @endforeach
 
-                                                <label>{{ __('State') }} *</label>
-                                                <select onchange="getCities(event)" name="state_id"
-                                                    class="form-control state_id states js-example-basic-single3">
-                                                    <option selected disabled>{{ __('Select State') }}
-                                                    </option>
-                                                    @foreach ($states as $state)
-                                                        <option value="{{ $state->id }}">
-                                                            {{ $state->stateContent->name }}</option>
-                                                    @endforeach
-
-                                                </select>
-                                            </div>
+                                            </select>
                                         </div>
-                                    @endif
+                                    </div> 
+ 
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
 
-                                    @if ($settings->property_country_status == 1)
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
 
+                                            <label>{{ __('Country') }} *</label>
+                                            <select name="country_id"
+                                                class="form-control country js-example-basic-single3">
+                                                <option disabled selected>{{ __('Select Country') }}
+                                                </option>
 
-                                                <label>{{ __('Country') }} *</label>
-                                                <select name="country_id"
-                                                    class="form-control country js-example-basic-single3">
-                                                    <option disabled selected>{{ __('Select Country') }}
-                                                    </option>
-
-                                                    @foreach ($propertyCountries as $country)
-                                                        <option value="{{ $country->id }}">
-                                                            {{ $country->countryContent->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                                @foreach ($propertyCountries as $country)
+                                                    <option value="{{ $country->id }}">
+                                                        {{ $country->countryContent->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
-                                    @endif
+                                    </div> 
+                                    
+                                    <div class="col-lg-12">
+                                        <div class="form-group">  
+                                             <label>{{ __('Address') }} *</label>
+                                            <input type="text" class="form-control" name="address"
+                                                placeholder="Enter Address"> 
+                                          
+                                        </div>
+                                    </div>
 
                                     <div class="col-lg-3">
                                         <div class="form-group">
@@ -386,26 +391,13 @@
                                                         <div class="col-lg-12">
                                                             <div
                                                                 class="form-group {{ $language->direction == 1 ? 'rtl text-right' : '' }}">
-                                                                <label>{{ __('Title') }} *</label>
+                                                                <label>{{ __('Property Name') }} *</label>
                                                                 <input type="text" class="form-control"
                                                                     name="{{ $language->code }}_title"
-                                                                    placeholder="Enter Title">
+                                                                    placeholder="Enter Property Name">
                                                             </div>
                                                         </div>
-
-
-
-
-                                                        <div class="col-lg-12">
-                                                            <div
-                                                                class="form-group {{ $language->direction == 1 ? 'rtl text-right' : '' }}">
-                                                                <label>{{ __('Address') . '*' }}</label>
-                                                                <input type="text"
-                                                                    name="{{ $language->code }}_address"
-                                                                    class="form-control" placeholder="Enter Address">
-                                                            </div>
-                                                        </div>
-
+ 
                                                     </div>
 
                                                     <div class="row">

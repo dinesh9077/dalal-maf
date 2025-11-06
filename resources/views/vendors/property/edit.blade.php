@@ -307,15 +307,22 @@
                                                 </option>
                                                 {{-- @if ($property->area_id) --}}
                                                     @foreach ($propertyAreas as $area)
-                                                        <option value="{{ $area->area_id }}"
-                                                            {{ $area->area_id == $area->id ? 'selected' : '' }}>
-                                                            {{ $area->name }}</option>
+                                                        <option value="{{ $area->id }}"
+                                                        {{ $property->area_id == $area->id ? 'selected' : '' }}>
+                                                        {{ $area->name }}</option>
                                                     @endforeach
                                                 {{-- @endif --}}
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>{{ __('Address') }} *</label>
+                                            <input type="text" class="form-control" name="address"
+                                                placeholder="Enter Address" value="{{ $property->address }}">
 
+                                        </div>
+                                    </div>    
 
                                     <div class="col-lg-3">
                                         <div class="form-group">
@@ -496,26 +503,13 @@
                                                         <div class="col-lg-12">
                                                             <div
                                                                 class="form-group {{ $language->direction == 1 ? 'rtl text-right' : '' }}">
-                                                                <label>{{ __('Title*') }}</label>
+                                                                <label>{{ __('Property Name*') }}</label>
                                                                 <input type="text" class="form-control"
                                                                     name="{{ $language->code }}_title"
-                                                                    placeholder="Enter Title"
+                                                                    placeholder="Enter Property Name"
                                                                     value="{{ $peopertyContent ? $peopertyContent->title : '' }}">
                                                             </div>
-                                                        </div>
-
-                                                        <div class="col-lg-12">
-                                                            <div
-                                                                class="form-group {{ $language->direction == 1 ? 'rtl text-right' : '' }}">
-                                                                <label>{{ __('Address') . '*' }} </label>
-                                                                <input type="text"
-                                                                    name="{{ $language->code }}_address"
-                                                                    placeholder="Enter Address"
-                                                                    value="{{ @$peopertyContent->address }}"
-                                                                    class="form-control">
-                                                            </div>
-                                                        </div>
-
+                                                        </div>  
 
                                                     </div>
                                                     <div class="row">

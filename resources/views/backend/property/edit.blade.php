@@ -262,10 +262,9 @@
                                           <select name="area_id" class="form-control area_id js-example-basic-single">
                                               <option value="">{{ __('Select Area') }}</option>
                                               @foreach ($allAreas as $area)
-                                                  <option value="{{ $area->id }}"
-                                                      {{ $property->area_id == $area->id ? 'selected' : '' }}>
-                                                      {{ $area->name }}
-                                                  </option>
+                                                   <option value="{{ $area->id }}"
+                                                        {{ $property->area_id == $area->id ? 'selected' : '' }}>
+                                                        {{ $area->name }}</option>
                                               @endforeach
                                           </select>
                                       </div>
@@ -320,7 +319,7 @@
                                             <input type="text"
                                                 name="address"
                                                 placeholder="Enter Address"
-                                                value="{{ @$peopertyContent->address }}"
+                                                value="{{ @$peoperty->address }}"
                                                 class="form-control">
                                         </div>
                                     </div>
@@ -506,10 +505,10 @@
                                                         <div class="col-lg-12">
                                                             <div
                                                                 class="form-group {{ $language->direction == 1 ? 'rtl text-right' : '' }}">
-                                                                <label>{{ __('Title*') }}</label>
+                                                                <label>{{ __('Property Name*') }}</label>
                                                                 <input type="text" class="form-control"
                                                                     name="{{ $language->code }}_title"
-                                                                    placeholder="Enter Title"
+                                                                    placeholder="Enter Property Name"
                                                                     value="{{ $peopertyContent ? $peopertyContent->title : '' }}">
                                                             </div>
                                                         </div>
