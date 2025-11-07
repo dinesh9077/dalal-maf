@@ -7,7 +7,7 @@
               <img class="lazyload blur-up bg-img"
                   src="{{ asset('assets/img/' . $basicInfo->footer_background_image) }}">
           @endif
-          <div class="footer-top">
+          <div class="pt-70 pb-70">
               <div class="container">
                   <div class="row gx-xl-5 justify-content-xl-between">
                       <div class="col-lg-5">
@@ -92,5 +92,5 @@
   <!-- Footer-area end-->
 
   <!-- Go to Top -->
-  <div class="go-top"><i class="fal fa-angle-double-up"></i></div>
+  <!-- <div class="go-top"><i class="fal fa-angle-double-up"></i></div> -->
   <!-- Go to Top -->

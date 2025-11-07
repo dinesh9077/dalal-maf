@@ -97,7 +97,7 @@
     <div class="projects-details-area pt-100 pb-70 project-details-bg" id="tapDown">
         <div class="container">
             <div class="row">
-                <div class="col-9 px-lg-0 px-lg-5 px-lg-5" >
+                <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12" >
                     <div class="new-details-bg-white">
                         <div class="project-desc" data-aos="fade-up">
                             <h3 class="mb-20">{{ __('Project Overview') }}</h3>
@@ -214,7 +214,7 @@
                                 <div class="col-lg-4 col-md-6 grid-sizer"></div>
                                 @foreach ($galleryImages as $gallery)
                                     <div class="col-lg-4 col-md-6 grid-item ">
-                                        <div class="card radius-md">
+                                        <div class="card radius-md" style="    box-shadow: none;">
                                             <a href="{{ asset('assets/img/project/gallery-images/' . $gallery->image) }}"
                                                 class="card-img">
                                                 <img src="{{ asset('assets/img/project/gallery-images/' . $gallery->image) }}" style="height : 300px;   object-fit: cover;border-radius: 20px;">
@@ -227,7 +227,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
                     @if (count($project->specifications) > 0)
                         <div class="row" data-aos="fade-up">
                             <div class="new-details-bg-white" style="background-color: white; border: 1px solid #ced4dd;box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);">

@@ -21,6 +21,7 @@
 @section('style')
     <meta http-equiv="Cache-Control" content="no-store" />
 @endsection
+
 @section('content')
 
     <style>
@@ -176,19 +177,19 @@
 
 
 
-    <!-- Listing Start -->
-    <div class="listing-grid header-next pb-70" style="margin-top: 100px; " data-aos="fade-up">
-        <div class="container">
-            <div class="row gx-xl-5">
-                <div class="col-xl-3">
-                    <div class="widget-offcanvas offcanvas-xl offcanvas-start" tabindex="-1" id="widgetOffcanvas"
-                        aria-labelledby="widgetOffcanvas">
-                        <div class="offcanvas-header px-20">
-                            <h4 class="offcanvas-title">{{ __('Filter') }}</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                                data-bs-target="#widgetOffcanvas" aria-label="Close"></button>
-                        </div>
-                        <div class="offcanvas-body p-3 p-xl-0">
+<!-- Listing Start -->
+<div class="listing-grid header-next pb-10" style="margin-top: 100px; " data-aos="fade-up">
+    <div class="container">
+        <div class="row gx-xl-5">
+            <div class="col-xl-3">
+                <div class="widget-offcanvas offcanvas-xl offcanvas-start" tabindex="-1" id="widgetOffcanvas"
+                    aria-labelledby="widgetOffcanvas">
+                    <div class="offcanvas-header px-20">
+                        <h4 class="offcanvas-title">{{ __('Filter') }}</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                            data-bs-target="#widgetOffcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body p-3 p-xl-0">
 
                             <aside class="sidebar-widget-area new-color-ngs-property" data-aos="fade-up">
                                 <div class="widget widget-select  mb-30">

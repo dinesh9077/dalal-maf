@@ -26,7 +26,7 @@
         'subtitle' => __('FAQ'),
     ])
 
-    <div class="faq-area pt-100 pb-70">
+    <div class="faq-area pt-20 pb-20">
         <div class="container">
             <div class="accordion" id="faqAccordion">
                 <div class="row">
