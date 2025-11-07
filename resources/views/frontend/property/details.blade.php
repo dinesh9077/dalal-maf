@@ -1,5 +1,6 @@
 @php
 $version = $basicInfo->theme_version;
+$version = $basicInfo->theme_version;
 @endphp
 @extends("frontend.layouts.layout-v$version")
 
@@ -21,6 +22,9 @@ $version = $basicInfo->theme_version;
 
 
 @section('og:tag')
+<meta property="og:title" content="{{ $propertyContent->title }}">
+<meta property="og:image" content="{{ asset('assets/img/property/featureds/' . $propertyContent->featured_image) }}">
+<meta property="og:url" content="{{ route('frontend.property.details', $propertyContent->slug) }}">
 <meta property="og:title" content="{{ $propertyContent->title }}">
 <meta property="og:image" content="{{ asset('assets/img/property/featureds/' . $propertyContent->featured_image) }}">
 <meta property="og:url" content="{{ route('frontend.property.details', $propertyContent->slug) }}">
@@ -142,7 +146,11 @@ $version = $basicInfo->theme_version;
                         </div>
                     </div>
                 </div>
+                        </div>
+                    </div>
+                </div>
 
+            </div>
             </div>
 
 
@@ -271,6 +279,7 @@ $version = $basicInfo->theme_version;
                                 </h3>
 
                             <!-- <a @if (!empty($agent)) href="{{ route('frontend.agent.details', ['username' => $agent->username]) }}">
+                            <!-- <a @if (!empty($agent)) href="{{ route('frontend.agent.details', ['username' => $agent->username]) }}">
                                 @elseif(!empty($vendor))
                                 href="{{ route('frontend.vendor.details', ['username' => $vendor->username]) }}">
                                 @else
@@ -291,8 +300,17 @@ $version = $basicInfo->theme_version;
                                 </div>
                             </div>
                             <!-- </a> -->
+                                </div>
+                            </div>
+                            <!-- </a> -->
 
 
+                            <div class="product-location icon-start">
+                                <i class="fal fa-map-marker-alt"></i>
+                                <span style="color: black;">
+                                    {{ $propertyContent->address }}
+                                </span>
+                                {{-- <span style="color: black;">
                             <div class="product-location icon-start">
                                 <i class="fal fa-map-marker-alt"></i>
                                 <span style="color: black;">
@@ -340,10 +358,16 @@ $version = $basicInfo->theme_version;
         <div class="container">
             <div class="row">
                 <div class="col-lg-9 col-xl-9 mt-3">
+    <div class="new-property-details-down">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9 col-xl-9 mt-3">
 
+                    <div class="product-single-details" data-aos="fade-up">
                     <div class="product-single-details" data-aos="fade-up">
 
 
+                        <div class="new-details-bg-white">
                         <div class="new-details-bg-white">
 
                                 <div class="col-12">
@@ -471,7 +495,24 @@ $version = $basicInfo->theme_version;
                             </div>
                         </div>
                         @endif
+                                </ul>
+                            </div>
+                        </div>
+                        @endif
 
+                        @if (!empty($propertyContent->video_url))
+                        <div class="new-details-bg-white mt-5">
+                            <div class="product-video">
+                                <h3 class="mb-20 new-title-pps"> {{ __('Video') }}</h3>
+                                <div class="lazy-container radius-lg ratio ratio-16-11" style="width: 70%;">
+                                    <img class="lazyload" src="{{ asset('assets/front/images/placeholder.png') }}"
+                                        data-src="{{ $propertyContent->video_image ? asset('assets/img/property/video/' . $propertyContent->video_image) : asset('assets/front/images/placeholder.png') }}">
+                                    <a href="{{ $propertyContent->video_url }}"
+                                        class="video-btn youtube-popup p-absolute">
+                                        <i class="fas fa-play" style="color: black;"></i>
+                                    </a>
+                                </div>
+                            </div>
                         @if (!empty($propertyContent->video_url))
                         <div class="new-details-bg-white mt-5">
                             <div class="product-video">
@@ -488,7 +529,20 @@ $version = $basicInfo->theme_version;
 
                         </div>
                         @endif
+                        </div>
+                        @endif
 
+                        @if (!empty($propertyContent->floor_planning_image))
+                        <div class="new-details-bg-white mt-5">
+                            <div class="product-planning mb-40">
+                                <h3 class="mb-20 new-title-pps">{{ __('Floor Planning') }}</h3>
+                                <div class="lazy-container radius-lg ratio ratio-16-11 border">
+                                    <img class="lazyload" src="assets/images/placeholder.png"
+                                        data-src="{{ asset('assets/img/property/plannings/' . $propertyContent->floor_planning_image) }}">
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                         @if (!empty($propertyContent->floor_planning_image))
                         <div class="new-details-bg-white mt-5">
                             <div class="product-planning mb-40">
@@ -517,7 +571,50 @@ $version = $basicInfo->theme_version;
                 <div class="col-lg-3 col-xl-3 mt-3">
                     <aside class="sidebar-widget-area mb-10" data-aos="fade-up">
                         <div class="widget widget-recent radius-md mb-30  new-widgets-color" style="border: 1px solid #ced4dd;
+                        @if (!empty($propertyContent->latitude) && !empty($propertyContent->longitude))
+                        <div class="new-details-bg-white mt-5">
+                            <div class="product-location mb-40">
+                                <h3 class="mb-20 new-title-pps">{{ __('Location') }}</h3>
+                                <div class="lazy-container radius-lg ratio ratio-21-9 border">
+                                    <iframe class="lazyload"
+                                        src="https://maps.google.com/maps?q={{ $propertyContent->latitude }},{{ $propertyContent->longitude }}&hl={{ $currentLanguageInfo->code }}&z=14&amp;output=embed"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xl-3 mt-3">
+                    <aside class="sidebar-widget-area mb-10" data-aos="fade-up">
+                        <div class="widget widget-recent radius-md mb-30  new-widgets-color" style="border: 1px solid #ced4dd;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);">
+                            <h3 class="title">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#products" aria-expanded="true" aria-controls="products">
+                                    {{ __('Similar  Property') }}
+                                </button>
+                            </h3>
+                            <div id="products" class="collapse show">
+                                <div class="accordion-body p-0">
+                                    @foreach ($relatedProperty as $property)
+                                    <div class="product-default product-inline mt-20 new-hover">
+                                        <figure class="product-img">
+                                            <a href="{{ route('frontend.property.details', $property->slug) }}"
+                                                class="lazy-container ratio ratio-1-1 radius-md">
+                                                <img class="lazyload" src="assets/images/placeholder.png"
+                                                    data-src="{{ asset('assets/img/property/featureds/' . $property->featured_image) }}">
+                                            </a>
+                                        </figure>
+                                        <div class="px-3">
+                                            <h6 class="product-title"><a
+                                                    href="{{ route('frontend.property.details', $property->slug) }}">{{ $property->title }}</a>
+                                            </h6>
+                                            <span class="product-location icon-start"> <i
+                                                    class="fal fa-map-marker-alt"></i>
+                                                {{ $property->city->getContent($property->language_id)?->name }}
+                                                {{ $property->isStateActive ? ', ' . $property->state?->getContent($property->language_id)?->name : '' }}
+                                                {{ $property->isCountryActive ? ', ' . $property->country?->getContent($property->language_id)?->name : '' }}</span>
+                                            <div class="product-price">
                             <h3 class="title">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#products" aria-expanded="true" aria-controls="products">
@@ -567,6 +664,27 @@ $version = $basicInfo->theme_version;
                                                     <span>{{ $property->bath }} </span>
                                                 </li>
                                                 @endif
+                                                <span class="new-price">{{ __('Price:') }}
+                                                    {{ $property->price ? symbolPrice($property->price) : __('Negotiable') }}</span>
+                                            </div>
+                                            <ul class="product-info p-0 list-unstyled d-flex align-items-center">
+                                                <li class="icon-start" data-tooltip="tooltip" data-bs-placement="top"
+                                                    title="{{ __('Area') }}">
+                                                    <i class="fal fa-vector-square"></i>
+                                                    <span>{{ $property->area }}</span>
+                                                </li>
+                                                @if ($property->type == 'residential')
+                                                <li class="icon-start" data-tooltip="tooltip" data-bs-placement="top"
+                                                    title="{{ __('Bed') }}">
+                                                    <i class="fal fa-bed"></i>
+                                                    <span>{{ $property->beds }} </span>
+                                                </li>
+                                                <li class="icon-start" data-tooltip="tooltip" data-bs-placement="top"
+                                                    title="{{ __('Bath') }}">
+                                                    <i class="fal fa-bath"></i>
+                                                    <span>{{ $property->bath }} </span>
+                                                </li>
+                                                @endif
 
                                             </ul>
                                         </div>
@@ -575,7 +693,52 @@ $version = $basicInfo->theme_version;
                                 </div>
                             </div>
                         </div>
+                                            </ul>
+                                        </div>
+                                    </div><!-- product-default -->
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="widget widget-form radius-md mb-30 new-widgets-color"
+                            style="background: #e7e3d1 !important ;   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08); position:relative;">
+                            <div class="user new-users mb-20" style="margin-left:10px;">
+                                <div class="right-new-user-details">
+                                    <div class="">
+                                        <div class="image-with-border " style="width:73%;">
+                                            <img src="{{ asset('assets/img/image1.png') }}" alt="Image"
+                                                class="img-fluid">
+                                        </div>
+                                        <div class="form-image-right vector-building">
+                                            <img src="{{ asset('assets/img/vector-building (2).png') }}"
+                                                alt="Building Image" class="building-img ">
+                                        </div>
+
+                                        <!-- <div class="lazy-container ratio ratio-1-1 rounded-pill">
+                                            @if (!empty($agent))
+                                            <a
+                                                href="{{ route('frontend.agent.details', ['username' => $agent->username]) }}">
+                                                <img class="lazyload" src="{{ asset('assets/img/blank-user.jpg') }}"
+                                                    data-src="{{ $agent->image ? asset('assets/img/agents/' . $agent->image) : asset('assets/img/blank-user.jpg') }}">
+                                            </a>
+                                            @elseif(!empty($vendor))
+                                            <a
+                                                href="{{ route('frontend.vendor.details', ['username' => $vendor->username]) }}">
+                                                <img class="lazyload" src="{{ asset('assets/img/blank-user.jpg') }}"
+                                                    data-src=" {{ $vendor->photo ? asset('assets/admin/img/vendor-photo/' . $vendor->photo) : asset('assets/img/blank-user.jpg') }}">
+                                            </a>
+                                            @else
+                                            <a
+                                                href="{{ route('frontend.vendor.details', ['username' => $admin->username, 'admin' => 'true']) }}">
+                                                <img class="lazyload" src="{{ asset('assets/img/blank-user.jpg') }}"
+                                                    data-src=" {{ asset('assets/img/admins/' . $admin->image) }} ">
+                                            </a>
+                                            @endif
+                                        </div> -->
+                                    </div>
+                                    <h1 class="rigt-calss-cs mt-3 mb-0">Contact Seller</h1>
+                                    <!-- <div class="user-info new-user-right-info">
                         <div class="widget widget-form radius-md mb-30 new-widgets-color"
                             style="background: #e7e3d1 !important ;   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08); position:relative;">
                             <div class="user new-users mb-20" style="margin-left:10px;">

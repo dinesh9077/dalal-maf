@@ -287,6 +287,293 @@
 
 <body dir="{{ $currentLanguageInfo->direction == 1 ? 'rtl' : '' }}">
     <!-- <div id="loader" class="loader">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="KreativDev">
+
+    <meta name="keywords" content="@yield('metaKeywords')">
+    <meta name="description" content="@yield('metaDescription')">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta property="og:type" content="website">
+    @yield('og:tag')
+    {{-- title --}}
+    <title>@yield('pageHeading') {{ '| ' . $websiteInfo->website_title }}</title>
+    {{-- fav icon --}}
+    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/' . $websiteInfo->favicon) }}">
+    <link rel="apple-touch-icon" href="{{ asset('assets/img/' . $websiteInfo->favicon) }}">
+    @php
+    $primaryColor = 'F57F4B';
+    $secoundaryColor = '255056';
+    // check, whether color has '#' or not, will return 0 or 1
+    function checkColorCode($color)
+    {
+    return preg_match('/^#[a-f0-9]{6}/i', $color);
+    }
+
+    // if, primary color value does not contain '#', then add '#' before color value
+    if (isset($primaryColor) && checkColorCode($primaryColor) == 0 && checkColorCode($secoundaryColor) == 0) {
+    $primaryColor = '#' . $primaryColor;
+    $secoundaryColor = '#' . $secoundaryColor;
+    }
+
+    // change decimal point into hex value for opacity
+    function rgb($color = null)
+    {
+    if (!$color) {
+    echo '';
+    }
+    $hex = htmlspecialchars($color);
+    [$r, $g, $b] = sscanf($hex, '#%02x%02x%02x');
+    echo "$r, $g, $b";
+    }
+    @endphp
+    @includeIf('frontend.partials.styles.styles-v1')
+    <style>
+    :root {
+        --color-primary: {
+                {
+                $primaryColor
+            }
+        }
+
+        ;
+
+        --color-primary-rgb: {
+                {
+                rgb(htmlspecialchars($primaryColor))
+            }
+        }
+
+        ;
+
+        --color-secondary: {
+                {
+                $secoundaryColor
+            }
+        }
+
+        ;
+
+        --color-secondary-rgb: {
+                {
+                rgb(htmlspecialchars($secoundaryColor))
+            }
+        }
+
+        ;
+    }
+
+    .loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+    }
+
+    .spinner {
+        border: 6px solid #f3f3f3;
+        border-top: 6px solid #3498db;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .mobile-bottom-menu {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top: 1px solid #dcdcdc;
+        box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+        padding: 12px 0;
+        gap: 25px;
+    }
+
+    .menu-item {
+        text-align: center;
+        text-decoration: none;
+        color: #555;
+        font-size: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: color 0.3s ease;
+        margin: 0 1px;
+        font-family:'Open Sans', sans-serif;
+        font-weight:500;
+    }
+
+    .menu-item i {
+        font-size: 18px;
+        margin-bottom: 1px;
+    }
+
+    .menu-item.active,
+    .menu-item:hover {
+        color: #6c603c;
+    }
+
+    .floating-plus-btn {
+        position: fixed;
+        bottom: 128px;
+        right: 8px;
+        background: #6c603c;
+        color: #fff;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        font-size: 18px;
+        z-index: 999;
+        transition: all 0.3s ease;
+    }
+
+    .floating-plus-btn:hover {
+        background: #4f4626;
+        transform: scale(1.05);
+    }
+
+    @media (min-width: 768px) {
+
+        .mobile-bottom-menu,
+        .floating-plus-btn {
+            display: none;
+        }
+    }
+
+    @media (max-width: 767px) {
+        body {
+            padding-bottom: 80px;
+        }
+    }
+
+    :root {
+        --bg: #0f1724;
+        /* dark */
+        --accent: #ffb86b;
+        /* warm builder color */
+        --muted: #9aa4b2;
+    }
+
+    .loader-wrap {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 9999;
+        flex-direction: column;
+        gap: 18px;
+        padding: 24px;
+    }
+
+    .stage {
+        width: 340px;
+        max-width: 90%;
+        height: 240px;
+        display: grid;
+        place-items: center;
+    }
+
+    svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible
+    }
+
+    .percent {
+        font-family: Inter, system-ui, sans-serif;
+        color: var(--muted);
+        font-size: 14px;
+    }
+
+    .percent strong {
+        color: var(--accent);
+        font-size: 20px;
+        margin-left: 8px
+    }
+
+    /* small shadowed card behind svg */
+    .card {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+        border-radius: 14px;
+        padding: 18px;
+        box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6);
+        backdrop-filter: blur(6px);
+    }
+
+    /* path base style */
+    .house-path {
+        fill: none;
+        stroke: var(--muted);
+        stroke-width: 4;
+        stroke-linecap: round;
+        stroke-linejoin: round
+    }
+
+    .house-path.reveal {
+        stroke: var(--accent)
+    }
+
+    .fill-when-done {
+        fill: transparent
+    }
+
+    /* subtle builder animation for complete parts */
+    .done {
+        fill: var(--accent);
+        opacity: .15;
+        transition: opacity .4s ease
+    }
+
+    /* loader small label */
+    .label {
+        color: var(--muted);
+        font-size: 13px
+    }
+
+    /* hide when complete - user may remove this in integration */
+    .hidden {
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-6px);
+        transition: all .5s ease
+    }
+    </style>
+</head>
+
+
+<body dir="{{ $currentLanguageInfo->direction == 1 ? 'rtl' : '' }}">
+    <!-- <div id="loader" class="loader">
 			<div class="spinner"></div>
 		</div> -->
 
@@ -466,6 +753,8 @@
             }
         ];
 
+        const percentText = document.getElementById('percentText');
+        const loader = document.getElementById('loader');
         const percentText = document.getElementById('percentText');
         const loader = document.getElementById('loader');
 
