@@ -7,7 +7,7 @@
 			data-src="{{ asset('assets/img/property/featureds/' . $property->featured_image) }}">
 			</a>
 		</figure> -->
-		<div class="product-details"  style="padding : 0px;">
+		<div class=" product-new" style="padding : 0px;">
 			<div class="product-image-box"> <!-- wrapper div add -->
 				<a href="{{ route('frontend.property.details', ['slug' => $property->slug ?? $property->propertyContent->slug]) }}">
 					<img class="lazyload new-images-card"
