@@ -278,7 +278,7 @@ class AuthController extends Controller
 			DB::commit();
 			return $this->successResponse($vendor, 'Register successfully.');
 
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			DB::rollBack();
 			return $this->errorResponse('An error occurred.', 500, [$e->getMessage()]);
 		}
