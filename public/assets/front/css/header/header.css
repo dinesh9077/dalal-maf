@@ -423,6 +423,7 @@
         align-items: center;
         justify-content: space-between;
         height: 100%;
+        /* gap: 150px; */
     }
 
     .header-area .main-responsive-nav .logo {
@@ -609,6 +610,7 @@ width: 38%;
   font-family: "Poppins", sans-serif;
   text-decoration: none;
   padding: 7px 13px;
+  width: fit-content;
 }
 
 .style__postContainerTab:hover {

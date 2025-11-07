@@ -8627,3 +8627,18 @@ button:hover {
         margin-top: 35px;
     }
 }
+
+.mobile-search{
+    display: none;
+}
+
+@media(max-width : 1199px){
+        .banner-filter-form {
+            display: none;
+        }
+
+        .mobile-search{
+    display: block;
+}
+}
+

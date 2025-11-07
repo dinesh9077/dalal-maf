@@ -53,11 +53,7 @@ $version = $basicInfo->theme_version;
     background-color: transparent !important;
 }
 
-@media (max-width: 767px) {
-    .banner-filter-form {
-        display: none !important;
-    }
-}
+
 
 .mobile-search {
     position: absolute;
@@ -92,84 +88,6 @@ $version = $basicInfo->theme_version;
     pointer-events: none;
 }
 
-.mobile-bottom-menu {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #fff;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border-top: 1px solid #dcdcdc;
-    box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
-    z-index: 9999;
-    padding: 6px 0 5px;
-}
-
-.menu-item {
-    text-align: center;
-    flex: 1;
-    text-decoration: none;
-    color: #555;
-    font-size: 11px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: color 0.3s ease;
-}
-
-.menu-item i {
-    font-size: 20px;
-    margin-bottom: 3px;
-}
-
-.menu-item.active,
-.menu-item:hover {
-    color: #6c603c;
-    /* your theme color */
-}
-
-/* Center Floating Button */
-.center-btn {
-    position: relative;
-    top: -24px;
-}
-
-.plus-btn {
-    width: 55px;
-    height: 55px;
-    background: #6c603c;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
-    transition: 0.3s;
-}
-
-.plus-btn i {
-    color: #fff;
-    font-size: 22px;
-}
-
-.plus-btn:hover {
-    background: #4f4626;
-}
-
-/* Hide on Desktop */
-@media (min-width: 768px) {
-    .mobile-bottom-menu {
-        display: none;
-    }
-}
-
-/* Add space so content doesn't hide behind the menu */
-@media (max-width: 767px) {
-    body {
-        padding-bottom: 80px;
-    }
-}
 
 /* ==== */
 </style>
@@ -340,7 +258,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 			</div>
 		</div> 
          <!-- Mobile Search Bar (visible only on mobile) -->
-        <div class="mobile-search d-block d-md-none">
+        <div class="mobile-search">
             <div class="mobile-search-bar">
                 <a href="{{ route('frontend.properties.filter')}}">
                     <input type="text" class="mobile-search-input" placeholder="Search properties...">
@@ -348,8 +266,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                 </a>
             </div>
         </div>
-
-	</div>
+    </div>
 </section>
 
 @if($featured_properties->isNotEmpty())
@@ -432,9 +349,9 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                         <div class="swiper product-slider w-100">
                             <div class="swiper-wrapper">
                                 @forelse ($hotProperties as $property)
-                                <div class="swiper-slide">
-                                    <x-property :property="$property" />
-                                </div>
+                                    <div class="swiper-slide">
+                                        <x-hot-property :property="$property" />  
+                                    </div>
                                 @empty
                                 <div class="p-3 text-center mb-30 w-100">
                                     <h3 class="mb-0">{{ __('No Hot Property Found') }}</h3>
@@ -655,8 +572,6 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
         </div>
     </div>
 </section>
-
-
 
 
 <section class="product-area popular-product product-1 pt-40 pb-0 relative" style="background:#F8F7F1;">
@@ -1279,6 +1194,48 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 	</section>
 @endif -->
 
+    @php
+    $user = Auth::guard('web')->user();
+    $vendor = Auth::guard('vendor')->user();
+    $agent = Auth::guard('agent')->user();
+
+    // Determine auth type
+    if ($vendor) {
+    $authType = 'vendor';
+    $authUser = $vendor;
+    $dashboardRoute = route('vendor.dashboard');
+    $logoutRoute = route('vendor.logout');
+    } elseif ($user) {
+    $authType = 'user';
+    $authUser = $user;
+    $dashboardRoute = route('user.dashboard');
+    $logoutRoute = route('user.logout');
+    }elseif ($agent) {
+    $authType = 'agent';
+    $authUser = $agent;
+    $dashboardRoute = route('agent.dashboard');
+    $logoutRoute = route('agent.logout');
+    } else {
+    $authType = 'guest';
+    $authUser = null;
+    }
+
+    // First letter for avatar
+    $initial = $authUser ? strtoupper(substr($authUser->username ?? 'U', 0, 1)) : null;
+
+    // Post Property route
+    if ($authType === 'vendor' && $vendor->email)
+    {
+    $postPropertyRoute = route('vendor.property_management.type');
+    } elseif ($authType === 'user' && $user->email) {
+    $postPropertyRoute = route('user.property_management.type');
+    }elseif ($authType === 'agent' && $agent->email) {
+    $postPropertyRoute = route('agent.property_management.type');
+    } else {
+    $postPropertyRoute = route('user.signup');
+    }
+    @endphp
+
 
 
 
@@ -1329,35 +1286,38 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
         </div>
     </div>
 </div>
-
 <div class="mobile-bottom-menu">
     <a href="{{ route('index') }}" class="menu-item active">
         <i class="fas fa-home"></i>
         <span>Home</span>
     </a>
 
-    <a href="#" class="menu-item">
+    <a href="{{ route('frontend.properties') }}" class="menu-item">
         <i class="fas fa-lightbulb"></i>
         <span>Properties</span>
     </a>
 
-    <a href="#" class="menu-item center-btn" id="sellRentBtn">
-        <div class="plus-btn">
-            <i class="fas fa-plus"></i>
-        </div>
+    <a href="{{ route('frontend.projects') }}" class="menu-item">
+        <i class="fas fa-building"></i>
         <span>Projects</span>
     </a>
 
-    <a href="#" class="menu-item">
+    <a href="{{ route('frontend.properties',['purpose'=>'franchiese']) }}" class="menu-item">
         <i class="fas fa-heart"></i>
         <span>Franchiese</span>
     </a>
 
-    <a href="#" class="menu-item">
+    <a href="{{ route('frontend.properties', ['purpose' => 'business_for_sale']) }}" class="menu-item">
         <i class="fas fa-user"></i>
         <span>Business for Sale</span>
     </a>
 </div>
+
+
+<a href="#" class="floating-plus-btn" id="sellRentBtn1">
+    <i class="fas fa-plus"></i>
+</a>
+
 
 
 @php
@@ -1996,8 +1956,19 @@ document.addEventListener('DOMContentLoaded', function() {
 			});
 		}
 	});
+
+    document.getElementById("sellRentBtn1").addEventListener("click", function(e) {
+        e.preventDefault();
+        const modal = document.getElementById("customerPhoneModal");
+        if (modal) {
+            const modalTrigger = new bootstrap.Modal(modal);
+            modalTrigger.show();
+        }
+    });
 	
 </script>
+
+
 
 
 

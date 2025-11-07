@@ -2089,24 +2089,7 @@ Compare CSS
   background-color: #947D42 !important;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ==================== */
-
-
 
 .new-title-LRP-des form .form-group {
   display: flex;
@@ -2161,18 +2144,6 @@ color : white;
 .project-details-bg{
   background-color: #F3F3F3;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* ============================================================ */
 
@@ -2239,8 +2210,6 @@ background: linear-gradient(to top, #c5ae7573 0%, #ffffff 50%);
     line-height: 20px;
     color: #8993a4;
 }
-
-
 
 .new-lable-radio input[type="radio"] {
   appearance: none;
@@ -2948,7 +2917,7 @@ background: linear-gradient(to top, #c5ae7573 0%, #ffffff 50%);
 @media(min-width:320px) {
   .vector-building {
     position: absolute;
-    bottom: calc(100% - 91px);
+    bottom: calc(100% - 102px);
     right: -3%;
     width: 92%;
   }
