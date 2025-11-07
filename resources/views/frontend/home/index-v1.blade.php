@@ -21,39 +21,75 @@ $version = $basicInfo->theme_version;
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 
 <style>
-    .ui-widget.ui-widget-content {
-	background: white !important;
-	border: 1px solid #dcdcdc !important;
-	font-size: 14px !important;
-	padding: 2px !important;
-	color: #2b3138 !important;
-	text-transform: capitalize !important;
-	border-radius: 5px !important;
-    }
-	
-    .ui-widget.ui-widget-content .ui-menu-item .ui-menu-item-wrapper:hover {
-	background: black !important;
-	border: none !important;
-	color: white !important;
-	outline: none !important;
-	border-radius: 5px !important;
-	
-	
-    }
-	
-    .ui-widget.ui-widget-content .ui-menu-item {
-	background: white !important;
-	border: none !important;
-	outline: none !important;
-	color: black !important;
-    }
-	
-    .new-main-navbar {
-	
-	background-color: transparent !important;
-    }
-	
-    /* ==== */
+.ui-widget.ui-widget-content {
+    background: white !important;
+    border: 1px solid #dcdcdc !important;
+    font-size: 14px !important;
+    padding: 2px !important;
+    color: #2b3138 !important;
+    text-transform: capitalize !important;
+    border-radius: 5px !important;
+}
+
+.ui-widget.ui-widget-content .ui-menu-item .ui-menu-item-wrapper:hover {
+    background: black !important;
+    border: none !important;
+    color: white !important;
+    outline: none !important;
+    border-radius: 5px !important;
+
+
+}
+
+.ui-widget.ui-widget-content .ui-menu-item {
+    background: white !important;
+    border: none !important;
+    outline: none !important;
+    color: black !important;
+}
+
+.new-main-navbar {
+
+    background-color: transparent !important;
+}
+
+
+
+.mobile-search {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    z-index: 10;
+}
+
+.mobile-search-bar {
+    position: relative;
+    width: 100%;
+}
+
+.mobile-search-input {
+    width: 100%;
+    padding: 10px 40px 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+}
+
+.mobile-search-bar i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #000;
+    font-size: 18px;
+    pointer-events: none;
+}
+
+
+/* ==== */
 </style>
 
 @section('content')
@@ -61,19 +97,20 @@ $version = $basicInfo->theme_version;
 <a href="https://wa.me/9925133440" target="_blank">
     <div class="whatsapp-btn" data-aos="fade-up">
         <img src="{{ asset('assets/front/images/new-images/whatsapp.png') }}" alt="WhatsApp">
-	</div>
+    </div>
 </a>
 @php
 $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.jpg';
 @endphp
 <!-- <section class="home-banner home-banner-1 relative new-home-hero-color" data-aos="fade-up"> -->
 <section class="home-banner home-banner-1 relative" data-aos="fade-up">
-    <div class="hero-image" id="heroBanner" style="background: url('{{ asset('assets/img/hero/static/' . $firstHeroImg) }}'); background-size: cover; background-position: center;">
-		
+    <div class="hero-image" id="heroBanner"
+        style="background: url('{{ asset('assets/img/hero/static/' . $firstHeroImg) }}'); background-size: cover; background-position: center;">
+
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-xxl-10">
-                    <div class="content mb-40" data-aos="fade-up">
+                    <div class="content mb-30" data-aos="fade-up">
                         <!-- <h1 class="title title-colors">{{ $heroStatic->title }}</h1> -->
                         <!-- <h1 class="title">{{ $heroStatic->title }}</h1> -->
                         <!-- <p class="text title-colors">
@@ -84,14 +121,14 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 							
                             <a href="{{ route('frontend.properties') }}" class="home-hero-inq-btn">Make an Inquiry</a>
 						</div> -->
-					</div>
-					
-				</div>
-			</div>
-		</div>
-		
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
         <!-- <img src="{{ asset('assets/front/images/acrs-imag/HOUSE-1.png') }}" class="home-hero-imahes-new" alt=""> -->
-		
+
         @php
 		$tabs = [
 			'buy' => 'Buy',
@@ -105,7 +142,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 			<div class="tab-content form-wrapper">
 				
 				{{-- Tabs --}}
-				<div style="border-bottom: 1px solid #dcdcdc;">
+				<div style="border-bottom: 1px solid #f4f5f7;">
 					<ul class="nav nav-tabs">
 						@foreach($tabs as $key => $label)
 						<li class="nav-item">
@@ -220,247 +257,295 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 				@endforeach
 			</div>
 		</div> 
-	</div>
+         <!-- Mobile Search Bar (visible only on mobile) -->
+        <div class="mobile-search">
+            <div class="mobile-search-bar">
+                <a href="{{ route('frontend.properties.filter')}}">
+                    <input type="text" class="mobile-search-input" placeholder="Search properties...">
+                    <i class="fas fa-search"></i>
+                </a>
+            </div>
+        </div>
+    </div>
 </section>
 
-@if($featured_properties->isNotEmpty()) 
-<section class="product-area featured-product pt-100 pb-70">
-	<div class="container-fulid new-padding-des-res">
-		<div class="row">
-			<div class="container" >
-				<div class="col-12">
-					<div class="section-title text-center mb-40 new-titles" data-aos="fade-up"  style="position: relative;">
-						<h2 class="title" style="text-align : center;">Featured Properties</h2>
-						<p class="mt-4">Handpicked and premium listings showcased for you. Explore top-rated homes, offices, and commercial spaces that stand out.</p>
-						<a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn" style="padding: 10px 20px;">View All</a> 
-					</div>
-				</div>
-			</div>
-			
-			<div class="container ">  
-				<div class="row align-items-stretch new-my-div">
-					<!-- <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 d-flex" style="margin-bottom : 20px; " data-aos="fade-up">
-						<div class="custom-card w-100">
-						<img src="{{ asset('assets/front/images/new-images/citykrugy-about.png') }}" alt="citykrugy-about">
-						<h3 class="card-title"> Featured Properties In Surat</h3>
-						<p class="card-text">
-						We are Surat’s most trusted and best-selling real estate agency, specializing in luxury residences, premium commercial spaces, and profitable investment properties. With years of expertise, a wide property portfolio, and strong market knowledge, we’ve helped countless families and investors find exactly what they’re looking for.
-						</p> 
-						</div>
-					</div> -->
-					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex " style="position: relative;" data-aos="fade-up">
-						<div class="swiper product-slider w-100">
-							<div class="swiper-wrapper">
-								@forelse ($featured_properties as $property)
-								<div class="swiper-slide">
-									<x-property :property="$property" />
-								</div>
-								@empty
-								<div class="p-3 text-center mb-30 w-100">
-									<h3 class="mb-0">{{ __('No Featured Property Found') }}</h3>
-								</div>
-								@endforelse
-							</div>
-							<div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
-						</div> 
-						<div class="swiper-button-prev first-left custom-swiper-btn"></div>
-						<div class="swiper-button-next first-right custom-swiper-btn"></div>
-					</div>
-				</div> 
-			</div>
-		</div>
-	</div>
-</section> 
+@if($featured_properties->isNotEmpty())
+<section class="product-area featured-product pt-80 pb-20">
+    <div class="container">
+        <div class="row">
+            <div class="container">
+                <div class="col-12">
+                    <div class="section-title mb-30 new-titles position-relative" data-aos="fade-up">
+                        <h2 class="title text-center">Featured Properties</h2>
+                        <p class="mt-2" style="font-size:14px;">
+                            Handpicked and premium listings showcased for you.
+                            Explore top-rated homes, offices, and commercial spaces that stand out.
+                        </p>
+                        <!-- Desktop / Tablet view button -->
+                        <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-desktop"
+                            style="padding: 10px 20px;">View All</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row align-items-stretch">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex position-relative" data-aos="fade-up">
+                        <div class="swiper product-slider w-100">
+                            <div class="swiper-wrapper">
+                                @forelse ($featured_properties as $property)
+                                <div class="swiper-slide">
+                                    <x-property :property="$property" />
+                                </div>
+                                @empty
+                                <div class="p-3 text-center mb-30 w-100">
+                                    <h3 class="mb-0">{{ __('No Featured Property Found') }}</h3>
+                                </div>
+                                @endforelse
+                            </div>
+                            <div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
+                        </div>
+                        <div class="swiper-button-prev first-left custom-swiper-btn"></div>
+                        <div class="swiper-button-next first-right custom-swiper-btn"></div>
+                    </div>
+                </div>
+
+                <!-- Mobile view button (below cards) -->
+                <div class="text-center mt-4">
+                    <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
+                        style="padding: 10px 20px;">View All</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 @endif
+
 
 @if($hotProperties->isNotEmpty())
-<section class="product-area featured-product pt-100 pb-70">
-	<div class="container-fulid new-padding-des-res">
-		<div class="row">
-			<div class="container" >
-				<div class="col-12">
-					<div class="section-title text-center mb-40 new-titles" data-aos="fade-up"  style="position: relative;">
-						<h2 class="title" style="text-align : center;">Hot Properties</h2>
-						<p class="mt-4">Handpicked and premium listings showcased for you. Explore top-rated homes, offices, and commercial spaces that stand out.</p>
-						<a href="{{ url('properties/is_hot/all') }}" class="vs-btn vs-new-set-btn" style="padding: 10px 20px;">View All</a> 
-					</div>
-				</div>
-			</div>
-			
-			<div class="container ">   
-				<div class="row align-items-stretch new-my-div">  
-					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex " style="position: relative;" data-aos="fade-up">
-						<div class="swiper product-slider w-100">
-							<div class="swiper-wrapper">
-								@forelse ($hotProperties as $property)
-								<div class="swiper-slide">
-									<x-property :property="$property" />
-								</div>
-								@empty
-								<div class="p-3 text-center mb-30 w-100">
-									<h3 class="mb-0">{{ __('No Hot Property Found') }}</h3>
-								</div>
-								@endforelse
-							</div>
-							<div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
-						</div>
-						
-						<div class="swiper-button-prev first-left custom-swiper-btn"></div>
-						<div class="swiper-button-next first-right custom-swiper-btn"></div>
-					</div>
-				</div>
-				
-			</div>
-		</div>
-	</div>
-</section>  
+<section class="product-area featured-product pt-40 pb-20">
+    <div class="container">
+        <div class="row">
+            <div class="container">
+                <div class="col-12">
+                    <div class="section-title mb-30 new-titles" data-aos="fade-up" style="position: relative;">
+                        <h2 class="title" style="text-align : center;">Hot Properties</h2>
+                        <p class="mt-2" style="font-size:14px;">
+                            Handpicked and premium listings showcased for you.
+                            Explore top-rated homes, offices, and commercial spaces that stand out.
+                        </p>
+                        <a href="{{ url('properties/is_hot/all') }}" class="vs-btn vs-new-set-btn view-all-desktop"
+                            style="padding: 10px 20px;">
+                            View All
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row align-items-stretch">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex" style="position: relative;"
+                        data-aos="fade-up">
+                        <div class="swiper product-slider w-100">
+                            <div class="swiper-wrapper">
+                                @forelse ($hotProperties as $property)
+                                    <div class="swiper-slide">
+                                        <x-hot-property :property="$property" />  
+                                    </div>
+                                @empty
+                                <div class="p-3 text-center mb-30 w-100">
+                                    <h3 class="mb-0">{{ __('No Hot Property Found') }}</h3>
+                                </div>
+                                @endforelse
+                            </div>
+                            <div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
+                        </div>
+
+                        <div class="swiper-button-prev first-left custom-swiper-btn"></div>
+                        <div class="swiper-button-next first-right custom-swiper-btn"></div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="{{ url('properties/is_hot/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
+                        style="padding: 10px 20px;">
+                        View All
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 @endif
 
+
 @if($recommendedProperties->isNotEmpty())
-<section class="product-area featured-product pt-100 pb-70">
-	<div class="container-fulid new-padding-des-res">
-		<div class="row">
-			<div class="container" >
-				<div class="col-12">
-					<div class="section-title text-center mb-40 new-titles" data-aos="fade-up"  style="position: relative;">
-						<h2 class="title" style="text-align : center;">Recommended Properties</h2>
-						<p class="mt-4">Handpicked and premium listings showcased for you. Explore top-rated homes, offices, and commercial spaces that stand out.</p>
-						<a href="{{ url('properties/is_recommended/all') }}" class="vs-btn vs-new-set-btn" style="padding: 10px 20px;">View All</a>
-						
-					</div>
-				</div>
-			</div>
-			
-			<div class="container "> 
-				<div class="row align-items-stretch new-my-div">  
-					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex " style="position: relative;" data-aos="fade-up">
-						<div class="swiper product-slider w-100">
-							<div class="swiper-wrapper">
-								@forelse ($recommendedProperties as $property)
-								<div class="swiper-slide">
-									<x-property :property="$property" />
-								</div>
-								@empty
-								<div class="p-3 text-center mb-30 w-100">
-									<h3 class="mb-0">{{ __('No Recommended Property Found') }}</h3>
-								</div>
-								@endforelse
-							</div>
-							<div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
-						</div> 
-						<div class="swiper-button-prev first-left custom-swiper-btn"></div>
-						<div class="swiper-button-next first-right custom-swiper-btn"></div>
-					</div>
-				</div> 
-			</div>
-		</div>
-	</div>
-</section> 
+<section class="product-area featured-product pt-40 pb-20">
+    <div class="container">
+        <div class="row">
+            <div class="container">
+                <div class="col-12">
+                    <div class="section-title  mb-30 new-titles" data-aos="fade-up" style="position: relative;">
+                        <h2 class="title" style="text-align : center;">Recommended Properties</h2>
+                        <p class="mt-2" style="font-size:14px;">Handpicked and premium listings showcased for you.
+                            Explore top-rated homes, offices, and commercial spaces that stand out.</p>
+                        <a href="{{ url('properties/is_recommended/all') }}" class="vs-btn vs-new-set-btn"
+                            style="padding: 10px 20px;">View All</a>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="container ">
+                <div class="row align-items-stretch ">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex " style="position: relative;"
+                        data-aos="fade-up">
+                        <div class="swiper product-slider w-100">
+                            <div class="swiper-wrapper">
+                                @forelse ($recommendedProperties as $property)
+                                <div class="swiper-slide">
+                                    <x-property :property="$property" />
+                                </div>
+                                @empty
+                                <div class="p-3 text-center mb-30 w-100">
+                                    <h3 class="mb-0">{{ __('No Recommended Property Found') }}</h3>
+                                </div>
+                                @endforelse
+                            </div>
+                            <div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
+                        </div>
+                        <div class="swiper-button-prev first-left custom-swiper-btn"></div>
+                        <div class="swiper-button-next first-right custom-swiper-btn"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 @endif
 
 @if($fastSellingProperties->isNotEmpty())
-<section class="product-area featured-product pt-100 pb-70">
-	<div class="container-fulid new-padding-des-res">
-		<div class="row">
-			<div class="container" >
-				<div class="col-12">
-					<div class="section-title text-center mb-40 new-titles" data-aos="fade-up"  style="position: relative;">
-						<h2 class="title" style="text-align : center;">Fast Selling Properties</h2>
-						<p class="mt-4">Handpicked and premium listings showcased for you. Explore top-rated homes, offices, and commercial spaces that stand out.</p>
-						<a href="{{ url('properties/is_fast_selling/all') }}" class="vs-btn vs-new-set-btn" style="padding: 10px 20px;">View All</a>
-					</div>
-				</div>
-			</div>
-			
-			<div class="container "> 
-				<div class="row align-items-stretch new-my-div">  
-					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex " style="position: relative;" data-aos="fade-up">
-						<div class="swiper product-slider w-100">
-							<div class="swiper-wrapper">
-								@forelse ($fastSellingProperties as $property)
-								<div class="swiper-slide">
-									<x-property :property="$property" />
-								</div>
-								@empty
-								<div class="p-3 text-center mb-30 w-100">
-									<h3 class="mb-0">{{ __('No Fast Selling Property Found') }}</h3>
-								</div>
-								@endforelse
-							</div>
-							<div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
-						</div> 
-						<div class="swiper-button-prev first-left custom-swiper-btn"></div>
-						<div class="swiper-button-next first-right custom-swiper-btn"></div>
-					</div>
-				</div> 
-			</div>
-		</div>
-	</div>
-</section> 
-@endif
+<section class="product-area featured-product pt-40 pb-20">
+    <div class="container">
+        <div class="row">
+            <div class="container">
+                <div class="col-12">
+                    <div class="section-title mb-30 new-titles" data-aos="fade-up" style="position: relative;">
+                        <h2 class="title" style="text-align : center;">Fast Selling Properties</h2>
+                        <p class="mt-2" style="font-size:14px;">
+                            Handpicked and premium listings showcased for you.
+                            Explore top-rated homes, offices, and commercial spaces that stand out.
+                        </p>
+                        <a href="{{ url('properties/is_fast_selling/all') }}"
+                            class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 10px 20px;">
+                            View All
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-@if ($secInfo->property_section_status == 1)
-<section class="product-area popular-product product-1 pt-70 pb-70 relative" style="background : #F8F7F1;">
-	<img src="{{ asset('assets/front/images/new-images/new-primume-properties.png') }}" alt="" class="new-primume-prop-img">
-	<div class="container" style="margin-top: 50px;">
-		<div class="row">
-			<div class="col-12">
-				<div class="section-title text-center mb-40" data-aos="fade-up">
-					<h2 class="title">{{ $propertySecInfo->title }}</h2>
-					<p class="mt-4">Stay updated with the newest property listings. Discover fresh options for buying, selling, or renting in just a few clicks.
-					</p>
-					
-				</div>
-			</div>
-			<div class="col-12">
-				<div class="tab-content" data-aos="fade-up">
-					<div class="row new-padding-width-res" style="position: relative;">
-						<!-- Slider wrapper -->
-						<div class="swiper LP-new-slider">
-							<div class="swiper-wrapper">
-								@forelse ($properties as $property)
-								@if($property->property_type == 'partial')
-								<div class="swiper-slide">
-									<x-property :property="$property" class="col-12" />
-								</div>
-								@endif
-								@empty
-								<div class="p-3 text-center mb-30">
-									<h3 class="mb-0">{{ __('No Properties Found') }}</h3>
-								</div>
-								@endforelse
-							</div>
-						</div>
-						
-						<!-- Navigation arrows -->
-						<div class="LP-new-left-btn">
-							<img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
-						</div>
-						<div class="LP-new-right-btn">
-							<img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+            <div class="container">
+                <div class="row align-items-stretch">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex" style="position: relative;"
+                        data-aos="fade-up">
+                        <div class="swiper product-slider w-100">
+                            <div class="swiper-wrapper">
+                                @forelse ($fastSellingProperties as $property)
+                                <div class="swiper-slide">
+                                    <x-property :property="$property" />
+                                </div>
+                                @empty
+                                <div class="p-3 text-center mb-30 w-100">
+                                    <h3 class="mb-0">{{ __('No Fast Selling Property Found') }}</h3>
+                                </div>
+                                @endforelse
+                            </div>
+                            <div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
+                        </div>
+
+                        <div class="swiper-button-prev first-left custom-swiper-btn"></div>
+                        <div class="swiper-button-next first-right custom-swiper-btn"></div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="{{ url('properties/is_fast_selling/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
+                        style="padding: 10px 20px;">
+                        View All
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 @endif
 
-  
 
-<section class="product-area popular-product product-1 pt-70 pb-70 relative">
+@if ($secInfo->property_section_status == 1)
+<section class="product-area popular-product product-1 pt-40 pb-0 relative" style="background : #F8F7F1;">
+    <img src="{{ asset('assets/front/images/new-images/new-primume-properties.png') }}" alt=""
+        class="new-primume-prop-img">
+    <div class="container" style="margin-top: 50px;">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title prop-pad mb-30" data-aos="fade-up">
+                    <h2 class="title">{{ $propertySecInfo->title }}</h2>
+                    <p class="mt-2" style="font-size:14px;">Stay updated with the newest property listings. Discover
+                        fresh options for buying, selling, or renting in just a few clicks.
+                    </p>
+
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="tab-content" data-aos="fade-up">
+                    <div class="row new-padding-width-res" style="position: relative;">
+                        <!-- Slider wrapper -->
+                        <div class="swiper LP-new-slider">
+                            <div class="swiper-wrapper">
+                                @forelse ($properties as $property)
+                                @if($property->property_type == 'partial')
+                                <div class="swiper-slide">
+                                    <x-property :property="$property" class="col-12" />
+                                </div>
+                                @endif
+                                @empty
+                                <div class="p-3 text-center mb-30">
+                                    <h3 class="mb-0">{{ __('No Properties Found') }}</h3>
+                                </div>
+                                @endforelse
+                            </div>
+                        </div>
+
+                        <!-- Navigation arrows -->
+                        <div class="LP-new-left-btn">
+                            <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
+                        </div>
+                        <div class="LP-new-right-btn">
+                            <img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+
+
+
+<section class="product-area popular-product product-1 pt-40 pb-0 relative">
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="section-title text-center mb-40 aos-init aos-animate" data-aos="fade-up">
+                <div class="section-title mb-30 aos-init aos-animate" data-aos="fade-up">
                     <h2 class="title">Business For Sale</h2>
-                    <p class="mt-4">Explore a wide range of businesses up for sale. From retail outlets to commercial setups, find the right opportunity to invest and grow.
-					</p>
-				</div>
-			</div>
-		</div>
-		
+                    <p class="mt-2" style="font-size:14px;">Explore a wide range of businesses up for sale. From retail
+                        outlets to commercial setups, find the right opportunity to invest and grow.
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <div class="row  new-padding-width-res" style="position : relative;">
             <!-- Slider wrapper -->
             <div class="swiper bussiness-f-s-slider">
@@ -468,40 +553,39 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                     @forelse ($business_for_sale as $sale)
                     <div class="swiper-slide">
                         <x-property :property="$sale" class="col-12" />
-					</div>
+                    </div>
                     @empty
                     <div class="p-3 text-center mb-30">
                         <h3 class="mb-0"> {{ __('No Properties Found') }}</h3>
-					</div>
+                    </div>
                     @endforelse
-				</div>
-			</div>
-			
+                </div>
+            </div>
+
             <!-- Navigation arrows -->
             <div class="bussiness-f-s-left-btn">
                 <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
-			</div>
+            </div>
             <div class="bussiness-f-s-right-btn">
                 <img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </section>
 
 
-
-
-<section class="product-area popular-product product-1 pt-70 pb-70 relative" style="background:#F8F7F1;">
-    <div class="container" style="margin-top: 50px;">
+<section class="product-area popular-product product-1 pt-40 pb-0 relative" style="background:#F8F7F1;">
+    <div class="container">
         <div class="row" style="position: relative;">
             <div class="col-12">
-                <div class="section-title text-center mb-40 aos-init aos-animate" data-aos="fade-up">
+                <div class="section-title mb-30 aos-init aos-animate" data-aos="fade-up">
                     <h2 class="title">Franchiese</h2>
-                    <p class="mt-4">Join hands with Dala Maaf and become a part of a growing network. Unlock business opportunities with our easy-to-start franchise model.</p>
-				</div>
-			</div>
-			
-			
+                    <p class="mt-2" style="font-size:14px">Join hands with Dala Maaf and become a part of a growing
+                        network. Unlock business opportunities with our easy-to-start franchise model.</p>
+                </div>
+            </div>
+
+
             <div class="col-12">
                 <!-- Swiper Slider Wrapper -->
                 <div class="swiper fren-new-slider">
@@ -510,285 +594,309 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                         <div class="swiper-slide">
                             {{-- property component --}}
                             <x-property :property="$franchie" />
-						</div>
+                        </div>
                         @empty
                         <div class="p-3 text-center mb-30">
                             <h3 class="mb-0"> {{ __('No Properties Found') }}</h3>
-						</div>
+                        </div>
                         @endforelse
-					</div>
-					
-					
-				</div>
-				
+                    </div>
+
+
+                </div>
+
                 <!-- Navigation Buttons -->
                 <div class="fren-new-left-btn">
                     <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
-				</div>
+                </div>
                 <div class="fren-new-right-btn">
                     <img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
-				</div>
-			</div>
-		</div>
-	</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 
-<div class="container my-5 upcoming-projects" data-aos="fade-up">
-	
+<div class="container pt-40 pb-20 upcoming-projects" data-aos="fade-up">
+
     <div class="row">
         <div class="col-12">
-            <div class="section-title title-center mb-40" data-aos="fade-up">
+            <div class="section-title  mb-30" data-aos="fade-up">
                 <h2 class="title">Upcoming Project</h2>
-			</div>
-		</div>
-	</div>
-	
+            </div>
+        </div>
+    </div>
+
     <!-- Slider Wrapper -->
     <div class="up-comming-slide-wrapper mt-4" data-aos="fade-up">
-		
+
         <!-- Left Arrow -->
         <button class="arrow-button-pro arrow-left-pro hidden" id="up-comming-prev">
             <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="Prev">
-		</button>
-		
+        </button>
+
         <!-- Slider -->
         <div class="up-comming-project" style="height: fit-content;">
             @foreach($projects as $project)
             <a href="{{ route('frontend.projects.details', ['slug' => $project->slug]) }}" style="height : auto;">
                 <div class="new-up-cards">
-					
-                    <img src="{{ asset('assets/img/project/featured/' . $project->featured_image) }}" alt="Project" class="upcoming-projects-img">
-					
+
+                    <img src="{{ asset('assets/img/project/featured/' . $project->featured_image) }}" alt="Project"
+                        class="upcoming-projects-img">
+
                     <div class="upcomming-card-body">
                         <h5>{{ $project->title }}</h5>
                         <p class="text-muted">{{ $project->address }}</p>
                         <h6 class="up-price">
                             {{ symbolPrice($project->min_price) }}
                             <small class="text-muted">Starting</small>
-						</h6>
-					</div>
-					
-				</div>
-				
-			</a>
-			
+                        </h6>
+                    </div>
+
+                </div>
+
+            </a>
+
             @endforeach
-		</div>
-		
+        </div>
+
         <!-- Right Arrow -->
         <button class="arrow-button-pro arrow-right-pro hidden" id="up-comming-next">
             <img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="Next">
-		</button>
-	</div>
-	
-	
+        </button>
+    </div>
+
+
 </div>
 
-<section class="city-section">
+<section class="city-section pt-40 pb-20">
     <img src="{{ asset('assets/front/images/acrs-imag/building-vector.png') }}" alt="" class="building-vector">
     <div class="container">
         <div class="city-details">
-            <h6>First-time buyer, investor, or renter? Dala Maaf connects you to trusted properties in prime locations—your real estate partner.</h6>
-            <p>Looking for your dream home, the right investment, or the best rental deal? Dala Maaf makes it simple. With thousands of verified listings, expert insights, and user-friendly search options, you can buy, sell, or rent properties with complete confidence.</p>
-            <p>Whether you’re a first-time buyer, an investor, or someone searching for the perfect rental, Dala Maaf connects you to trusted property options across prime locations. It’s more than a platform—it’s your partner in real estate.</p>
+            <h6>First-time buyer, investor, or renter? Dala Maaf connects you to trusted properties in prime
+                locations—your real estate partner.</h6>
+            <p>Looking for your dream home, the right investment, or the best rental deal? Dala Maaf makes it simple.
+                With thousands of verified listings, expert insights, and user-friendly search options, you can buy,
+                sell, or rent properties with complete confidence.</p>
+            <p>Whether you’re a first-time buyer, an investor, or someone searching for the perfect rental, Dala Maaf
+                connects you to trusted property options across prime locations. It’s more than a platform—it’s your
+                partner in real estate.</p>
             <div style="margin-top: 30px;">
-                <a href="{{ route('frontend.properties') }}" class="find-your-btn">Find Your Perfect Property with Dala Maaf</a>
-			</div>
-		</div>
-	</div>
+                <a href="{{ route('frontend.properties') }}" class="find-your-btn">Find Your Perfect Property with Dala
+                    Maaf</a>
+            </div>
+        </div>
+    </div>
 </section>
 
 @if ($secInfo->why_choose_us_section_status == 1)
-<section class="new-aps-sections  pt-70 pb-70">
-    <div class="container new-padding-des-res">
-        <div class="section-title title-inline mb-40 aos-init aos-animate d-flex justify-content-center" data-aos="fade-up">
+<section class="new-aps-sections  pt-40 pb-20">
+    <div class="container">
+        <div class="section-title title-inline mb-30 aos-init aos-animate d-flex" data-aos="fade-up">
             <h2 class="title">Explore Property Types</h2>
-		</div>
-		
+        </div>
+
         <div class="aps-slide-wrapper " style="margin-top : 50px;" data-aos="fade-up">
             <!-- Left Arrow -->
-            <button class="arrow-button arrow-left" id="arrowLeft"><img src="{{ asset('assets/front/images/new-images/left.png') }}" alt=""></button>
-			
+            <button class="arrow-button arrow-left" id="arrowLeft"><img
+                    src="{{ asset('assets/front/images/new-images/left.png') }}" alt=""></button>
+
             <!-- Slider -->
             <div class="aps-slider ">
                 @foreach ($all_proeprty_categories as $category)
                 <div class="new-aps-titles-bag">
                     <a href="{{ route('frontend.properties',['category'=>$category->categoryContent->name]) }}">
-                        <img src="{{ asset('assets/img/property-category/' . $category->image) }}" alt="" class="new-images-aps-type">
+                        <img src="{{ asset('assets/img/property-category/' . $category->image) }}" alt=""
+                            class="new-images-aps-type">
                         <div class="new-type-title">
                             <h6 class="aps-type">{{ @$category->categoryContent->name }}</h6>
                             <h6 class="aps-type-property">{{ $category->properties_count }} properties</h6>
-						</div>
-					</a>
-				</div>
+                        </div>
+                    </a>
+                </div>
                 @endforeach
-				
-			</div>
-			
+
+            </div>
+
             <!-- Right Arrow -->
-            <button class="arrow-button arrow-right" id="arrowRight"><img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt=""></button>
-		</div>
-		
-		
-		
-	</div>
+            <button class="arrow-button arrow-right" id="arrowRight"><img
+                    src="{{ asset('assets/front/images/new-images/Right.png') }}" alt=""></button>
+        </div>
+
+
+
+    </div>
 </section>
 @endif
 
 
 
 
-<section class="buy-rent-sale-section">
+<section class="buy-rent-sale-section pt-40 pb-20">
     <div class="container">
-		
-		
-		
-        <div class="section-title title-inline mb-40 aos-init aos-animate d-flex justify-content-center" data-aos="fade-up">
+
+
+
+        <div class="section-title title-inline mb-30 aos-init aos-animate d-flex" data-aos="fade-up">
             <h2 class="title">For all your luxury real estate needs, We have got you covered!</h2>
-            <p>From finding your dream home with all the luxury amenities to seamless transactions, trust us to handle every detail with care and expertise.</p>
-		</div>
-		
+            <p>From finding your dream home with all the luxury amenities to seamless transactions, trust us to handle
+                every detail with care and expertise.</p>
+        </div>
+
         <div class="row">
             <div class="col-lg-4 b-s-r-div-main">
                 <div class="b-s-r-div ">
                     <img src="{{ asset('assets/front/images/acrs-imag/buy.png') }}" alt="" class="b-s-r-img">
                     <h5 class="but-title">Buy</h5>
-                    <p class="but-title-p">Discover thousands of verified listings across residential and commercial spaces. Find your dream home or perfect investment with our easy-to-use search and trusted property details.</p>
-				</div>
-			</div>
+                    <p class="but-title-p">Discover thousands of verified listings across residential and commercial
+                        spaces. Find your dream home or perfect investment with our easy-to-use search and trusted
+                        property details.</p>
+                </div>
+            </div>
             <div class="col-lg-4 b-s-r-div-main">
                 <div class="b-s-r-div ">
                     <img src="{{ asset('assets/front/images/acrs-imag/sale.png') }}" alt="" class="b-s-r-img">
                     <h5 class="but-title">Sell</h5>
-                    <p class="but-title-p">List your property in minutes and connect with serious buyers. With DalalMaf’s wide reach and trusted network, selling your property has never been faster or easier.</p>
-					
-				</div>
-			</div>
+                    <p class="but-title-p">List your property in minutes and connect with serious buyers. With
+                        DalalMaf’s wide reach and trusted network, selling your property has never been faster or
+                        easier.</p>
+
+                </div>
+            </div>
             <div class="col-lg-4 b-s-r-div-main">
                 <div class="b-s-r-div ">
                     <img src="{{ asset('assets/front/images/acrs-imag/rent.png') }}" alt="" class="b-s-r-img">
                     <h5 class="but-title">Rent</h5>
-                    <p class="but-title-p">Looking for a home or office on rent? Explore verified rental options that fit your budget and lifestyle. Hassle-free rentals with trusted landlords, all in one place.</p>
-					
-				</div>
-			</div>
-		</div>  
-	</div>
-</section> 
+                    <p class="but-title-p">Looking for a home or office on rent? Explore verified rental options that
+                        fit your budget and lifestyle. Hassle-free rentals with trusted landlords, all in one place.</p>
 
-<section class="why-dlal-dection">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="why-dlal-dection pt-40 pb-20">
     <div class="container">
-        <div class="section-title title-inline mb-40 aos-init aos-animate d-flex justify-content-center" style="flex-direction: column;" data-aos="fade-up">
+        <div class="section-title title-inline mb-30 aos-init aos-animate d-flex " style="flex-direction: column;"
+            data-aos="fade-up">
             <h2 class="title">Why DalalMaf ?</h2>
             <p>For Your Buying, Selling & Renting in Real Estate</p>
-		</div>
-		
+        </div>
+
         <div class="row">
             <div class="col-lg-6">
                 <div class="why-main-div">
                     <h6>Best Deals at Your Fingertips</h6>
-                    <p>Find verified properties at the most competitive prices. Whether buying, selling, or renting, DalalMaf ensures you get the best value for your money.</p>
+                    <p>Find verified properties at the most competitive prices. Whether buying, selling, or renting,
+                        DalalMaf ensures you get the best value for your money.</p>
                     <div class="icons">
                         <img src="{{ asset('assets/front/images/acrs-imag/why-1.png') }}" alt="">
-					</div>
-				</div>
-			</div>
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-6">
                 <div class="why-main-div">
                     <h6>Verified & Trusted Listings </h6>
-                    <p>Every property listed on DalalMaf goes through a strict verification process, ensuring that you connect only with genuine sellers, buyers, and renters.</p>
+                    <p>Every property listed on DalalMaf goes through a strict verification process, ensuring that you
+                        connect only with genuine sellers, buyers, and renters.</p>
                     <div class="icons">
                         <img src="{{ asset('assets/front/images/acrs-imag/why-2.png') }}" alt="">
-					</div>
-				</div>
-			</div>
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-6">
                 <div class="why-main-div">
                     <h6>Expert Support Anytime </h6>
-                    <p>From searching properties to closing the deal, our dedicated support team is here to guide you at every step, making your journey smooth and hassle-free.</p>
+                    <p>From searching properties to closing the deal, our dedicated support team is here to guide you at
+                        every step, making your journey smooth and hassle-free.</p>
                     <div class="icons">
                         <img src="{{ asset('assets/front/images/acrs-imag/why-3.png') }}" alt="">
-					</div>
-				</div>
-			</div>
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-6">
                 <div class="why-main-div">
                     <h6>Wide Network & Easy Access </h6>
-                    <p>With thousands of listings across residential, commercial, and rental properties, DalalMaf gives you a wide choice and helps you find the perfect property quickly.</p>
+                    <p>With thousands of listings across residential, commercial, and rental properties, DalalMaf gives
+                        you a wide choice and helps you find the perfect property quickly.</p>
                     <div class="icons">
                         <img src="{{ asset('assets/front/images/acrs-imag/why-4.png') }}" alt="">
-					</div>
-				</div>
-			</div>
-		</div>
-		
-	</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </section>
 
-<section class="about-section-new">
+<section class="about-section-new pt-40 pb-20">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6 about-lrft-sections-new"> 
-                <img src="{{ asset('assets/front/images/acrs-imag/about-right.png') }}" alt="" class="about-llrs-img"> 
-			</div>
+            <div class="col-lg-6 about-lrft-sections-new">
+                <img src="{{ asset('assets/front/images/acrs-imag/about-right.png') }}" alt="" class="about-llrs-img">
+            </div>
             <div class="col-lg-6">
                 <h1 class="ab-le-title">About The Story Behind Us</h1>
-                <p class="ab-le-par">Welcome to DalalMaf, your trusted platform for buying, selling, and renting properties.
-                    We are committed to making real estate simple, transparent, and accessible for everyone. Whether you are a first-time buyer, a property investor, or someone looking to rent a home, DalalMaf connects you with verified listings and trusted partners.
-				</p>
+                <p class="ab-le-par">Welcome to DalalMaf, your trusted platform for buying, selling, and renting
+                    properties.
+                    We are committed to making real estate simple, transparent, and accessible for everyone. Whether you
+                    are a first-time buyer, a property investor, or someone looking to rent a home, DalalMaf connects
+                    you with verified listings and trusted partners.
+                </p>
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="about-right-pd">
                             <div class="abs-r-i-des-div">
                                 <h6>{{ $cityCount }}</h6>
                                 <h5>Cities Covered</h5>
-							</div>
+                            </div>
                             <div class="abt-r-i-div">
                                 <img src="{{ asset('assets/front/images/acrs-imag/abs-01.png') }}" alt="">
-							</div>
-						</div>
-					</div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-lg-6">
                         <div class="about-right-pd">
                             <div class="abs-r-i-des-div">
                                 <h6>{{ $userCount }}</h6>
                                 <h5>Happy Customers</h5>
-							</div>
+                            </div>
                             <div class="abt-r-i-div">
                                 <img src="{{ asset('assets/front/images/acrs-imag/abs-02.png') }}" alt="">
-							</div>
-						</div>
-					</div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-lg-6">
                         <div class="about-right-pd">
                             <div class="abs-r-i-des-div">
                                 <h6>24/7</h6>
                                 <h5>Customer Support</h5>
-							</div>
+                            </div>
                             <div class="abt-r-i-div">
                                 <img src="{{ asset('assets/front/images/acrs-imag/abs-03.png') }}" alt="">
-							</div>
-						</div>
-					</div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-lg-6">
                         <div class="about-right-pd">
                             <div class="abs-r-i-des-div">
                                 <h6>{{ $vendorCount }}</h6>
                                 <h5>Trusted Partners</h5>
-							</div>
+                            </div>
                             <div class="abt-r-i-div">
                                 <img src="{{ asset('assets/front/images/acrs-imag/abs-04.png') }}" alt="">
-							</div>
-						</div>
-					</div>
-				</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div style="margin-top: 30px;">
                     <a href="{{ route('about_us') }}" class="btn-cus-header">Know More About Us</a>
-				</div>
-			</div>
-		</div>
-	</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 
@@ -842,84 +950,86 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 	</div>
 </section> --}}
 
- 
+
 
 @if ($secInfo->vendor_section_status == 1)
-<section class="pt-70">
+<section class="pt-40 pb-20">
     <div class="container">
-		
+
         <div class="row">
-			
-            <div class="col-12">
-                <div class="section-title title-center mb-40" data-aos="fade-up">
+            <div class="col-12 button-res">
+                <div class="section-title mb-30" data-aos="fade-up">
                     <h2 class="title">{{ $vendorInfo?->subtitle }}</h2>
-				</div>
-			</div>
-			
+                </div>
+
+                @if (count($vendors) > 0)
+                <div class="text-center view-all-desktop">
+                    <a href="{{ route('frontend.vendors') }}" class="btn btn-lg btn-primary mb-30"
+                        style="background-color:#6c603c;">{{ $vendorInfo->btn_name }}</a>
+                </div>
+                @endif
+            </div>
+
             @forelse ($vendors as $vendor)
-			
             <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="new-company-card " data-aos="fade-up">
+                <div class="new-company-card" data-aos="fade-up">
                     <div class="logo-container">
-                        <img class="lazyload" data-src="{{ $vendor->photo ? asset('assets/admin/img/vendor-photo/' . $vendor->photo) : asset('assets/img/blank-user.jpg') }}">
-					</div>
+                        <img class="lazyload"
+                            data-src="{{ $vendor->photo ? asset('assets/admin/img/vendor-photo/' . $vendor->photo) : asset('assets/img/blank-user.jpg') }}">
+                    </div>
                     <div class="company-details">
-						
                         <h3>{{ $vendor->vendor_info['name'] ?? 'Not Available'}}</h3>
                         <div>
-                            @php
-                            $agents = App\Models\Agent::where('vendor_id', $vendor->vendorId)->get();
-                            @endphp
-							
                             <p class="new-fonts-property">{{ count($vendor->properties) }} {{ __('Properties') }}</p>
                             <p class="new-fonts-property">{{ count($vendor->agents) }} {{ __('Staffs') }}</p>
                             <p class="new-fonts-property">{{ count($vendor->projects) }} {{ __('Projects') }}</p>
-						</div>
-                        <!-- <div class="mt-3">
-                            <a href="{{ route('frontend.vendor.details', ['username' => $vendor->username]) }}"
-							class="btn-text view-profile">{{ __('View Profile') }}</a>
-						</div> -->
-					</div>
-				</div>
-			</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @empty
             <div class="p-3 text-center mb-30 w-100">
-                <h3 class="mb-0"> {{ __('No Partners Found') }}</h3>
-			</div>
+                <h3 class="mb-0">{{ __('No Partners Found') }}</h3>
+            </div>
             @endforelse
-		</div>
-        @if (count($vendors) > 0)
-        <div class="text-center mt-4">
-            <a href="{{ route('frontend.vendors') }}"
-			class="btn btn-lg btn-primary  mb-30" style="background-color:  #6c603c;">{{ $vendorInfo->btn_name }}</a>
-		</div>
-        @endif
-	</div>
+
+            @if (count($vendors) > 0)
+            <div class="text-center mt-4 view-all-mobile">
+                <a href="{{ route('frontend.vendors') }}" class="btn btn-lg btn-primary mb-30"
+                    style="background-color:#6c603c;">{{ $vendorInfo->btn_name }}</a>
+            </div>
+            @endif
+        </div>
+
+    </div>
 </section>
 @endif
 
+
 @if ($secInfo->cities_section_status == 1)
 
-<section class="new-gellary-area pt-70 pb-70 relative ">
-	
-    <img src="http://127.0.0.1:8000/assets/front/images/new-images/new-primume-properties.png" alt="" class="exp-img">
-	
+<section class="new-gellary-area pt-40 pb-20 relative ">
+
+    <!-- <img src="http://127.0.0.1:8000/assets/front/images/new-images/new-primume-properties.png" alt="" class="exp-img"> -->
+
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="section-title title-center mb-40" data-aos="fade-up">
+                <div class="section-title mb-30" data-aos="fade-up">
                     <h2 class="title">{{ $citySecInfo?->subtitle }}</h2>
-				</div>
-			</div>
-			
-		</div>
-        <div class="row justify-content-center new-city-design">
+                </div>
+            </div>
+
+        </div>
+        <div class="row ">
             <!-- City Card Start -->
             @forelse ($cities as $city)
             <div class="custom-col-5 mt-4" data-aos="fade-up">
-                <a href="{{ route('frontend.properties', ['city' => $city->name]) }}" class="text-center" style="display: block; text-decoration: none; color: inherit;">
+                <a href="{{ route('frontend.properties', ['city' => $city->name]) }}" class="text-center"
+                    style="display: block; text-decoration: none; color: inherit;">
                     <div class="city-card text-center">
-                        <img class="lazyload blur-up" data-src="{{ asset('assets/img/property-city/' . $city->image) }}">
+                        <img class="lazyload blur-up"
+                            data-src="{{ asset('assets/img/property-city/' . $city->image) }}">
                         <p>{{ $city->name }}</p>
                         <p>
                             {{ $city->propertyCount }}
@@ -928,16 +1038,16 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                             @else
                             {{ __('Property') }}
                             @endif
-						</p>
-					</div>
-				</a>
-			</div>
+                        </p>
+                    </div>
+                </a>
+            </div>
             @empty
             <div class="p-3 text-center mb-30 w-100">
                 <h3 class="mb-0">{{ __('No Cities Found') }}</h3>
-			</div>
+            </div>
             @endforelse
-			
+
             {{-- <div class="mt-3" data-aos="fade-up">
                 <div class="city-tag-wrapper" id="cityTagWrapper">
                     <span class="city-tag">Surat</span>
@@ -958,22 +1068,22 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 				</div>
 				
 			</div> --}}
-			
-			
-		</div>
+
+
+        </div>
         {{-- <div class="text-center" style="margin-top : 30px;">
             <a href="http://127.0.0.1:8000/vendors" class="btn btn-lg btn-primary  mb-30" style="background : black;">See All</a>
 		</div> --}}
-		
-	</div>
-	
+
+    </div>
+
     <img src="{{ asset('assets/front/images/new-images/left-img.png') }}" alt="" class="city-left">
     <img src="{{ asset('assets/front/images/new-images/right-img.png') }}" alt="" class="city-right">
 </section>
 @endif
 
 <!-- @if ($secInfo->testimonial_section_status == 1)
-	<section class="testimonial-area pt-100 pb-70">
+	<section class="testimonial-area pt-100 pb-20">
     <div class="overlay-bg d-none d-lg-block">
 	<img class="lazyload blur-up" data-src="{{ asset('assets/img/' . $testimonialSecImage) }}">
     </div>
@@ -1006,7 +1116,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 	<div class="swiper" id="testimonial-slider-1">
 	<div class="swiper-wrapper">
 	@forelse ($testimonials as $testimonial)
-	<div class="swiper-slide pb-30" data-aos="fade-up">
+	<div class="swiper-slide pb-20" data-aos="fade-up">
 	<div class="slider-item">
 	<div class="client-img">
 	<div class="lazy-container ratio ratio-1-1">
@@ -1057,7 +1167,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 @endif -->
 
 <!-- @if ($secInfo->subscribe_section_status == 1)
-	<section class="newsletter-area pb-100" data-aos="fade-up">
+	<section class="newsletter-area pb-200" data-aos="fade-up">
     <div class="container">
 	<div class="newsletter-inner px-4">
 	<img class="lazyload bg-img" src="{{ asset('assets/img/' . $subscribeSectionImage) }}">
@@ -1084,51 +1194,132 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 	</section>
 @endif -->
 
+    @php
+    $user = Auth::guard('web')->user();
+    $vendor = Auth::guard('vendor')->user();
+    $agent = Auth::guard('agent')->user();
+
+    // Determine auth type
+    if ($vendor) {
+    $authType = 'vendor';
+    $authUser = $vendor;
+    $dashboardRoute = route('vendor.dashboard');
+    $logoutRoute = route('vendor.logout');
+    } elseif ($user) {
+    $authType = 'user';
+    $authUser = $user;
+    $dashboardRoute = route('user.dashboard');
+    $logoutRoute = route('user.logout');
+    }elseif ($agent) {
+    $authType = 'agent';
+    $authUser = $agent;
+    $dashboardRoute = route('agent.dashboard');
+    $logoutRoute = route('agent.logout');
+    } else {
+    $authType = 'guest';
+    $authUser = null;
+    }
+
+    // First letter for avatar
+    $initial = $authUser ? strtoupper(substr($authUser->username ?? 'U', 0, 1)) : null;
+
+    // Post Property route
+    if ($authType === 'vendor' && $vendor->email)
+    {
+    $postPropertyRoute = route('vendor.property_management.type');
+    } elseif ($authType === 'user' && $user->email) {
+    $postPropertyRoute = route('user.property_management.type');
+    }elseif ($authType === 'agent' && $agent->email) {
+    $postPropertyRoute = route('agent.property_management.type');
+    } else {
+    $postPropertyRoute = route('user.signup');
+    }
+    @endphp
 
 
 
 
-<div class="main-blog" data-aos="fade-up">
-    <div class="container" style="padding-top: 100px; padding-bottom: 100px; ">
-		
+
+<div class="main-blog pt-40 pb-20" data-aos="fade-up">
+    <div class="container">
+
         <div class="row">
-            <div class="col-12">
-                <div class="section-title title-center mb-40" data-aos="fade-up">
+            <div class="col-12 button-res">
+                <div class="section-title mb-30" data-aos="fade-up">
                     <h2 class="title">Our Blogs</h2>
-				</div>
-			</div>
-		</div>
-		
-        <div class="row g-4 mt-4">
-			
+                </div>
+
+                <!-- Desktop Button -->
+                <div class="text-center view-all-desktop">
+                    <a href="{{ route('blog') }}" class="btn btn-lg btn-primary mb-30"
+                        style="background-color:#6c603c;">All Blogs</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-1">
             @foreach ($blogs as $blog)
             <div class="col-md-4">
                 <div class="blog-card">
                     <img src="{{ asset('assets/img/blogs/' . $blog->image) }}" class="blog-img" alt="Blog Image">
                     <div class="blog-body">
-                        <h5 class="blog-title">{{$blog->title}}</h5>
-                        <p class="blog-text">{{ \Illuminate\Support\Str::limit(strip_tags($blog->content), 90) }}
-						</p>
+                        <h5 class="blog-title">{{ $blog->title }}</h5>
+                        <p class="blog-text">{{ \Illuminate\Support\Str::limit(strip_tags($blog->content), 90) }}</p>
                         <a href="{{ route('blog_details', ['slug' => $blog->slug]) }}" class="show-more">Show More →</a>
-					</div>
+                    </div>
                     <div class="blog-footer">
                         <img src="https://i.pravatar.cc/50" class="author-img" alt="Author">
                         <div class="author-info">
-                            <span>{{$blog->author}}</span>
+                            <span>{{ $blog->author }}</span>
                             <small>{{ $blog->created_at->diffForHumans() }}</small>
-						</div>
-					</div>
-				</div>
-			</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @endforeach
-			
-		</div>
-        <div class="text-center mt-4">
-            <a href="{{ route('blog') }}"
-			class="btn btn-lg btn-primary  mb-30" style="background-color:  #6c603c;">All Blogs</a>
-		</div>
-	</div>
+        </div>
+
+        <!-- Mobile Button -->
+        <div class="text-center mt-4 view-all-mobile">
+            <a href="{{ route('blog') }}" class="btn btn-lg btn-primary mb-30" style="background-color:#6c603c;">All
+                Blogs</a>
+        </div>
+    </div>
 </div>
+<div class="mobile-bottom-menu">
+    <a href="{{ route('index') }}" class="menu-item active">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+
+    <a href="{{ route('frontend.properties') }}" class="menu-item">
+        <i class="fas fa-lightbulb"></i>
+        <span>Properties</span>
+    </a>
+
+    <a href="{{ route('frontend.projects') }}" class="menu-item">
+        <i class="fas fa-building"></i>
+        <span>Projects</span>
+    </a>
+
+    <a href="{{ route('frontend.properties',['purpose'=>'franchiese']) }}" class="menu-item">
+        <i class="fas fa-heart"></i>
+        <span>Franchiese</span>
+    </a>
+
+    <a href="{{ route('frontend.properties', ['purpose' => 'business_for_sale']) }}" class="menu-item">
+        <i class="fas fa-user"></i>
+        <span>Business for Sale</span>
+    </a>
+</div>
+
+
+<a href="#" class="floating-plus-btn" id="sellRentBtn1">
+    <i class="fas fa-plus"></i>
+</a>
+
+
+
 @php
 $imagePaths = is_array($heroImg) ? array_map(function($img) {
 return asset('assets/img/hero/static/' . $img);
@@ -1142,600 +1333,600 @@ return asset('assets/img/hero/static/' . $img);
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <script>
-    // apartment slide ===============
-    $(document).ready(function() {
-        const $slider = $('.aps-slider');
-		
-        $slider.slick({
-            slidesToShow: 6,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 4000,
-            dots: false,
-            arrows: false,
-            pauseOnHover: true, // autoplay hover पर रुक जाएगा
-            responsive: [{
-				breakpoint: 1200,
-				settings: {
-					slidesToShow: 3
-				}
-			},
-			{
-				breakpoint: 992,
-				settings: {
-					slidesToShow: 2
-				}
-			},
-			{
-				breakpoint: 576,
-				settings: {
-					slidesToShow: 1
-				}
-			}
-            ]
-		});
-		
-        // Custom arrows
-        $('#arrowLeft').on('click', function() {
-            $slider.slick('slickPrev');
-		});
-		
-        $('#arrowRight').on('click', function() {
-            $slider.slick('slickNext');
-		});
-		
-        // जब mouse slider पर जाए → drag/swipe disable
-        $slider.on('mouseenter', function() {
-            $slider.slick('slickSetOption', 'swipe', false, false);
-            $slider.slick('slickSetOption', 'draggable', false, false);
-		});
-		
-        // जब mouse slider से हटे → drag/swipe enable
-        $slider.on('mouseleave', function() {
-            $slider.slick('slickSetOption', 'swipe', true, false);
-            $slider.slick('slickSetOption', 'draggable', true, false);
-		});
-		
-        // Function to update arrow visibility
-        function updateArrows(event, slick, currentSlide) {
-            if (slick.slideCount <= slick.options.slidesToShow) {
-                $('#arrowLeft, #arrowRight').addClass('hidden');
-                return;
-			}
-            if (slick.currentSlide === 0) {
-                $('#arrowLeft').addClass('hidden');
-				} else {
-                $('#arrowLeft').removeClass('hidden');
-			}
-            if (slick.currentSlide >= slick.slideCount - slick.options.slidesToShow) {
-                $('#arrowRight').addClass('hidden');
-				} else {
-                $('#arrowRight').removeClass('hidden');
-			}
-		}
-		
-        $slider.on('init reInit afterChange', updateArrows);
-		
-        $slider.on('init', function(event, slick) {
-            updateArrows(event, slick, 0);
-		});
-		
-        $slider.slick('setPosition');
-	});
-	
-	
-	
-	
-	
-    $(document).ready(function() {
-        const $slider = $('.up-comming-project');
-        const $prev = $('#up-comming-prev');
-        const $next = $('#up-comming-next');
-		
-        // Init slick
-        $slider.slick({
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 3000,
-            dots: false,
-            arrows: false,
-            infinite: false,
-            pauseOnHover: true,
-            swipe: false, // Disable swipe/drag
-            draggable: false, // Disable mouse drag
-            touchMove: false, // Disable touch drag
-            responsive: [{
-				breakpoint: 1100,
-				settings: {
-					slidesToShow: 2
-				}
-			},
-			{
-				breakpoint: 576,
-				settings: {
-					slidesToShow: 1
-				}
-			}
-            ]
-		});
-		
-        // Custom arrows
-        $prev.on('click', function() {
-            $slider.slick('slickPrev');
-		});
-        $next.on('click', function() {
-            $slider.slick('slickNext');
-		});
-		
-        // Arrow visibility
-        function updateArrows(event, slick) {
-            const current = slick.currentSlide;
-            const maxSlides = slick.slideCount - slick.options.slidesToShow;
-			
-            if (slick.slideCount <= slick.options.slidesToShow) {
-                $prev.addClass('hidden');
-                $next.addClass('hidden');
-                return;
-			}
-			
-            $prev.toggleClass('hidden', current === 0);
-            $next.toggleClass('hidden', current >= maxSlides);
-		}
-		
-        $slider.on('init reInit afterChange', updateArrows);
-        $slider.slick('slickGoTo', 0);
-		
-        // Stop slider autoplay on hover
-        $slider.on('mouseenter', function() {
-            $slider.slick('slickPause');
-		});
-        $slider.on('mouseleave', function() {
-            $slider.slick('slickPlay');
-		});
-		
-		
-	});
-	
-	
-	
-    // Hero Section  Swiper====================
-	
-    document.addEventListener("DOMContentLoaded", function() {
-        const images = @json($imagePaths);
-		
-        let index = 0;
-        const hero = document.getElementById("heroBanner");
-		
-        if (images.length > 0) {
-            hero.style.backgroundImage = `url('${images[0]}')`;
-			
-            setInterval(() => {
-                index = (index + 1) % images.length;
-                hero.style.backgroundImage = `url('${images[index]}')`;
-			}, 5000); // change every 5 sec
-		}
-	});
-    $(function() {
-        $(".searchBar").autocomplete({
-            source: function(request, response) {
-                $.ajax({
-                    url: "{{ route('frontend.location.search') }}",
-                    data: {
-                        term: request.term
-					},
-                    success: function(data) {
-                        response($.map(data, function(item) {
-                            return {
-                                label: item.text, // what to show
-                                value: item.id, // what fills input
-                                id: item.id // area id
-							};
-						}));
-					}
-				});
-			},
-            minLength: 2,
-            select: function(event, ui) {
-                console.log("Selected Area ID: " + ui.item.id);
-			}
-		});
-	});
-	
-	
-    // product-2 ================================
-	
-	
-    document.addEventListener('DOMContentLoaded', function() {
-        // query the buttons inside this slider container
-        const prevBtn = document.querySelector('.product-slider .swiper-button-prev');
-        const nextBtn = document.querySelector('.product-slider .swiper-button-next');
-		
-        var productSwiper = new Swiper(".product-slider", {
-            loop: false,
-            spaceBetween: 20,
-            pagination: {
-                el: "#product-slider-pagination",
-                clickable: true,
-			},
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-			},
-            autoplay: {
-                delay: 4000,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: true,
-			},
-            breakpoints: {
-                320: {
-                    slidesPerView: 1
-				},
-                576: {
-                    slidesPerView: 2
-				},
-                991: {
-                    slidesPerView: 3
-				},
-                1200: {
-                    slidesPerView: 4
-				},
-                1400: {
-                    slidesPerView: 4
-				},
-                1600: {
-                    slidesPerView: 4
-				}
-			},
-			
-            // keep Swiper aware of DOM changes (useful if your slides are rendered after load)
-            observer: true,
-            observeParents: true,
-			
-            // attach events to update nav visibility
-            on: {
-                init: function() {
-                    updateNav(this);
-				},
-                slideChange: function() {
-                    updateNav(this);
-				},
-                resize: function() {
-                    updateNav(this);
-				},
-                breakpoint: function() {
-                    updateNav(this);
-				},
-                observerUpdate: function() {
-                    updateNav(this);
-				}
-			}
-		});
-		
-        // function to hide/show nav buttons
-        function updateNav(swiper) {
-            // safety: if buttons don't exist, do nothing
-            if (!prevBtn || !nextBtn) return;
-			
-            // If slider is "locked" (not enough slides for current view) hide both
-            // swiper.isLocked is true when no sliding possible
-            const notEnoughSlides = swiper.isLocked || (swiper.slides.length <= (swiper.params.slidesPerView || 1));
-            if (notEnoughSlides) {
-                prevBtn.classList.add('hidden');
-                nextBtn.classList.add('hidden');
-                return;
-			}
-			
-            // show/hide based on position
-            if (swiper.isBeginning) prevBtn.classList.add('hidden');
-            else prevBtn.classList.remove('hidden');
-            if (swiper.isEnd) nextBtn.classList.add('hidden');
-            else nextBtn.classList.remove('hidden');
-		}
-	});
-	
-	
-	
-	
-	
-    // ===============
-	
-	
-    document.addEventListener('DOMContentLoaded', function() {
-        const prevBtnFS = document.querySelector('.bussiness-f-s-left-btn');
-        const nextBtnFS = document.querySelector('.bussiness-f-s-right-btn');
-        const sliderEl = document.querySelector('.bussiness-f-s-slider');
-		
-        if (!sliderEl) return;
-		
-        var businessFSSlider = new Swiper(sliderEl, {
-            loop: false,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-			},
-            spaceBetween: 20,
-            slidesPerView: 4,
-            simulateTouch: false, // 👈 drag disable
-            allowTouchMove: false, // 👈 swipe disable
-            navigation: {
-                nextEl: nextBtnFS,
-                prevEl: prevBtnFS,
-			},
-            breakpoints: {
-                0: {
-                    slidesPerView: 1
-				},
-                576: {
-                    slidesPerView: 2
-				},
-                768: {
-                    slidesPerView: 3
-				},
-                1200: {
-                    slidesPerView: 4
-				},
-			},
-            on: {
-                init(swiper) {
-                    updateNavFS(swiper);
-				},
-                slideChange(swiper) {
-                    updateNavFS(swiper);
-				},
-                resize(swiper) {
-                    updateNavFS(swiper);
-				},
-                breakpoint(swiper) {
-                    updateNavFS(swiper);
-				},
-			}
-		});
-		
-        // Hover → autoplay stop/start
-        sliderEl.addEventListener("mouseenter", () => businessFSSlider.autoplay.stop());
-        sliderEl.addEventListener("mouseleave", () => businessFSSlider.autoplay.start());
-		
-        // Update navigation buttons
-        function updateNavFS(swiper) {
-            if (!prevBtnFS || !nextBtnFS) return;
-			
-            const notEnoughSlides =
-			swiper.isLocked || swiper.slides.length <= swiper.params.slidesPerView;
-			
-            if (notEnoughSlides) {
-                prevBtnFS.classList.add('hidden');
-                nextBtnFS.classList.add('hidden');
-                return;
-			}
-			
-            swiper.isBeginning ?
-			prevBtnFS.classList.add('hidden') :
-			prevBtnFS.classList.remove('hidden');
-			
-            swiper.isEnd ?
-			nextBtnFS.classList.add('hidden') :
-			nextBtnFS.classList.remove('hidden');
-		}
-	});
-	
-    // =======================
-	
-    document.addEventListener('DOMContentLoaded', function() {
-        const sliderEl = document.querySelector('.fren-new-slider');
-		
-        var frenNewSlider = new Swiper(".fren-new-slider", {
-            loop: false,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-			},
-            spaceBetween: 20,
-            slidesPerView: 4,
-			
-            // 🔒 Cursor/Swipe movement disable
-            simulateTouch: false,
-            allowTouchMove: false,
-			
-            navigation: {
-                nextEl: ".fren-new-right-btn",
-                prevEl: ".fren-new-left-btn",
-			},
-            breakpoints: {
-                0: {
-                    slidesPerView: 1
-				},
-                576: {
-                    slidesPerView: 2
-				},
-                768: {
-                    slidesPerView: 3
-				},
-                1200: {
-                    slidesPerView: 4
-				},
-			},
-            on: {
-                init: function() {
-                    toggleNavButtons(this);
-				},
-                slideChange: function() {
-                    toggleNavButtons(this);
-				},
-			},
-		});
-		
-        // 👉 Hover पर autoplay stop / leave पर start
-        sliderEl.addEventListener("mouseenter", () => frenNewSlider.autoplay.stop());
-        sliderEl.addEventListener("mouseleave", () => frenNewSlider.autoplay.start());
-		
-        function toggleNavButtons(swiper) {
-            const prevBtn = document.querySelector('.fren-new-left-btn');
-            const nextBtn = document.querySelector('.fren-new-right-btn');
-			
-            // Left button disable on first slide
-            prevBtn.classList.toggle('swiper-button-disabled', swiper.isBeginning);
-			
-            // Right button disable on last slide
-            nextBtn.classList.toggle('swiper-button-disabled', swiper.isEnd);
-		}
-	});
-	
-    // ===================================
-	
-    document.addEventListener('DOMContentLoaded', function() {
-		const prevBtnFS = document.querySelector('.verify-f-s-left-btn');
-		const nextBtnFS = document.querySelector('.verify-f-s-right-btn');
-		const sliderEl = document.querySelector('.verify-f-s-slider');
-		
-		if (!sliderEl) return;
-		
-		var verifyFSSlider = new Swiper(sliderEl, {
-			loop: false,
-			autoplay: {
-				delay: 3000,
-				disableOnInteraction: false,
-			},
-			spaceBetween: 20,
-			slidesPerView: 4,
-			simulateTouch: false, // 👈 drag disable
-			allowTouchMove: false, // 👈 swipe disable
-			navigation: {
-				nextEl: nextBtnFS,
-				prevEl: prevBtnFS,
-			},
-			breakpoints: {
-				0: {
-					slidesPerView: 1
-				},
-				576: {
-					slidesPerView: 2
-				},
-				768: {
-					slidesPerView: 3
-				},
-				1200: {
-					slidesPerView: 4
-				},
-			},
-			on: {
-				init(swiper) {
-					updateNavFS(swiper);
-				},
-				slideChange(swiper) {
-					updateNavFS(swiper);
-				},
-				resize(swiper) {
-					updateNavFS(swiper);
-				},
-				breakpoint(swiper) {
-					updateNavFS(swiper);
-				},
-			}
-		});
-		
-		// Hover → autoplay stop/start
-		sliderEl.addEventListener("mouseenter", () => verifyFSSlider.autoplay.stop());
-		sliderEl.addEventListener("mouseleave", () => verifyFSSlider.autoplay.start());
-		
-		// Update navigation buttons
-		function updateNavFS(swiper) {
-			if (!prevBtnFS || !nextBtnFS) return;
-			
-			const notEnoughSlides =
+// apartment slide ===============
+$(document).ready(function() {
+    const $slider = $('.aps-slider');
+
+    $slider.slick({
+        slidesToShow: 6,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 4000,
+        dots: false,
+        arrows: false,
+        pauseOnHover: true, // autoplay hover पर रुक जाएगा
+        responsive: [{
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 3
+                }
+            },
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 2
+                }
+            },
+            {
+                breakpoint: 576,
+                settings: {
+                    slidesToShow: 1
+                }
+            }
+        ]
+    });
+
+    // Custom arrows
+    $('#arrowLeft').on('click', function() {
+        $slider.slick('slickPrev');
+    });
+
+    $('#arrowRight').on('click', function() {
+        $slider.slick('slickNext');
+    });
+
+    // जब mouse slider पर जाए → drag/swipe disable
+    $slider.on('mouseenter', function() {
+        $slider.slick('slickSetOption', 'swipe', false, false);
+        $slider.slick('slickSetOption', 'draggable', false, false);
+    });
+
+    // जब mouse slider से हटे → drag/swipe enable
+    $slider.on('mouseleave', function() {
+        $slider.slick('slickSetOption', 'swipe', true, false);
+        $slider.slick('slickSetOption', 'draggable', true, false);
+    });
+
+    // Function to update arrow visibility
+    function updateArrows(event, slick, currentSlide) {
+        if (slick.slideCount <= slick.options.slidesToShow) {
+            $('#arrowLeft, #arrowRight').addClass('hidden');
+            return;
+        }
+        if (slick.currentSlide === 0) {
+            $('#arrowLeft').addClass('hidden');
+        } else {
+            $('#arrowLeft').removeClass('hidden');
+        }
+        if (slick.currentSlide >= slick.slideCount - slick.options.slidesToShow) {
+            $('#arrowRight').addClass('hidden');
+        } else {
+            $('#arrowRight').removeClass('hidden');
+        }
+    }
+
+    $slider.on('init reInit afterChange', updateArrows);
+
+    $slider.on('init', function(event, slick) {
+        updateArrows(event, slick, 0);
+    });
+
+    $slider.slick('setPosition');
+});
+
+
+
+
+
+$(document).ready(function() {
+    const $slider = $('.up-comming-project');
+    const $prev = $('#up-comming-prev');
+    const $next = $('#up-comming-next');
+
+    // Init slick
+    $slider.slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        dots: false,
+        arrows: false,
+        infinite: false,
+        pauseOnHover: true,
+        swipe: false, // Disable swipe/drag
+        draggable: false, // Disable mouse drag
+        touchMove: false, // Disable touch drag
+        responsive: [{
+                breakpoint: 1100,
+                settings: {
+                    slidesToShow: 2
+                }
+            },
+            {
+                breakpoint: 576,
+                settings: {
+                    slidesToShow: 1
+                }
+            }
+        ]
+    });
+
+    // Custom arrows
+    $prev.on('click', function() {
+        $slider.slick('slickPrev');
+    });
+    $next.on('click', function() {
+        $slider.slick('slickNext');
+    });
+
+    // Arrow visibility
+    function updateArrows(event, slick) {
+        const current = slick.currentSlide;
+        const maxSlides = slick.slideCount - slick.options.slidesToShow;
+
+        if (slick.slideCount <= slick.options.slidesToShow) {
+            $prev.addClass('hidden');
+            $next.addClass('hidden');
+            return;
+        }
+
+        $prev.toggleClass('hidden', current === 0);
+        $next.toggleClass('hidden', current >= maxSlides);
+    }
+
+    $slider.on('init reInit afterChange', updateArrows);
+    $slider.slick('slickGoTo', 0);
+
+    // Stop slider autoplay on hover
+    $slider.on('mouseenter', function() {
+        $slider.slick('slickPause');
+    });
+    $slider.on('mouseleave', function() {
+        $slider.slick('slickPlay');
+    });
+
+
+});
+
+
+
+// Hero Section  Swiper====================
+
+document.addEventListener("DOMContentLoaded", function() {
+    const images = @json($imagePaths);
+
+    let index = 0;
+    const hero = document.getElementById("heroBanner");
+
+    if (images.length > 0) {
+        hero.style.backgroundImage = `url('${images[0]}')`;
+
+        setInterval(() => {
+            index = (index + 1) % images.length;
+            hero.style.backgroundImage = `url('${images[index]}')`;
+        }, 5000); // change every 5 sec
+    }
+});
+$(function() {
+    $(".searchBar").autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: "{{ route('frontend.location.search') }}",
+                data: {
+                    term: request.term
+                },
+                success: function(data) {
+                    response($.map(data, function(item) {
+                        return {
+                            label: item.text, // what to show
+                            value: item.id, // what fills input
+                            id: item.id // area id
+                        };
+                    }));
+                }
+            });
+        },
+        minLength: 2,
+        select: function(event, ui) {
+            console.log("Selected Area ID: " + ui.item.id);
+        }
+    });
+});
+
+
+// product-2 ================================
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // query the buttons inside this slider container
+    const prevBtn = document.querySelector('.product-slider .swiper-button-prev');
+    const nextBtn = document.querySelector('.product-slider .swiper-button-next');
+
+    var productSwiper = new Swiper(".product-slider", {
+        loop: false,
+        spaceBetween: 20,
+        pagination: {
+            el: "#product-slider-pagination",
+            clickable: true,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+        },
+        breakpoints: {
+            320: {
+                slidesPerView: 1
+            },
+            576: {
+                slidesPerView: 2
+            },
+            991: {
+                slidesPerView: 3
+            },
+            1200: {
+                slidesPerView: 4
+            },
+            1400: {
+                slidesPerView: 4
+            },
+            1600: {
+                slidesPerView: 4
+            }
+        },
+
+        // keep Swiper aware of DOM changes (useful if your slides are rendered after load)
+        observer: true,
+        observeParents: true,
+
+        // attach events to update nav visibility
+        on: {
+            init: function() {
+                updateNav(this);
+            },
+            slideChange: function() {
+                updateNav(this);
+            },
+            resize: function() {
+                updateNav(this);
+            },
+            breakpoint: function() {
+                updateNav(this);
+            },
+            observerUpdate: function() {
+                updateNav(this);
+            }
+        }
+    });
+
+    // function to hide/show nav buttons
+    function updateNav(swiper) {
+        // safety: if buttons don't exist, do nothing
+        if (!prevBtn || !nextBtn) return;
+
+        // If slider is "locked" (not enough slides for current view) hide both
+        // swiper.isLocked is true when no sliding possible
+        const notEnoughSlides = swiper.isLocked || (swiper.slides.length <= (swiper.params.slidesPerView || 1));
+        if (notEnoughSlides) {
+            prevBtn.classList.add('hidden');
+            nextBtn.classList.add('hidden');
+            return;
+        }
+
+        // show/hide based on position
+        if (swiper.isBeginning) prevBtn.classList.add('hidden');
+        else prevBtn.classList.remove('hidden');
+        if (swiper.isEnd) nextBtn.classList.add('hidden');
+        else nextBtn.classList.remove('hidden');
+    }
+});
+
+
+
+
+
+// ===============
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const prevBtnFS = document.querySelector('.bussiness-f-s-left-btn');
+    const nextBtnFS = document.querySelector('.bussiness-f-s-right-btn');
+    const sliderEl = document.querySelector('.bussiness-f-s-slider');
+
+    if (!sliderEl) return;
+
+    var businessFSSlider = new Swiper(sliderEl, {
+        loop: false,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        spaceBetween: 20,
+        slidesPerView: 4,
+        simulateTouch: false, // 👈 drag disable
+        allowTouchMove: false, // 👈 swipe disable
+        navigation: {
+            nextEl: nextBtnFS,
+            prevEl: prevBtnFS,
+        },
+        breakpoints: {
+            0: {
+                slidesPerView: 1
+            },
+            576: {
+                slidesPerView: 2
+            },
+            768: {
+                slidesPerView: 3
+            },
+            1200: {
+                slidesPerView: 4
+            },
+        },
+        on: {
+            init(swiper) {
+                updateNavFS(swiper);
+            },
+            slideChange(swiper) {
+                updateNavFS(swiper);
+            },
+            resize(swiper) {
+                updateNavFS(swiper);
+            },
+            breakpoint(swiper) {
+                updateNavFS(swiper);
+            },
+        }
+    });
+
+    // Hover → autoplay stop/start
+    sliderEl.addEventListener("mouseenter", () => businessFSSlider.autoplay.stop());
+    sliderEl.addEventListener("mouseleave", () => businessFSSlider.autoplay.start());
+
+    // Update navigation buttons
+    function updateNavFS(swiper) {
+        if (!prevBtnFS || !nextBtnFS) return;
+
+        const notEnoughSlides =
             swiper.isLocked || swiper.slides.length <= swiper.params.slidesPerView;
-			
-			if (notEnoughSlides) {
-				prevBtnFS.classList.add('hidden');
-				nextBtnFS.classList.add('hidden');
-				return;
-			}
-			
-			swiper.isBeginning ?
+
+        if (notEnoughSlides) {
+            prevBtnFS.classList.add('hidden');
+            nextBtnFS.classList.add('hidden');
+            return;
+        }
+
+        swiper.isBeginning ?
             prevBtnFS.classList.add('hidden') :
             prevBtnFS.classList.remove('hidden');
-			
-			swiper.isEnd ?
+
+        swiper.isEnd ?
             nextBtnFS.classList.add('hidden') :
             nextBtnFS.classList.remove('hidden');
-		}
-	});
-	
-	
-	
-	document.addEventListener('DOMContentLoaded', function() {
-		const prevBtnLP = document.querySelector('.LP-new-left-btn');
-		const nextBtnLP = document.querySelector('.LP-new-right-btn');
-		const sliderEl = document.querySelector('.LP-new-slider');
-		
-		if (!sliderEl) return;
-		
-		var LPNewSlider = new Swiper(sliderEl, {
-			loop: false,
-			autoplay: {
-				delay: 3000,
-				disableOnInteraction: false,
-			},
-			spaceBetween: 20,
-			slidesPerView: 4,
-			simulateTouch: false, // 👈 drag disable
-			allowTouchMove: false, // 👈 swipe disable
-			navigation: {
-				nextEl: nextBtnLP,
-				prevEl: prevBtnLP,
-			},
-			breakpoints: {
-				0: {
-					slidesPerView: 1
-				},
-				576: {
-					slidesPerView: 2
-				},
-				768: {
-					slidesPerView: 3
-				},
-				1200: {
-					slidesPerView: 4
-				},
-			},
-			on: {
-				init(swiper) {
-					updateNavLP(swiper);
-				},
-				slideChange(swiper) {
-					updateNavLP(swiper);
-				},
-				resize(swiper) {
-					updateNavLP(swiper);
-				},
-				breakpoint(swiper) {
-					updateNavLP(swiper);
-				},
-			}
-		});
-		
-		// Hover → autoplay stop/start
-		sliderEl.addEventListener("mouseenter", () => LPNewSlider.autoplay.stop());
-		sliderEl.addEventListener("mouseleave", () => LPNewSlider.autoplay.start());
-		
-		// Update navigation buttons
-		function updateNavLP(swiper) {
-			if (!prevBtnLP || !nextBtnLP) return;
-			
-			const notEnoughSlides =
+    }
+});
+
+// =======================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const sliderEl = document.querySelector('.fren-new-slider');
+
+    var frenNewSlider = new Swiper(".fren-new-slider", {
+        loop: false,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        spaceBetween: 20,
+        slidesPerView: 4,
+
+        // 🔒 Cursor/Swipe movement disable
+        simulateTouch: false,
+        allowTouchMove: false,
+
+        navigation: {
+            nextEl: ".fren-new-right-btn",
+            prevEl: ".fren-new-left-btn",
+        },
+        breakpoints: {
+            0: {
+                slidesPerView: 1
+            },
+            576: {
+                slidesPerView: 2
+            },
+            768: {
+                slidesPerView: 3
+            },
+            1200: {
+                slidesPerView: 4
+            },
+        },
+        on: {
+            init: function() {
+                toggleNavButtons(this);
+            },
+            slideChange: function() {
+                toggleNavButtons(this);
+            },
+        },
+    });
+
+    // 👉 Hover पर autoplay stop / leave पर start
+    sliderEl.addEventListener("mouseenter", () => frenNewSlider.autoplay.stop());
+    sliderEl.addEventListener("mouseleave", () => frenNewSlider.autoplay.start());
+
+    function toggleNavButtons(swiper) {
+        const prevBtn = document.querySelector('.fren-new-left-btn');
+        const nextBtn = document.querySelector('.fren-new-right-btn');
+
+        // Left button disable on first slide
+        prevBtn.classList.toggle('swiper-button-disabled', swiper.isBeginning);
+
+        // Right button disable on last slide
+        nextBtn.classList.toggle('swiper-button-disabled', swiper.isEnd);
+    }
+});
+
+// ===================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const prevBtnFS = document.querySelector('.verify-f-s-left-btn');
+    const nextBtnFS = document.querySelector('.verify-f-s-right-btn');
+    const sliderEl = document.querySelector('.verify-f-s-slider');
+
+    if (!sliderEl) return;
+
+    var verifyFSSlider = new Swiper(sliderEl, {
+        loop: false,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        spaceBetween: 20,
+        slidesPerView: 4,
+        simulateTouch: false, // 👈 drag disable
+        allowTouchMove: false, // 👈 swipe disable
+        navigation: {
+            nextEl: nextBtnFS,
+            prevEl: prevBtnFS,
+        },
+        breakpoints: {
+            0: {
+                slidesPerView: 1
+            },
+            576: {
+                slidesPerView: 2
+            },
+            768: {
+                slidesPerView: 3
+            },
+            1200: {
+                slidesPerView: 4
+            },
+        },
+        on: {
+            init(swiper) {
+                updateNavFS(swiper);
+            },
+            slideChange(swiper) {
+                updateNavFS(swiper);
+            },
+            resize(swiper) {
+                updateNavFS(swiper);
+            },
+            breakpoint(swiper) {
+                updateNavFS(swiper);
+            },
+        }
+    });
+
+    // Hover → autoplay stop/start
+    sliderEl.addEventListener("mouseenter", () => verifyFSSlider.autoplay.stop());
+    sliderEl.addEventListener("mouseleave", () => verifyFSSlider.autoplay.start());
+
+    // Update navigation buttons
+    function updateNavFS(swiper) {
+        if (!prevBtnFS || !nextBtnFS) return;
+
+        const notEnoughSlides =
             swiper.isLocked || swiper.slides.length <= swiper.params.slidesPerView;
-			
-			if (notEnoughSlides) {
-				prevBtnLP.classList.add('hidden');
-				nextBtnLP.classList.add('hidden');
-				return;
-			}
-			
-			swiper.isBeginning ?
+
+        if (notEnoughSlides) {
+            prevBtnFS.classList.add('hidden');
+            nextBtnFS.classList.add('hidden');
+            return;
+        }
+
+        swiper.isBeginning ?
+            prevBtnFS.classList.add('hidden') :
+            prevBtnFS.classList.remove('hidden');
+
+        swiper.isEnd ?
+            nextBtnFS.classList.add('hidden') :
+            nextBtnFS.classList.remove('hidden');
+    }
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const prevBtnLP = document.querySelector('.LP-new-left-btn');
+    const nextBtnLP = document.querySelector('.LP-new-right-btn');
+    const sliderEl = document.querySelector('.LP-new-slider');
+
+    if (!sliderEl) return;
+
+    var LPNewSlider = new Swiper(sliderEl, {
+        loop: false,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        spaceBetween: 20,
+        slidesPerView: 4,
+        simulateTouch: false, // 👈 drag disable
+        allowTouchMove: false, // 👈 swipe disable
+        navigation: {
+            nextEl: nextBtnLP,
+            prevEl: prevBtnLP,
+        },
+        breakpoints: {
+            0: {
+                slidesPerView: 1
+            },
+            576: {
+                slidesPerView: 2
+            },
+            768: {
+                slidesPerView: 3
+            },
+            1200: {
+                slidesPerView: 4
+            },
+        },
+        on: {
+            init(swiper) {
+                updateNavLP(swiper);
+            },
+            slideChange(swiper) {
+                updateNavLP(swiper);
+            },
+            resize(swiper) {
+                updateNavLP(swiper);
+            },
+            breakpoint(swiper) {
+                updateNavLP(swiper);
+            },
+        }
+    });
+
+    // Hover → autoplay stop/start
+    sliderEl.addEventListener("mouseenter", () => LPNewSlider.autoplay.stop());
+    sliderEl.addEventListener("mouseleave", () => LPNewSlider.autoplay.start());
+
+    // Update navigation buttons
+    function updateNavLP(swiper) {
+        if (!prevBtnLP || !nextBtnLP) return;
+
+        const notEnoughSlides =
+            swiper.isLocked || swiper.slides.length <= swiper.params.slidesPerView;
+
+        if (notEnoughSlides) {
+            prevBtnLP.classList.add('hidden');
+            nextBtnLP.classList.add('hidden');
+            return;
+        }
+
+        swiper.isBeginning ?
             prevBtnLP.classList.add('hidden') :
             prevBtnLP.classList.remove('hidden');
-			
-			swiper.isEnd ?
+
+        swiper.isEnd ?
             nextBtnLP.classList.add('hidden') :
             nextBtnLP.classList.remove('hidden');
 		}
@@ -1765,8 +1956,18 @@ return asset('assets/img/hero/static/' . $img);
 			});
 		}
 	});
+
+    document.getElementById("sellRentBtn1").addEventListener("click", function(e) {
+        e.preventDefault();
+        const modal = document.getElementById("customerPhoneModal");
+        if (modal) {
+            const modalTrigger = new bootstrap.Modal(modal);
+            modalTrigger.show();
+        }
+    });
 	
 </script>
+
 
 
 

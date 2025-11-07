@@ -18,174 +18,275 @@
     <link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/' . $websiteInfo->favicon) }}">
     <link rel="apple-touch-icon" href="{{ asset('assets/img/' . $websiteInfo->favicon) }}">
     @php
-        $primaryColor = 'F57F4B';
-        $secoundaryColor = '255056';
-        // check, whether color has '#' or not, will return 0 or 1
-        function checkColorCode($color)
-        {
-            return preg_match('/^#[a-f0-9]{6}/i', $color);
-        }
+    $primaryColor = 'F57F4B';
+    $secoundaryColor = '255056';
+    // check, whether color has '#' or not, will return 0 or 1
+    function checkColorCode($color)
+    {
+    return preg_match('/^#[a-f0-9]{6}/i', $color);
+    }
 
-        // if, primary color value does not contain '#', then add '#' before color value
-        if (isset($primaryColor) && checkColorCode($primaryColor) == 0 && checkColorCode($secoundaryColor) == 0) {
-            $primaryColor = '#' . $primaryColor;
-            $secoundaryColor = '#' . $secoundaryColor;
-        }
+    // if, primary color value does not contain '#', then add '#' before color value
+    if (isset($primaryColor) && checkColorCode($primaryColor) == 0 && checkColorCode($secoundaryColor) == 0) {
+    $primaryColor = '#' . $primaryColor;
+    $secoundaryColor = '#' . $secoundaryColor;
+    }
 
-        // change decimal point into hex value for opacity
-        function rgb($color = null)
-        {
-            if (!$color) {
-                echo '';
-            }
-            $hex = htmlspecialchars($color);
-            [$r, $g, $b] = sscanf($hex, '#%02x%02x%02x');
-            echo "$r, $g, $b";
-        }
+    // change decimal point into hex value for opacity
+    function rgb($color = null)
+    {
+    if (!$color) {
+    echo '';
+    }
+    $hex = htmlspecialchars($color);
+    [$r, $g, $b] = sscanf($hex, '#%02x%02x%02x');
+    echo "$r, $g, $b";
+    }
     @endphp
     @includeIf('frontend.partials.styles.styles-v1')
     <style>
-        :root {
-            --color-primary: {{ $primaryColor }};
-            --color-primary-rgb: {{ rgb(htmlspecialchars($primaryColor)) }};
-            --color-secondary: {{ $secoundaryColor }};
-            --color-secondary-rgb: {{ rgb(htmlspecialchars($secoundaryColor)) }};
-        }
-
-        .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-
-        .spinner {
-            border: 6px solid #f3f3f3;
-            border-top: 6px solid #3498db;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
+    :root {
+        --color-primary: {
+                {
+                $primaryColor
             }
+        };
 
-            100% {
-                transform: rotate(360deg);
+        --color-primary-rgb: {
+                {
+                rgb(htmlspecialchars($primaryColor))
             }
         }
 
+        ;
 
-        :root {
-            --bg: #0f1724;
-            /* dark */
-            --accent: #ffb86b;
-            /* warm builder color */
-            --muted: #9aa4b2;
+        --color-secondary: {
+                {
+                $secoundaryColor
+            }
         }
 
-        .loader-wrap {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 9999;
-            flex-direction: column;
-            gap: 18px;
-            padding: 24px;
+        ;
+
+        --color-secondary-rgb: {
+                {
+                rgb(htmlspecialchars($secoundaryColor))
+            }
         }
 
-        .stage {
-            width: 340px;
-            max-width: 90%;
-            height: 240px;
-            display: grid;
-            place-items: center;
+        ;
+    }
+
+    .loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+    }
+
+    .spinner {
+        border: 6px solid #f3f3f3;
+        border-top: 6px solid #3498db;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
         }
 
-        svg {
-            width: 100%;
-            height: 100%;
-            overflow: visible
+        100% {
+            transform: rotate(360deg);
         }
+    }
 
-        .percent {
-            font-family: Inter, system-ui, sans-serif;
-            color: var(--muted);
-            font-size: 14px;
-        }
+    .mobile-bottom-menu {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top: 1px solid #dcdcdc;
+        box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+        padding: 12px 0;
+        gap: 25px;
+    }
 
-        .percent strong {
-            color: var(--accent);
-            font-size: 20px;
-            margin-left: 8px
-        }
+    .menu-item {
+        text-align: center;
+        text-decoration: none;
+        color: #555;
+        font-size: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: color 0.3s ease;
+        margin: 0 1px;
+        font-family:'Open Sans', sans-serif;
+        font-weight:500;
+    }
 
-        /* small shadowed card behind svg */
-        .card {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-            border-radius: 14px;
-            padding: 18px;
-            box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6);
-            backdrop-filter: blur(6px);
-        }
+    .menu-item i {
+        font-size: 18px;
+        margin-bottom: 1px;
+    }
 
-        /* path base style */
-        .house-path {
-            fill: none;
-            stroke: var(--muted);
-            stroke-width: 4;
-            stroke-linecap: round;
-            stroke-linejoin: round
-        }
+    .menu-item.active,
+    .menu-item:hover {
+        color: #6c603c;
+    }
 
-        .house-path.reveal {
-            stroke: var(--accent)
-        }
+    .floating-plus-btn {
+        position: fixed;
+        bottom: 128px;
+        right: 8px;
+        background: #6c603c;
+        color: #fff;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        font-size: 18px;
+        z-index: 999;
+        transition: all 0.3s ease;
+    }
 
-        .fill-when-done {
-            fill: transparent
-        }
+    .floating-plus-btn:hover {
+        background: #4f4626;
+        transform: scale(1.05);
+    }
 
-        /* subtle builder animation for complete parts */
-        .done {
-            fill: var(--accent);
-            opacity: .15;
-            transition: opacity .4s ease
-        }
+    @media (min-width: 768px) {
 
-        /* loader small label */
-        .label {
-            color: var(--muted);
-            font-size: 13px
+        .mobile-bottom-menu,
+        .floating-plus-btn {
+            display: none;
         }
+    }
 
-        /* hide when complete - user may remove this in integration */
-        .hidden {
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(-6px);
-            transition: all .5s ease
+    @media (max-width: 767px) {
+        body {
+            padding-bottom: 80px;
         }
+    }
+
+    :root {
+        --bg: #0f1724;
+        /* dark */
+        --accent: #ffb86b;
+        /* warm builder color */
+        --muted: #9aa4b2;
+    }
+
+    .loader-wrap {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 9999;
+        flex-direction: column;
+        gap: 18px;
+        padding: 24px;
+    }
+
+    .stage {
+        width: 340px;
+        max-width: 90%;
+        height: 240px;
+        display: grid;
+        place-items: center;
+    }
+
+    svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible
+    }
+
+    .percent {
+        font-family: Inter, system-ui, sans-serif;
+        color: var(--muted);
+        font-size: 14px;
+    }
+
+    .percent strong {
+        color: var(--accent);
+        font-size: 20px;
+        margin-left: 8px
+    }
+
+    /* small shadowed card behind svg */
+    .card {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+        border-radius: 14px;
+        padding: 18px;
+        box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6);
+        backdrop-filter: blur(6px);
+    }
+
+    /* path base style */
+    .house-path {
+        fill: none;
+        stroke: var(--muted);
+        stroke-width: 4;
+        stroke-linecap: round;
+        stroke-linejoin: round
+    }
+
+    .house-path.reveal {
+        stroke: var(--accent)
+    }
+
+    .fill-when-done {
+        fill: transparent
+    }
+
+    /* subtle builder animation for complete parts */
+    .done {
+        fill: var(--accent);
+        opacity: .15;
+        transition: opacity .4s ease
+    }
+
+    /* loader small label */
+    .label {
+        color: var(--muted);
+        font-size: 13px
+    }
+
+    /* hide when complete - user may remove this in integration */
+    .hidden {
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-6px);
+        transition: all .5s ease
+    }
     </style>
 </head>
 
 
 <body dir="{{ $currentLanguageInfo->direction == 1 ? 'rtl' : '' }}">
     <!-- <div id="loader" class="loader">
-   <div class="spinner"></div>
-  </div> -->
+			<div class="spinner"></div>
+		</div> -->
 
     <div class="loader-wrap" id="loader">
 
@@ -219,8 +320,7 @@
                 <path id="p-eave" class="house-path" d="M30 64 H170" />
 
                 <!-- large fill groups (invisible fill shapes) that will fade in when part is done -->
-                <rect id="f-walls" class="fill-when-done" x="40" y="40" width="120" height="50"
-                    rx="2" />
+                <rect id="f-walls" class="fill-when-done" x="40" y="40" width="120" height="50" rx="2" />
                 <polygon id="f-roof" class="fill-when-done" points="20,55 100,10 180,55" />
                 <rect id="f-door" class="fill-when-done" x="92" y="60" width="16" height="30" />
                 <rect id="f-win1" class="fill-when-done" x="52" y="60" width="24" height="16" />
@@ -232,6 +332,42 @@
         <div class="percent">Loading <strong id="percentText">0%</strong></div>
 
     </div>
+    <div class="mobile-bottom-menu">
+        <a href="{{ route('index') }}" class="menu-item {{ request()->routeIs('index') ? 'active' : '' }}">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+
+        <a href="{{ route('frontend.properties') }}"
+            class="menu-item {{ request()->routeIs('frontend.properties') && !request()->has('purpose') ? 'active' : '' }}">
+            <i class="fas fa-lightbulb"></i>
+            <span>Properties</span>
+        </a>
+
+        <a href="{{ route('frontend.projects') }}"
+            class="menu-item {{ request()->routeIs('frontend.projects') ? 'active' : '' }}">
+            <i class="fas fa-building"></i>
+            <span>Projects</span>
+        </a>
+
+        <a href="{{ route('frontend.properties',['purpose'=>'franchiese']) }}"
+            class="menu-item {{ request('purpose') === 'franchiese' ? 'active' : '' }}">
+            <i class="fas fa-heart"></i>
+            <span>Franchiese</span>
+        </a>
+
+        <a href="{{ route('frontend.properties', ['purpose' => 'business_for_sale']) }}"
+            class="menu-item {{ request('purpose') === 'business_for_sale' ? 'active' : '' }}">
+            <i class="fas fa-user"></i>
+            <span>Business for Sale</span>
+        </a>
+    </div>
+
+
+
+    <a href="#" class="floating-plus-btn" id="sellRentBtn">
+        <i class="fas fa-plus"></i>
+    </a>
 
     @includeIf('frontend.partials.header.header-v1')
 
@@ -246,11 +382,11 @@
     @includeIf('frontend.partials.footer.footer-v1')
     {{-- cookie alert --}}
     @if (!is_null($cookieAlertInfo) && $cookieAlertInfo->cookie_alert_status == 1)
-        @include('cookie-consent::index')
+    @include('cookie-consent::index')
     @endif
 
     <!-- Go to Top -->
-    <div class="go-top"><i class="fal fa-angle-double-up"></i></div>
+    <!-- <div class="go-top"><i class="fal fa-angle-double-up"></i></div> -->
 
 
     <!-- WhatsApp Chat Button -->
@@ -277,59 +413,59 @@
             }
         });
 
-        (function() {
-            const steps = [{
-                    id: 'p-foundation',
-                    start: 0,
-                    end: 8,
-                    fillId: null
-                },
-                {
-                    id: 'p-walls',
-                    start: 8,
-                    end: 40,
-                    fillId: 'f-walls'
-                },
-                {
-                    id: 'p-roof',
-                    start: 40,
-                    end: 62,
-                    fillId: 'f-roof'
-                },
-                {
-                    id: 'p-chimney',
-                    start: 62,
-                    end: 68,
-                    fillId: null
-                },
-                {
-                    id: 'p-eave',
-                    start: 68,
-                    end: 74,
-                    fillId: null
-                },
-                {
-                    id: 'p-door',
-                    start: 74,
-                    end: 84,
-                    fillId: 'f-door'
-                },
-                {
-                    id: 'p-win1',
-                    start: 84,
-                    end: 92,
-                    fillId: 'f-win1'
-                },
-                {
-                    id: 'p-win2',
-                    start: 92,
-                    end: 100,
-                    fillId: 'f-win2'
-                }
-            ];
+    (function() {
+        const steps = [{
+                id: 'p-foundation',
+                start: 0,
+                end: 8,
+                fillId: null
+            },
+            {
+                id: 'p-walls',
+                start: 8,
+                end: 40,
+                fillId: 'f-walls'
+            },
+            {
+                id: 'p-roof',
+                start: 40,
+                end: 62,
+                fillId: 'f-roof'
+            },
+            {
+                id: 'p-chimney',
+                start: 62,
+                end: 68,
+                fillId: null
+            },
+            {
+                id: 'p-eave',
+                start: 68,
+                end: 74,
+                fillId: null
+            },
+            {
+                id: 'p-door',
+                start: 74,
+                end: 84,
+                fillId: 'f-door'
+            },
+            {
+                id: 'p-win1',
+                start: 84,
+                end: 92,
+                fillId: 'f-win1'
+            },
+            {
+                id: 'p-win2',
+                start: 92,
+                end: 100,
+                fillId: 'f-win2'
+            }
+        ];
 
-            const percentText = document.getElementById('percentText');
-            const loader = document.getElementById('loader');
+        const percentText = document.getElementById('percentText');
+        const loader = document.getElementById('loader');
 
             // prepare SVG paths (if present)
             steps.forEach(s => {
@@ -530,6 +666,15 @@
 			});
 
 		});
+
+        document.getElementById("sellRentBtn").addEventListener("click", function(e) {
+            e.preventDefault();
+            const modal = document.getElementById("customerPhoneModal");
+            if (modal) {
+                const modalTrigger = new bootstrap.Modal(modal);
+                modalTrigger.show();
+            }
+        });
 
     </script>
 
