@@ -89,7 +89,7 @@
         </div>
     </footer>
     <!-- Go to Top -->
-    <div class="go-top"><i class="fal fa-angle-double-up"></i></div>
+    <!-- <div class="go-top"><i class="fal fa-angle-double-up"></i></div> -->
     <!-- Go to Top -->
 @endif
 <!-- Footer-area end-->

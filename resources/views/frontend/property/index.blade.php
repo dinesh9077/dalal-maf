@@ -21,6 +21,7 @@ $version = $basicInfo->theme_version;
 @section('style')
 <meta http-equiv="Cache-Control" content="no-store" />
 @endsection
+
 @section('content')
 
 <style>
