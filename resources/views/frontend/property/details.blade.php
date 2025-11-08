@@ -588,80 +588,10 @@ $version = $basicInfo->theme_version;
                                         <div class="form-image-right vector-building">
                                             <img src="{{ asset('assets/img/vector-building (2).png') }}"
                                                 alt="Building Image" class="building-img ">
-                                        </div>
-
-                                        <!-- <div class="lazy-container ratio ratio-1-1 rounded-pill">
-                                            @if (!empty($agent))
-                                            <a
-                                                href="{{ route('frontend.agent.details', ['username' => $agent->username]) }}">
-                                                <img class="lazyload" src="{{ asset('assets/img/blank-user.jpg') }}"
-                                                    data-src="{{ $agent->image ? asset('assets/img/agents/' . $agent->image) : asset('assets/img/blank-user.jpg') }}">
-                                            </a>
-                                            @elseif(!empty($vendor))
-                                            <a
-                                                href="{{ route('frontend.vendor.details', ['username' => $vendor->username]) }}">
-                                                <img class="lazyload" src="{{ asset('assets/img/blank-user.jpg') }}"
-                                                    data-src=" {{ $vendor->photo ? asset('assets/admin/img/vendor-photo/' . $vendor->photo) : asset('assets/img/blank-user.jpg') }}">
-                                            </a>
-                                            @else
-                                            <a
-                                                href="{{ route('frontend.vendor.details', ['username' => $admin->username, 'admin' => 'true']) }}">
-                                                <img class="lazyload" src="{{ asset('assets/img/blank-user.jpg') }}"
-                                                    data-src=" {{ asset('assets/img/admins/' . $admin->image) }} ">
-                                            </a>
-                                            @endif
-                                        </div> -->
+                                        </div>  
                                     </div>
                                     <h1 class="rigt-calss-cs mt-3 mb-0">Contact Seller</h1>
-                                    <!-- <div class="user-info new-user-right-info">
-                                            <h4 class="mb-0">
-                                                <a @if (!empty($agent)) href="{{ route('frontend.agent.details', ['username' => $agent->username]) }}"> {{ $agent->agent_info?->first_name . ' ' . $agent->agent_info?->last_name }}
-                                                    @elseif(!empty($vendor))
-                                                    href="{{ route('frontend.vendor.details', ['username' => $vendor->username]) }}"> {{ $vendor->vendor_info?->name }}
-                                                    @else
-                                                    href="{{ route('frontend.vendor.details', ['username' => $admin->username, 'admin' => 'true']) }}"> {{ $admin->first_name . ' ' . $admin->last_name }} @endif
-                                                    </a>
-                                            </h4>
-                                            <a class="d-block right-em-ph mt-2"
-                                                href="tel:@if (!empty($agent)) {{ $agent->phone }}
-                                            @elseif(!empty($vendor))
-                                                {{ $vendor->phone }}
-                                            @else
-                                                @if ($admin->show_contact_form && !empty($admin->phone))
-                                                    {{ $admin->phone }} @endif
-                                            @endif">
-
-                                                @php
-                                                $phone = '';
-                                                if (!empty($agent)) {
-                                                $phone = $agent->phone;
-                                                } elseif (!empty($vendor)) {
-                                                $phone = $vendor->phone;
-                                                } elseif ($admin->show_contact_form && !empty($admin->phone)) {
-                                                $phone = $admin->phone;
-                                                }
-                                                @endphp
-
-                                                @if($phone)
-                                                {{ str_repeat('*', max(strlen($phone)-2,0)) . substr($phone, -2) }}
-                                                @endif
-                                            </a>
-
-                                            <a href="mailto:@if (!empty($agent)) {{ $agent->email }}
-                                                @elseif(!empty($vendor))
-                                                    {{ $vendor->email }} @else {{ $admin->email }} @endif"
-                                                class="right-em-ph">
-                                                @if (!empty($agent))
-                                                {{ $agent->email }}
-                                                @elseif(!empty($vendor))
-                                                {{ $vendor->email }}
-                                                @else
-                                                @if ($admin->show_email_addresss)
-                                                {{ $admin->email }}
-                                                @endif
-                                                @endif
-                                            </a>
-                                        </div> -->
+                                  
                                     <div class="contact-user">
                                         <p style="mt-0 " class="right-em-ph">Your Dream Home Is Just a Call
                                             Away!
@@ -692,22 +622,26 @@ $version = $basicInfo->theme_version;
                                     </div>
                                 </div>
                             </div>
-
+                            @php 
+                                $authUser = Auth::guard('vendor')->user()
+                                ?? Auth::guard('agent')->user()
+                                ?? Auth::guard('web')->user();
+                            @endphp
                             <form action="{{ route('property_contact') }}" method="POST" class="from-new">
                                 @csrf
                                 @if (!empty($agent))
-                                <input type="hidden" name="vendor_id" value="{{ $agent->vendor_id }}">
-                                <input type="hidden" name="agent_id" value="{{ !empty($agent) ? $agent->id : '' }}">
+                                    <input type="hidden" name="vendor_id" value="{{ $agent->vendor_id }}">
+                                    <input type="hidden" name="agent_id" value="{{ !empty($agent) ? $agent->id : '' }}">
                                 @elseif(!empty($vendor) && empty($agent))
-                                <input type="hidden" name="vendor_id" value="{{ $vendor->id }}">
+                                  <input type="hidden" name="vendor_id" value="{{ $vendor->id }}">
                                 @else
-                                <input type="hidden" name="vendor_id" value="0">
+                                   <input type="hidden" name="vendor_id" value="0">
                                 @endif
                                 <input type="hidden" name="property_id" value="{{ $propertyContent->propertyId }}">
                                 <div class="form-group mb-15">
                                     <label class="new-right-lable" for="name"></label>
                                     <input type="text" class="form-control new-right-form-control fc-new" name="name"
-                                        placeholder="{{ __('Name') }}*" required value="{{ old('name') }}"
+                                        placeholder="{{ __('Name') }}*" required value="{{ $authUser->username ?? '' }}"
                                         style="height:36px;">
                                     @error('name')
                                     <p class=" text-danger">{{ $message }}</p>
@@ -716,8 +650,8 @@ $version = $basicInfo->theme_version;
                                 <div class="form-group mb-15">
                                     <label class="new-right-lable" for="email"></label>
                                     <input type="email" class="form-control new-right-form-control  fc-new" required
-                                        name="email" placeholder="{{ __('Email Address') }}*" value="{{ old('email') }}"
-                                        style="height:36px;">
+                                        name="email" placeholder="{{ __('Email Address') }}*" value="{{ $authUser->email ?? '' }}"
+                                        style="height:36px;" >
                                     @error('email')
                                     <p class=" text-danger">{{ $message }}</p>
                                     @enderror
@@ -725,7 +659,7 @@ $version = $basicInfo->theme_version;
                                 <div class="form-group mb-15">
                                     <label class="new-right-lable" for="Phone"></label>
                                     <input type="number" class="form-control new-right-form-control  fc-new"
-                                        name="phone" required value="{{ old('phone') }}"
+                                        name="phone" required value="{{ $authUser->phone ?? '' }}"
                                         placeholder="{{ __('Phone Number') }}*" style="height:36px;">
                                     @error('phone')
                                     <p class=" text-danger">{{ $message }}</p>

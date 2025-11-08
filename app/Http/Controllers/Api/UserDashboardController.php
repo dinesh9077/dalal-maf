@@ -377,4 +377,9 @@ class UserDashboardController extends Controller
             return $this->errorResponse('Failed to update profile. Please try again later.'. $e->getMessage(), 500);
         }
     }
+
+    public function vendorProfileUpdate(Request $request)
+    {
+        
+    }
 }

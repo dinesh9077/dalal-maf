@@ -66,21 +66,10 @@ Route::prefix('property-management')->middleware(['jwt.verify'])->group(function
     Route::post('bulk-delete', [PropertyController::class, 'deleteBulkProperty']);
 });
 
-// User routes 
-Route::prefix('user')->middleware(['jwt.verify'])->group(function () 
-{
-    Route::get('dashboard', [UserDashboardController::class, 'dashboard']);
-    Route::post('profile-update', [UserDashboardController::class, 'profileUpdate']);
-});
+// User routes  
+Route::get('dashboard', [UserDashboardController::class, 'dashboard'])->middleware('jwt.verify');
+Route::post('user/profile-update', [UserDashboardController::class, 'profileUpdate'])->middleware('jwt.verify');
 
-// Vendor routes
-Route::prefix('vendor')->middleware(['auth:vendor_api', 'jwt.verify'])->group(function () 
-{ 
-     
-});
-
-// Vendor routes
-Route::prefix('agent')->middleware(['auth:agent_api', 'jwt.verify'])->group(function () 
-{ 
-     
-});
+Route::post('vendor/profile-update', [UserDashboardController::class, 'vendorProfileUpdate'])->middleware('jwt.verify');
+ 
+ 
