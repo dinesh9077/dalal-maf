@@ -47,16 +47,16 @@ class PropertyUpdateRequest extends FormRequest
             ],
             'price' => 'nullable|numeric',
             // 'beds' => 'required_if:type,residential',
-            'bath' => 'required_if:type,residential',
+            'bath' => 'nullable|required_if:type,residential|numeric|min:0',
             'purpose' => 'required',
-            'area' => 'required',
+            'area' => 'required_if:purpose,franchiese|required_if:purpose,business_for_sale|numeric|min:0',
             'status' => 'required',
             // 'amenities' => 'required',
             'category_id' => 'required',
             'city_id' => 'required',
             'area_id' => 'required',
             'address' => 'required|max:255',
-
+            'notes' => 'nullable|required_if:purpose,franchiese|required_if:purpose,business_for_sale', 
         ];
         $basicSettings = Basic::select('property_state_status', 'property_country_status')->first();
         if ($basicSettings->property_country_status == 1) {

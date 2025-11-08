@@ -69,8 +69,13 @@ class HomeController extends Controller
 		if ($themeVersion != 2) {
 			$queryResult['heroStatic'] = $language->heroStatic()->first();
 			// $queryResult['heroImg'] = Basic::query()->pluck('hero_static_img')->first();
-			$heroImg = Basic::query()->pluck('hero_static_img')->first();
-			$queryResult['heroImg'] = $heroImg ? json_decode($heroImg, true) : [];
+			$heroImg = Basic::query()->value('hero_static_img');
+			$decoded = $heroImg ? json_decode($heroImg, true) : [];
+
+			$queryResult['heroImg'] = collect($decoded)
+				->map(fn($img) => asset('assets/img/hero/static/' . $img))
+				->toArray();
+
 		}
 		
 		if ($secInfo->property_section_status == 1) {

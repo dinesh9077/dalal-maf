@@ -33,7 +33,8 @@ Route::prefix('vendor')->middleware('auth:vendor', 'Deactive')->group(function (
   Route::get('/edit-profile', 'Vendor\VendorController@edit_profile')->name('vendor.edit.profile');
 
 
-
+  Route::post('/phone/send-otp', 'Vendor\VendorController@sendPhoneOtp')->name('vendor.phone.send-otp');
+  Route::post('/phone/verify-otp', 'Vendor\VendorController@verifyPhoneOtp')->name('vendor.phone.verify-otp');
   Route::post('/profile/update', 'Vendor\VendorController@update_profile')->name('vendor.update_profile');
   Route::get('/logout', 'Vendor\VendorController@logout')->name('vendor.logout');
 

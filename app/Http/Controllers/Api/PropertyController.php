@@ -106,14 +106,16 @@ class PropertyController extends Controller
     {
         $rules = [ 
             'price' => 'nullable|numeric',
-            'bath' => 'required_if:type,residential',
+            'bath' => 'nullable|required_if:type,residential|numeric|min:0',
             'purpose' => 'required',
-            'area' => 'required',
+            'area' => 'required_if:purpose,franchiese|required_if:purpose,business_for_sale|numeric|min:0',
             'status' => 'required',
             'category_id' => 'required',
             'city_id' => 'required',
             'address' => 'required|max:255',
+            'notes' => 'nullable|required_if:purpose,franchiese|required_if:purpose,business_for_sale',
         ]; 
+        
         if($isUpdate){
             $rules['featured_image'] = [new ImageMimeTypeRule()];
             $rules['slider_images.*'] = 'image|mimes:jpg,jpeg,png,webp|max:5120';
@@ -251,9 +253,10 @@ class PropertyController extends Controller
                 'purpose' => $request->purpose,
                 'address' => $request->address,
                 'type' => $request->type,
-                'beds' => $request->beds,
-                'bath' => $request->bath,
-                'area' => $request->area,
+                'notes' => $request->notes ?? '',
+                'beds' => $request->beds ?? 0,
+                'bath' => $request->bath ?? 0,
+                'area' => $request->area ?? 0,
                 'video_url' => $request->video_url,
                 'status' => $request->status,
                 'latitude' => $request->latitude,
@@ -393,9 +396,10 @@ class PropertyController extends Controller
                 'purpose' => $request->purpose,
                 'type' => $request->type,
                 'address' => $request->address,
-                'beds' => $request->beds,
-                'bath' => $request->bath,
-                'area' => $request->area,
+                'notes' => $request->notes ?? '',
+                'beds' => $request->beds ?? 0,
+                'bath' => $request->bath ?? 0,
+                'area' => $request->area ?? 0,
                 'video_url' => $request->video_url,
                 'status' => $request->status,
                 'latitude' => $request->latitude,

@@ -194,14 +194,14 @@
                                         <div class="form-group">
                                             <label>{{ __('Purpose') }}*</label>
 
-                                            <select name="purpose" class="form-control">
+                                            <select id="purpose" name="purpose" class="form-control">
                                                 <option disabled> {{ __('Select a Purpose') }} </option>
                                                 <option value="rent" @if ($property->purpose == 'rent') selected @endif>
                                                     {{ __('Rent') }}
                                                 </option>
-                                                <option value="sell" @if ($property->purpose == 'sell') selected @endif>
+                                                {{-- <option value="sell" @if ($property->purpose == 'sell') selected @endif>
                                                     {{ __('Sell') }}
-                                                </option>
+                                                </option> --}}
                                                 <option value="buy" @if ($property->purpose == 'buy') selected @endif>
                                                     {{ __('Buy') }}
                                                 </option>
@@ -214,8 +214,7 @@
                                                 <option value="business_for_sale" @if ($property->purpose == 'business_for_sale') selected @endif>
                                                     {{ __('Business For Sale') }}
                                                 </option>
-                                            </select>
-
+                                            </select> 
                                         </div>
 
                                     </div>
@@ -323,6 +322,14 @@
                                                 class="form-control">
                                         </div>
                                     </div>
+                                    <div class="col-lg-12 hideNotes" style="display:{{ !in_array($property->purpose, ['franchiese', 'business_for_sale']) ? 'none' : 'block' }}">
+                                        <div class="form-group">
+                                            <label>{{ __('Notes') }} *</label>
+                                            <input type="text" class="form-control" name="notes"
+                                                placeholder="Enter Notes"  value="{{ $property->notes }}">
+
+                                        </div>
+                                    </div>
 
                                     <div class="col-lg-3">
                                         <div class="form-group">
@@ -337,14 +344,14 @@
 
 
                                     @if ($property->type == 'residential')
-                                        <div class="col-lg-3">
+                                        {{-- <div class="col-lg-3">
                                             <div class="form-group">
                                                 <label>{{ __('Beds') }} *</label>
                                                 <input type="text" class="form-control" name="beds"
                                                     value="{{ $property->beds }}" placeholder="Enter number of bed">
                                             </div>
-                                        </div>
-                                        <div class="col-lg-3">
+                                        </div> --}}
+                                        <div class="col-lg-3 hideBath" style="display:{{ in_array($property->purpose, ['franchiese', 'business_for_sale']) ? 'none' : 'block' }}">
                                             <div class="form-group">
                                                 <label>{{ __('Baths') }} *</label>
                                                 <input type="text" class="form-control" name="bath"
@@ -353,7 +360,7 @@
                                         </div>
                                     @endif
 
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-3 hideSqft" style="display:{{ in_array($property->purpose, ['franchiese', 'business_for_sale']) ? 'none' : 'block' }}">
                                         <div class="form-group">
                                             <label>{{ __('Area (sqft)') }} *</label>
                                             <input type="text" class="form-control" name="area"
@@ -737,6 +744,19 @@
         var specificationRmvUrl = "{{ route('admin.property_management.specification_delete') }}";
 
         let galleryImages = {{ $uploadGImg }};
+
+         $('#purpose').on('change', function() {
+            const val = this.value;
+            const hideFields = val === 'franchiese' || val === 'business_for_sale';
+            
+            // toggle visibility
+            $('.hideBath, .hideSqft').toggle(!hideFields);
+            $('.hideNotes').toggle(hideFields);
+             
+            // reset values
+            $('input[name="bath"], input[name="area"]').val(0);
+            $('input[name="notes"]').val('');
+        });
     </script>
     <script type="text/javascript" src="{{ asset('assets/js/admin-partial.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/admin-dropzone.js') }}"></script>
