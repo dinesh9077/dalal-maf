@@ -2054,7 +2054,7 @@ Compare CSS
 }
 
 .right-em-ph{
-  font-size: 11px !important;
+  font-size: 12px !important;
   color: black !important;
 }
 
@@ -2917,7 +2917,7 @@ background: linear-gradient(to top, #c5ae7573 0%, #ffffff 50%);
 @media(min-width:320px) {
   .vector-building {
     position: absolute;
-    bottom: calc(100% - 102px);
+    bottom: calc(100% - 122px);
     right: -3%;
     width: 92%;
   }

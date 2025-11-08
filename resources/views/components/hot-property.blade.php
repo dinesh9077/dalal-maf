@@ -81,11 +81,11 @@
 
 </style>
 
-<div {{ $attributes }} style="position: relative; margin-bottom:0;">
-    <div class="product-default product-new mb-0" style="border-radius: 20px;"
+<div {{ $attributes }} style="position: relative; margin-bottom:0; box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.05);">
+    <div class="product-default product-new mb-0 " style="border-radius: 20px;"
         {{ $animation ? 'data-aos="fade-up" data-aos-delay="100"' : '' }}>
         
-        <div class="product-details product-new" style="padding: 0px;">
+        <div class="product-details product-new " style="padding: 0px;">
             
             <div class="product-image-box">
                 <a href="{{ route('frontend.property.details', ['slug' => $property->slug ?? $property->propertyContent->slug]) }}">
