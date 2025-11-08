@@ -98,10 +98,10 @@
 }
 
 .box-p-3 {
-    padding-top: 25px;
+    /* padding-top: 25px; */
     padding-right: 24px;
     padding-left: 24px;
-    padding-bottom: 28px;
+    /* padding-bottom: 28px; */
 }
 
 .otp-input-wrapper input.otp-box {
@@ -142,7 +142,7 @@
 
                 <div class="row no-gutters">
                     <div class="col-lg-12">
-                        <div class="form-group" style="padding-bottom:80px;">
+                        <div class="form-group">
                             <label for="">{{ __('Phone') }}</label>
                             <input type="text" name="phone" id="in_phone" class="form-control new-form-designs">
                             <p id="editErr_in_phone" class="mt-2 mb-0 text-danger em"></p>

@@ -172,7 +172,7 @@
         transform: scale(1.05);
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 576px) {
 
         .mobile-bottom-menu,
         .floating-plus-btn {

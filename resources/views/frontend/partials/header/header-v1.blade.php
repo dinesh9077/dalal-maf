@@ -66,13 +66,13 @@
                     </a>
                 @endif
             </div>
-            <!-- <button class="menu-toggler" type="button">
+            <button class="menu-toggler d-none d-sm-block" type="button">
                 <span></span>
                 <span></span>
                 <span></span>
-            </button> -->
+            </button>
             @if ($authType === 'guest')
-                <button type="button" class="style__postContainerTab" data-bs-toggle="modal"
+                <button type="button" class="style__postContainerTab d-block d-sm-none " data-bs-toggle="modal"
                     data-bs-target="#customerPhoneModal" data-action="post_property">
                     <span class="style__postTab">{{ __('Post Property') }}</span>
                 </button>
@@ -258,6 +258,7 @@
                         text-align: center;
                         line-height: 1;
                     }
+                    
                 </style>
 
 

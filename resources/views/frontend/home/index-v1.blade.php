@@ -505,7 +505,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                                 @forelse ($properties as $property)
                                 @if($property->property_type == 'partial')
                                 <div class="swiper-slide">
-                                    <x-property :property="$property" class="col-12" />
+                                    <x-latest-property :property="$property" class="col-12" />
                                 </div>
                                 @endif
                                 @empty
@@ -593,7 +593,8 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                         @forelse ($franchiese as $franchie)
                         <div class="swiper-slide">
                             {{-- property component --}}
-                            <x-property :property="$franchie" />
+                            <!-- <x-property :property="$franchie" /> -->
+                            <x-hot-property :property="$franchie" />  
                         </div>
                         @empty
                         <div class="p-3 text-center mb-30">
