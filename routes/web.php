@@ -135,6 +135,8 @@
 		Route::get('/edit-profile', 'FrontEnd\UserController@editProfile')->name('user.edit_profile');
 		
 		// update profile route
+		Route::post('/phone/send-otp', 'FrontEnd\UserController@sendPhoneOtp')->name('user.phone.send-otp');
+		Route::post('/phone/verify-otp', 'FrontEnd\UserController@verifyPhoneOtp')->name('user.phone.verify-otp');
 		Route::post('/update-profile', 'FrontEnd\UserController@updateProfile')->name('user.update_profile')->withoutMiddleware('change.lang');
 		
 		// change password route

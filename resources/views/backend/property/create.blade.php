@@ -129,11 +129,11 @@
                                         <div class="form-group">
                                             <label>{{ __('Purpose') }}*</label>
 
-                                            <select name="purpose" class="form-control">
+                                            <select id="purpose" name="purpose" class="form-control">
                                                 <option selected disabled value=""> {{ __('Select a Purpose') }}
                                                 </option>
                                                 <option value="rent">{{ __('Rent') }}</option>
-                                                <option value="sell">{{ __('Sell') }}</option>
+                                                {{-- <option value="sell">{{ __('Sell') }}</option> --}}
                                                 <option value="buy">{{ __('Buy') }}</option>
                                                 <option value="lease">{{ __('Lease') }}</option>
                                                 <option value="franchiese">{{ __('Franchiese') }}</option>
@@ -168,7 +168,7 @@
                                                 </option>
                                                 @foreach ($amenities as $amenity)
                                                     <option value="{{ $amenity->id }}">
-                                                        {{ $amenity->amenityContent->name }}</option>
+                                                        {{ $amenity->amenityContent->name }}</option> 
                                                 @endforeach
                                             </select>
 
@@ -252,6 +252,14 @@
                                                 placeholder="Enter Address">
                                         </div>
                                     </div>
+                                    <div class="col-lg-12 hideNotes">
+                                        <div class="form-group">
+                                            <label>{{ __('Notes') }} *</label>
+                                            <input type="text" class="form-control" name="notes"
+                                                placeholder="Enter Notes">
+
+                                        </div>
+                                    </div>
 
                                     <div class="col-lg-3">
                                         <div class="form-group">
@@ -273,7 +281,7 @@
                                                     placeholder="Enter number of bed">
                                             </div>
                                         </div> --}}
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-3 hideBath">
                                             <div class="form-group">
                                                 <label>{{ __('Baths') }} *</label>
                                                 <input type="text" class="form-control" name="bath"
@@ -281,7 +289,7 @@
                                             </div>
                                         </div>
                                     @endif
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-3 hideSqft">
                                         <div class="form-group">
                                             <label>{{ __('Area (sqft)') }} *</label>
                                             <input type="text" class="form-control" name="area"
@@ -587,4 +595,18 @@
     <script type="text/javascript" src="{{ asset('assets/js/admin-partial.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/admin-dropzone.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/property.js') }}"></script>
+    <script>
+        $('#purpose').on('change', function() {
+            const val = this.value;
+            const hideFields = val === 'franchiese' || val === 'business_for_sale';
+            
+            // toggle visibility
+            $('.hideBath, .hideSqft').toggle(!hideFields);
+            $('.hideNotes').toggle(hideFields);
+             
+            // reset values
+            $('input[name="bath"], input[name="area"]').val(0);
+            $('input[name="notes"]').val('');
+        });
+    </script>
 @endsection

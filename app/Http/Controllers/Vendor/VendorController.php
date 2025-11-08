@@ -7,8 +7,7 @@ use App\Http\Controllers\FrontEnd\MiscellaneousController;
 use App\Http\Helpers\VendorPermissionHelper;
 use App\Models\Agent;
 use App\Models\BasicSettings\Basic;
-use App\Models\BasicSettings\MailTemplate;
-use App\Models\Car;
+use App\Models\BasicSettings\MailTemplate; 
 use App\Models\Language;
 use App\Models\Membership;
 use App\Models\Package;
@@ -18,8 +17,7 @@ use App\Models\SupportTicket;
 use App\Models\Vendor;
 use App\Models\User;
 use App\Models\VendorInfo;
-use App\Models\VendorKYC;
-use App\Models\Visitor;
+use App\Models\VendorKYC; 
 use App\Rules\MatchEmailRule;
 use App\Rules\MatchOldPasswordRule;
 use Carbon\Carbon;
@@ -36,10 +34,9 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
-use PHPMailer\PHPMailer\PHPMailer;
-use App\Http\Controllers\Vendor\VendorCheckoutController;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule; 
+use App\Http\Controllers\Vendor\VendorCheckoutController; 
+use Illuminate\Support\Facades\Cache;   
 
 class VendorController extends Controller
 {
@@ -620,8 +617,12 @@ class VendorController extends Controller
 
     //update_profile
     public function update_profile(Request $request, Vendor $vendor)
-    {
-        $id = Auth::guard('vendor')->user()->id;
+    { 
+        $vendor = Auth::guard('vendor')->user();
+        $id = $vendor->id;
+
+        $languages = Language::get();
+
         $rules = [
             'username' => [
                 'required',
@@ -631,7 +632,7 @@ class VendorController extends Controller
             'email' => [
                 'required',
                 'email',
-                Rule::unique('vendors', 'email')->ignore($id)
+                Rule::unique('vendors', 'email')->ignore($id),
             ]
         ];
 
@@ -639,28 +640,27 @@ class VendorController extends Controller
             $rules['photo'] = 'mimes:png,jpeg,jpg';
         }
 
-        $languages = Language::get();
         foreach ($languages as $language) {
             $rules[$language->code . '_name'] = 'required';
         }
 
         $messages = [];
-
         foreach ($languages as $language) {
-            $messages[$language->code . '_name.required'] = 'The Name field is required for ' . $language->name . '  language.';
+            $messages[$language->code . '_name.required'] =
+                'The Name field is required for ' . $language->name . ' language.';
         }
 
-        $validator = Validator::make($request->all(), $rules, $messages);
-
+        $validator = Validator::make($request->all(), $rules, $messages); 
+         
         if ($validator->fails()) {
             return Response::json([
-                'errors' => $validator->getMessageBag()
-            ], 400);
+                'status' => 'validation',
+                'errors' => $validator->errors(),
+            ], 422);
         }
 
 
-        $in = $request->all();
-        $vendor  = Vendor::where('id', $id)->first();
+        $in = $request->all(); 
         $file = $request->file('photo');
         if ($file) {
             $extension = $file->getClientOriginalExtension();
@@ -710,12 +710,84 @@ class VendorController extends Controller
             $vendorInfo->details = $request[$language->code . '_details'];
             $vendorInfo->save();
         }
-
-
-
+ 
         Session::flash('success', 'Vendor updated successfully!');
 
         return Response::json(['status' => 'success'], 200);
+    }
+
+    public function sendPhoneOtp(Request $request)
+    {
+        // Check if user exists
+        $vendor = Auth::guard('vendor')->user();
+
+        // Generate OTP (static for testing)
+        $otp = '1234'; // Replace with rand(1000, 9999) in production
+
+        // Insert new OTP row, with otp_at = NULL
+        DB::table('otp_verification')->updateOrInsert(
+            ['phone' => $request->phone], // Condition: if this exists
+            [
+                'user_id' => $vendor->id,
+                'phone' => $request->phone,
+                'otp' => $otp,
+                'otp_at' => null,
+                'updated_at' => now(),
+                'created_at' => now(), // Optional; doesn't update on existing row
+            ]
+        );
+
+        return response()->json([
+            'message' => 'OTP sent successfully.',
+            'otp' => $otp
+        ]);
+    }
+
+    public function verifyPhoneOtp(Request $request)
+    { 
+        try {
+            $phone = $request->phone;
+            $otp = $request->otp; 
+            
+            // Fetch latest OTP record
+            $otpRecord = DB::table('otp_verification')
+                ->where('phone', $phone)
+                ->latest()
+                ->first();
+
+            if (!$otpRecord) {
+                return response()->json(['message' => 'OTP not found.'], 404);
+            }
+
+            if ($otpRecord->otp != $otp) {
+                return response()->json(['message' => 'Invalid OTP.'], 422);
+            }
+
+            // Mark OTP verified
+            DB::table('otp_verification')
+                ->where('id', $otpRecord->id)
+                ->update(['otp_at' => now()]);
+
+            $vendor = Auth::guard('vendor')->user();
+            $vendor->update(['phone' => $request->phone]);
+
+            Auth::guard('web')->logout();
+
+            // Invalidate session and regenerate CSRF token for security
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return response()->json([
+                'message' => 'OTP verified successfully.',
+                'url' => url('vendor/edit-profile')
+            ]);
+
+        } catch (\Throwable $e) {
+            Log::error('OTP verification error: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
+            return response()->json([
+                'message' => 'An error occurred during OTP verification.',
+                'error' => config('app.debug') ? $e->getMessage() : null
+            ], 500);
+        }
     }
 
     public function changeTheme(Request $request)

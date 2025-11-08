@@ -523,6 +523,81 @@
 			return redirect()->back();
 		}
 		
+		 public function sendPhoneOtp(Request $request)
+		{
+			// Check if user exists
+			$vendor = Auth::guard('web')->user();
+
+			// Generate OTP (static for testing)
+			$otp = '1234'; // Replace with rand(1000, 9999) in production
+
+			// Insert new OTP row, with otp_at = NULL
+			DB::table('otp_verification')->updateOrInsert(
+				['phone' => $request->phone], // Condition: if this exists
+				[
+					'user_id' => $vendor->id,
+					'phone' => $request->phone,
+					'otp' => $otp,
+					'otp_at' => null,
+					'updated_at' => now(),
+					'created_at' => now(), // Optional; doesn't update on existing row
+				]
+			);
+
+			return response()->json([
+				'message' => 'OTP sent successfully.',
+				'otp' => $otp
+			]);
+		}
+
+		public function verifyPhoneOtp(Request $request)
+		{ 
+			try {
+				$phone = $request->phone;
+				$otp = $request->otp; 
+				
+				// Fetch latest OTP record
+				$otpRecord = DB::table('otp_verification')
+					->where('phone', $phone)
+					->latest()
+					->first();
+
+				if (!$otpRecord) {
+					return response()->json(['message' => 'OTP not found.'], 404);
+				}
+
+				if ($otpRecord->otp != $otp) {
+					return response()->json(['message' => 'Invalid OTP.'], 422);
+				}
+
+				// Mark OTP verified
+				DB::table('otp_verification')
+					->where('id', $otpRecord->id)
+					->update(['otp_at' => now()]);
+
+				$vendor = Auth::guard('web')->user();
+				$vendor->update(['phone' => $request->phone]);
+				
+				Auth::guard('web')->logout();
+
+				// Invalidate session and regenerate CSRF token for security
+				$request->session()->invalidate();
+				$request->session()->regenerateToken();
+
+				return response()->json([
+					'message' => 'OTP verified successfully.',
+					'url' => url('user/edit-profile')
+				]);
+
+			} catch (\Throwable $e) {
+				Log::error('OTP verification error: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
+				return response()->json([
+					'message' => 'An error occurred during OTP verification.',
+					'error' => config('app.debug') ? $e->getMessage() : null
+				], 500);
+			}
+		}
+
 		public function changePassword()
 		{
 			$misc = new MiscellaneousController();

@@ -70,6 +70,16 @@ Route::prefix('property-management')->middleware(['jwt.verify'])->group(function
 Route::get('dashboard', [UserDashboardController::class, 'dashboard'])->middleware('jwt.verify');
 Route::post('user/profile-update', [UserDashboardController::class, 'profileUpdate'])->middleware('jwt.verify');
 
-Route::post('vendor/profile-update', [UserDashboardController::class, 'vendorProfileUpdate'])->middleware('jwt.verify');
+Route::post('vendor/profile-update', [UserDashboardController::class, 'vendorProfileUpdate'])->middleware('jwt.verify'); 
+Route::get('vendor/package-list', [UserDashboardController::class, 'packagePlans'])->middleware('jwt.verify');
+Route::get('vendor/package-checkout/{package_id}', [UserDashboardController::class, 'checkout'])->middleware('jwt.verify');
+Route::post('vendor/package/checkout', [UserDashboardController::class, 'checkoutPayment'])->middleware('jwt.verify');
+
+Route::post('agent/profile-update', [UserDashboardController::class, 'agentProfileUpdate'])->middleware('jwt.verify');
+
+Route::post('/phone/send-otp', [UserDashboardController::class, 'sendPhoneOtp'])->middleware('jwt.verify');
+Route::post('/phone/verify-otp', [UserDashboardController::class, 'verifyPhoneOtp'])->middleware('jwt.verify');
+
+
  
  

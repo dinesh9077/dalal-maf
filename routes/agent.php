@@ -24,7 +24,10 @@
 		Route::get('/dashboard', 'Agent\AgentController@dashboard')->name('agent.dashboard');
 		Route::get('/change-password', 'Agent\AgentController@change_password')->name('agent.change_password');
 		Route::post('/update-password', 'Agent\AgentController@updated_password')->name('agent.update_password');
+
 		Route::get('/edit-profile', 'Agent\AgentController@edit_profile')->name('agent.edit.profile');
+		Route::post('/phone/send-otp', 'Agent\AgentController@sendPhoneOtp')->name('agent.phone.send-otp');
+		Route::post('/phone/verify-otp', 'Agent\AgentController@verifyPhoneOtp')->name('agent.phone.verify-otp');
 		Route::post('/profile/update', 'Agent\AgentController@update_profile')->name('agent.update_profile');
 		Route::get('/logout', 'Agent\AgentController@logout')->name('agent.logout');
 		
