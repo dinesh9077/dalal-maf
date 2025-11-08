@@ -192,247 +192,250 @@
                     <div class="offcanvas-body p-3 p-xl-0">
 
                             <aside class="sidebar-widget-area new-color-ngs-property" data-aos="fade-up">
-                                <div class="widget widget-select  mb-30">
-                                    <h3 class="title">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#type" aria-expanded="true" aria-controls="type">
-                                            {{ __('Property Type') }}
-                                        </button>
-                                    </h3>
-                                    <div id="type" class="collapse show">
-                                        <div class="accordion-body">
-                                            <div class=" custom-checkbox new-animitis-divs">
-                                                @php
-                                                    if (!empty(request()->input('type'))) {
-                                                        $selectedTypes = [];
-                                                        if (is_array(request()->input('type'))) {
-                                                            $selectedTypes = request()->input('type');
-                                                        } else {
-                                                            array_push($selectedTypes, request()->input('type'));
-                                                        }
-                                                    } else {
-                                                        $selectedTypes = [];
-                                                    }
-                                                @endphp
-
-                                                @foreach (['residential', 'commercial', 'industrial'] as $type)
-                                                    <div>
-                                                        <input class="input-checkbox" type="checkbox" name="category[]"
-                                                            id="checkbox{{ $type }}" value="{{ $type }}"
-                                                            {{ in_array($type, $selectedTypes) ? 'checked' : '' }}
-                                                            onchange="updateAmenities('type[]={{ $type }}',this)">
-                                                        <label for="checkbox{{ $type }}"><span
-                                                                class="animits-div-tab">
-                                                                {{ ucwords($type) }}</span></label>
-                                                    </div>
-                                                @endforeach
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <form action="{{ route('frontend.properties') }}" method="get" id="searchForm"
-                                    class="w-100">
+                                @if(!request()->has('purpose') || request()->has('purpose') && !in_array(request('purpose'), ['franchiese', 'business_for_sale']))
                                     <div class="widget widget-select  mb-30">
                                         <h3 class="title">
                                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#select" aria-expanded="true" aria-controls="select">
-                                                {{ __('Property Info') }}
+                                                data-bs-target="#type" aria-expanded="true" aria-controls="type">
+                                                {{ __('Property Type') }}
                                             </button>
                                         </h3>
-                                        <div id="select" class="collapse show">
+                                        <div id="type" class="collapse show">
                                             <div class="accordion-body">
-                                                <div class="form-group mb-20">
-                                                    <!-- <label class="mb-10">{{ __('Title') }}</label> -->
-                                                    <input type="text" class="form-control filter-input" name="title"
-                                                        placeholder="{{ __('Enter title') }}" style="box-shadow : none" value="{{ request()->input('title') }}">
-                                                </div>
+                                                <div class=" custom-checkbox new-animitis-divs">
+                                                    @php
+                                                        if (!empty(request()->input('type'))) {
+                                                            $selectedTypes = [];
+                                                            if (is_array(request()->input('type'))) {
+                                                                $selectedTypes = request()->input('type');
+                                                            } else {
+                                                                array_push($selectedTypes, request()->input('type'));
+                                                            }
+                                                        } else {
+                                                            $selectedTypes = [];
+                                                        }
+                                                    @endphp
 
-                                                <div class="form-group mb-20">
-                                                    <!-- <label class="mb-10">{{ __('Country') }}</label> -->
-                                                    <select name="country" id=""
-                                                        class="form-control country form-select " style="box-shadow : none"
-                                                        onchange="updateURL('country='+$(this).val())">
-                                                        <option selected disabled>{{ __('Select Country') }}</option>
-                                                        <option value="all" data-id="0">{{ __('All') }}
-                                                        </option>
-                                                        @foreach ($all_countries as $country)
-                                                            <option data-id="{{ $country->id }}"
-                                                                value="{{ $country->countryContent?->name }}">
-                                                                {{ $country->countryContent?->name }}
+                                                    @foreach (['residential', 'commercial', 'industrial'] as $type)
+                                                        <div>
+                                                            <input class="input-checkbox" type="checkbox" name="category[]"
+                                                                id="checkbox{{ $type }}" value="{{ $type }}"
+                                                                {{ in_array($type, $selectedTypes) ? 'checked' : '' }}
+                                                                onchange="updateAmenities('type[]={{ $type }}',this)">
+                                                            <label for="checkbox{{ $type }}"><span
+                                                                    class="animits-div-tab">
+                                                                    {{ ucwords($type) }}</span></label>
+                                                        </div>
+                                                    @endforeach
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+
+                                <form action="{{ route('frontend.properties') }}" method="get" id="searchForm"
+                                    class="w-100">
+                                    @if(!request()->has('purpose') || request()->has('purpose') && !in_array(request('purpose'), ['franchiese', 'business_for_sale']))
+                                        <div class="widget widget-select  mb-30">
+                                            <h3 class="title">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                    data-bs-target="#select" aria-expanded="true" aria-controls="select">
+                                                    {{ __('Property Info') }}
+                                                </button>
+                                            </h3>
+                                            <div id="select" class="collapse show">
+                                                <div class="accordion-body">
+                                                    <div class="form-group mb-20">
+                                                        <!-- <label class="mb-10">{{ __('Title') }}</label> -->
+                                                        <input type="text" class="form-control filter-input" name="title"
+                                                            placeholder="{{ __('Enter title') }}" style="box-shadow : none" value="{{ request()->input('title') }}">
+                                                    </div>
+
+                                                    <div class="form-group mb-20">
+                                                        <!-- <label class="mb-10">{{ __('Country') }}</label> -->
+                                                        <select name="country" id=""
+                                                            class="form-control country form-select " style="box-shadow : none"
+                                                            onchange="updateURL('country='+$(this).val())">
+                                                            <option selected disabled>{{ __('Select Country') }}</option>
+                                                            <option value="all" data-id="0">{{ __('All') }}
                                                             </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group mb-20 state" style="display: none;">
-                                                    <!-- <label class="mb-10">{{ __('State') }}</label> -->
-                                                    <select name="state_id" id=""
-                                                        class="form-control form-select  state_id states"
-                                                        style="box-shadow : none"
-                                                        onchange="updateURL('state='+$(this).val());getCities(this)">
-                                                        <option>{{ __('Select State') }}</option>
-                                                        @if ($basicInfo->property_country_status != 1 && $basicInfo->property_state_status == 1)
-                                                            @foreach ($all_states as $state)
-                                                                <option data-id="{{ $state->id }}"
-                                                                    value="{{ $state->stateContent?->name }}">
-                                                                    {{ $state->stateContent?->name }}
+                                                            @foreach ($all_countries as $country)
+                                                                <option data-id="{{ $country->id }}"
+                                                                    value="{{ $country->countryContent?->name }}">
+                                                                    {{ $country->countryContent?->name }}
                                                                 </option>
                                                             @endforeach
-                                                        @endif
-                                                    </select>
-                                                </div>
-                                                <div class="form-group mb-20 city" style="display: none;">
-                                                    <!-- <label class="mb-10">{{ __('City') }}</label> -->
-                                                    <select name="city_id" id=""
-                                                        class="form-control form-select  city_id"
-                                                        style="box-shadow : none"
-                                                        onchange="updateURL('city='+$(this).val());getAreas(this)">
-                                                        <option>{{ __('Select City') }}</option>
-                                                        @if ($basicInfo->property_country_status != 1 && $basicInfo->property_state_status != 1)
-                                                            @foreach ($all_cities as $city)
-                                                                <option data-id="{{ $city->id }}"
-                                                                    value="{{ $city->cityContent?->name }}">
-                                                                    {{ $city->cityContent?->name }}</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group mb-20 state" style="display: none;">
+                                                        <!-- <label class="mb-10">{{ __('State') }}</label> -->
+                                                        <select name="state_id" id=""
+                                                            class="form-control form-select  state_id states"
+                                                            style="box-shadow : none"
+                                                            onchange="updateURL('state='+$(this).val());getCities(this)">
+                                                            <option>{{ __('Select State') }}</option>
+                                                            @if ($basicInfo->property_country_status != 1 && $basicInfo->property_state_status == 1)
+                                                                @foreach ($all_states as $state)
+                                                                    <option data-id="{{ $state->id }}"
+                                                                        value="{{ $state->stateContent?->name }}">
+                                                                        {{ $state->stateContent?->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group mb-20 city" style="display: none;">
+                                                        <!-- <label class="mb-10">{{ __('City') }}</label> -->
+                                                        <select name="city_id" id=""
+                                                            class="form-control form-select  city_id"
+                                                            style="box-shadow : none"
+                                                            onchange="updateURL('city='+$(this).val());getAreas(this)">
+                                                            <option>{{ __('Select City') }}</option>
+                                                            @if ($basicInfo->property_country_status != 1 && $basicInfo->property_state_status != 1)
+                                                                @foreach ($all_cities as $city)
+                                                                    <option data-id="{{ $city->id }}"
+                                                                        value="{{ $city->cityContent?->name }}">
+                                                                        {{ $city->cityContent?->name }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group mb-20 area">
+                                                        <select name="area_id" id=""
+                                                            class="form-control form-select area_id" style="box-shadow : none"
+                                                            onchange="updateURL('listArea='+$(this).val())">
+                                                            <option>{{ __('Select Area') }}</option>
+                                                            @foreach ($all_areas as $area)
+                                                                <option data-id="{{ $area->id }}"
+                                                                    value="{{ $area->name }}">
+                                                                    {{ $area->name }}</option>
                                                             @endforeach
-                                                        @endif
-                                                    </select>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group mb-20">
+                                                        <input type="text" class="form-control filter-input"
+                                                            name="location" placeholder="{{ __('Enter location') }}"
+                                                            style="box-shadow : none" value="{{ request()->input('location') }}">
+                                                    </div>
+                                                    <div class="row">
+                                                        {{-- <div class="col-lg-6">
+                                                            <div class="form-group mb-20">
+                                                                <input type="text" class="form-control filter-input"
+                                                                    name="beds" placeholder="{{ __('No. of bed') }}"
+                                                                    style="box-shadow : none" value="{{ request()->input('beds') }}">
+                                                            </div>
+                                                        </div> --}}
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group mb-20">
+                                                                <input type="text" class="form-control filter-input"
+                                                                    name="baths" placeholder="{{ __('No. of bath') }}"
+                                                                    style="box-shadow : none" value="{{ request()->input('baths') }}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group mb-20">
+                                                        <input type="text" class="form-control filter-input"
+                                                            style="box-shadow : none"
+                                                            placeholder="{{ __('Enter area Sqft') }}" name="area" value="{{ request()->input('area') }}">
+                                                    </div>
                                                 </div>
-                                                <div class="form-group mb-20 area">
-                                                    <select name="area_id" id=""
-                                                        class="form-control form-select area_id" style="box-shadow : none"
-                                                        onchange="updateURL('listArea='+$(this).val())">
-                                                        <option>{{ __('Select Area') }}</option>
-                                                        @foreach ($all_areas as $area)
-                                                            <option data-id="{{ $area->id }}"
-                                                                value="{{ $area->name }}">
-                                                                {{ $area->name }}</option>
+                                            </div>
+                                        </div>
+                                        <div class="widget widget-categories  mb-30">
+                                            <h3 class="title">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                    data-bs-target="#categories" aria-expanded="true"
+                                                    aria-controls="categories">
+                                                    {{ __('Categories') }}
+                                                </button>
+                                            </h3>
+                                            <div id="categories" class="collapse show">
+                                                <div class="accordion-body">
+                                                    <div class=" custom-checkbox new-animitis-divs">
+                                                        @php
+                                                            if (!empty(request()->input('category'))) {
+                                                                $selectedCategories = [];
+                                                                if (is_array(request()->input('category'))) {
+                                                                    $selectedCategories = request()->input('category');
+                                                                } else {
+                                                                    array_push(
+                                                                        $selectedCategories,
+                                                                        request()->input('category'),
+                                                                    );
+                                                                }
+                                                            } else {
+                                                                $selectedCategories = [];
+                                                            }
+                                                        @endphp
+
+                                                        @foreach ($categories as $category)
+                                                            @if ($category->categoryContent)
+                                                                <div>
+                                                                    <input class="input-checkbox" type="checkbox"
+                                                                        name="category[]" id="checkbox{{ $category->id }}"
+                                                                        value="{{ $category->id }}"
+                                                                        {{ in_array($category->categoryContent?->slug, $selectedCategories) ? 'checked' : '' }}
+                                                                        onchange="updateAmenities('category[]={{ $category->categoryContent?->slug }}',this)">
+                                                                    <label for="checkbox{{ $category->id }}"><span
+                                                                            class="animits-div-tab">
+                                                                            {{ $category->categoryContent?->name }}</span></label>
+                                                                </div>
+                                                            @endif
                                                         @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="form-group mb-20">
-                                                    <input type="text" class="form-control filter-input"
-                                                        name="location" placeholder="{{ __('Enter location') }}"
-                                                        style="box-shadow : none" value="{{ request()->input('location') }}">
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group mb-20">
-                                                            <input type="text" class="form-control filter-input"
-                                                                name="beds" placeholder="{{ __('No. of bed') }}"
-                                                                style="box-shadow : none" value="{{ request()->input('beds') }}">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group mb-20">
-                                                            <input type="text" class="form-control filter-input"
-                                                                name="baths" placeholder="{{ __('No. of bath') }}"
-                                                                style="box-shadow : none" value="{{ request()->input('baths') }}">
-                                                        </div>
+
                                                     </div>
                                                 </div>
-                                                <div class="form-group mb-20">
-                                                    <input type="text" class="form-control filter-input"
-                                                        style="box-shadow : none"
-                                                        placeholder="{{ __('Enter area Sqft') }}" name="area" value="{{ request()->input('area') }}">
-                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="widget widget-categories  mb-30">
-                                        <h3 class="title">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#categories" aria-expanded="true"
-                                                aria-controls="categories">
-                                                {{ __('Categories') }}
-                                            </button>
-                                        </h3>
-                                        <div id="categories" class="collapse show">
-                                            <div class="accordion-body">
-                                                <div class=" custom-checkbox new-animitis-divs">
-                                                    @php
-                                                        if (!empty(request()->input('category'))) {
-                                                            $selectedCategories = [];
-                                                            if (is_array(request()->input('category'))) {
-                                                                $selectedCategories = request()->input('category');
+
+                                        <div class="widget widget-amenities mb-30">
+                                            <h3 class="title">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                    data-bs-target="#amenities" aria-expanded="true"
+                                                    aria-controls="amenities">
+                                                    {{ __('Amenities') }}
+                                                </button>
+                                            </h3>
+                                            <div id="amenities" class="collapse show">
+                                                <div class="accordion-body">
+                                                    <div class=" custom-checkbox new-animitis-divs">
+                                                        @php
+                                                            if (!empty(request()->input('amenities'))) {
+                                                                $selected_amenities = [];
+                                                                if (is_array(request()->input('amenities'))) {
+                                                                    $selected_amenities = request()->input('amenities');
+                                                                } else {
+                                                                    array_push(
+                                                                        $selected_amenities,
+                                                                        request()->input('amenities'),
+                                                                    );
+                                                                }
                                                             } else {
-                                                                array_push(
-                                                                    $selectedCategories,
-                                                                    request()->input('category'),
-                                                                );
+                                                                $selected_amenities = [];
                                                             }
-                                                        } else {
-                                                            $selectedCategories = [];
-                                                        }
-                                                    @endphp
+                                                        @endphp
+                                                        @foreach ($amenities as $amenity)
+                                                            @if ($amenity->amenityContent)
+                                                                <div>
+                                                                    <input class="input-checkbox" type="checkbox"
+                                                                        name="amenities[]" id="checkbox{{ $amenity->id }}"
+                                                                        value="{{ $amenity->id }}"
+                                                                        {{ in_array($amenity->amenityContent?->name, $selected_amenities) ? 'checked' : '' }}
+                                                                        onchange="updateAmenities('amenities[]={{ $amenity->amenityContent?->name }}',this)">
 
-                                                    @foreach ($categories as $category)
-                                                        @if ($category->categoryContent)
-                                                            <div>
-                                                                <input class="input-checkbox" type="checkbox"
-                                                                    name="category[]" id="checkbox{{ $category->id }}"
-                                                                    value="{{ $category->id }}"
-                                                                    {{ in_array($category->categoryContent?->slug, $selectedCategories) ? 'checked' : '' }}
-                                                                    onchange="updateAmenities('category[]={{ $category->categoryContent?->slug }}',this)">
-                                                                <label for="checkbox{{ $category->id }}"><span
-                                                                        class="animits-div-tab">
-                                                                        {{ $category->categoryContent?->name }}</span></label>
-                                                            </div>
-                                                        @endif
-                                                    @endforeach
-
+                                                                    <label for="checkbox{{ $amenity->id }}"><span
+                                                                            class="animits-div-tab">{{ $amenity->amenityContent?->name }}</span></label>
+                                                                    <!-- <label class="form-check-label new-lable-check-animitis" for="checkbox{{ $amenity->id }}"><span class="animits-div-tab">{{ $amenity->amenityContent?->name }}</span></label> -->
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="widget widget-amenities mb-30">
-                                        <h3 class="title">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#amenities" aria-expanded="true"
-                                                aria-controls="amenities">
-                                                {{ __('Amenities') }}
-                                            </button>
-                                        </h3>
-                                        <div id="amenities" class="collapse show">
-                                            <div class="accordion-body">
-                                                <div class=" custom-checkbox new-animitis-divs">
-                                                    @php
-                                                        if (!empty(request()->input('amenities'))) {
-                                                            $selected_amenities = [];
-                                                            if (is_array(request()->input('amenities'))) {
-                                                                $selected_amenities = request()->input('amenities');
-                                                            } else {
-                                                                array_push(
-                                                                    $selected_amenities,
-                                                                    request()->input('amenities'),
-                                                                );
-                                                            }
-                                                        } else {
-                                                            $selected_amenities = [];
-                                                        }
-                                                    @endphp
-                                                    @foreach ($amenities as $amenity)
-                                                        @if ($amenity->amenityContent)
-                                                            <div>
-                                                                <input class="input-checkbox" type="checkbox"
-                                                                    name="amenities[]" id="checkbox{{ $amenity->id }}"
-                                                                    value="{{ $amenity->id }}"
-                                                                    {{ in_array($amenity->amenityContent?->name, $selected_amenities) ? 'checked' : '' }}
-                                                                    onchange="updateAmenities('amenities[]={{ $amenity->amenityContent?->name }}',this)">
-
-                                                                <label for="checkbox{{ $amenity->id }}"><span
-                                                                        class="animits-div-tab">{{ $amenity->amenityContent?->name }}</span></label>
-                                                                <!-- <label class="form-check-label new-lable-check-animitis" for="checkbox{{ $amenity->id }}"><span class="animits-div-tab">{{ $amenity->amenityContent?->name }}</span></label> -->
-                                                            </div>
-                                                        @endif
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                    @endif
                                     <div class="widget widget-price mb-30">
                                         <h3 class="title">
                                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -561,6 +564,7 @@
         'use strict';
         var property_contents = @json($property_contents);
         var properties = property_contents.data;
+        var purpose = @json(request('purpose') ?? '');
     </script>
     <!-- Leaflet Map JS -->
     <script src="{{ asset('/assets/front/js/vendors/leaflet.js') }}"></script>

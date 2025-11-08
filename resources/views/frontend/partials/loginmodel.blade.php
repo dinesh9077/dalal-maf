@@ -160,12 +160,10 @@
                         {{ __('Send OTP') }}
                     </button>
                 </div>
-                <a href="{{ route('user.signup')}}" class="text-center d-block"
-                    style="margin-top: 20px; font-size:15px; text-align: center;">
-                    By clicking you agree to
+                <a href="{{ url('terms-&-condition')}}" target="_blank" class="text-center d-block"
+                    style="margin-top: 20px; font-size:15px; text-align: center;"> 
                     <span style="color: #6c603c; margin-left: 5px;">Terms and conditions</span>
-                </a>
-
+                </a> 
             </div>
         </div>
     </div>
@@ -182,8 +180,8 @@
                         {{ __('Verify your number') }}
                     </h4>
                     <h4 style="color:#000; font-weight:600; margin:0;">
-                        +91-9684756267
-                        <i class="fa fa-pencil" style="color:#6c603c; font-size:13px; margin-left:4px;"></i>
+                        <span id="editFrontPhone">+91-7854875487</span>
+                        <i class="fa fa-pencil" id="editPhoneNumber" style="color:#6c603c; font-size:13px; margin-left:4px;cursor:pointer;"></i>
                     </h4>
                 </div>
                 <button type="button" class="close-btn-login" data-bs-dismiss="modal" aria-label="Close"
@@ -234,7 +232,7 @@
 <script type="text/javascript" src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script>
 $(document).ready(function() {
-    $('#customerPhoneModal').on('show.bs.modal', function(event) {
+    $('#customerPhoneModal').on('show.bs.modal', function(event) { 
         let button = $(event.relatedTarget);
         let action = button.data('action');
         $(this).data('action', action);
@@ -266,6 +264,14 @@ $(document).ready(function() {
         }
     });
 
+    $('#editPhoneNumber').on('click', function() 
+    {
+        const phone = $(this).attr('data-phone'); 
+        $('#in_phone').val(phone);
+        $('#customerPhoneModal').modal('show');
+        $('#otpVerificationModal').modal('hide');
+    });
+
     // Send OTP
     $('#sendOtp').on('click', function() {
         let phone = $('#in_phone').val();
@@ -278,7 +284,8 @@ $(document).ready(function() {
 
         $('#editErr_in_phone').text('');
         $(this).prop('disabled', true).text('Sending...');
-
+        $('#editFrontPhone').text('+91-'+phone);
+        $('#editPhoneNumber').attr('data-phone', phone);
         $.ajax({
             url: '{{ route("send.otp") }}', // Update this route
             method: 'POST',

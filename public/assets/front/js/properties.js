@@ -178,20 +178,46 @@ function getCategories(type) {
 // Resets (keep original behavior)
 // -----------------------------
 function resetURL() {
-  // Uncheck all checkboxes
-  document
-    .querySelectorAll('input[type="checkbox"]')
-    .forEach((cb) => (cb.checked = false));
+  // 1) Capture current purpose BEFORE reset (from URL or form)
+  const currentUrl = new URL(
+    typeof getURL === "function" ? getURL() : window.location.href
+  );
+  const form = document.getElementById("searchForm");
+  const purposeEl = document.getElementById("purpose");
+  const purposeBeforeReset =
+    currentUrl.searchParams.get("purpose") ||
+    (purposeEl ? purposeEl.value : "");
 
-  // Reset form + price UI
-  document.getElementById("searchForm").reset();
-  priceRest();
+  // 2) Uncheck all checkboxes inside the form (safer scope)
+  if (form) {
+    form
+      .querySelectorAll('input[type="checkbox"]')
+      .forEach((cb) => (cb.checked = false));
+    form.reset();
+  }
 
-  $('.state, .city, .area').hide();
-  const url = getURL();
-  const clean = new URL(url.origin + url.pathname);
+  // 3) Reset price UI if available
+  if (typeof priceRest === "function") {
+    priceRest();
+  }
+
+  // 4) Hide dependent selects
+  $(".state, .city, .area").hide();
+
+  // 5) Build a clean URL (origin + path only)
+  const clean = new URL(currentUrl.origin + currentUrl.pathname);
+
+  // 6) Preserve purpose only for these two values
+  if (["business_for_sale", "franchiese"].includes(purposeBeforeReset)) {
+    clean.searchParams.set("purpose", purposeBeforeReset);
+    // Also re-apply to the form control (optional)
+    if (purposeEl) purposeEl.value = purposeBeforeReset;
+  }
+
+  // 7) Push state + fetch results
   pushAndFetch(clean);
 }
+
 
 function reset() {
   // Uncheck all checkboxes

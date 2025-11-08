@@ -72,10 +72,10 @@
                 <span></span>
             </button>
             @if ($authType === 'guest')
-            <button type="button" class="style__postContainerTab d-block d-sm-none " data-bs-toggle="modal"
-                data-bs-target="#customerPhoneModal" data-action="post_property">
-                <span class="style__postTab">{{ __('Post Property') }}</span>
-            </button>
+                <button type="button" class="style__postContainerTab d-block d-sm-none " data-bs-toggle="modal"
+                    data-bs-target="#customerPhoneModal" data-action="login" id="openCustomerPhoneModal">
+                    <span class="style__postTab">{{ __('Sign In') }}</span>
+                </button>
             @else
             <a class="style__postContainerTab" href="{{ $postPropertyRoute }}">
                 <span class="style__postTab">{{ __('Post Property') }}</span>

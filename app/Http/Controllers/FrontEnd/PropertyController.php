@@ -7,6 +7,12 @@ use App\Models\Admin;
 use App\Models\Agent;
 use App\Models\Amenity;
 use App\Models\AmenityContent;
+use App\Models\HomePage\Section;
+use App\Models\HomePage\PropertySection;
+use App\Models\CounterSection;
+use App\Models\Prominence\FeatureSection;
+use App\Models\HomePage\CategorySection;
+use App\Models\HomePage\CitySection;
 use App\Models\BasicSettings\Basic;
 use App\Models\Property\Area;
 use App\Models\Property\City;
@@ -727,13 +733,54 @@ class PropertyController extends Controller
             ];
         }
 
-        return response()->json($suggestions);
+        return response()->json($suggestions); 
+    } 
+    public function filters(Request $request)
+	{
+			$themeVersion = Basic::query()->pluck('theme_version')->first();
+			
+			$secInfo = Section::query()->first();
+			
+			$misc = new MiscellaneousController();
+			
+			$language = $misc->getLanguage();
+			
+			$queryResult['language'] = $language;
+			
+		  
+			$all_proeprty_categories = PropertyCategory::where('status', 1)
+			->with(['categoryContent' => function ($q) use ($language) {
+				$q->where('language_id', $language->id);
+			}])
+			->withCount(['properties' => function ($query) {
+				$query->where('status', 1)->where('approve_status', 1);
+			}])
+			->orderBy('serial_number', 'asc')
+			->get();
+			 
+			$queryResult['all_proeprty_categories'] = $all_proeprty_categories;
+			
+			   
+			if ($themeVersion == 1 && $secInfo->cities_section_status == 1) {
+				$cities =  City::where([['status', 1], ['featured', 1]])->orderBy('serial_number', 'asc')->get();
+				$cities->map(function ($city) use ($language) {
+					$city['propertyCount'] = $city->cityProperties()->count();
+					$city['name'] = $city->getContent($language->id)->name;
+				});
+				
+				$queryResult['cities'] =  $cities;
+			} 
+			
+			// --- Property min & max ---
+			$propertyStats = Property::query()
+				->where('status', 1)
+				->where('approve_status', 1)
+				->selectRaw('MIN(price) as min_price, MAX(price) as max_price')
+				->first();
 
-    }
-
-    public function filters()
-    {
-        return view('frontend.property.filter');
-    }
-
+			$queryResult['min'] = (int) $propertyStats->min_price;
+			$queryResult['max'] = (int) $propertyStats->max_price;
+ 
+        return view('frontend.property.filter', $queryResult);
+    } 
 }
