@@ -99,14 +99,14 @@
     .home-banner {
         position: relative;
         overflow: hidden;
-        margin-top: 40px;
+        /* margin-top: 40px; */
     }
 
     .hero-image {
         background: #f0f0f0;
         height: auto;
         position: relative;
-        padding: 40px 0 40px;
+        /* padding: 40px 0 40px; */
     }
 
     .banner-filter-form {
@@ -240,7 +240,7 @@
 
     @media (max-width: 767px) {
         .navbar {
-            padding: 10px 15px 50px 15px;
+            padding: 10px 15px 25px 15px;
         }
 
         .nav-buttons button {
@@ -290,12 +290,12 @@
             <button class="nav-link" data-tab="lease">Lease</button>
         </div>
         <button class="close-btn"><i class="fas fa-times"></i></button>
-        <div class="search-btn-container">
+        <!-- <div class="search-btn-container">
             <div class="search-bar">
                 <i class="fas fa-search"></i>
                 <input type="text" placeholder="Search properties..." id="searchInput" />
             </div>
-        </div>
+        </div> -->
     </nav>
 
     <section class="home-banner">
