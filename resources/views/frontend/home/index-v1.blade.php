@@ -88,6 +88,74 @@ $version = $basicInfo->theme_version;
     pointer-events: none;
 }
 
+.tabs-wrapper {
+    display: flex;
+    align-items: center;
+    /* ✅ Vertically center */
+    gap: 10px;
+    border-bottom: 1px solid #f4f5f7;
+}
+
+.tabs-wrapper .nav-tabs {
+    border: none;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.tabs-wrapper .nav-tabs .nav-link {
+    border: none;
+    font-weight: 500;
+    color: #333;
+    background: none;
+}
+
+.tabs-wrapper .nav-tabs .nav-link.active {
+    color: #6c603c;
+    border-bottom: 2px solid #6c603c;
+}
+
+.post-property-btn {
+    border-left: 2px solid #dcdcdc;
+    padding-left: 15px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.style__postContainerTab {
+    background-color: #6c603c;
+    border: none;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.style__postContainerTab:hover {
+    background-color: #5a5234;
+    color: #fff;
+}
+
+@media (max-width: 576px) {
+    .tabs-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .post-property-btn {
+        border-left: none;
+        margin-top: 10px;
+        text-align: left;
+        padding-left: 0;
+    }
+
+    .style__postContainerTab {
+        width: 100%;
+        text-align: center;
+    }
+}
 
 /* ==== */
 </style>
@@ -130,134 +198,179 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
         <!-- <img src="{{ asset('assets/front/images/acrs-imag/HOUSE-1.png') }}" class="home-hero-imahes-new" alt=""> -->
 
         @php
-		$tabs = [
-			'buy' => 'Buy',
-			'sale' => 'Sale',
-			'rent' => 'Rent',
-			'lease' => 'Lease',
-		];
-		@endphp
-		
-		<div class="banner-filter-form new-banner-filters-width" data-aos="fade-up">
-			<div class="tab-content form-wrapper">
-				
-				{{-- Tabs --}}
-				<div style="border-bottom: 1px solid #f4f5f7;">
-					<ul class="nav nav-tabs">
-						@foreach($tabs as $key => $label)
-						<li class="nav-item">
-							<button class="nav-link {{ $loop->first ? 'active' : '' }}"
-							data-bs-toggle="tab"
-							data-bs-target="#{{ $key }}"
-							type="button">{{ __($label) }}</button>
-						</li>
-						@endforeach
-					</ul>
-				</div>
-				
-				{{-- Common Hidden Fields --}} 
-				<input type="hidden" id="currency_symbol" value="{{ $basicInfo->base_currency_symbol }}">
-				<input class="form-control" type="hidden" value="{{ $min }}" id="o_min">
-				<input class="form-control" type="hidden" value="{{ $max }}" id="o_max">
-				
-				{{-- Tab Content --}}
-				@foreach($tabs as $key => $label)
-				<div class="tab-pane fade mt-3 {{ $loop->first ? 'active show' : '' }}" id="{{ $key }}">
-					<form action="{{ route('frontend.properties') }}" method="get" id="{{ $key }}Form">
-						<input type="hidden" name="purpose" value="{{ strtolower($label) }}">
-						<input type="hidden" name="min" value="{{ $min }}" id="min_{{ $key }}">
-						<input type="hidden" name="max" value="{{ $max }}" id="max_{{ $key }}">
-						
-						<div class="grid">
-							{{-- Location --}}
-							<div class="grid-item home-des-border">
-								<div class="form-group">
-									<label for="search_{{ $key }}">{{ __('Location') }}</label>
-									<input type="text"
-									id="search_{{ $key }}"
-									name="location"
-									class="form-control searchBar"
-									placeholder="{{ __('Enter Location') }}"
-									style="box-shadow: none;">
-								</div>
-							</div>
-							
-							{{-- City --}}
-							<div class="grid-item home-des-border">
-								<div class="form-group">
-									<label for="city_{{ $key }}" class="icon-end">City</label>
-									<select name="city"
-									id="city_{{ $key }}"
-									class="form-control select2">
-										<option value="">{{ __('Select City') }}</option>
-										@foreach ($cities as $city)
-										<option value="{{ $city->name }}">{{ $city->name }}</option>
-										@endforeach
-									</select>
-								</div>
-							</div>
-							
-							{{-- Property Type --}}
-							<div class="grid-item home-des-border">
-								<div class="form-group">
-									<label for="type_{{ $key }}" class="icon-end">{{ __('Property Type') }}</label>
-									<select name="type[]"
-									id="type_{{ $key }}"
-									class="form-control select2">
-										<option selected disabled value="">{{ __('Select Property') }}</option>
-										<option value="all">{{ __('All') }}</option>
-										<option value="residential">{{ __('Residential') }}</option>
-										<option value="commercial">{{ __('Commercial') }}</option>
-										<option value="industrial">{{ __('Industrial') }}</option>
-									</select>
-								</div>
-							</div>
-							
-							{{-- Categories --}}
-							<div class="grid-item home-des-border">
-								<div class="form-group">
-									<label for="category_{{ $key }}" class="icon-end">{{ __('Categories') }}</label>
-									<select name="category[]"
-									id="category_{{ $key }}"
-									class="form-control select2 bringCategory">
-										<option selected disabled value="">{{ __('Select Category') }}</option>
-										<option value="all">{{ __('All') }}</option>
-										@foreach ($all_proeprty_categories as $category)
-										<option value="{{ @$category->categoryContent->slug }}">
-											{{ @$category->categoryContent->name }}
-										</option>
-										@endforeach
-									</select>
-								</div>
-							</div>
-							
-							{{-- Price Slider --}}
-							<div class="grid-item home-des-border">
-								<label class="price-value">{{ __('Price') }}:<br>
-									<span data-range-value="filterPriceSlider_{{ $key }}_value">
-										{{ symbolPrice($min) }} - {{ symbolPrice($max) }}
-									</span>
-								</label>
-								
-								<div data-range-slider="filterPriceSlider_{{ $key }}"></div>
-							</div>
-							
-							{{-- Submit Button --}}
-							<div>
-								<button type="submit"
-								class="btn btn-primary bg-secondary icon-start new-search-btn"
-								style="background-color:#6c603c !important;">
-									<img src="{{ asset('assets/front/images/new-images/search.png') }}"
-									alt="Search" class="new-icons-search">
-								</button>
-							</div>
-						</div>
-					</form>
-				</div>
-				@endforeach
-			</div>
-		</div> 
-         <!-- Mobile Search Bar (visible only on mobile) -->
+        $tabs = [
+        'buy' => 'Buy',
+        'sale' => 'Sale',
+        'rent' => 'Rent',
+        'lease' => 'Lease',
+        ];
+
+        $user = Auth::guard('web')->user();
+        $vendor = Auth::guard('vendor')->user();
+        $agent = Auth::guard('agent')->user();
+
+        // Determine auth type
+        if ($vendor) {
+        $authType = 'vendor';
+        $authUser = $vendor;
+        $dashboardRoute = route('vendor.dashboard');
+        $logoutRoute = route('vendor.logout');
+        } elseif ($user) {
+        $authType = 'user';
+        $authUser = $user;
+        $dashboardRoute = route('user.dashboard');
+        $logoutRoute = route('user.logout');
+        } elseif ($agent) {
+        $authType = 'agent';
+        $authUser = $agent;
+        $dashboardRoute = route('agent.dashboard');
+        $logoutRoute = route('agent.logout');
+        } else {
+        $authType = 'guest';
+        $authUser = null;
+        }
+
+        // First letter for avatar
+        $initial = $authUser ? strtoupper(substr($authUser->username ?? 'U', 0, 1)) : null;
+
+        // Post Property route
+        if ($authType === 'vendor' && $vendor->email) {
+        $postPropertyRoute = route('vendor.property_management.type');
+        } elseif ($authType === 'user' && $user->email) {
+        $postPropertyRoute = route('user.property_management.type');
+        } elseif ($authType === 'agent' && $agent->email) {
+        $postPropertyRoute = route('agent.property_management.type');
+        } else {
+        $postPropertyRoute = route('user.signup');
+        }
+        @endphp
+
+        <div class="banner-filter-form new-banner-filters-width" data-aos="fade-up">
+            <div class="tab-content form-wrapper">
+
+                {{-- Tabs --}}
+                <div class="tabs-wrapper" style="border-bottom: 1px solid #f4f5f7; display: flex;">
+                    <ul class="nav nav-tabs mb-0">
+                        @foreach($tabs as $key => $label)
+                        <li class="nav-item">
+                            <button class="nav-link {{ $loop->first ? 'active' : '' }}" data-bs-toggle="tab"
+                                data-bs-target="#{{ $key }}" type="button">
+                                {{ __($label) }}
+                            </button>
+                        </li>
+                        @endforeach
+                    </ul>
+
+                    {{-- Post Property Button --}}
+                    <div class="post-property-btn">
+                        @if ($authType === 'guest')
+                        <button type="button" class="style__postContainerTab" data-bs-toggle="modal"
+                            style="border:none; " data-bs-target="#customerPhoneModal" data-action="post_property">
+                            <span class="style__postTab">{{ __('Post Property') }}</span>
+                        </button>
+                        @else
+                        <a class="style__postContainerTab" href="{{ $postPropertyRoute }}">
+                            <span class="style__postTab">{{ __('Post Property') }}</span>
+                        </a>
+                        @endif
+                    </div>
+                </div>
+
+
+                {{-- Common Hidden Fields --}}
+                <input type="hidden" id="currency_symbol" value="{{ $basicInfo->base_currency_symbol }}">
+                <input class="form-control" type="hidden" value="{{ $min }}" id="o_min">
+                <input class="form-control" type="hidden" value="{{ $max }}" id="o_max">
+
+                {{-- Tab Content --}}
+                @foreach($tabs as $key => $label)
+                <div class="tab-pane fade mt-3 {{ $loop->first ? 'active show' : '' }}" id="{{ $key }}">
+                    <form action="{{ route('frontend.properties') }}" method="get" id="{{ $key }}Form">
+                        <input type="hidden" name="purpose" value="{{ strtolower($label) }}">
+                        <input type="hidden" name="min" value="{{ $min }}" id="min_{{ $key }}">
+                        <input type="hidden" name="max" value="{{ $max }}" id="max_{{ $key }}">
+
+                        <div class="grid">
+                            {{-- Location --}}
+                            <div class="grid-item home-des-border">
+                                <div class="form-group">
+                                    <label for="search_{{ $key }}">{{ __('Location') }}</label>
+                                    <input type="text" id="search_{{ $key }}" name="location"
+                                        class="form-control searchBar" placeholder="{{ __('Enter Location') }}"
+                                        style="box-shadow: none;">
+                                </div>
+                            </div>
+
+                            {{-- City --}}
+                            <div class="grid-item home-des-border">
+                                <div class="form-group">
+                                    <label for="city_{{ $key }}" class="icon-end">City</label>
+                                    <select name="city" id="city_{{ $key }}" class="form-control select2">
+                                        <option value="">{{ __('Select City') }}</option>
+                                        @foreach ($cities as $city)
+                                        <option value="{{ $city->name }}">{{ $city->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            {{-- Property Type --}}
+                            <div class="grid-item home-des-border">
+                                <div class="form-group">
+                                    <label for="type_{{ $key }}" class="icon-end">{{ __('Property Type') }}</label>
+                                    <select name="type[]" id="type_{{ $key }}" class="form-control select2">
+                                        <option selected disabled value="">{{ __('Select Property') }}</option>
+                                        <option value="all">{{ __('All') }}</option>
+                                        <option value="residential">{{ __('Residential') }}</option>
+                                        <option value="commercial">{{ __('Commercial') }}</option>
+                                        <option value="industrial">{{ __('Industrial') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            {{-- Categories --}}
+                            <div class="grid-item home-des-border">
+                                <div class="form-group">
+                                    <label for="category_{{ $key }}" class="icon-end">{{ __('Categories') }}</label>
+                                    <select name="category[]" id="category_{{ $key }}"
+                                        class="form-control select2 bringCategory">
+                                        <option selected disabled value="">{{ __('Select Category') }}</option>
+                                        <option value="all">{{ __('All') }}</option>
+                                        @foreach ($all_proeprty_categories as $category)
+                                        <option value="{{ @$category->categoryContent->slug }}">
+                                            {{ @$category->categoryContent->name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            {{-- Price Slider --}}
+                            <div class="grid-item home-des-border">
+                                <label class="price-value">{{ __('Price') }}:<br>
+                                    <span data-range-value="filterPriceSlider_{{ $key }}_value">
+                                        {{ symbolPrice($min) }} - {{ symbolPrice($max) }}
+                                    </span>
+                                </label>
+
+                                <div data-range-slider="filterPriceSlider_{{ $key }}"></div>
+                            </div>
+
+                            {{-- Submit Button --}}
+                            <div>
+                                <button type="submit" class="btn btn-primary bg-secondary icon-start new-search-btn"
+                                    style="background-color:#6c603c !important;">
+                                    <img src="{{ asset('assets/front/images/new-images/search.png') }}" alt="Search"
+                                        class="new-icons-search">
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                @endforeach
+            </div>
+        </div>
+        <!-- Mobile Search Bar (visible only on mobile) -->
         <div class="mobile-search">
             <div class="mobile-search-bar">
                 <a href="{{ route('frontend.properties.filter')}}">
@@ -270,12 +383,12 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 </section>
 
 @if($featured_properties->isNotEmpty())
-<section class="product-area featured-product pt-80 pb-20">
+<section class="product-area featured-product pt-80 pb-10">
     <div class="container">
         <div class="row">
             <div class="container">
                 <div class="col-12">
-                    <div class="section-title mb-30 new-titles position-relative" data-aos="fade-up">
+                    <div class="section-title mb-10 new-titles position-relative" data-aos="fade-up">
                         <h2 class="title text-center">Featured Properties</h2>
                         <p class="mt-2" style="font-size:14px;">
                             Handpicked and premium listings showcased for you.
@@ -311,7 +424,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                 </div>
 
                 <!-- Mobile view button (below cards) -->
-                <div class="text-center mt-4">
+                <div class="text-center">
                     <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
                         style="padding: 10px 20px;">View All</a>
                 </div>
@@ -349,9 +462,9 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                         <div class="swiper product-slider w-100">
                             <div class="swiper-wrapper">
                                 @forelse ($hotProperties as $property)
-                                    <div class="swiper-slide">
-                                        <x-hot-property :property="$property" />  
-                                    </div>
+                                <div class="swiper-slide">
+                                    <x-hot-property :property="$property" />
+                                </div>
                                 @empty
                                 <div class="p-3 text-center mb-30 w-100">
                                     <h3 class="mb-0">{{ __('No Hot Property Found') }}</h3>
@@ -366,7 +479,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                     </div>
                 </div>
 
-                <div class="text-center mt-4">
+                <div class="text-center ">
                     <a href="{{ url('properties/is_hot/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
                         style="padding: 10px 20px;">
                         View All
@@ -425,12 +538,12 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 @endif
 
 @if($fastSellingProperties->isNotEmpty())
-<section class="product-area featured-product pt-40 pb-20">
+<section class="product-area featured-product pt-40 pb-10">
     <div class="container">
         <div class="row">
             <div class="container">
                 <div class="col-12">
-                    <div class="section-title mb-30 new-titles" data-aos="fade-up" style="position: relative;">
+                    <div class="section-title mb-10 new-titles" data-aos="fade-up" style="position: relative;">
                         <h2 class="title" style="text-align : center;">Fast Selling Properties</h2>
                         <p class="mt-2" style="font-size:14px;">
                             Handpicked and premium listings showcased for you.
@@ -468,7 +581,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                     </div>
                 </div>
 
-                <div class="text-center mt-4">
+                <div class="text-center">
                     <a href="{{ url('properties/is_fast_selling/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
                         style="padding: 10px 20px;">
                         View All
@@ -482,7 +595,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 
 @if ($secInfo->property_section_status == 1)
-<section class="product-area popular-product product-1 pt-40 pb-0 relative" style="background : #F8F7F1;">
+<section class="product-area popular-product product-1 pt-40 pb-10 relative" style="background : #F8F7F1;">
     <img src="{{ asset('assets/front/images/new-images/new-primume-properties.png') }}" alt=""
         class="new-primume-prop-img">
     <div class="container" style="margin-top: 50px;">
@@ -574,7 +687,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 </section>
 
 
-<section class="product-area popular-product product-1 pt-40 pb-0 relative" style="background:#F8F7F1;">
+<section class="product-area popular-product product-1 pt-40 pb-20 relative" style="background:#F8F7F1;">
     <div class="container">
         <div class="row" style="position: relative;">
             <div class="col-12">
@@ -591,15 +704,15 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                 <div class="swiper fren-new-slider">
                     <div class="swiper-wrapper">
                         @forelse ($franchiese as $franchie)
-                        <div class="swiper-slide"> 
-                            <x-hot-property :property="$franchie" />  
+                        <div class="swiper-slide">
+                            <x-hot-property :property="$franchie" />
                         </div>
                         @empty
                         <div class="p-3 text-center mb-30">
                             <h3 class="mb-0"> {{ __('No Properties Found') }}</h3>
                         </div>
                         @endforelse
-                    </div>  
+                    </div>
                 </div>
 
                 <!-- Navigation Buttons -->
@@ -1190,49 +1303,6 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
     </div>
 	</section>
 @endif -->
-
-    @php
-    $user = Auth::guard('web')->user();
-    $vendor = Auth::guard('vendor')->user();
-    $agent = Auth::guard('agent')->user();
-
-    // Determine auth type
-    if ($vendor) {
-    $authType = 'vendor';
-    $authUser = $vendor;
-    $dashboardRoute = route('vendor.dashboard');
-    $logoutRoute = route('vendor.logout');
-    } elseif ($user) {
-    $authType = 'user';
-    $authUser = $user;
-    $dashboardRoute = route('user.dashboard');
-    $logoutRoute = route('user.logout');
-    }elseif ($agent) {
-    $authType = 'agent';
-    $authUser = $agent;
-    $dashboardRoute = route('agent.dashboard');
-    $logoutRoute = route('agent.logout');
-    } else {
-    $authType = 'guest';
-    $authUser = null;
-    }
-
-    // First letter for avatar
-    $initial = $authUser ? strtoupper(substr($authUser->username ?? 'U', 0, 1)) : null;
-
-    // Post Property route
-    if ($authType === 'vendor' && $vendor->email)
-    {
-    $postPropertyRoute = route('vendor.property_management.type');
-    } elseif ($authType === 'user' && $user->email) {
-    $postPropertyRoute = route('user.property_management.type');
-    }elseif ($authType === 'agent' && $agent->email) {
-    $postPropertyRoute = route('agent.property_management.type');
-    } else {
-    $postPropertyRoute = route('user.signup');
-    }
-    @endphp
-
 
 
 
@@ -1926,43 +1996,44 @@ document.addEventListener('DOMContentLoaded', function() {
         swiper.isEnd ?
             nextBtnLP.classList.add('hidden') :
             nextBtnLP.classList.remove('hidden');
-		}
-	});
-	
-	var min = @json($min);
-	var max = @json($max);
-	['buy', 'sale', 'rent', 'lease'].forEach(key => {
-		const slider = document.querySelector(`[data-range-slider="filterPriceSlider_${key}"]`);
-		const valueEl = document.querySelector(`[data-range-value="filterPriceSlider_${key}_value"]`);
-		const minInput = document.getElementById(`min_${key}`);
-		const maxInput = document.getElementById(`max_${key}`);
-		if (slider && valueEl) {
-			// Initialize your price range slider logic here
-			// Example (if using noUiSlider or similar):
-			noUiSlider.create(slider, {
-				start: [min, max],
-				connect: true,
-				range: { min: min, max: max }
-			});
-			
-			slider.noUiSlider.on('update', (values) =>
-			{ 
-				minInput.value = Math.round(values[0]);
-				maxInput.value = Math.round(values[1]);
-				valueEl.textContent = `${values[0]} - ${values[1]}`;
-			});
-		}
-	});
+    }
+});
 
-    document.getElementById("sellRentBtn1").addEventListener("click", function(e) {
-        e.preventDefault();
-        const modal = document.getElementById("customerPhoneModal");
-        if (modal) {
-            const modalTrigger = new bootstrap.Modal(modal);
-            modalTrigger.show();
-        }
-    });
-	
+var min = @json($min);
+var max = @json($max);
+['buy', 'sale', 'rent', 'lease'].forEach(key => {
+    const slider = document.querySelector(`[data-range-slider="filterPriceSlider_${key}"]`);
+    const valueEl = document.querySelector(`[data-range-value="filterPriceSlider_${key}_value"]`);
+    const minInput = document.getElementById(`min_${key}`);
+    const maxInput = document.getElementById(`max_${key}`);
+    if (slider && valueEl) {
+        // Initialize your price range slider logic here
+        // Example (if using noUiSlider or similar):
+        noUiSlider.create(slider, {
+            start: [min, max],
+            connect: true,
+            range: {
+                min: min,
+                max: max
+            }
+        });
+
+        slider.noUiSlider.on('update', (values) => {
+            minInput.value = Math.round(values[0]);
+            maxInput.value = Math.round(values[1]);
+            valueEl.textContent = `${values[0]} - ${values[1]}`;
+        });
+    }
+});
+
+document.getElementById("sellRentBtn1").addEventListener("click", function(e) {
+    e.preventDefault();
+    const modal = document.getElementById("customerPhoneModal");
+    if (modal) {
+        const modalTrigger = new bootstrap.Modal(modal);
+        modalTrigger.show();
+    }
+});
 </script>
 
 

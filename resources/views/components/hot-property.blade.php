@@ -78,13 +78,14 @@
 .btn-view-details-1 i {
     font-size: 14px;
 }
+
 </style>
 
-<div {{ $attributes }} style="position: relative; margin-bottom:0;">
-    <div class="product-default product-new mb-0" style="border-radius: 20px;"
+<div {{ $attributes }} style="position: relative; margin-bottom:0; box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.05);">
+    <div class="product-default product-new mb-0 " style="border-radius: 20px;"
         {{ $animation ? 'data-aos="fade-up" data-aos-delay="100"' : '' }}>
         
-        <div class="product-details product-new" style="padding: 0px;">
+        <div class="product-details product-new " style="padding: 0px;">
             
             <div class="product-image-box">
                 <a href="{{ route('frontend.property.details', ['slug' => $property->slug ?? $property->propertyContent->slug]) }}">
@@ -152,7 +153,7 @@
                     </span>
                 </div>
 
-                <ul class="product-info p-0 list-unstyled d-flex align-items-center">
+                <ul class="product-info p-0 list-unstyled d-flex  align-items-center" style="gap:0px;">
                     <li class="icon-start new-badge-product" data-tooltip="tooltip" title="{{ __('Area') }}">
                         <i class="fal fa-vector-square new-icon-color"></i>
                         <span>{{ $property->area }} {{ __('Sqft') }}</span>
