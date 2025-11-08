@@ -482,7 +482,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 
 @if ($secInfo->property_section_status == 1)
-<section class="product-area popular-product product-1 pt-40 pb-0 relative" style="background : #F8F7F1;">
+<section class="product-area popular-product product-1 pt-40 pb-10 relative" style="background : #F8F7F1;">
     <img src="{{ asset('assets/front/images/new-images/new-primume-properties.png') }}" alt=""
         class="new-primume-prop-img">
     <div class="container" style="margin-top: 50px;">
@@ -574,7 +574,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 </section>
 
 
-<section class="product-area popular-product product-1 pt-40 pb-0 relative" style="background:#F8F7F1;">
+<section class="product-area popular-product product-1 pt-40 pb-10 relative" style="background:#F8F7F1;">
     <div class="container">
         <div class="row" style="position: relative;">
             <div class="col-12">

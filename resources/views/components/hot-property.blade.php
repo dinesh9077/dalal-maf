@@ -78,6 +78,7 @@
 .btn-view-details-1 i {
     font-size: 14px;
 }
+
 </style>
 
 <div {{ $attributes }} style="position: relative; margin-bottom:0;">
@@ -152,7 +153,7 @@
                     </span>
                 </div>
 
-                <ul class="product-info p-0 list-unstyled d-flex align-items-center">
+                <ul class="product-info p-0 list-unstyled d-flex  align-items-center" style="gap:0px;">
                     <li class="icon-start new-badge-product" data-tooltip="tooltip" title="{{ __('Area') }}">
                         <i class="fal fa-vector-square new-icon-color"></i>
                         <span>{{ $property->area }} {{ __('Sqft') }}</span>

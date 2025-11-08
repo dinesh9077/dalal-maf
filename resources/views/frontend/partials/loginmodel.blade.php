@@ -175,7 +175,7 @@
     aria-labelledby="otpVerificationModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered model-otp" role="document">
         <div class="modal-content model-otp">
-            <div class="modal-header box-p-2 mb-4"
+            <div class="modal-header box-p-2 mb-2"
                 style="justify-content: space-between; align-items: flex-start; border-bottom:none;">
                 <div>
                     <h4 class="modal-title mb-1" id="otpVerificationModalLabel">
@@ -196,7 +196,7 @@
             <div class="modal-body text-center box-p-3 ">
                 <!-- <p class="mb-2">{{ __('An OTP has been sent to your phone.') }}</p> -->
 
-                <div class="mb-3">
+                <div class="">
                     <label class="form-label d-block"
                         style="text-align:left !important;">{{ __('Enter your 4 digit OTP') }}</label>
                     <div class="d-flex gap-2 otp-input-wrapper">

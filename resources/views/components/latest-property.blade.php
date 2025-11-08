@@ -108,7 +108,7 @@
             border: 1px solid #e0e0e0;
             border-radius: 6px;
             padding: 4px 8px;
-            background: #fafafa;
+            /* background: #fafafa; */
             display: flex;
             align-items: center;
             line-height: 1.2;
@@ -116,8 +116,8 @@
 
         .latest-info i {
             margin-right: 5px;
-            color: #999;
-            font-size: 13px;
+            color: var(--color-meduim);
+            font-size: 10px;
         }
 
         .latest-footer {
@@ -247,7 +247,7 @@
             @endif
             @if (!Auth::guard('vendor')->check() && !Auth::guard('web')->check() && !Auth::guard('agent')->check())
                 <a type="button" class="btn-wishlist" data-bs-toggle="modal" data-bs-target="#customerPhoneModal" data-action="login">
-                    <i class="fal fa-heart"></i> Wishlist
+                    <i class="fal fa-heart"></i> 
                 </a>
             @else
                 <a href="javascript:void(0);"
