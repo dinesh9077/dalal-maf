@@ -154,21 +154,28 @@
                 </div>
 
                 <ul class="product-info p-0 list-unstyled d-flex  align-items-center" style="gap:0px;">
-                    <li class="icon-start new-badge-product" data-tooltip="tooltip" title="{{ __('Area') }}">
-                        <i class="fal fa-vector-square new-icon-color"></i>
-                        <span>{{ $property->area }} {{ __('Sqft') }}</span>
-                    </li>
-                    @if ($property->type == 'residential')
-                        <li class="icon-start new-badge-product ms-3" data-tooltip="tooltip" title="{{ __('Beds') }}">
-                            <i class="fal fa-bed new-icon-color"></i>
-                            <span>{{ $property->beds }} {{ __('Beds') }}</span>
+                    @if (!in_array($property->purpose, ['franchiese', 'business_for_sale']))
+                        <li class="icon-start new-badge-product" data-tooltip="tooltip" title="{{ __('Area') }}">
+                            <i class="fal fa-vector-square new-icon-color"></i>
+                            <span>{{ $property->area }} {{ __('Sqft') }}</span>
                         </li>
-                        <li class="icon-start new-badge-product ms-3" data-tooltip="tooltip" title="{{ __('Baths') }}">
-                            <i class="fal fa-bath new-icon-color"></i>
-                            <span>{{ $property->bath }} {{ __('Baths') }}</span>
-                        </li>
+                        @if ($property->type == 'residential')
+                            <li class="icon-start new-badge-product ms-3" data-tooltip="tooltip" title="{{ __('Beds') }}">
+                                <i class="fal fa-bed new-icon-color"></i>
+                                <span>{{ $property->beds }} {{ __('Beds') }}</span>
+                            </li>
+                            <li class="icon-start new-badge-product ms-3" data-tooltip="tooltip" title="{{ __('Baths') }}">
+                                <i class="fal fa-bath new-icon-color"></i>
+                                <span>{{ $property->bath }} {{ __('Baths') }}</span>
+                            </li>
+                        @endif
+                    @else
+                        <li class="icon-start new-badge-product" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Listing Type') }}">
+						    <i class="fal fa-info new-icon-color"></i>
+						    <span>{{ $property->notes ?? __('N/A') }}</span>
+						</li> 
                     @endif
-                </ul>
+                </ul> 
 
                 <a href="{{ route('frontend.property.details', $property->slug ?? $property->propertyContent->slug) }}"
                     class="btn-view-details-1">

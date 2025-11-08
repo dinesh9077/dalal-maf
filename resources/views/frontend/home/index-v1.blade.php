@@ -200,7 +200,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
         @php
         $tabs = [
         'buy' => 'Buy',
-        'sale' => 'Sale',
+       // 'sale' => 'Sale',
         'rent' => 'Rent',
         'lease' => 'Lease',
         ];
@@ -1381,7 +1381,8 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 </div>
 
 
-<a href="#" class="floating-plus-btn" id="sellRentBtn1">
+<a href="javascript:;" class="floating-plus-btn" data-bs-toggle="modal"
+                data-bs-target="#customerPhoneModal" data-action="post_property">
     <i class="fas fa-plus"></i>
 </a>
 
