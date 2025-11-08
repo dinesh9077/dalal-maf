@@ -225,6 +225,26 @@
         </div>
 
         <div class="latest-footer">
+            @if (Auth::guard('web')->check())
+                @php
+                    $user_id = Auth::guard('web')->user()->id;
+                    $checkWishList = checkWishList($property->id, $user_id,'user'); 
+                @endphp
+            @elseif(Auth::guard('vendor')->check())
+                @php
+                    $user_id = Auth::guard('vendor')->user()->id;
+                    $checkWishList = checkWishList($property->id, $user_id,'vendor'); 
+                @endphp
+            @elseif(Auth::guard('agent')->check())
+                @php
+                    $user_id = Auth::guard('agent')->user()->id;
+                    $checkWishList = checkWishList($property->id, $user_id,'agent'); 
+                @endphp
+            @else
+                @php
+                    $checkWishList = false;
+                @endphp
+            @endif
             @if (!Auth::guard('vendor')->check() && !Auth::guard('web')->check() && !Auth::guard('agent')->check())
                 <a type="button" class="btn-wishlist" data-bs-toggle="modal" data-bs-target="#customerPhoneModal" data-action="login">
                     <i class="fal fa-heart"></i> Wishlist

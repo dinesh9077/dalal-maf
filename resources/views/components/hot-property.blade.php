@@ -68,7 +68,7 @@
     transition: all 0.3s ease;
     text-decoration: none;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-}
+} 
 
 .btn-view-details-1:hover {
     background-color: #e6e6e6;
@@ -93,20 +93,44 @@
                         data-src="{{ asset('assets/img/property/featureds/' . $property->featured_image) }}">
                 </a>
 
-                @if (!Auth::guard('vendor')->check() && !Auth::guard('web')->check() && !Auth::guard('agent')->check())
-                    <a type="button" class="btn-wishlist" data-bs-toggle="modal" data-bs-target="#customerPhoneModal"
-                        data-action="login">
-                        <i class="fal fa-heart"></i>
-                    </a>
-                @else
-                    <a href="javascript:void(0);" class="btn-wishlist {{ $checkWishList ? 'wishlist-active' : '' }}"
-                        data-id="{{ $property->id }}" data-action="{{ $checkWishList ? 'remove' : 'add' }}"
-                        data-add-url="{{ route('addto.wishlist', $property->id) }}"
-                        data-remove-url="{{ route('remove.wishlist', $property->id) }}"
-                        title="{{ $checkWishList ? __('Saved') : __('Add to Wishlist') }}">
-                        <i class="fal fa-heart"></i>
-                    </a>
-                @endif
+                    @if (Auth::guard('web')->check())
+						@php
+							$user_id = Auth::guard('web')->user()->id;
+							$checkWishList = checkWishList($property->id, $user_id,'user'); 
+						@endphp
+					@elseif(Auth::guard('vendor')->check())
+						@php
+							$user_id = Auth::guard('vendor')->user()->id;
+							$checkWishList = checkWishList($property->id, $user_id,'vendor'); 
+						@endphp
+					@elseif(Auth::guard('agent')->check())
+						@php
+							$user_id = Auth::guard('agent')->user()->id;
+							$checkWishList = checkWishList($property->id, $user_id,'agent'); 
+						@endphp
+					@else
+						@php
+							$checkWishList = false;
+						@endphp
+					@endif
+					@if (!Auth::guard('vendor')->check() && !Auth::guard('web')->check() && !Auth::guard('agent')->check())
+						<a type="button" class="btn-wishlist" data-bs-toggle="modal" data-bs-target="#customerPhoneModal" data-action="login">
+							<i class="fal fa-heart"></i>
+						</a>
+					@else
+						<a href="javascript:void(0);"
+						   class="btn-wishlist {{ $checkWishList ? 'wishlist-active' : '' }}"
+						   data-id="{{ $property->id }}"
+						   data-action="{{ $checkWishList ? 'remove' : 'add' }}"
+						   data-add-url="{{ route('addto.wishlist', $property->id) }}"
+						   data-remove-url="{{ route('remove.wishlist', $property->id) }}"
+						   data-url="{{ $checkWishList ? route('remove.wishlist', $property->id) : route('addto.wishlist', $property->id) }}"
+						   title="{{ $checkWishList ? __('Saved') : __('Add to Wishlist') }}">
+							<i class="fal fa-heart"></i>
+						</a>
+
+
+					@endif 
             </div>
 
             <div class="product-new-div">

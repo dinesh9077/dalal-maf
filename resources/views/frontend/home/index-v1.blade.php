@@ -591,9 +591,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                 <div class="swiper fren-new-slider">
                     <div class="swiper-wrapper">
                         @forelse ($franchiese as $franchie)
-                        <div class="swiper-slide">
-                            {{-- property component --}}
-                            <!-- <x-property :property="$franchie" /> -->
+                        <div class="swiper-slide"> 
                             <x-hot-property :property="$franchie" />  
                         </div>
                         @empty
@@ -601,9 +599,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                             <h3 class="mb-0"> {{ __('No Properties Found') }}</h3>
                         </div>
                         @endforelse
-                    </div>
-
-
+                    </div>  
                 </div>
 
                 <!-- Navigation Buttons -->
