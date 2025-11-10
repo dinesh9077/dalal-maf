@@ -47,6 +47,7 @@
   border: none;
   background-color: transparent;
   box-shadow: none;
+  font-size: 20px !important;
 }
 
 .sidebar-widget-area .accordion-button::after {

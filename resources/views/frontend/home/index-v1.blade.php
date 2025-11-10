@@ -91,7 +91,6 @@ $version = $basicInfo->theme_version;
 .tabs-wrapper {
     display: flex;
     align-items: center;
-    /* ✅ Vertically center */
     gap: 10px;
     border-bottom: 1px solid #f4f5f7;
 }
@@ -383,8 +382,8 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 </section>
 
 @if($featured_properties->isNotEmpty())
-<section class="product-area featured-product pt-80 pb-10">
-    <div class="container">
+<section class="product-area featured-product pt-80 pb-20" >
+    <div class="container" style="border-top:none !important;">
         <div class="row">
             <div class="container">
                 <div class="col-12">
@@ -411,7 +410,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                                     <x-property :property="$property" />
                                 </div>
                                 @empty
-                                <div class="p-3 text-center mb-30 w-100">
+                                <div class="p-3 text-center w-100">
                                     <h3 class="mb-0">{{ __('No Featured Property Found') }}</h3>
                                 </div>
                                 @endforelse
@@ -436,7 +435,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 
 @if($hotProperties->isNotEmpty())
-<section class="product-area featured-product pt-40 pb-20">
+<section class="product-area featured-product pt-20 pb-10">
     <div class="container">
         <div class="row">
             <div class="container">
@@ -479,7 +478,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                     </div>
                 </div>
 
-                <div class="text-center ">
+                <div class="text-center mt-2 mt-sm-2">
                     <a href="{{ url('properties/is_hot/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
                         style="padding: 10px 20px;">
                         View All
@@ -493,7 +492,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 
 @if($recommendedProperties->isNotEmpty())
-<section class="product-area featured-product pt-40 pb-20">
+<section class="product-area featured-product pt-20 pb-20">
     <div class="container">
         <div class="row">
             <div class="container">
@@ -538,7 +537,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 @endif
 
 @if($fastSellingProperties->isNotEmpty())
-<section class="product-area featured-product pt-40 pb-10">
+<section class="product-area featured-product pt-20 pb-20">
     <div class="container">
         <div class="row">
             <div class="container">
@@ -595,10 +594,10 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 
 @if ($secInfo->property_section_status == 1)
-<section class="product-area popular-product product-1 pt-40 pb-10 relative" style="background : #F8F7F1;">
+<section class="product-area popular-product product-1 pt-20 pb-20 relative" style="background : #F8F7F1;">
     <img src="{{ asset('assets/front/images/new-images/new-primume-properties.png') }}" alt=""
         class="new-primume-prop-img">
-    <div class="container" style="margin-top: 50px;">
+    <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="section-title prop-pad mb-30" data-aos="fade-up">
@@ -646,7 +645,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 
 
-<section class="product-area popular-product product-1 pt-40 pb-0 relative">
+<section class="product-area popular-product product-1 pt-20 pb-20 relative">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -687,7 +686,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 </section>
 
 
-<section class="product-area popular-product product-1 pt-40 pb-20 relative" style="background:#F8F7F1;">
+<section class="product-area popular-product product-1 pt-20 pb-40 relative" style="background:#F8F7F1; overflow:visible;">
     <div class="container">
         <div class="row" style="position: relative;">
             <div class="col-12">
@@ -728,7 +727,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 </section>
 
 
-<div class="container pt-40 pb-20 upcoming-projects" data-aos="fade-up">
+<div class="container pt-20 pb-20 upcoming-projects" data-aos="fade-up">
 
     <div class="row">
         <div class="col-12">
@@ -780,7 +779,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 </div>
 
-<section class="city-section pt-40 pb-20">
+<section class="city-section pt-20 pb-20">
     <img src="{{ asset('assets/front/images/acrs-imag/building-vector.png') }}" alt="" class="building-vector">
     <div class="container">
         <div class="city-details">
@@ -801,7 +800,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 </section>
 
 @if ($secInfo->why_choose_us_section_status == 1)
-<section class="new-aps-sections  pt-40 pb-20">
+<section class="new-aps-sections  pt-20 pb-20">
     <div class="container">
         <div class="section-title title-inline mb-30 aos-init aos-animate d-flex" data-aos="fade-up">
             <h2 class="title">Explore Property Types</h2>
@@ -843,10 +842,8 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 
 
-<section class="buy-rent-sale-section pt-40 pb-20">
+<section class="buy-rent-sale-section pt-20 pb-20">
     <div class="container">
-
-
 
         <div class="section-title title-inline mb-30 aos-init aos-animate d-flex" data-aos="fade-up">
             <h2 class="title">For all your luxury real estate needs, We have got you covered!</h2>
@@ -887,7 +884,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
     </div>
 </section>
 
-<section class="why-dlal-dection pt-40 pb-20">
+<section class="why-dlal-dection pt-20 pb-20">
     <div class="container">
         <div class="section-title title-inline mb-30 aos-init aos-animate d-flex " style="flex-direction: column;"
             data-aos="fade-up">
@@ -941,7 +938,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
     </div>
 </section>
 
-<section class="about-section-new pt-40 pb-20">
+<section class="about-section-new pt-20 pb-20">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 about-lrft-sections-new">
@@ -1010,8 +1007,6 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 </section>
 
 
-
-
 {{-- <section class="ready-section">
     <div class="container">
         <div class="row">
@@ -1061,9 +1056,8 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 </section> --}}
 
 
-
 @if ($secInfo->vendor_section_status == 1)
-<section class="pt-40 pb-20">
+<section class="pt-20 pb-20">
     <div class="container">
 
         <div class="row">
@@ -1118,7 +1112,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 @if ($secInfo->cities_section_status == 1)
 
-<section class="new-gellary-area pt-40 pb-20 relative ">
+<section class="new-gellary-area pt-20 pb-20 relative ">
 
     <!-- <img src="http://127.0.0.1:8000/assets/front/images/new-images/new-primume-properties.png" alt="" class="exp-img"> -->
 
@@ -1307,7 +1301,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 
 
-<div class="main-blog pt-40 pb-20" data-aos="fade-up">
+<div class="main-blog pt-20 pb-20" data-aos="fade-up">
     <div class="container">
 
         <div class="row">
@@ -1482,10 +1476,6 @@ $(document).ready(function() {
     $slider.slick('setPosition');
 });
 
-
-
-
-
 $(document).ready(function() {
     const $slider = $('.up-comming-project');
     const $prev = $('#up-comming-prev');
@@ -1555,7 +1545,6 @@ $(document).ready(function() {
 
 
 });
-
 
 
 // Hero Section  Swiper====================

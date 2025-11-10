@@ -585,7 +585,7 @@ width: 38%;
 .new-color-ngs-property{
     background-color:  white;
     border: 1px solid #ced4dd;
-    border-radius: 10px;
+    border-radius: var(--bs-border-radius);
     padding: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);
     width: 308px;

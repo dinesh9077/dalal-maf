@@ -57,7 +57,7 @@
     }
     @endphp
 
-    <div  class="main-responsive-nav ">
+    <div class="main-responsive-nav ">
         <div class="container">
             <div class="logo">
                 @if (!empty($websiteInfo->logo))
@@ -72,10 +72,11 @@
                 <span></span>
             </button>
             @if ($authType === 'guest')
-                <button type="button" class="style__postContainerTab d-block d-sm-none " data-bs-toggle="modal"
-                    data-bs-target="#customerPhoneModal" data-action="login" id="openCustomerPhoneModal">
-                    <span class="style__postTab">{{ __('Sign In') }}</span>
-                </button>
+            <button type="button" class="style__postContainerTab d-block d-sm-none " data-bs-toggle="modal"
+                data-bs-target="#customerPhoneModal" data-action="login" id="openCustomerPhoneModal"
+                style="line-height:20px;">
+                <span class="style__postTab">{{ __('Sign In') }}</span>
+            </button>
             @else
             <a class="style__postContainerTab" href="{{ $postPropertyRoute }}">
                 <span class="style__postTab">{{ __('Post Property') }}</span>
@@ -258,35 +259,24 @@
                     line-height: 1;
                 }
 
-                /* Initial state: Gradient background */
                 .main-navbar.navbar-transparent {
-                    background: linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)) !important;
+                    background: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)) !important;
                     transition: background 0.3s ease;
-                    /* Smooth transition */
+                    height:110px;
                 }
 
-                /* Scrolled state: Fixed/Opaque background (NO gradient) */
-                /* Assuming your fixed navbar already has a solid color (like white or your theme color) */
                 .main-navbar.navbar-scrolled {
                     background: #6c603c !important;
-                    /* Example: Solid white background */
-                    /* Or use your theme's primary color: background: #6c603c !important; */
-                    /* Remove any box-shadow you might want to add for the fixed state */
                     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                    /* Subtle shadow when fixed */
                 }
 
-                /* Ensure other navbar styles are applied correctly to both states */
                 .main-navbar {
                     position: absolute;
-                    /* or relative/fixed depending on your layout */
                     top: 0;
                     left: 0;
                     width: 100%;
                     z-index: 1030;
                 }
-
-                /* If your navbar becomes fixed (position: fixed) on scroll, ensure the .navbar-scrolled class applies the fixed position and solid background. */
                 </style>
 
 
@@ -297,27 +287,21 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const navbar = document.getElementById('mainNavbar');
-    // Define the scroll point where the gradient should disappear (e.g., 50px)
     const scrollThreshold = 50;
 
     if (navbar) {
         function checkScroll() {
-            // window.scrollY or window.pageYOffset check how far the user has scrolled
             if (window.scrollY > scrollThreshold) {
-                // User has scrolled, apply the solid background class (removes gradient)
                 navbar.classList.remove('navbar-transparent');
                 navbar.classList.add('navbar-scrolled');
             } else {
-                // User is near the top, apply the gradient/transparent class
                 navbar.classList.add('navbar-transparent');
                 navbar.classList.remove('navbar-scrolled');
             }
         }
 
-        // Run the check on page load (in case the page is loaded mid-scroll)
         checkScroll();
 
-        // Run the check whenever the user scrolls
         window.addEventListener('scroll', checkScroll);
     }
 });

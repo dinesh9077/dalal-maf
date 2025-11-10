@@ -308,8 +308,8 @@
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label for="">{{ __('Phone') }}</label>
-                                <input type="text" name="phone" id="in_phone" value="{{ $agent->phone }}"
-                                    class="form-control new-form-designs">
+                                <input type="text" name="phone" id="in_phone" value="{{ $agent->phone }}" 
+                                    class="form-control new-form-designs" >
                                 <p id="editErr_in_phone" class="mt-2 mb-0 text-danger em"></p>
                             </div>
                         </div>

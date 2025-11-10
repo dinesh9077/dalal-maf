@@ -2,12 +2,12 @@
 .product-new {
     border: none !important;
     background-color: #f8f7f1;
-    box-shadow: none;
-    margin-bottom: 0 !important; 
+    box-shadow: 0 10px 20px -8px rgba(var(--color-dark-rgb), 0.3);
+    margin-bottom: 0 !important;
 }
 
 .product-new:hover {
-    box-shadow: none;
+    box-shadow: 0 5px 15px -5px rgba(var(--color-dark-rgb), 0.2);
 }
 
 .product-image-box {
@@ -55,7 +55,7 @@
 
 .btn-view-details-1 {
     position: absolute;
-    bottom: 16px; 
+    bottom: 16px;
     right: 0px;
     display: inline-flex;
     align-items: center;
@@ -68,7 +68,7 @@
     transition: all 0.3s ease;
     text-decoration: none;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-} 
+}
 
 .btn-view-details-1:hover {
     background-color: #e6e6e6;
@@ -78,65 +78,64 @@
 .btn-view-details-1 i {
     font-size: 14px;
 }
-
 </style>
 
-<div {{ $attributes }} style="position: relative; margin-bottom:0; box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.05);">
+<div {{ $attributes }} style="position: relative; margin-bottom:0; ">
     <div class="product-default product-new mb-0 " style="border-radius: 20px;"
         {{ $animation ? 'data-aos="fade-up" data-aos-delay="100"' : '' }}>
-        
+
         <div class="product-details product-new " style="padding: 0px;">
-            
+
             <div class="product-image-box">
-                <a href="{{ route('frontend.property.details', ['slug' => $property->slug ?? $property->propertyContent->slug]) }}">
-                    <img class="lazyload new-images-card"
-                        src="assets/images/placeholder.png"
+                <a
+                    href="{{ route('frontend.property.details', ['slug' => $property->slug ?? $property->propertyContent->slug]) }}">
+                    <img class="lazyload new-images-card" src="assets/images/placeholder.png"
                         data-src="{{ asset('assets/img/property/featureds/' . $property->featured_image) }}">
                 </a>
 
-                    @if (Auth::guard('web')->check())
-						@php
-							$user_id = Auth::guard('web')->user()->id;
-							$checkWishList = checkWishList($property->id, $user_id,'user'); 
-						@endphp
-					@elseif(Auth::guard('vendor')->check())
-						@php
-							$user_id = Auth::guard('vendor')->user()->id;
-							$checkWishList = checkWishList($property->id, $user_id,'vendor'); 
-						@endphp
-					@elseif(Auth::guard('agent')->check())
-						@php
-							$user_id = Auth::guard('agent')->user()->id;
-							$checkWishList = checkWishList($property->id, $user_id,'agent'); 
-						@endphp
-					@else
-						@php
-							$checkWishList = false;
-						@endphp
-					@endif
-					@if (!Auth::guard('vendor')->check() && !Auth::guard('web')->check() && !Auth::guard('agent')->check())
-						<a type="button" class="btn-wishlist" data-bs-toggle="modal" data-bs-target="#customerPhoneModal" data-action="login">
-							<i class="fal fa-heart"></i>
-						</a>
-					@else
-						<a href="javascript:void(0);"
-						   class="btn-wishlist {{ $checkWishList ? 'wishlist-active' : '' }}"
-						   data-id="{{ $property->id }}"
-						   data-action="{{ $checkWishList ? 'remove' : 'add' }}"
-						   data-add-url="{{ route('addto.wishlist', $property->id) }}"
-						   data-remove-url="{{ route('remove.wishlist', $property->id) }}"
-						   data-url="{{ $checkWishList ? route('remove.wishlist', $property->id) : route('addto.wishlist', $property->id) }}"
-						   title="{{ $checkWishList ? __('Saved') : __('Add to Wishlist') }}">
-							<i class="fal fa-heart"></i>
-						</a>
+                @if (Auth::guard('web')->check())
+                @php
+                $user_id = Auth::guard('web')->user()->id;
+                $checkWishList = checkWishList($property->id, $user_id,'user');
+                @endphp
+                @elseif(Auth::guard('vendor')->check())
+                @php
+                $user_id = Auth::guard('vendor')->user()->id;
+                $checkWishList = checkWishList($property->id, $user_id,'vendor');
+                @endphp
+                @elseif(Auth::guard('agent')->check())
+                @php
+                $user_id = Auth::guard('agent')->user()->id;
+                $checkWishList = checkWishList($property->id, $user_id,'agent');
+                @endphp
+                @else
+                @php
+                $checkWishList = false;
+                @endphp
+                @endif
+                @if (!Auth::guard('vendor')->check() && !Auth::guard('web')->check() && !Auth::guard('agent')->check())
+                <a type="button" class="btn-wishlist" data-bs-toggle="modal" data-bs-target="#customerPhoneModal"
+                    data-action="login">
+                    <i class="fal fa-heart"></i>
+                </a>
+                @else
+                <a href="javascript:void(0);" class="btn-wishlist {{ $checkWishList ? 'wishlist-active' : '' }}"
+                    data-id="{{ $property->id }}" data-action="{{ $checkWishList ? 'remove' : 'add' }}"
+                    data-add-url="{{ route('addto.wishlist', $property->id) }}"
+                    data-remove-url="{{ route('remove.wishlist', $property->id) }}"
+                    data-url="{{ $checkWishList ? route('remove.wishlist', $property->id) : route('addto.wishlist', $property->id) }}"
+                    title="{{ $checkWishList ? __('Saved') : __('Add to Wishlist') }}">
+                    <i class="fal fa-heart"></i>
+                </a>
 
 
-					@endif 
+                @endif
             </div>
 
             <div class="product-new-div">
                 <h3 class="product-title">
-                    <a href="{{ route('frontend.property.details', $property->slug ?? $property->propertyContent->slug) }}">
+                    <a
+                        href="{{ route('frontend.property.details', $property->slug ?? $property->propertyContent->slug) }}">
                         {{ Str::limit($property->title ?? $property->propertyContent->title, 20) }}
                     </a>
                 </h3>
@@ -155,30 +154,31 @@
 
                 <ul class="product-info p-0 list-unstyled d-flex  align-items-center" style="gap:0px;">
                     @if (!in_array($property->purpose, ['franchiese', 'business_for_sale']))
-                        <li class="icon-start new-badge-product" data-tooltip="tooltip" title="{{ __('Area') }}">
-                            <i class="fal fa-vector-square new-icon-color"></i>
-                            <span>{{ $property->area }} {{ __('Sqft') }}</span>
-                        </li>
-                        @if ($property->type == 'residential')
-                            <li class="icon-start new-badge-product ms-3" data-tooltip="tooltip" title="{{ __('Beds') }}">
-                                <i class="fal fa-bed new-icon-color"></i>
-                                <span>{{ $property->beds }} {{ __('Beds') }}</span>
-                            </li>
-                            <li class="icon-start new-badge-product ms-3" data-tooltip="tooltip" title="{{ __('Baths') }}">
-                                <i class="fal fa-bath new-icon-color"></i>
-                                <span>{{ $property->bath }} {{ __('Baths') }}</span>
-                            </li>
-                        @endif
-                    @else
-                        <li class="icon-start new-badge-product" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Listing Type') }}">
-						    <i class="fal fa-info new-icon-color"></i>
-						    <span>{{ $property->notes ?? __('N/A') }}</span>
-						</li> 
+                    <li class="icon-start new-badge-product" data-tooltip="tooltip" title="{{ __('Area') }}">
+                        <i class="fal fa-vector-square new-icon-color"></i>
+                        <span>{{ $property->area }} {{ __('Sqft') }}</span>
+                    </li>
+                    @if ($property->type == 'residential')
+                    <li class="icon-start new-badge-product ms-3" data-tooltip="tooltip" title="{{ __('Beds') }}">
+                        <i class="fal fa-bed new-icon-color"></i>
+                        <span>{{ $property->beds }} {{ __('Beds') }}</span>
+                    </li>
+                    <li class="icon-start new-badge-product ms-3" data-tooltip="tooltip" title="{{ __('Baths') }}">
+                        <i class="fal fa-bath new-icon-color"></i>
+                        <span>{{ $property->bath }} {{ __('Baths') }}</span>
+                    </li>
                     @endif
-                </ul> 
+                    @else
+                    <li class="icon-start new-badge-product" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="{{ __('Listing Type') }}">
+                        <i class="fal fa-info new-icon-color"></i>
+                        <span>{{ $property->notes ?? __('N/A') }}</span>
+                    </li>
+                    @endif
+                </ul>
 
                 <a href="{{ route('frontend.property.details', $property->slug ?? $property->propertyContent->slug) }}"
-                    class="btn-view-details-1">
+                    class="btn-view-details-1 ">
                     <i class="fal fa-arrow-right"></i>
                 </a>
             </div>
