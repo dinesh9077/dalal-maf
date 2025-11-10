@@ -27,6 +27,7 @@
 
 		Route::get('/edit-profile', 'Agent\AgentController@edit_profile')->name('agent.edit.profile');
 		Route::post('/phone/send-otp', 'Agent\AgentController@sendPhoneOtp')->name('agent.phone.send-otp');
+		Route::post('/phone/resend-otp', 'Agent\AgentController@resendPhoneOtp')->name('agent.phone.resend-otp');
 		Route::post('/phone/verify-otp', 'Agent\AgentController@verifyPhoneOtp')->name('agent.phone.verify-otp');
 		Route::post('/profile/update', 'Agent\AgentController@update_profile')->name('agent.update_profile');
 		Route::get('/logout', 'Agent\AgentController@logout')->name('agent.logout');

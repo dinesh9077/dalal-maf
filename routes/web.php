@@ -94,6 +94,7 @@
 			// user redirect to login page route
 			Route::get('', 'FrontEnd\UserController@login')->name('user.login');
 			Route::post('send-otp', 'FrontEnd\UserController@sendOtp')->name('send.otp');
+			Route::post('resend-otp', 'FrontEnd\UserController@resendOtp')->name('resend.otp');
 			Route::post('verify-otp', 'FrontEnd\UserController@verifyOtp')->name('verify.otp');
 		});
 		// user login submit route
@@ -125,17 +126,17 @@
 		Route::get('/wishlist', 'FrontEnd\UserController@wishlist')->name('user.wishlist');
 		Route::get('/inquiry', 'FrontEnd\UserController@inquiry')->name('user.inquiry');
 		  
-		
+		 
 		// signup verify route
 		Route::get('/signup-verify/{token}', 'FrontEnd\UserController@signupVerify')->withoutMiddleware('change.lang');
-		
-		
+		 
 		
 		// edit profile route
 		Route::get('/edit-profile', 'FrontEnd\UserController@editProfile')->name('user.edit_profile');
 		
 		// update profile route
 		Route::post('/phone/send-otp', 'FrontEnd\UserController@sendPhoneOtp')->name('user.phone.send-otp');
+		Route::post('/phone/resend-otp', 'FrontEnd\UserController@resendPhoneOtp')->name('user.phone.resend-otp');
 		Route::post('/phone/verify-otp', 'FrontEnd\UserController@verifyPhoneOtp')->name('user.phone.verify-otp');
 		Route::post('/update-profile', 'FrontEnd\UserController@updateProfile')->name('user.update_profile')->withoutMiddleware('change.lang');
 		
