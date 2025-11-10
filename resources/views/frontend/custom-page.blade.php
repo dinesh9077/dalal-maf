@@ -23,7 +23,7 @@
     ])
 
     <!--====== Start FAQ Section ======-->
-    <section class="blog-area blog-1 ptb-100">
+    <section class="blog-area blog-1 ptb-60">
         <div class="container">
             <div class="row">
                 <div class="col-12">

@@ -99,14 +99,16 @@ $version = $basicInfo->theme_version;
     margin: auto !important;
     position: relative !important;
 }
-@media(min-width:320px) and (max-width:576px){
-    .model-width{
-        width:100% !important;
+
+@media(min-width:320px) and (max-width:576px) {
+    .model-width {
+        width: 100% !important;
     }
 }
-@media(min-width:567px) and (max-width:768px){
-    .model-width{
-        width:70% !important;
+
+@media(min-width:567px) and (max-width:768px) {
+    .model-width {
+        width: 70% !important;
     }
 }
 </style>
@@ -359,7 +361,10 @@ $version = $basicInfo->theme_version;
                             </div>
                             <!-- </a> -->
 
-
+                            <div class="product-price mt-2" >
+                                <span class="new-price" style="color:#2b3138 !important;">{{ __('Price:') }}
+                                    {{ $propertyContent->price ? symbolPrice($propertyContent->price) : __('Negotiable') }}</span>
+                            </div>
                             <div class="product-location icon-start">
                                 <i class="fal fa-map-marker-alt"></i>
                                 <span style="color: black;">
@@ -390,7 +395,7 @@ $version = $basicInfo->theme_version;
                                     </li>
                                     @endif
                                 </ul> -->
-                            <button type="button" class="hover-btn mt-3" data-bs-toggle="modal"
+                            <button type="button" class="hover-btn mt-2" data-bs-toggle="modal"
                                 data-bs-target="#contactSellerModal">
                                 Contact Seller
                             </button>
@@ -523,18 +528,11 @@ $version = $basicInfo->theme_version;
                                     </div>
                                 </div>
                             </div>
+
                         </div>
-                    </div>
-                    <div>
-                        <div class="product-price mb-10">
-                            <span class="new-price">{{ __('Price:') }}
-                                {{ $propertyContent->price ? symbolPrice($propertyContent->price) : __('Negotiable') }}</span>
-                        </div>
+
                     </div>
                 </div>
-
-
-
             </div>
         </div>
     </div>
