@@ -20,15 +20,15 @@ class Authenticate extends Middleware
         return route('admin.login');
       }
       if (Route::is('vendor.*')) {
-        return route('vendor.login');
+        return route('index');
       }
       if (Route::is('agent.*')) {
 
-        return route('agent.login');
+        return route('index');
       }
       if (Route::is('user.*')) {
         session(['redirectTo' => url()->previous()]);
-        return route('user.login');
+        return route('index');
       }
     }
   }

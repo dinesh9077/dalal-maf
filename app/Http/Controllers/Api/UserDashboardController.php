@@ -605,9 +605,19 @@ class UserDashboardController extends Controller
             return $this->unauthorizedResponse();
         }
 
-        // Generate OTP (static for testing)
-        $otp = '1234'; // Replace with rand(1000, 9999) in production
+        // Generate OTP
+        $otp = rand(1000, 9999);
+        $smsContent = "Use OTP $otp to log in securely. This code is valid for 10 minutes. Keep it confidential._ Team Dalal Maf";
 
+        // Send via MsgClub helper
+        $result = msgClubSendSms($request->phone, $smsContent);
+
+        if (!$result) { 
+            return $this->errorResponse('OTP sending failed.');
+        }
+
+        // Calculate expiry (10 minutes)
+        $expiresAt = now()->addMinutes(10);
         // Insert new OTP row, with otp_at = NULL
         DB::table('otp_verification')->updateOrInsert(
             ['phone' => $request->phone], // Condition: if this exists
@@ -616,12 +626,63 @@ class UserDashboardController extends Controller
                 'phone' => $request->phone,
                 'otp' => $otp,
                 'otp_at' => null,
+                'expires_at' => $expiresAt,
                 'updated_at' => now(),
                 'created_at' => now(), // Optional; doesn't update on existing row
             ]
         );
 
-        return $this->successResponse(['otp' => $otp], 'OTP sent successfully.');
+        return $this->successResponse([], 'OTP sent successfully.');
+    }
+
+    public function resendPhoneOtp(Request $request)
+    { 
+        // Get guard info or JSON error automatically
+        $auth = $this->resolveAuthGuard($request->auth_type);
+
+        // If invalid auth type, it's already a JsonResponse, so return it
+        if ($auth instanceof \Illuminate\Http\JsonResponse) {
+            return $auth;
+        }
+
+        [$guard, $column] = [$auth[0], $auth[1]];
+
+        $user = Auth::guard($guard)->user();
+        if (!$user) {
+            return $this->unauthorizedResponse();
+        }
+ 
+        $phone = $request->phone; 
+        if(empty($phone))
+        { 
+            return $this->errorResponse('Phone Number is required.');
+        }
+        $now = now();
+        $expiresAt = $now->copy()->addMinutes(10);  
+        
+        $otp = rand(1000, 9999);
+        $smsContent = "Use OTP $otp to log in securely. This code is valid for 10 minutes. Keep it confidential._ Team Dalal Maf";
+
+        // Send via MsgClub helper
+        $result = msgClubSendSms($request->phone, $smsContent);
+
+        if (!$result) { 
+            return $this->errorResponse('OTP sending failed.');
+        }
+
+        DB::table('otp_verification')->updateOrInsert(
+            ['phone' => $phone],
+            [ 
+                'phone' => $phone,
+                'otp' => $otp,
+                'otp_at' => null,           
+                'expires_at' => $expiresAt,
+                'updated_at' => $now,
+                'created_at' => $now,          
+            ]
+        );
+
+        return $this->successResponse([], 'OTP sent successfully.'); 
     }
 
     public function verifyPhoneOtp(Request $request)
@@ -653,6 +714,11 @@ class UserDashboardController extends Controller
 
             if (!$otpRecord) { 
                 return $this->errorResponse('OTP not found.');
+            }
+
+            // 3️⃣ Check expiry before verifying
+            if (isset($otpRecord->expires_at) && now()->gt($otpRecord->expires_at)) {
+                return $this->errorResponse('OTP has expired. Please request a new one.');  
             }
 
             if ($otpRecord->otp != $otp) {

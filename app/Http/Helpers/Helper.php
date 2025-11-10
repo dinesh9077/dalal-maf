@@ -6,8 +6,9 @@
 	use App\Models\Car\Brand;
 	use App\Models\Car\CarModel;
 	use App\Models\Car\Category;
-	use App\Models\Language; 
-	
+	use App\Models\Language;
+	use Illuminate\Support\Facades\Http;
+
 	if (!function_exists('createSlug')) {
 		function createSlug($string)
 		{
@@ -306,6 +307,7 @@
 			return  $brand ? $brand->name : '';
 		}
 	}
+
 	if (!function_exists('authGuard')) {
 		function authGuard($authType)
 		{ 
@@ -318,5 +320,37 @@
 			$guard = $map[$authType]['guard'] ?? null;
 			 
 			return [$guard, $map[$authType]['column'], $map[$authType]['inquiry']]; 
+		}
+	}
+
+	if (!function_exists('msgClubSendSms')) {
+		function msgClubSendSms(string $phone_no, string $message)
+		{
+			try { 
+				$authKey = "78a47e619c9e6c3a35305b952d4da46";
+				$senderId = "DLALMF";
+
+				$apiUrl = 'http://msg.msgclub.net/rest/services/sendSMS/sendGroupSms'; 
+				$params = [
+					'AUTH_KEY' => $authKey,
+					'message' => $message,
+					'senderId' => $senderId,
+					'routeId' => '1',
+					'mobileNos' => $phone_no,
+					'smsContentType' => 'english', 
+				];
+
+				$response = Http::timeout(10)->get($apiUrl, $params);
+
+				if ($response->successful())
+				{ 
+					return $response->body();
+				} else { 
+					return false;
+				}
+
+			} catch (\Throwable $e) { 
+				return false;
+			}
 		}
 	}
