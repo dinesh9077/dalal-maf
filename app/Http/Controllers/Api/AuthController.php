@@ -48,23 +48,76 @@ class AuthController extends Controller
 			$user->is_new = "0";
 			$user->save();
 		}
-		 
-		$otp = '1234'; 
+
+		// Generate OTP
+		$otp = rand(1000, 9999);
+		$smsContent = "Use OTP $otp to log in securely. This code is valid for 10 minutes. Keep it confidential._ Team Dalal Maf";
+
+		// Send via MsgClub helper
+		$result = msgClubSendSms($request->phone, $smsContent);
+
+		if (!$result) {
+			return response()->json([
+				'message' => 'OTP sending failed.',
+				'otp' => $otp
+			]);
+		}
+
+		// Calculate expiry (10 minutes)
+		$expiresAt = now()->addMinutes(10);
+
+		// Insert or update OTP record
 		DB::table('otp_verification')->updateOrInsert(
-			['phone' => $request->phone], 
+			['phone' => $request->phone],
 			[
 				'user_id' => $user->id,
 				'phone' => $request->phone,
 				'otp' => $otp,
 				'otp_at' => null,
+				'expires_at' => $expiresAt,
 				'updated_at' => now(),
-				'created_at' => now(), 
+				'created_at' => now(),
 			]
 		);
 		
-		return $this->successResponse(['otp' => $otp, 'auth_type' => $type], 'OTP sent successfully.'); 
+		return $this->successResponse(['auth_type' => $type], 'OTP sent successfully.'); 
     }
 	
+	public function resendOtp(Request $request)
+	{ 
+		$phone = $request->phone; 
+		if(empty($phone))
+		{
+			return $this->errorResponse('Phone Number is required.');
+		}
+		$now = now();
+		$expiresAt = $now->copy()->addMinutes(10);  
+		
+		$otp = rand(1000, 9999);
+		$smsContent = "Use OTP $otp to log in securely. This code is valid for 10 minutes. Keep it confidential._ Team Dalal Maf";
+
+		// Send via MsgClub helper
+		$result = msgClubSendSms($request->phone, $smsContent);
+
+		if (!$result) {
+			return $this->errorResponse('OTP sending failed.');	 
+		}
+
+		DB::table('otp_verification')->updateOrInsert(
+			['phone' => $phone],
+			[ 
+				'phone' => $phone,
+				'otp' => $otp,
+				'otp_at' => null,           
+				'expires_at' => $expiresAt,
+				'updated_at' => $now,
+				'created_at' => $now,          
+			]
+		);
+
+		return $this->successResponse([], 'OTP sent successfully.');
+	}
+
 	public function verifyOtp(Request $request)
 	{
 		try {

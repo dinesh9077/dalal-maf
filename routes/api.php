@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\PropertyController;
 
 
 Route::post('send-otp', [AuthController::class, 'sendOtp']);
+Route::post('resend-otp', [AuthController::class, 'resendOtp']);
 Route::post('verify-otp', [AuthController::class, 'verifyOtp']);
 Route::post('register', [AuthController::class, 'register']);
 
@@ -78,6 +79,7 @@ Route::post('vendor/package/checkout', [UserDashboardController::class, 'checkou
 Route::post('agent/profile-update', [UserDashboardController::class, 'agentProfileUpdate'])->middleware('jwt.verify');
 
 Route::post('/phone/send-otp', [UserDashboardController::class, 'sendPhoneOtp'])->middleware('jwt.verify');
+Route::post('/phone/resend-otp', [UserDashboardController::class, 'resendPhoneOtp'])->middleware('jwt.verify');
 Route::post('/phone/verify-otp', [UserDashboardController::class, 'verifyPhoneOtp'])->middleware('jwt.verify');
 
 

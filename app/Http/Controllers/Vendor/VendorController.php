@@ -721,9 +721,22 @@ class VendorController extends Controller
         // Check if user exists
         $vendor = Auth::guard('vendor')->user();
 
-        // Generate OTP (static for testing)
-        $otp = '1234'; // Replace with rand(1000, 9999) in production
+        // Generate OTP
+        $otp = rand(1000, 9999);
+        $smsContent = "Use OTP $otp to log in securely. This code is valid for 10 minutes. Keep it confidential._ Team Dalal Maf";
 
+        // Send via MsgClub helper
+        $result = msgClubSendSms($request->phone, $smsContent);
+
+        if (!$result) {
+            return response()->json([
+                'message' => 'OTP sending failed.',
+                'otp' => $otp
+            ]);
+        }
+
+        // Calculate expiry (10 minutes)
+        $expiresAt = now()->addMinutes(10);
         // Insert new OTP row, with otp_at = NULL
         DB::table('otp_verification')->updateOrInsert(
             ['phone' => $request->phone], // Condition: if this exists
@@ -732,6 +745,7 @@ class VendorController extends Controller
                 'phone' => $request->phone,
                 'otp' => $otp,
                 'otp_at' => null,
+                'expires_at' => $expiresAt,
                 'updated_at' => now(),
                 'created_at' => now(), // Optional; doesn't update on existing row
             ]
@@ -743,12 +757,54 @@ class VendorController extends Controller
         ]);
     }
 
+    public function resendPhoneOtp(Request $request)
+    {
+        $phone = $request->phone;
+        if (empty($phone)) {
+            return response()->json([
+                'message' => 'Phone Number is required.',
+            ]);
+        }
+        $now = now();
+        $expiresAt = $now->copy()->addMinutes(10);
+
+        $otp = rand(1000, 9999);
+        $smsContent = "Use OTP $otp to log in securely. This code is valid for 10 minutes. Keep it confidential._ Team Dalal Maf";
+
+        // Send via MsgClub helper
+        $result = msgClubSendSms($request->phone, $smsContent);
+
+        if (!$result) {
+            return response()->json([
+                'message' => 'OTP sending failed.',
+                'otp' => $otp
+            ]);
+        }
+
+        DB::table('otp_verification')->updateOrInsert(
+            ['phone' => $phone],
+            [
+                'phone' => $phone,
+                'otp' => $otp,
+                'otp_at' => null,
+                'expires_at' => $expiresAt,
+                'updated_at' => $now,
+                'created_at' => $now,
+            ]
+        );
+
+        return response()->json([
+            'message' => 'OTP sent successfully.',
+            'expires_at' => $expiresAt->toIso8601String(),
+        ]);
+    }
+
     public function verifyPhoneOtp(Request $request)
-    { 
+    {
         try {
             $phone = $request->phone;
-            $otp = $request->otp; 
-            
+            $otp = $request->otp;
+
             // Fetch latest OTP record
             $otpRecord = DB::table('otp_verification')
                 ->where('phone', $phone)
@@ -757,6 +813,11 @@ class VendorController extends Controller
 
             if (!$otpRecord) {
                 return response()->json(['message' => 'OTP not found.'], 404);
+            }
+
+            // 3️⃣ Check expiry before verifying
+            if (isset($otpRecord->expires_at) && now()->gt($otpRecord->expires_at)) {
+                return response()->json(['message' => 'OTP has expired. Please request a new one.'], 410);
             }
 
             if ($otpRecord->otp != $otp) {
@@ -771,18 +832,19 @@ class VendorController extends Controller
             $vendor = Auth::guard('vendor')->user();
             $vendor->update(['phone' => $request->phone]);
 
-            Auth::guard('web')->logout();
+            Auth::guard('vendor')->logout();
 
             // Invalidate session and regenerate CSRF token for security
             $request->session()->invalidate();
             $request->session()->regenerateToken();
+
             return response()->json([
                 'message' => 'OTP verified successfully.',
-                'url' => url('vendor/edit-profile')
+                'url' => url('user/edit-profile')
             ]);
 
         } catch (\Throwable $e) {
-            Log::error('OTP verification error: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
+            // Log::error('OTP verification error: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
             return response()->json([
                 'message' => 'An error occurred during OTP verification.',
                 'error' => config('app.debug') ? $e->getMessage() : null
