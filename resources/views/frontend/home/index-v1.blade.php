@@ -779,7 +779,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 </div>
 
-<section class="city-section pt-20 pb-20">
+<section class="city-section pt-20 pb-30">
     <img src="{{ asset('assets/front/images/acrs-imag/building-vector.png') }}" alt="" class="building-vector">
     <div class="container">
         <div class="city-details">
@@ -1301,7 +1301,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 
 
-<div class="main-blog pt-20 pb-20" data-aos="fade-up">
+<div class="main-blog pt-20 pb-30" data-aos="fade-up">
     <div class="container">
 
         <div class="row">
