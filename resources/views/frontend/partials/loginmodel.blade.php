@@ -144,23 +144,25 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label for="">{{ __('Phone') }}</label>
-                            <input type="text" name="phone" id="in_phone" class="form-control new-form-designs">
+                            <input type="text" name="phone" id="in_phone" value="+ 91 |"
+                                class="form-control new-form-designs">
                             <p id="editErr_in_phone" class="mt-2 mb-0 text-danger em"></p>
                         </div>
                     </div>
 
+
                 </div>
 
-                <div class="modal-footer" style="border-top:none;"> 
+                <div class="modal-footer" style="border-top:none;">
                     <button id="sendOtp" type="button" class="btn btn-primary btn-sm" disabled
                         style="background: #6c603c ; margin-top : 20px; ">
                         {{ __('Send OTP') }}
                     </button>
                 </div>
                 <a href="{{ url('terms-&-condition')}}" target="_blank" class="text-center d-block"
-                    style="margin-top: 20px; font-size:15px; text-align: center;"> 
+                    style="margin-top: 20px; font-size:15px; text-align: center;">
                     <span style="color: #6c603c; margin-left: 5px;">Terms and conditions</span>
-                </a> 
+                </a>
             </div>
         </div>
     </div>
@@ -202,7 +204,7 @@
 
                 <div>
                     <p style="text-align:left; margin-top:5px;">
-                        Haven't received yet? 
+                        Haven't received yet?
                         <span id="resendOtp" style="color:#6c603c; cursor:pointer; text-decoration:underline;">
                             Resend OTP
                         </span>
@@ -234,7 +236,7 @@
 <script type="text/javascript" src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script>
 $(document).ready(function() {
-    $('#customerPhoneModal').on('show.bs.modal', function(event) { 
+    $('#customerPhoneModal').on('show.bs.modal', function(event) {
         let button = $(event.relatedTarget);
         let action = button.data('action');
         $(this).data('action', action);
@@ -266,12 +268,11 @@ $(document).ready(function() {
         }
     });
 
-    $('#editPhoneNumber').on('click', function() 
-    {
-        const phone = $(this).attr('data-phone'); 
+    $('#editPhoneNumber').on('click', function() {
+        const phone = $(this).attr('data-phone');
         $('#in_phone').val(phone);
         $('#customerPhoneModal').modal('show');
-        $('#otpVerificationModal').modal('hide');  
+        $('#otpVerificationModal').modal('hide');
     });
 
     // Send OTP
@@ -286,7 +287,7 @@ $(document).ready(function() {
 
         $('#editErr_in_phone').text('');
         $(this).prop('disabled', true).text('Sending...');
-        $('#editFrontPhone').text('+91-'+phone);
+        $('#editFrontPhone').text('+91-' + phone);
         $('#editPhoneNumber').attr('data-phone', phone);
         $.ajax({
             url: '{{ route("send.otp") }}', // Update this route
@@ -302,7 +303,7 @@ $(document).ready(function() {
                 $('#otpVerificationModal').modal('show');
 
                 $('#otpVerificationModal').data('phone', phone);
-                $('#otpVerificationModal').data('action', action);  
+                $('#otpVerificationModal').data('action', action);
             },
             error: function(xhr) {
                 $('#editErr_in_phone').text(xhr.responseJSON.message ||
@@ -364,9 +365,9 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
 });
 
 // === RESEND + 10-MIN EXPIRY (non-breaking) ===============================
-(function () {
-    const OTP_VALID_MS = 10 * 60 * 1000;          // 10 minutes validity
-    const RESEND_COOLDOWN_MS = 30 * 1000;         // 30s anti-spam cooldown
+(function() {
+    const OTP_VALID_MS = 10 * 60 * 1000; // 10 minutes validity
+    const RESEND_COOLDOWN_MS = 30 * 1000; // 30s anti-spam cooldown
 
     let otpExpiryAt = null;
     let resendCooldownUntil = 0;
@@ -391,7 +392,10 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
                 $p.append($timer);
             }
         }
-        return { $resend, $timer };
+        return {
+            $resend,
+            $timer
+        };
     }
 
     function fmt(ms) {
@@ -402,8 +406,14 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
     }
 
     function clearAllIntervals() {
-        if (otpTimerInterval) { clearInterval(otpTimerInterval); otpTimerInterval = null; }
-        if (resendTimerInterval) { clearInterval(resendTimerInterval); resendTimerInterval = null; }
+        if (otpTimerInterval) {
+            clearInterval(otpTimerInterval);
+            otpTimerInterval = null;
+        }
+        if (resendTimerInterval) {
+            clearInterval(resendTimerInterval);
+            resendTimerInterval = null;
+        }
     }
 
     function setVerifyEnabled(enabled) {
@@ -411,37 +421,49 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
     }
 
     function startOtpValidityTimer() {
-        const { $timer } = ensureAnchors();
+        const {
+            $timer
+        } = ensureAnchors();
         if (!otpExpiryAt) otpExpiryAt = Date.now() + OTP_VALID_MS;
 
         if (otpTimerInterval) clearInterval(otpTimerInterval);
         otpTimerInterval = setInterval(() => {
             const remaining = otpExpiryAt - Date.now();
             if (remaining <= 0) {
-                clearInterval(otpTimerInterval); 
+                clearInterval(otpTimerInterval);
                 setVerifyEnabled(false);
                 // Gentle inline hint
                 $('#customerOtpError').text('OTP expired. Please tap “Resend OTP”.').show();
                 return;
             }
-           // $timer && $timer.text(`Code expires in ${fmt(remaining)}`);
+            // $timer && $timer.text(`Code expires in ${fmt(remaining)}`);
         }, 1000);
         // immediate draw
         const remainingNow = otpExpiryAt - Date.now();
-       // $timer && $timer.text(`Code expires in ${fmt(remainingNow)}`);
+        // $timer && $timer.text(`Code expires in ${fmt(remainingNow)}`);
         setVerifyEnabled(true);
         $('#customerOtpError').hide();
     }
 
     function setResendEnabled(enabled, labelOverride) {
-        const { $resend } = ensureAnchors();
+        const {
+            $resend
+        } = ensureAnchors();
         if (!$resend.length) return;
 
         if (enabled) {
-            $resend.css({ pointerEvents: 'auto', opacity: 1, textDecoration: 'underline' });
+            $resend.css({
+                pointerEvents: 'auto',
+                opacity: 1,
+                textDecoration: 'underline'
+            });
             $resend.text(labelOverride || 'Resend OTP');
         } else {
-            $resend.css({ pointerEvents: 'none', opacity: 0.5, textDecoration: 'none' });
+            $resend.css({
+                pointerEvents: 'none',
+                opacity: 0.5,
+                textDecoration: 'none'
+            });
             if (labelOverride) $resend.text(labelOverride);
         }
     }
@@ -462,19 +484,19 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
         };
         resendTimerInterval = setInterval(tick, 1000);
         tick(); // draw immediately
-    } 
+    }
     // Wire into your existing flows:
 
     // 1) When "Send OTP" succeeds (your existing success callback),
     //    we hook via the modal show event to ensure timer starts every time it opens.
-    $('#otpVerificationModal').on('shown.bs.modal', function () {
-        otpExpiryAt = Date.now() + OTP_VALID_MS;   // reset validity window on each send
+    $('#otpVerificationModal').on('shown.bs.modal', function() {
+        otpExpiryAt = Date.now() + OTP_VALID_MS; // reset validity window on each send
         startOtpValidityTimer();
-        startResendCooldown();                      // small cooldown before allowing another resend
+        startResendCooldown(); // small cooldown before allowing another resend
     });
 
     // 2) Block verification if expired (non-destructive addition to your handler)
-    $('#verifyOtpBtn').off('click.otpExpiryGuard').on('click.otpExpiryGuard', function () {
+    $('#verifyOtpBtn').off('click.otpExpiryGuard').on('click.otpExpiryGuard', function() {
         if (otpExpiryAt && Date.now() > otpExpiryAt) {
             $('#otp_error').text('OTP expired. Please resend a new code.').show();
             setVerifyEnabled(false);
@@ -485,11 +507,11 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
     });
 
     // 3) Handle "Resend OTP" click
-    $(document).on('click', '#resendOtp', function () {
+    $(document).on('click', '#resendOtp', function() {
         // cooldown guard
         if (resendCooldownUntil && Date.now() < resendCooldownUntil) return;
 
-        const phone = $('#otpVerificationModal').data('phone'); 
+        const phone = $('#otpVerificationModal').data('phone');
         if (!phone) {
             $('#customerOtpError').text('Phone number missing. Please go back and enter it again.').show();
             return;
@@ -505,7 +527,7 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
                 // Optionally tell backend we're refreshing the same OTP flow:
                 // reason: 'resend'
             },
-            success: function () {
+            success: function() {
                 // Reset input boxes visually
                 $('.otp-box').val('');
                 $('#customerOtpInput').val('');
@@ -517,8 +539,9 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
 
                 $('#customerOtpError').hide();
             },
-            error: function (xhr) {
-                const msg = (xhr.responseJSON && xhr.responseJSON.message) || 'Unable to resend OTP right now.';
+            error: function(xhr) {
+                const msg = (xhr.responseJSON && xhr.responseJSON.message) ||
+                    'Unable to resend OTP right now.';
                 $('#customerOtpError').text(msg).show();
                 // Let user try again soon
                 setResendEnabled(true, 'Resend OTP');
@@ -527,14 +550,13 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
     });
 
     // 4) Clean up timers when the OTP modal closes
-    $('#otpVerificationModal').on('hide.bs.modal', function () {
+    $('#otpVerificationModal').on('hide.bs.modal', function() {
         clearAllIntervals();
     });
 
     // 5) Also ensure when you jump back to "edit phone" we clean timers
-    $('#editPhoneNumber').on('click', function () {
+    $('#editPhoneNumber').on('click', function() {
         clearAllIntervals();
     });
 })();
-
 </script>
