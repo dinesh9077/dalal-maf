@@ -554,7 +554,7 @@ input[type="checkbox"]:checked+label .animits-div-tab {
         </div>
         <div class="row properties">
             @forelse ($property_contents as $property_content)
-            <x-property :property="$property_content" :animate="false" class="col-lg-4 col-md-6" />
+            <x-property :property="$property_content" :animate="false" class="col-lg-4 col-md-6 mb-30" />
             @empty
             <div class="col-lg-12">
                 <h3 class="text-center mt-5">{{ __('NO PROPERTY FOUND') . '!' }}</h3>

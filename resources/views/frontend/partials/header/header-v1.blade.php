@@ -86,7 +86,7 @@
     </div>
 
     
-    <div id="mainNavbar" class="main-navbar new-main-navbar navbar-transparent">
+    <div id="mainNavbar" class="main-navbar new-main-navbar navbar-transparent"  >
         <div class="container">
             <nav class="navbar navbar-expand-lg">
 
@@ -261,9 +261,8 @@
                 }
 
                 .main-navbar.navbar-transparent {
-                    background: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)) !important;
+                    /* background: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)) !important; */
                     transition: background 0.3s ease;
-                    height:110px;
                 }
 
                 .main-navbar.navbar-scrolled {
