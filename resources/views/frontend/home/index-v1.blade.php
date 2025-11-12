@@ -289,17 +289,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                         <input type="hidden" name="min" value="{{ $min }}" id="min_{{ $key }}">
                         <input type="hidden" name="max" value="{{ $max }}" id="max_{{ $key }}">
 
-                        <div class="grid">
-                            {{-- Location --}}
-                            <div class="grid-item home-des-border">
-                                <div class="form-group">
-                                    <label for="search_{{ $key }}">{{ __('Location') }}</label>
-                                    <input type="text" id="search_{{ $key }}" name="location"
-                                        class="form-control searchBar" placeholder="{{ __('Enter Location') }}"
-                                        style="box-shadow: none;">
-                                </div>
-                            </div>
-
+                        <div class="grid"> 
                             {{-- City --}}
                             <div class="grid-item home-des-border">
                                 <div class="form-group">
@@ -313,6 +303,16 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                                 </div>
                             </div>
 
+                             {{-- Location --}}
+                            <div class="grid-item home-des-border">
+                                <div class="form-group">
+                                    <label for="search_{{ $key }}">{{ __('Location') }}</label>
+                                    <input type="text" id="search_{{ $key }}" name="location"
+                                        class="form-control searchBar" placeholder="{{ __('Enter Location') }}"
+                                        style="box-shadow: none;">
+                                </div>
+                            </div>
+                            
                             {{-- Property Type --}}
                             <div class="grid-item home-des-border">
                                 <div class="form-group">

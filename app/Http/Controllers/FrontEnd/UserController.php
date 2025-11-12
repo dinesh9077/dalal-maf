@@ -640,11 +640,11 @@
 				$vendor = Auth::guard('web')->user();
 				$vendor->update(['phone' => $request->phone]);
 				
-				Auth::guard('web')->logout();
+				// Auth::guard('web')->logout();
 
-				// Invalidate session and regenerate CSRF token for security
-				$request->session()->invalidate();
-				$request->session()->regenerateToken();
+				// // Invalidate session and regenerate CSRF token for security
+				// $request->session()->invalidate();
+				// $request->session()->regenerateToken();
 
 				return response()->json([
 					'message' => 'OTP verified successfully.',
