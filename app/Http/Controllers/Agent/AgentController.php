@@ -443,11 +443,11 @@ class AgentController extends Controller
             $vendor = Auth::guard('agent')->user();
             $vendor->update(['phone' => $request->phone]);
 
-            Auth::guard('agent')->logout();
+            // Auth::guard('agent')->logout();
 
-            // Invalidate session and regenerate CSRF token for security
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
+            // // Invalidate session and regenerate CSRF token for security
+            // $request->session()->invalidate();
+            // $request->session()->regenerateToken();
 
             return response()->json([
                 'message' => 'OTP verified successfully.',

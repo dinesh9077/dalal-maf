@@ -393,16 +393,6 @@
                         <input type="hidden" name="max" id="max_{{ $key }}" value="{{ $max }}">
 
                         <div class="grid">
-                            {{-- Location --}}
-                            <div class="grid-item home-des-border">
-                                <div class="form-group">
-                                    <label for="search_{{ $key }}">{{ __('Location') }}</label>
-                                    <input type="text" id="search_{{ $key }}" name="location"
-                                        class="form-control searchBar" placeholder="{{ __('Enter Location') }}"
-                                        style="box-shadow:none;">
-                                </div>
-                            </div>
-
                             {{-- City --}}
                             <div class="grid-item home-des-border">
                                 <div class="form-group">
@@ -415,6 +405,18 @@
                                     </select>
                                 </div>
                             </div>
+
+
+                            {{-- Location --}}
+                            <div class="grid-item home-des-border">
+                                <div class="form-group">
+                                    <label for="search_{{ $key }}">{{ __('Location') }}</label>
+                                    <input type="text" id="search_{{ $key }}" name="location"
+                                        class="form-control searchBar" placeholder="{{ __('Enter Location') }}"
+                                        style="box-shadow:none;">
+                                </div>
+                            </div>
+ 
 
                             {{-- Property Type --}}
                             <div class="grid-item home-des-border">

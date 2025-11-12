@@ -832,11 +832,11 @@ class VendorController extends Controller
             $vendor = Auth::guard('vendor')->user();
             $vendor->update(['phone' => $request->phone]);
 
-            Auth::guard('vendor')->logout();
+            // Auth::guard('vendor')->logout();
 
-            // Invalidate session and regenerate CSRF token for security
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
+            // // Invalidate session and regenerate CSRF token for security
+            // $request->session()->invalidate();
+            // $request->session()->regenerateToken();
 
             return response()->json([
                 'message' => 'OTP verified successfully.',
