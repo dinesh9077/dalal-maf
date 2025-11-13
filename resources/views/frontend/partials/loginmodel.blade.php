@@ -130,24 +130,29 @@
 }
 </style>
 
+
 <div class="modal fade" id="customerPhoneModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content model-new" style="box-shadow: 0 8px 12px rgba(31, 92, 163, .2); ">
+        <div class="modal-content model-new" style="box-shadow: 0 8px 12px rgba(31, 92, 163, .2);">
+            
             <div class="modal-header box-p"
                 style="justify-content: space-between; flex-direction: column; align-items: flex-start; border-bottom:none;">
+                
                 <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
                     <h4 class="modal-title" id="exampleModalLongTitle">{{ __('Login / Register') }}</h4>
-                    <button type="button" class="close-btn-login" data-bs-dismiss="modal" aria-label="Close">
-                        <i class="fa fa-xmark"></i>
+                    <button type="button" class="close-btn-login" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-times"></i>
                     </button>
                 </div>
+
                 <p class="login-subtext" style="margin-top: 4px; margin-bottom:0px; color: #6b7280; font-size: 14px;">
                     {{ __('Please enter your Phone Number') }}
                 </p>
             </div>
 
             <div class="modal-body  box-p-1">
+        
                 <div class="row no-gutters">
                     <div class="col-lg-12">
                         <div class="form-group phone-input-wrapper">
@@ -155,17 +160,18 @@
                                         style="width: 24px; height: 16px; border-radius: 2px;"></span>  
                             <input type="text" name="phone" id="in_phone"
                                 class="form-control new-form-designs" value="+91 " />
-                            <p id="editErr_in_phone" class="mt-2 mb-0 text-danger em"></p>
+                            
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-footer" style="border-top:none;">
-                    <button id="sendOtp" type="button" class="btn btn-primary btn-sm" disabled
-                        style="background: #6c603c ; margin-top : 20px; ">
+                    <button id="sendOtp" type="button" class="btn btn-primary btn-sm w-100"
+                        style="background: #6c603c; margin-top: 20px;">
                         {{ __('Send OTP') }}
                     </button>
                 </div>
+
                 <a href="{{ url('terms-&-condition')}}" target="_blank" class="text-center d-block"
                     style="margin-top: 20px; font-size:15px; text-align: center;">
                     <span style="color: #6c603c; margin-left: 5px;">Terms and conditions</span>
@@ -174,6 +180,7 @@
         </div>
     </div>
 </div>
+
 
 <div class="modal fade" id="otpVerificationModal" tabindex="-1" role="dialog"
     aria-labelledby="otpVerificationModalLabel" aria-hidden="true">

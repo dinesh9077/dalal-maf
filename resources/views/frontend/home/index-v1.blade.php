@@ -180,6 +180,13 @@ $version = $basicInfo->theme_version;
                     height:110px;
                 }
 
+
+
+  .main-navbar.navbar-transparent {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)) !important;
+    height:110px;
+    }
+
 /* ==== */
 </style>
 
