@@ -118,6 +118,7 @@ $version = $basicInfo->theme_version;
     border-left: 2px solid #dcdcdc;
     padding-left: 15px;
     margin-left: 10px;
+    margin-bottom: 5px;
     display: flex;
     align-items: center;
 }
@@ -154,6 +155,23 @@ $version = $basicInfo->theme_version;
         width: 100%;
         text-align: center;
     }
+}
+
+.select2-results__options {
+    max-height: 150px !important;  /* Dropdown ki max height */
+    overflow-y: auto !important;   /* Scrollbar enable */
+}
+
+/* (Optional) Scrollbar styling */
+.select2-results__options::-webkit-scrollbar {
+    width: 6px !important;
+}
+.select2-results__options::-webkit-scrollbar-thumb {
+    background: #aaa !important;
+    border-radius: 3px !important;
+}
+.select2-results__options::-webkit-scrollbar-thumb:hover {
+    background: #888 !important;
 }
 
 /* ==== */
@@ -389,7 +407,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                 <div class="col-12">
                     <div class="section-title mb-10 new-titles position-relative" data-aos="fade-up">
                         <h2 class="title text-center">Featured Properties</h2>
-                        <p class="mt-2" style="font-size:14px;">
+                        <p class="mt-1" style="font-size:13px; line-height : 1.2;">
                             Handpicked and premium listings showcased for you.
                             Explore top-rated homes, offices, and commercial spaces that stand out.
                         </p>
@@ -402,7 +420,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
             <div class="container">
                 <div class="row align-items-stretch">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex position-relative" data-aos="fade-up">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex position-relative px-0" data-aos="fade-up"> 
                         <div class="swiper product-slider w-100">
                             <div class="swiper-wrapper">
                                 @forelse ($featured_properties as $property)
@@ -440,9 +458,9 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
         <div class="row">
             <div class="container">
                 <div class="col-12">
-                    <div class="section-title mb-30 new-titles" data-aos="fade-up" style="position: relative;">
+                    <div class="section-title mb-10 new-titles" data-aos="fade-up" style="position: relative;">
                         <h2 class="title" style="text-align : center;">Hot Properties</h2>
-                        <p class="mt-2" style="font-size:14px;">
+                        <p class="mt-1" style="font-size:13px; line-height : 1.2;">
                             Handpicked and premium listings showcased for you.
                             Explore top-rated homes, offices, and commercial spaces that stand out.
                         </p>
@@ -499,7 +517,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                 <div class="col-12">
                     <div class="section-title  mb-30 new-titles" data-aos="fade-up" style="position: relative;">
                         <h2 class="title" style="text-align : center;">Recommended Properties</h2>
-                        <p class="mt-2" style="font-size:14px;">Handpicked and premium listings showcased for you.
+                        <p class="mt-1" style="font-size:13px; line-height : 1.2;">Handpicked and premium listings showcased for you.
                             Explore top-rated homes, offices, and commercial spaces that stand out.</p>
                         <a href="{{ url('properties/is_recommended/all') }}" class="vs-btn vs-new-set-btn"
                             style="padding: 10px 20px;">View All</a>
@@ -544,7 +562,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                 <div class="col-12">
                     <div class="section-title mb-10 new-titles" data-aos="fade-up" style="position: relative;">
                         <h2 class="title" style="text-align : center;">Fast Selling Properties</h2>
-                        <p class="mt-2" style="font-size:14px;">
+                        <p class="mt-1" style="font-size:13px; line-height : 1.2;">
                             Handpicked and premium listings showcased for you.
                             Explore top-rated homes, offices, and commercial spaces that stand out.
                         </p>
@@ -594,15 +612,15 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 
 @if ($secInfo->property_section_status == 1)
-<section class="product-area popular-product product-1 pt-20 pb-20 relative" style="background : #F8F7F1;">
+<section class="product-area popular-product product-1 relative" style="background : #F8F7F1;">
     <img src="{{ asset('assets/front/images/new-images/new-primume-properties.png') }}" alt=""
         class="new-primume-prop-img">
-    <div class="container">
+    <div class="container pt-30 pb-30">
         <div class="row">
             <div class="col-12">
-                <div class="section-title prop-pad mb-30" data-aos="fade-up">
+                <div class="section-title prop-pad" data-aos="fade-up">
                     <h2 class="title">{{ $propertySecInfo->title }}</h2>
-                    <p class="mt-2" style="font-size:14px;">Stay updated with the newest property listings. Discover
+                    <p class="mt-1" style="font-size:13px; line-height : 1.2;">Stay updated with the newest property listings. Discover
                         fresh options for buying, selling, or renting in just a few clicks.
                     </p>
 
@@ -645,13 +663,13 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 
 
-<section class="product-area popular-product product-1 pt-20 pb-20 relative">
-    <div class="container">
+<section class="product-area popular-product product-1 relative">
+    <div class="container pt-30 pb-30 ">
         <div class="row">
             <div class="col-12">
-                <div class="section-title mb-30 aos-init aos-animate" data-aos="fade-up">
+                <div class="section-title  aos-init aos-animate" data-aos="fade-up">
                     <h2 class="title">Business For Sale</h2>
-                    <p class="mt-2" style="font-size:14px;">Explore a wide range of businesses up for sale. From retail
+                    <p class="mt-1" style="font-size:13px; line-height : 1.2;">Explore a wide range of businesses up for sale. From retail
                         outlets to commercial setups, find the right opportunity to invest and grow.
                     </p>
                 </div>
@@ -686,13 +704,13 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 </section>
 
 
-<section class="product-area popular-product product-1 pt-20 pb-40 relative" style="background:#F8F7F1; overflow:visible;">
-    <div class="container">
+<section class="product-area popular-product product-1 relative" style="background:#F8F7F1; overflow:visible;">
+    <div class="container pt-30 pb-30">
         <div class="row" style="position: relative;">
             <div class="col-12">
-                <div class="section-title mb-30 aos-init aos-animate" data-aos="fade-up">
+                <div class="section-title mb-10 aos-init aos-animate" data-aos="fade-up">
                     <h2 class="title">Franchiese</h2>
-                    <p class="mt-2" style="font-size:14px">Join hands with Dala Maaf and become a part of a growing
+                    <p class="mt-1" style="font-size:13px; line-height : 1.2;">Join hands with Dala Maaf and become a part of a growing
                         network. Unlock business opportunities with our easy-to-start franchise model.</p>
                 </div>
             </div>
@@ -727,11 +745,11 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 </section>
 
 
-<div class="container pt-20 pb-20 upcoming-projects" data-aos="fade-up">
+<div class="container pt-30 pb-30 upcoming-projects" data-aos="fade-up">
 
     <div class="row">
         <div class="col-12">
-            <div class="section-title  mb-30" data-aos="fade-up">
+            <div class="section-title" data-aos="fade-up">
                 <h2 class="title">Upcoming Project</h2>
             </div>
         </div>
@@ -756,7 +774,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
                     <div class="upcomming-card-body">
                         <h5>{{ $project->title }}</h5>
-                        <p class="text-muted">{{ $project->address }}</p>
+                        <p class="text-muted">{{ \Illuminate\Support\Str::limit($project->address, 35) }}</p>
                         <h6 class="up-price">
                             {{ symbolPrice($project->min_price) }}
                             <small class="text-muted">Starting</small>
@@ -779,7 +797,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 </div>
 
-<section class="city-section pt-20 pb-30">
+<section class="city-section">
     <img src="{{ asset('assets/front/images/acrs-imag/building-vector.png') }}" alt="" class="building-vector">
     <div class="container">
         <div class="city-details">
@@ -800,13 +818,13 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 </section>
 
 @if ($secInfo->why_choose_us_section_status == 1)
-<section class="new-aps-sections  pt-20 pb-20">
+<section class="new-aps-sections  pt-30 pb-30">
     <div class="container">
-        <div class="section-title title-inline mb-30 aos-init aos-animate d-flex" data-aos="fade-up">
+        <div class="section-title title-inline    aos-init aos-animate d-flex" data-aos="fade-up">
             <h2 class="title">Explore Property Types</h2>
         </div>
 
-        <div class="aps-slide-wrapper " style="margin-top : 50px;" data-aos="fade-up">
+        <div class="aps-slide-wrapper " style="margin-top : 30px;" data-aos="fade-up">
             <!-- Left Arrow -->
             <button class="arrow-button arrow-left" id="arrowLeft"><img
                     src="{{ asset('assets/front/images/new-images/left.png') }}" alt=""></button>
@@ -842,12 +860,12 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 
 
-<section class="buy-rent-sale-section pt-20 pb-20">
+<section class="buy-rent-sale-section pt-30 pb-30">
     <div class="container">
 
-        <div class="section-title title-inline mb-30 aos-init aos-animate d-flex" data-aos="fade-up">
+        <div class="section-title title-inline mb-3 aos-init aos-animate d-flex" data-aos="fade-up">
             <h2 class="title">For all your luxury real estate needs, We have got you covered!</h2>
-            <p>From finding your dream home with all the luxury amenities to seamless transactions, trust us to handle
+            <p style="font-size: 13px; line-height : 1.2;">From finding your dream home with all the luxury amenities to seamless transactions, trust us to handle
                 every detail with care and expertise.</p>
         </div>
 
@@ -884,12 +902,12 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
     </div>
 </section>
 
-<section class="why-dlal-dection pt-20 pb-20">
+<section class="why-dlal-dection pt-30 pb-30">
     <div class="container">
-        <div class="section-title title-inline mb-30 aos-init aos-animate d-flex " style="flex-direction: column;"
+        <div class="section-title title-inline  aos-init aos-animate d-flex " style="flex-direction: column;"
             data-aos="fade-up">
             <h2 class="title">Why DalalMaf ?</h2>
-            <p>For Your Buying, Selling & Renting in Real Estate</p>
+            <p style="font-size: 13px;  line-height : 1.2;">For Your Buying, Selling & Renting in Real Estate</p>
         </div>
 
         <div class="row">
@@ -938,7 +956,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
     </div>
 </section>
 
-<section class="about-section-new pt-20 pb-20">
+<section class="about-section-new pt-40 pb-40">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 about-lrft-sections-new">
@@ -1057,19 +1075,19 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 
 @if ($secInfo->vendor_section_status == 1)
-<section class="pt-20 pb-20">
+<section class="pt-30 pb-30">
     <div class="container">
 
         <div class="row">
             <div class="col-12 button-res">
-                <div class="section-title mb-30" data-aos="fade-up">
+                <div class="section-title mb-20" data-aos="fade-up">
                     <h2 class="title">{{ $vendorInfo?->subtitle }}</h2>
                 </div>
 
                 @if (count($vendors) > 0)
                 <div class="text-center view-all-desktop">
-                    <a href="{{ route('frontend.vendors') }}" class="btn btn-lg btn-primary mb-30"
-                        style="background-color:#6c603c;">{{ $vendorInfo->btn_name }}</a>
+                    <a href="{{ route('frontend.vendors') }}" class="vs-btn" style="padding: 11px 20px;"
+                        >{{ $vendorInfo->btn_name }}</a>
                 </div>
                 @endif
             </div>
@@ -1112,14 +1130,14 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 @if ($secInfo->cities_section_status == 1)
 
-<section class="new-gellary-area pt-20 pb-20 relative ">
+<section class="new-gellary-area pt-30 pb-30 relative ">
 
     <!-- <img src="http://127.0.0.1:8000/assets/front/images/new-images/new-primume-properties.png" alt="" class="exp-img"> -->
 
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="section-title mb-30" data-aos="fade-up">
+                <div class="section-title" data-aos="fade-up">
                     <h2 class="title">{{ $citySecInfo?->subtitle }}</h2>
                 </div>
             </div>
@@ -1128,7 +1146,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
         <div class="row ">
             <!-- City Card Start -->
             @forelse ($cities as $city)
-            <div class="custom-col-5 mt-4" data-aos="fade-up">
+            <div class="custom-col-5 mt-3" data-aos="fade-up">
                 <a href="{{ route('frontend.properties', ['city' => $city->name]) }}" class="text-center"
                     style="display: block; text-decoration: none; color: inherit;">
                     <div class="city-card text-center">
@@ -1301,19 +1319,19 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 
 
-<div class="main-blog pt-20 pb-30" data-aos="fade-up">
+<div class="main-blog pt-30 pb-40" data-aos="fade-up">
     <div class="container">
 
         <div class="row">
             <div class="col-12 button-res">
-                <div class="section-title mb-30" data-aos="fade-up">
+                <div class="section-title " data-aos="fade-up">
                     <h2 class="title">Our Blogs</h2>
                 </div>
 
                 <!-- Desktop Button -->
                 <div class="text-center view-all-desktop">
-                    <a href="{{ route('blog') }}" class="btn btn-lg btn-primary mb-30"
-                        style="background-color:#6c603c;">All Blogs</a>
+                    <a href="{{ route('blog') }}" class="vs-btn mb-30"
+                        style="padding: 11px 20px;">All Blogs</a>
                 </div>
             </div>
         </div>
@@ -1501,7 +1519,7 @@ $(document).ready(function() {
                 }
             },
             {
-                breakpoint: 576,
+                breakpoint: 767,
                 settings: {
                     slidesToShow: 1
                 }

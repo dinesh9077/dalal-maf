@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="xxx" dir="{{ $currentLanguageInfo->direction == 1 ? 'rtl' : '' }}">
+<html lang="xxx" class="no-scroll-pp">
 
 <head>
     <meta charset="utf-8">
@@ -45,6 +45,13 @@
     @endphp
     @includeIf('frontend.partials.styles.styles-v1')
     <style>
+
+           .no-scroll-pp {
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+
+        
     :root {
         --color-primary: {
                 {

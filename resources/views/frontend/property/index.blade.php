@@ -25,159 +25,159 @@ $version = $basicInfo->theme_version;
 @section('content')
 
 <style>
-.new-main-navbar {
-    background-color: #6c603c;
-}
+    .new-main-navbar {
+        background-color: #6c603c;
+    }
 
 
-.new-round-category-des {
-    border: 1px solid #dcdcdc;
-    padding: 4px 16px;
-    margin: 3px;
-    font-size: 13px;
-    font-weight: 500;
-    border-radius: 50px;
-    height: 20px;
-    background: white;
-    line-height: 2;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-
-
-.new-round-category-des:hover,
-.new-round-category-des:active,
-.new-round-category-des.active {
-    border: 1px solid #a3daff !important;
-    background: #f0f9ff !important;
-}
-
-
-.new-animitis-divs {
-    display: flex;
-    flex-wrap: wrap;
-}
+    .new-round-category-des {
+        border: 1px solid #dcdcdc;
+        padding: 4px 16px;
+        margin: 3px;
+        font-size: 13px;
+        font-weight: 500;
+        border-radius: 50px;
+        height: 20px;
+        background: white;
+        line-height: 2;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
 
 
 
-.animits-div-tab {
-    border: 1px solid #dcdcdc;
-    padding: 5px 16px;
-    margin: 4px;
-    font-size: 13px;
-    font-weight: 500;
-    border-radius: 50px;
-    height: 20px;
-    background: white;
-    line-height: 2.5;
-    color: #2b3138;
-    cursor: pointer;
-}
+    .new-round-category-des:hover,
+    .new-round-category-des:active,
+    .new-round-category-des.active {
+        border: 1px solid #a3daff !important;
+        background: #f0f9ff !important;
+    }
 
 
-.animits-div-tab:hover,
-.animits-div-tab:active {
-    border: 1px solid #a3daff !important;
-    background: #f0f9ff !important;
-}
-
-input[type="checkbox"]:checked+label .animits-div-tab {
-    border: 1px solid #a3daff !important;
-    background: #f0f9ff !important;
-}
-
-.new-items-pricelist {
-    padding: 5px 40px 2px 15px;
-    width: fit-content;
-    border-radius: 8px;
-    background: white;
-    border: 1px solid #dcdcdc;
-    color: #2b3138;
-}
-
-.propertyType-div-tab {
-    border: 1px solid #dcdcdc;
-    padding: 1px 17px;
-    margin: 4px;
-    font-size: 13px;
-    font-weight: 500;
-    border-radius: 50px;
-    background: white;
-    line-height: 2.1;
-    color: #2b3138;
-    cursor: pointer;
-}
-
-
-.propertyType-div-tab:hover {
-    border: 1px solid #a3daff !important;
-    background: #f0f9ff !important;
-}
-
-.btn-check:checked+.propertyType-div-tab {
-    border: 1px solid #a3daff !important;
-    background: #f0f9ff !important;
-    color: #000000ff !important;
-}
-
-.purpose-div-tab {
-    border: 1px solid #dcdcdc;
-    padding: 1px 16px;
-    margin: 4px;
-    font-size: 13px;
-    font-weight: 500;
-    border-radius: 36px;
-    background: white;
-    line-height: 2.1;
-    color: #2b3138;
-    cursor: pointer;
-}
-
-.purpose-div-tab:hover {
-    border: 1px solid #a3daff !important;
-    background: #f0f9ff !important;
-}
-
-.btn-check:checked+.purpose-div-tab {
-    border: 1px solid #a3daff !important;
-    background: #f0f9ff !important;
-    color: #000000ff !important;
-}
-
-
-.sidebar-widget-area .widget {
-    padding: 0px;
-    border: none;
-    border-bottom: 1px solid #dcdcdc;
-    padding-bottom: 14px;
-}
-
-@media (max-width: 576px) {
-    .product-sort-area .row.justify-content-sm-end {
+    .new-animitis-divs {
         display: flex;
-        align-items: center;
-        /* justify-content: space-between; */
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
     }
 
-    .product-sort-area .col-sm-5,
-    .product-sort-area .col-sm-7 {
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
 
-    .product-sort-area .col-sm-5 button {
-        width: 100%;
-        padding: 4px 8px;
+
+    .animits-div-tab {
+        border: 1px solid #dcdcdc;
+        padding: 5px 16px;
+        margin: 4px;
         font-size: 13px;
+        font-weight: 500;
+        border-radius: 50px;
+        height: 20px;
+        background: white;
+        line-height: 2.5;
+        color: #2b3138;
+        cursor: pointer;
     }
 
-    .product-sort-area .product-sort-list select {
-        font-size: 13px;
-        padding: 4px 6px;
+
+    .animits-div-tab:hover,
+    .animits-div-tab:active {
+        border: 1px solid #a3daff !important;
+        background: #f0f9ff !important;
     }
-}
+
+    input[type="checkbox"]:checked+label .animits-div-tab {
+        border: 1px solid #a3daff !important;
+        background: #f0f9ff !important;
+    }
+
+    .new-items-pricelist {
+        padding: 5px 40px 2px 15px;
+        width: fit-content;
+        border-radius: 8px;
+        background: white;
+        border: 1px solid #dcdcdc;
+        color: #2b3138;
+    }
+
+    .propertyType-div-tab {
+        border: 1px solid #dcdcdc;
+        padding: 1px 17px;
+        margin: 4px;
+        font-size: 13px;
+        font-weight: 500;
+        border-radius: 50px;
+        background: white;
+        line-height: 2.1;
+        color: #2b3138;
+        cursor: pointer;
+    }
+
+
+    .propertyType-div-tab:hover {
+        border: 1px solid #a3daff !important;
+        background: #f0f9ff !important;
+    }
+
+    .btn-check:checked+.propertyType-div-tab {
+        border: 1px solid #a3daff !important;
+        background: #f0f9ff !important;
+        color: #000000ff !important;
+    }
+
+    .purpose-div-tab {
+        border: 1px solid #dcdcdc;
+        padding: 1px 16px;
+        margin: 4px;
+        font-size: 13px;
+        font-weight: 500;
+        border-radius: 36px;
+        background: white;
+        line-height: 2.1;
+        color: #2b3138;
+        cursor: pointer;
+    }
+
+    .purpose-div-tab:hover {
+        border: 1px solid #a3daff !important;
+        background: #f0f9ff !important;
+    }
+
+    .btn-check:checked+.purpose-div-tab {
+        border: 1px solid #a3daff !important;
+        background: #f0f9ff !important;
+        color: #000000ff !important;
+    }
+
+
+    .sidebar-widget-area .widget {
+        padding: 0px;
+        border: none;
+        border-bottom: 1px solid #dcdcdc;
+        padding-bottom: 14px;
+    }
+
+    @media (max-width: 576px) {
+        .product-sort-area .row.justify-content-sm-end {
+            display: flex;
+            align-items: center;
+            /* justify-content: space-between; */
+            flex-wrap: nowrap;
+        }
+
+        .product-sort-area .col-sm-5,
+        .product-sort-area .col-sm-7 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        .product-sort-area .col-sm-5 button {
+            width: 100%;
+            padding: 4px 8px;
+            font-size: 13px;
+        }
+
+        .product-sort-area .product-sort-list select {
+            font-size: 13px;
+            padding: 4px 6px;
+        }
+    }
 </style>
 
 
@@ -273,12 +273,11 @@ input[type="checkbox"]:checked+label .animits-div-tab {
                                             <div class="form-group mb-20">
                                                 <!-- <label class="mb-10">{{ __('Title') }}</label> -->
                                                 <input type="text" class="form-control filter-input" name="title"
-                                                    placeholder="{{ __('Enter title') }}" style="box-shadow : none"
+                                                    placeholder="{{ __('Enter Properties Name') }}" style="box-shadow : none"
                                                     value="{{ request()->input('title') }}">
                                             </div>
 
-                                            <div class="form-group mb-20">
-                                                <!-- <label class="mb-10">{{ __('Country') }}</label> -->
+                                            <!-- <div class="form-group mb-20">
                                                 <select name="country" id="" class="form-control country form-select "
                                                     style="box-shadow : none"
                                                     onchange="updateURL('country='+$(this).val())">
@@ -292,7 +291,7 @@ input[type="checkbox"]:checked+label .animits-div-tab {
                                                     </option>
                                                     @endforeach
                                                 </select>
-                                            </div>
+                                            </div> -->
 
                                             <div class="form-group mb-20 state" style="display: none;">
                                                 <!-- <label class="mb-10">{{ __('State') }}</label> -->
@@ -313,7 +312,7 @@ input[type="checkbox"]:checked+label .animits-div-tab {
                                                 </select>
                                             </div>
                                             <div class="form-group mb-20 city" style="display: none;">
-                                                <!-- <label class="mb-10">{{ __('City') }}</label> -->
+
                                                 <select name="city_id" id="" class="form-control form-select  city_id"
                                                     style="box-shadow : none"
                                                     onchange="updateURL('city='+$(this).val());getAreas(this)">
@@ -323,7 +322,8 @@ input[type="checkbox"]:checked+label .animits-div-tab {
                                                     @foreach ($all_cities as $city)
                                                     <option data-id="{{ $city->id }}"
                                                         value="{{ $city->cityContent?->name }}">
-                                                        {{ $city->cityContent?->name }}</option>
+                                                        {{ $city->cityContent?->name }}
+                                                    </option>
                                                     @endforeach
                                                     @endif
                                                 </select>
@@ -335,15 +335,16 @@ input[type="checkbox"]:checked+label .animits-div-tab {
                                                     <option>{{ __('Select Area') }}</option>
                                                     @foreach ($all_areas as $area)
                                                     <option data-id="{{ $area->id }}" value="{{ $area->name }}">
-                                                        {{ $area->name }}</option>
+                                                        {{ $area->name }}
+                                                    </option>
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group mb-20">
+                                            <!-- <div class="form-group mb-20">
                                                 <input type="text" class="form-control filter-input" name="location"
                                                     placeholder="{{ __('Enter location') }}" style="box-shadow : none"
                                                     value="{{ request()->input('location') }}">
-                                            </div>
+                                            </div> -->
                                             <div class="row">
                                                 {{-- <div class="col-lg-6">
                                                             <div class="form-group mb-20">
@@ -352,18 +353,56 @@ input[type="checkbox"]:checked+label .animits-div-tab {
                                                 style="box-shadow : none" value="{{ request()->input('beds') }}">
                                             </div>
                                         </div> --}}
-                                        <div class="col-lg-12">
+                                        <!-- <div class="col-lg-12">
                                             <div class="form-group mb-20">
                                                 <input type="text" class="form-control filter-input" name="baths"
                                                     placeholder="{{ __('No. of bath') }}" style="box-shadow : none"
                                                     value="{{ request()->input('baths') }}">
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
-                                    <div class="form-group mb-20">
+                                    <!-- <div class="form-group mb-20">
                                         <input type="text" class="form-control filter-input" style="box-shadow : none"
                                             placeholder="{{ __('Enter area Sqft') }}" name="area"
                                             value="{{ request()->input('area') }}">
+                                    </div> -->
+                                    <div class="collapse show">
+                                        <div >
+                                            <div class=" custom-checkbox new-animitis-divs">
+                                                <div>
+                                                    <input class="input-checkbox" type="checkbox" name="category[]" id="checkbox34" value="34" >
+                                                    <label for="checkbox34"><span class="animits-div-tab">
+                                                            1 BHK</span></label>
+                                                </div>
+                                                <div>
+                                                    <input class="input-checkbox" type="checkbox" name="category[]" id="checkbox35" value="35">
+                                                    <label for="checkbox35"><span class="animits-div-tab">
+                                                            2 BHK</span></label>
+                                                </div>
+                                                 <div>
+                                                    <input class="input-checkbox" type="checkbox" name="category[]" id="checkbox35" value="35">
+                                                    <label for="checkbox35"><span class="animits-div-tab">
+                                                            3 BHK</span></label>
+                                                </div>
+                                                 <div>
+                                                    <input class="input-checkbox" type="checkbox" name="category[]" id="checkbox35" value="35">
+                                                    <label for="checkbox35"><span class="animits-div-tab">
+                                                            4 BHK</span></label>
+                                                </div>
+                                                 <div>
+                                                    <input class="input-checkbox" type="checkbox" name="category[]" id="checkbox35" value="35">
+                                                    <label for="checkbox35"><span class="animits-div-tab">
+                                                            5 BHK</span></label>
+                                                </div>
+                                                 <div>
+                                                    <input class="input-checkbox" type="checkbox" name="category[]" id="checkbox35" value="35">
+                                                    <label for="checkbox35"><span class="animits-div-tab">
+                                                            6 BHK</span></label>
+                                                </div>
+                                                
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                     </div>
@@ -554,7 +593,7 @@ input[type="checkbox"]:checked+label .animits-div-tab {
         </div>
         <div class="row properties">
             @forelse ($property_contents as $property_content)
-            <x-property :property="$property_content" :animate="false" class="col-lg-4 col-md-6" />
+            <x-property :property="$property_content" :animate="false" class="col-lg-4 col-md-6 mt-4" />
             @empty
             <div class="col-lg-12">
                 <h3 class="text-center mt-5">{{ __('NO PROPERTY FOUND') . '!' }}</h3>
@@ -575,10 +614,10 @@ input[type="checkbox"]:checked+label .animits-div-tab {
 
 @section('script')
 <script>
-'use strict';
-var property_contents = @json($property_contents);
-var properties = property_contents.data;
-var purpose = @json(request('purpose') ?? '');
+    'use strict';
+    var property_contents = @json($property_contents);
+    var properties = property_contents.data;
+    var purpose = @json(request('purpose') ?? '');
 </script>
 <!-- Leaflet Map JS -->
 <script src="{{ asset('/assets/front/js/vendors/leaflet.js') }}"></script>
@@ -588,70 +627,70 @@ var purpose = @json(request('purpose') ?? '');
 <script src="{{ asset('/assets/front/js/properties.js') }}"></script>
 
 <script>
-// Debounce search input
-let debounceTimer;
-$('.filter-input').keyup(function(e) {
-    const param = $(this).attr('name');
-    const val = $(this).val().trim();
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-        updateURL(`${param}=${encodeURIComponent(val)}`);
-    }, 400);
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    const sliderEl = document.querySelector("[data-range-slider='priceSlider']");
-    if (!sliderEl) return;
-
-    if (!sliderEl.noUiSlider) {
-        noUiSlider.create(sliderEl, {
-            start: [Number($('#min').val()) || 0, Number($('#max').val()) || 0],
-            connect: true,
-            range: {
-                min: Number($('#o_min').val()) || 0,
-                max: Number($('#o_max').val()) || 0
-            },
-            step: 1
-        });
-    }
-
-    const inputs = [
-        document.getElementById('min') || null,
-        document.getElementById('max') || null
-    ];
-
-    sliderEl.noUiSlider.on('update', function(values, handle) {
-        const val = Math.round(Number(values[handle]) || 0);
-        const input = inputs[handle];
-        if (input) input.value = val; // ✅ only write if present
-    });
-
-    // If you also update a label:
-    const $label = $("[data-range-value='priceSliderValue']");
-    const currency = $('#currency_symbol').val() || '';
-    const fmt = new Intl.NumberFormat(undefined, {
-        maximumFractionDigits: 0
-    });
-
-    sliderEl.noUiSlider.on('update', function(values) {
-        const minV = Math.round(Number(values[0]) || 0);
-        const maxV = Math.round(Number(values[1]) || 0);
-        if ($label.length) $label.text(
-            `${currency}${fmt.format(minV)} - ${currency}${fmt.format(maxV)}`);
-    });
-
-    // when user releases handles, push via your updateURL(min=...), updateURL(max=...)
-    let debounceTimer1;
-    sliderEl.noUiSlider.on('change', function(values) {
-        const minV = Math.round(+values[0] || 0);
-        const maxV = Math.round(+values[1] || 0);
-
-        clearTimeout(debounceTimer1);
+    // Debounce search input
+    let debounceTimer;
+    $('.filter-input').keyup(function(e) {
+        const param = $(this).attr('name');
+        const val = $(this).val().trim();
+        clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => {
-            updateURL(`min=${encodeURIComponent(minV)}`);
-            updateURL(`max=${encodeURIComponent(maxV)}`);
+            updateURL(`${param}=${encodeURIComponent(val)}`);
         }, 400);
     });
-});
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const sliderEl = document.querySelector("[data-range-slider='priceSlider']");
+        if (!sliderEl) return;
+
+        if (!sliderEl.noUiSlider) {
+            noUiSlider.create(sliderEl, {
+                start: [Number($('#min').val()) || 0, Number($('#max').val()) || 0],
+                connect: true,
+                range: {
+                    min: Number($('#o_min').val()) || 0,
+                    max: Number($('#o_max').val()) || 0
+                },
+                step: 1
+            });
+        }
+
+        const inputs = [
+            document.getElementById('min') || null,
+            document.getElementById('max') || null
+        ];
+
+        sliderEl.noUiSlider.on('update', function(values, handle) {
+            const val = Math.round(Number(values[handle]) || 0);
+            const input = inputs[handle];
+            if (input) input.value = val; // ✅ only write if present
+        });
+
+        // If you also update a label:
+        const $label = $("[data-range-value='priceSliderValue']");
+        const currency = $('#currency_symbol').val() || '';
+        const fmt = new Intl.NumberFormat(undefined, {
+            maximumFractionDigits: 0
+        });
+
+        sliderEl.noUiSlider.on('update', function(values) {
+            const minV = Math.round(Number(values[0]) || 0);
+            const maxV = Math.round(Number(values[1]) || 0);
+            if ($label.length) $label.text(
+                `${currency}${fmt.format(minV)} - ${currency}${fmt.format(maxV)}`);
+        });
+
+        // when user releases handles, push via your updateURL(min=...), updateURL(max=...)
+        let debounceTimer1;
+        sliderEl.noUiSlider.on('change', function(values) {
+            const minV = Math.round(+values[0] || 0);
+            const maxV = Math.round(+values[1] || 0);
+
+            clearTimeout(debounceTimer1);
+            debounceTimer = setTimeout(() => {
+                updateURL(`min=${encodeURIComponent(minV)}`);
+                updateURL(`max=${encodeURIComponent(maxV)}`);
+            }, 400);
+        });
+    });
 </script>
 @endsection

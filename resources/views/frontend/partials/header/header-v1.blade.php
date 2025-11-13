@@ -66,7 +66,7 @@
                 </a>
                 @endif
             </div>
-            <button class="menu-toggler d-none d-sm-block" type="button">
+            <button class="menu-toggler new-menu-toggals" type="button">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -78,7 +78,7 @@
                 <span class="style__postTab">{{ __('Sign In') }}</span>
             </button>
             @else
-            <a class="style__postContainerTab" href="{{ $postPropertyRoute }}">
+            <a class="style__postContainerTab p-sn-dds" href="{{ $postPropertyRoute }}">
                 <span class="style__postTab">{{ __('Post Property') }}</span>
             </a>
             @endif
