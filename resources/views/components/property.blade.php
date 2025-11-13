@@ -22,19 +22,38 @@
 					<a
 					href="{{ route('frontend.property.details', $property->slug ?? $property->propertyContent->slug) }}">{{ Str::limit($property->title ?? $property->propertyContent->title, 20) }}</a>
 				</h3>
+
+						<!-- <span class="product-location icon-start"> <i class="fal fa-map-marker-alt"></i>
+						{{ $property->city->getContent($property->language_id)?->name }}
+						{{ $property->isStateActive ? ', ' . $property->state?->getContent($property->language_id)?->name : '' }}
+						{{-- {{ $property->isCountryActive ? ', ' . $property->country?->getContent($property->language_id)?->name : '' }} --}}
+					</span> -->
+							<!-- <div class="product-price">
+						<span class="new-price">{{ __('') }}
+						{{ $property->price ? symbolPrice($property->price) : __('Negotiable') }}</span>
+					</div> -->
 				
-				<span class="product-location icon-start"> <i class="fal fa-map-marker-alt"></i>
-					{{ $property->city->getContent($property->language_id)?->name }}
-					{{ $property->isStateActive ? ', ' . $property->state?->getContent($property->language_id)?->name : '' }}
-					{{-- {{ $property->isCountryActive ? ', ' . $property->country?->getContent($property->language_id)?->name : '' }} --}}
-				</span>
+				
+				<div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 5px;">
+					<div class="product-price">
+						<span class="new-price">{{ __('') }}
+						{{ $property->price ? symbolPrice($property->price) : __('Negotiable') }}</span>
+					</div>
+
+
+					<span class="product-location icon-start" > <i class="fal fa-map-marker-alt" > </i>
+						{{ $property->city->getContent($property->language_id)?->name }}
+						{{ $property->isStateActive ? ', ' . $property->state?->getContent($property->language_id)?->name : '' }}
+						{{-- {{ $property->isCountryActive ? ', ' . $property->country?->getContent($property->language_id)?->name : '' }} --}}
+					</span>
 				
 				
-				<div class="product-price">
-					<span class="new-price">{{ __('') }}
-					{{ $property->price ? symbolPrice($property->price) : __('Negotiable') }}</span>
+				
+
 				</div>
 				
+		
+
 				
 				<ul class="product-info p-0 list-unstyled d-flex align-items-center flex-wrap">
 					@if (in_array($property->purpose, ['franchiese', 'business_for_sale']))

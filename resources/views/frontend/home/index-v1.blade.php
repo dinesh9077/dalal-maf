@@ -841,7 +841,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                 <div class="new-aps-titles-bag">
                     <a href="{{ route('frontend.properties',['category'=>$category->categoryContent->name]) }}">
                         <img src="{{ asset('assets/img/property-category/' . $category->image) }}" alt=""
-                            class="new-images-aps-type">
+                            class="new-images-aps-type mx-auto">
                         <div class="new-type-title">
                             <h6 class="aps-type">{{ @$category->categoryContent->name }}</h6>
                             <h6 class="aps-type-property">{{ $category->properties_count }} properties</h6>

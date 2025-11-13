@@ -3525,7 +3525,7 @@ Lazyload CSS
     position: relative;
     background-color: transparent;
     border: 1px solid #dcdcdc;
-    padding: 5px 8px;
+    padding: 5px ;
     border-radius: 5px;
     color: black;
 }
@@ -5802,6 +5802,8 @@ p.cookie-consent__message * {
 @media(max-width : 1399px) {
     .button-new-add a {
         font-size: 12px;
+    padding: 11px 15px;
+
     }
 
 }
@@ -6046,8 +6048,8 @@ p.cookie-consent__message * {
     border: 1px solid #d4c2a2;
     border-radius: 50%;
     margin-right: 16px;
-    /* width: 150px; */
-    /* height: 150px; */
+    /* width: 150px;
+    height: 130px; */
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -6057,6 +6059,20 @@ p.cookie-consent__message * {
     /* optional: control max size */
 
 }
+
+/* @media(max-width:1399px){
+    .logo-container{
+        width: 150px;
+        height: 110px;
+    }
+}
+
+@media(max-width:1199px){
+    .logo-container{
+        width: 150px;
+        height: 80px;
+    }
+} */
 
 .logo-container-new {
     border: 1px solid #d4c2a2;
@@ -7045,6 +7061,12 @@ p.cookie-consent__message * {
     right: 0px;
 }
 
+@media(max-width:767px) {
+.new-primume-prop-img {
+    width: 50%;
+}
+}
+
 @media(max-width:320px) {
     .new-primume-prop-img {
         position: absolute;
@@ -7073,8 +7095,8 @@ p.cookie-consent__message * {
     border-radius: 10px;
     background-color: #6c603c;
     color: white;
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 500;
 }
 
 .vs-btn:hover {
@@ -7616,7 +7638,7 @@ p.cookie-consent__message * {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
+    position: relative;
 }
 
 @media(max-width : 991px) {
@@ -7630,6 +7652,9 @@ p.cookie-consent__message * {
     font-size: 25px;
     font-weight: 600;
     color: black;
+    position: absolute;
+    top: 20px;
+    left: 20px;
 }
 
 .but-title-p {
@@ -7936,8 +7961,8 @@ button:hover {
 }
 
 .b-s-r-img {
-    height: 300px;
-    width: 300px;
+    height: 250px;
+    width: 250px;
     transition: transform 0.6s ease;
 }
 
@@ -7961,7 +7986,7 @@ button:hover {
 
 .header-description {
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     color: #000000;
     width: 80%;
     margin-bottom: 0;
@@ -8794,3 +8819,24 @@ button:hover {
 
     
 }
+
+.Pro-ty-card{
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.09) !important;
+    background-color: white !important;
+    border: none !important;
+    border-radius: 12px !important;
+}
+
+.Pro-ty-card span{
+    font-size: 13px  !important;
+}
+
+.new-span-f-s p span{
+    font-size: 13px  !important;
+}
+
+
+.new-span-f-s p{
+    font-size: 13px  !important;
+}
+
