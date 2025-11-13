@@ -31,6 +31,8 @@
                             </div>
                         </div>
 
+                        <p class="text-warning mb-0">Image Size : 152 x 100</p>
+
                         <p id="editErr_image" class="mb-0 text-danger em"></p>
                     </div>
 

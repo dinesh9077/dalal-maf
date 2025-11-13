@@ -61,6 +61,8 @@
                   @if ($errors->has('footer_logo'))
                     <p class="mt-2 mb-0 text-danger">{{ $errors->first('footer_logo') }}</p>
                   @endif
+<p class="text-warning mb-0">Image Size : 280 x 100</p>
+
                 </div>
               </form>
             </div>

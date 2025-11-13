@@ -117,6 +117,9 @@
 								@error('image')
 									<p class="mt-2 mb-0 text-danger">{{ $message }}</p>
 								@enderror
+
+<p class="text-warning mb-0">Image Size : 1900 x 350</p>
+
 							</div>
 						</form>
 					</div>

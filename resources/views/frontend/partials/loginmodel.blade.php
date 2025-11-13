@@ -9,10 +9,22 @@
     height: 39px;
     line-height: 55px;
     padding: 0;
-    padding-inline-start: 18px;
+    padding-inline-start: 45px; /* space for flag */
     padding-inline-end: 10px;
     font-size: 16px;
     margin-top: 10px;
+}
+
+.phone-input-wrapper {
+    position: relative;
+}
+
+.phone-flag {
+    position: absolute;
+    top: 49%;
+    left: 12px;
+    transform: translateY(-50%);
+    font-size: 18px;
 }
 
 .modal-footer {
@@ -98,10 +110,8 @@
 }
 
 .box-p-3 {
-    /* padding-top: 25px; */
     padding-right: 24px;
     padding-left: 24px;
-    /* padding-bottom: 28px; */
 }
 
 .otp-input-wrapper input.otp-box {
@@ -119,7 +129,6 @@
     box-shadow: 0 0 3px rgba(148, 126, 65, 0.5);
 }
 </style>
-
 
 <div class="modal fade" id="customerPhoneModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
@@ -139,18 +148,16 @@
             </div>
 
             <div class="modal-body  box-p-1">
-
                 <div class="row no-gutters">
                     <div class="col-lg-12">
-                        <div class="form-group">
-                            <label for="">{{ __('Phone') }}</label>
-                            <input type="text" name="phone" id="in_phone" value="+ 91 |"
-                                class="form-control new-form-designs">
+                        <div class="form-group phone-input-wrapper">
+                            <span class="phone-flag"> <img src="https://flagcdn.com/w20/in.png" alt="India Flag"
+                                        style="width: 24px; height: 16px; border-radius: 2px;"></span>  
+                            <input type="text" name="phone" id="in_phone"
+                                class="form-control new-form-designs" value="+91 " />
                             <p id="editErr_in_phone" class="mt-2 mb-0 text-danger em"></p>
                         </div>
                     </div>
-
-
                 </div>
 
                 <div class="modal-footer" style="border-top:none;">
@@ -231,9 +238,8 @@
     </div>
 </div>
 
-
-<!-- Header End -->
 <script type="text/javascript" src="{{ asset('assets/js/jquery.min.js') }}"></script>
+
 <script>
 $(document).ready(function() {
     $('#customerPhoneModal').on('show.bs.modal', function(event) {
@@ -242,19 +248,32 @@ $(document).ready(function() {
         $(this).data('action', action);
     });
 
-    document.getElementById('in_phone').addEventListener('input', function(e) {
-        // Remove any non-digit characters
-        this.value = this.value.replace(/\D/g, '');
+    // Phone number input logic with +91 prefix lock
+    const phoneInput = document.getElementById('in_phone');
+    const prefix = '+91 ';
+    phoneInput.value = prefix;
 
-        // Limit to 10 digits
-        if (this.value.length > 10) {
-            this.value = this.value.slice(0, 10);
+    phoneInput.addEventListener('input', function(e) {
+        // Ensure prefix always remains
+        if (!this.value.startsWith(prefix)) {
+            this.value = prefix + this.value.replace(/\D/g, '').substring(0, 10);
+        } else {
+            // Only allow digits after prefix
+            let digits = this.value.substring(prefix.length).replace(/\D/g, '');
+            if (digits.length > 10) digits = digits.substring(0, 10);
+            this.value = prefix + digits;
         }
     });
-    // Phone number input validation
-    $('#in_phone').on('input', function() {
-        let phone = $(this).val();
 
+    phoneInput.addEventListener('keydown', function(e) {
+        // Prevent deleting the prefix
+        if (this.selectionStart <= prefix.length && (e.key === "Backspace" || e.key === "Delete")) {
+            e.preventDefault();
+        }
+    });
+
+    $('#in_phone').on('input', function() {
+        let phone = $(this).val().replace(prefix, '');
         if (/^\d{10}$/.test(phone)) {
             $('#sendOtp').prop('disabled', false).css({
                 'cursor': 'pointer',
@@ -270,14 +289,14 @@ $(document).ready(function() {
 
     $('#editPhoneNumber').on('click', function() {
         const phone = $(this).attr('data-phone');
-        $('#in_phone').val(phone);
+        $('#in_phone').val(prefix + phone);
         $('#customerPhoneModal').modal('show');
         $('#otpVerificationModal').modal('hide');
     });
 
-    // Send OTP
+    // === Send OTP ===
     $('#sendOtp').on('click', function() {
-        let phone = $('#in_phone').val();
+        let phone = $('#in_phone').val().replace(prefix, '');
         let action = $('#customerPhoneModal').data('action');
 
         if (!/^\d{10}$/.test(phone)) {
@@ -289,8 +308,9 @@ $(document).ready(function() {
         $(this).prop('disabled', true).text('Sending...');
         $('#editFrontPhone').text('+91-' + phone);
         $('#editPhoneNumber').attr('data-phone', phone);
+
         $.ajax({
-            url: '{{ route("send.otp") }}', // Update this route
+            url: '{{ route("send.otp") }}',
             method: 'POST',
             data: {
                 _token: '{{ csrf_token() }}',
@@ -298,22 +318,19 @@ $(document).ready(function() {
             },
             success: function(response) {
                 $('#sendOtp').prop('disabled', false).text('Send OTP');
-
                 $('#customerPhoneModal').modal('hide');
                 $('#otpVerificationModal').modal('show');
-
                 $('#otpVerificationModal').data('phone', phone);
                 $('#otpVerificationModal').data('action', action);
             },
             error: function(xhr) {
-                $('#editErr_in_phone').text(xhr.responseJSON.message ||
-                    'An error occurred.');
+                $('#editErr_in_phone').text(xhr.responseJSON.message || 'An error occurred.');
                 $('#sendOtp').prop('disabled', false).text('Send OTP');
             }
         });
     });
 
-    // Verify OTP
+    // === Verify OTP ===
     $('#verifyOtpBtn').on('click', function() {
         let otp = $('#customerOtpInput').val();
         let phone = $('#otpVerificationModal').data('phone');
@@ -347,12 +364,12 @@ $(document).ready(function() {
     });
 });
 
+// OTP box logic
 document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
     box.addEventListener("input", (e) => {
         if (e.target.value.length === 1 && index < boxes.length - 1) {
             boxes[index + 1].focus();
         }
-        // Combine all digits into hidden input
         document.getElementById("customerOtpInput").value =
             Array.from(boxes).map(b => b.value).join("");
     });
@@ -364,26 +381,23 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
     });
 });
 
-// === RESEND + 10-MIN EXPIRY (non-breaking) ===============================
+// OTP timer + resend logic (unchanged)
 (function() {
-    const OTP_VALID_MS = 10 * 60 * 1000; // 10 minutes validity
-    const RESEND_COOLDOWN_MS = 30 * 1000; // 30s anti-spam cooldown
+    const OTP_VALID_MS = 10 * 60 * 1000;
+    const RESEND_COOLDOWN_MS = 30 * 1000;
 
     let otpExpiryAt = null;
     let resendCooldownUntil = 0;
     let otpTimerInterval = null;
     let resendTimerInterval = null;
 
-    // Gracefully find/create the UI anchors if IDs weren't added in HTML
     function ensureAnchors() {
-        // Try to find the "Resend OTP" span; if missing, attach an id to the first one we see
         let $resend = $('#resendOtp');
         if (!$resend.length) {
             $resend = $('p:contains("Resend OTP") span:contains("Resend OTP")').first();
             if ($resend.length) $resend.attr('id', 'resendOtp').css('cursor', 'pointer');
         }
 
-        // Ensure we have a timer label next to it
         let $timer = $('#otpTimer');
         if (!$timer.length) {
             const $p = $resend.closest('p');
@@ -392,10 +406,7 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
                 $p.append($timer);
             }
         }
-        return {
-            $resend,
-            $timer
-        };
+        return { $resend, $timer };
     }
 
     function fmt(ms) {
@@ -421,9 +432,7 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
     }
 
     function startOtpValidityTimer() {
-        const {
-            $timer
-        } = ensureAnchors();
+        const { $timer } = ensureAnchors();
         if (!otpExpiryAt) otpExpiryAt = Date.now() + OTP_VALID_MS;
 
         if (otpTimerInterval) clearInterval(otpTimerInterval);
@@ -432,23 +441,16 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
             if (remaining <= 0) {
                 clearInterval(otpTimerInterval);
                 setVerifyEnabled(false);
-                // Gentle inline hint
                 $('#customerOtpError').text('OTP expired. Please tap “Resend OTP”.').show();
                 return;
             }
-            // $timer && $timer.text(`Code expires in ${fmt(remaining)}`);
         }, 1000);
-        // immediate draw
-        const remainingNow = otpExpiryAt - Date.now();
-        // $timer && $timer.text(`Code expires in ${fmt(remainingNow)}`);
         setVerifyEnabled(true);
         $('#customerOtpError').hide();
     }
 
     function setResendEnabled(enabled, labelOverride) {
-        const {
-            $resend
-        } = ensureAnchors();
+        const { $resend } = ensureAnchors();
         if (!$resend.length) return;
 
         if (enabled) {
@@ -483,32 +485,25 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
             }
         };
         resendTimerInterval = setInterval(tick, 1000);
-        tick(); // draw immediately
+        tick();
     }
-    // Wire into your existing flows:
 
-    // 1) When "Send OTP" succeeds (your existing success callback),
-    //    we hook via the modal show event to ensure timer starts every time it opens.
     $('#otpVerificationModal').on('shown.bs.modal', function() {
-        otpExpiryAt = Date.now() + OTP_VALID_MS; // reset validity window on each send
+        otpExpiryAt = Date.now() + OTP_VALID_MS;
         startOtpValidityTimer();
-        startResendCooldown(); // small cooldown before allowing another resend
+        startResendCooldown();
     });
 
-    // 2) Block verification if expired (non-destructive addition to your handler)
     $('#verifyOtpBtn').off('click.otpExpiryGuard').on('click.otpExpiryGuard', function() {
         if (otpExpiryAt && Date.now() > otpExpiryAt) {
             $('#otp_error').text('OTP expired. Please resend a new code.').show();
             setVerifyEnabled(false);
             return false;
         }
-        // else let your original click handler continue
         return true;
     });
 
-    // 3) Handle "Resend OTP" click
     $(document).on('click', '#resendOtp', function() {
-        // cooldown guard
         if (resendCooldownUntil && Date.now() < resendCooldownUntil) return;
 
         const phone = $('#otpVerificationModal').data('phone');
@@ -524,37 +519,28 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
             data: {
                 _token: '{{ csrf_token() }}',
                 phone: phone,
-                // Optionally tell backend we're refreshing the same OTP flow:
-                // reason: 'resend'
             },
             success: function() {
-                // Reset input boxes visually
                 $('.otp-box').val('');
                 $('#customerOtpInput').val('');
-
-                // Restart validity window and timers
                 otpExpiryAt = Date.now() + OTP_VALID_MS;
                 startOtpValidityTimer();
                 startResendCooldown();
-
                 $('#customerOtpError').hide();
             },
             error: function(xhr) {
                 const msg = (xhr.responseJSON && xhr.responseJSON.message) ||
                     'Unable to resend OTP right now.';
                 $('#customerOtpError').text(msg).show();
-                // Let user try again soon
                 setResendEnabled(true, 'Resend OTP');
             }
         });
     });
 
-    // 4) Clean up timers when the OTP modal closes
     $('#otpVerificationModal').on('hide.bs.modal', function() {
         clearAllIntervals();
     });
 
-    // 5) Also ensure when you jump back to "edit phone" we clean timers
     $('#editPhoneNumber').on('click', function() {
         clearAllIntervals();
     });

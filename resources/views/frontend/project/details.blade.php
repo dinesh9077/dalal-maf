@@ -98,10 +98,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12" >
-                    <div class="new-details-bg-white">
+                    <div class="new-details-bg-white new-span-f-s">
                         <div class="project-desc" data-aos="fade-up">
                             <h3 class="mb-20">{{ __('Project Overview') }}</h3>
-                            <p class="summernote-content">
+                            <p class="summernote-content" >
                                 {!! $project->description !!}
                             </p>
 
@@ -164,13 +164,13 @@
                         <div class="pb-20"></div>
                     
                         @if (count($project->projectTypeContents) > 0)
-                            <div class="project-type mb-10" data-aos="fade-up">
+                            <div class="new-details-bg-white project-type mb-10" data-aos="fade-up">
                                 <h3 class="mb-20">{{ __('Project Types') }}</h3>
                                 <div class="row">
                                     @foreach ($project->projectTypeContents as $typeContent)
                                         <div class="col-lg-4 col-md-6">
-                                            <div class="card border mb-30">
-                                                <div class="card-content">
+                                            <div class="card mb-30 Pro-ty-card">
+                                                <div class="">
                                                     <ul class="m-0 p-0">
                                                         <li class="d-flex align-items-center">
                                                             <span class="font-lg color-dark">{{ __('Area') }}</span>

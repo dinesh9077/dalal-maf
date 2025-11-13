@@ -28,8 +28,9 @@
                                 <input type="file" class="img-input" name="image">
                             </div>
                         </div>
-
                         <p id="err_image" class=" mb-0 text-danger em"></p>
+                         <p class="text-warning mb-0">{{ __('Image Size : 100 x 100') }}</p>
+
                     </div>
 
                     <div class="form-group">

@@ -66,22 +66,24 @@
                 </a>
                 @endif
             </div>
-            <button class="menu-toggler d-none d-sm-block" type="button">
+            <button class="menu-toggler new-menu-toggals" type="button">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
             @if ($authType === 'guest')
-            <button type="button" class="style__postContainerTab d-block d-sm-none " data-bs-toggle="modal"
+            <button type="button" class="style__postContainerTab new-si-btn-res" data-bs-toggle="modal"
                 data-bs-target="#customerPhoneModal" data-action="login" id="openCustomerPhoneModal"
                 style="line-height:20px;">
                 <span class="style__postTab">{{ __('Sign In') }}</span>
             </button>
             @else
-            <a class="style__postContainerTab" href="{{ $postPropertyRoute }}">
+            <a class="style__postContainerTab p-sn-dds" href="{{ $postPropertyRoute }}">
                 <span class="style__postTab">{{ __('Post Property') }}</span>
             </a>
             @endif
+            
+            
         </div>
     </div>
 
@@ -260,11 +262,7 @@
                     line-height: 1;
                 }
 
-                .main-navbar.navbar-transparent {
-                    background: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)) !important;
-                    transition: background 0.3s ease;
-                    height:110px;
-                }
+              
 
                 .main-navbar.navbar-scrolled {
                     background: #6c603c !important;

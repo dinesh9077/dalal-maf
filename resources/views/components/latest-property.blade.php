@@ -54,7 +54,8 @@
         .latest-image-box {
             flex: 0 0 90px;
             height: 90px;
-            border-radius: 50%;
+            width:  90px;
+            border-radius: 100px;
             overflow: hidden;
             position: relative;
         }
@@ -63,8 +64,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 50%;
-            padding-top: 10px;
+            /* border-radius: 100px; */
+  
         }
 
         .latest-details {

@@ -30,7 +30,7 @@
                             </div>
                         </div>
                         @if ($settings->theme_version == 1)
-                            <p class="text-warning mb-0">{{ __('Image Size : 360x160') }}</p>
+                            <p class="text-warning mb-0">{{ __('Image Size : 100 x 100') }}</p>
                         @elseif ($settings->theme_version == 2)
                             <p class="text-warning mb-0">{{ __('Image Size : 290x158') }}</p>
                         @elseif ($settings->theme_version == 3)

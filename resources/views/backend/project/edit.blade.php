@@ -95,6 +95,7 @@
                                         <input type="hidden" value="{{ $project->id }}" name="project_id">
                                     </form>
                                     <p class="em text-danger mb-0" id="errgallery_images"></p>
+                                    <p class="text-warning mb-0">Image Size : 270 x 300</p>
 
                                 </div>
 
@@ -127,6 +128,8 @@
                                         </div>
                                         <input type="hidden" value="{{ $project->id }}" name="project_id">
                                     </form>
+                                    <p class="text-warning mb-0">Image Size : 305 x 216</p>
+
                                     <p class="em text-danger mb-0" id="errfloor_plan_images"></p>
                                 </div>
                             </div>
@@ -153,6 +156,8 @@
                                                     <input type="file" class="img-input" name="featured_image">
                                                 </div>
                                             </div>
+                                    <p class="text-warning mb-0">Image Size : 440 x 270</p>
+                                            
                                         </div>
                                     </div>
 

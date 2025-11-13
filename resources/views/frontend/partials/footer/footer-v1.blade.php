@@ -5,15 +5,15 @@
     <div class=" pt-40 pb-40">
         <div class="container">
 
-            <div class="row">
-                <div class="col-lg-7">
+            <div class="row footer-row">
+                <div class="col-lg-7 footer-left">
                     <div class="footer-left-text">
                         <h3 class="header-title-footer">India’s Trusted Real Estate Platform
                         </h3>
                         <p class="header-description">{{ !empty($footerInfo) ? $footerInfo->about_company : '' }}</p>
                     </div>
                 </div>
-                <div class="col-lg-5">
+                <div class="col-lg-5 footer-right">
                     <div class="footer-right-btn">
                         @if (!empty($basicInfo->footer_logo))
                         <a href="{{ route('index') }}">
