@@ -53,8 +53,8 @@
                                 <input type="file" class="img-input" name="image">
                             </div>
                         </div>
-
                         <p id="err_image" class=" mb-0 text-danger em"></p>
+                        <p class="text-warning mb-0">Image Size : 152 x 100</p>
                     </div>
                     @foreach ($langs as $lang)
                         <div class="form-group {{ $lang->direction == 1 ? 'rtl text-right' : '' }}">

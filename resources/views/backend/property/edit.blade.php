@@ -92,6 +92,7 @@
                                                             <i class="fa fa-times rmvbtndb"
                                                                 data-indb="{{ $item->id }}"></i>
                                                         </td>
+                                                        
                                                     </tr>
                                                 @endforeach
                                             </table>
@@ -108,6 +109,7 @@
                                     <input type="hidden" value="{{ $property->id }}" name="property_id">
                                 </form>
                                 <p class="em text-danger mb-0" id="errslider_images"></p>
+                                                    <p class="text-warning mb-0">Image Size : 400 x 200</p>
 
                             </div>
 
@@ -133,6 +135,8 @@
                                                     <input type="file" class="img-input" name="featured_image">
                                                 </div>
                                             </div>
+<p class="text-warning mb-0">Image Size :  310 x 180</p>
+
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -155,6 +159,8 @@
                                                     <input type="file" class="img-input2" name="floor_planning_image">
                                                 </div>
                                             </div>
+<p class="text-warning mb-0">Image Size :  900 x 500</p>
+
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -177,6 +183,8 @@
                                                     <input type="file" class="img-input3" name="video_image">
                                                 </div>
                                             </div>
+<p class="text-warning mb-0">Image Size :  900 x 500</p>
+
                                         </div>
                                     </div>
                                 </div>

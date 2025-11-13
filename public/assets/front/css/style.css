@@ -6946,6 +6946,12 @@ p.cookie-consent__message * {
     right: -10px;
 }
 
+@media(max-width : 575px) {
+    .arrow-left-pro {
+        width: 40px;
+        height: 40px;
+    }
+}
 
 
 /* === */
@@ -7143,7 +7149,7 @@ p.cookie-consent__message * {
 
 @media(max-width : 575px) {
     .first-left {
-        left: 10px !important;
+        left: -10px !important;
     }
 }
 
@@ -7274,6 +7280,22 @@ p.cookie-consent__message * {
     z-index: 10;
 }
 
+@media (max-width : 575px) {
+.LP-new-left-btn {
+      width: 40px;
+    height: 40px;
+        left: 4px;
+
+}
+.LP-new-right-btn {
+      width: 40px;
+    height: 40px;
+        right: 4px;
+
+
+}
+}
+
 
 
 .verify-f-s-left-btn {
@@ -7353,6 +7375,23 @@ p.cookie-consent__message * {
     align-items: center;
     justify-content: center;
     z-index: 10;
+}
+
+@media(max-width : 575px) {
+.fren-new-right-btn {
+    width: 40px;
+    height: 40px;
+        right: 4px;
+
+}
+.fren-new-left-btn {
+    width: 40px;
+    height: 40px;
+        left: 4px;
+
+}
+
+
 }
 
 .btn-set {
@@ -7926,6 +7965,12 @@ button:hover {
     color: #000000;
     width: 80%;
     margin-bottom: 0;
+}
+@media(max-width : 991px) {
+.header-description {
+    width: 100%;
+
+}
 }
 
 .foot-btn {
@@ -8595,6 +8640,12 @@ button:hover {
     float: right;
 }
 
+@media(max-width : 991px) {
+    .footer-right-btn {
+    float: left;
+}
+}
+
 .new-footer-appy {
     display: flex;
     justify-content: center;
@@ -8689,8 +8740,57 @@ button:hover {
 }
 
 @media (max-width : 1199px) {
-    .new-menu-toggals{
-    display: block !important;
+   .new-menu-toggals{
+    display: block;
 }
 }
 
+@media (max-width : 575px) {
+   .new-menu-toggals{
+    display: none;
+}
+}
+
+.new-si-btn-res{
+    display: block;
+}
+
+
+
+@media (max-width : 1199px) {
+  .new-si-btn-res{
+    display: none;
+}
+}
+
+@media (max-width : 575px) {
+
+.new-si-btn-res{
+    display: block;
+}
+
+}
+@media (max-width : 575px) {
+
+.new-ww-mb{
+    margin: auto;
+}
+}
+
+.footer-row {
+    display: flex;
+}
+
+
+@media (max-width: 991px) {
+    .footer-row {
+        display: flex;
+        flex-direction: column-reverse; /* brings logo on top */
+        gap: 20px
+        ;
+    }
+
+    
+
+    
+}

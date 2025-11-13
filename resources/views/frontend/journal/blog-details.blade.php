@@ -1,3 +1,5 @@
+
+
 @php
     $version = $basicInfo->theme_version;
 @endphp
@@ -82,13 +84,13 @@
                             <form class="search-form radius-md" action="{{ route('blog') }}" method="GET">
                                 <input type="search" class="search-input"placeholder="{{ __('Search By Title') }}"
                                     name="title"
-                                    value="{{ !empty(request()->input('title')) ? request()->input('title') : '' }}">
+                                    value="{{ !empty(request()->input('title')) ? request()->input('title') : '' }}" style="box-shadow: none;">
 
                                 @if (!empty(request()->input('category')))
                                     <input type="hidden" name="category" value="{{ request()->input('category') }}">
                                 @endif
-                                <button class="btn-search" type="submit">
-                                    <i class="far fa-search"></i>
+                                <button class="btn-search" type="submit" style="    line-height: 0px;">
+                                    <i class="fa fa-search"></i>
                                 </button>
                             </form>
                         </div>

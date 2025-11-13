@@ -32,10 +32,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
-                    <div class="card-title d-inline-block">{{ __('Add Porperty') }}</div>
-                </div>
-
+                
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-10 offset-lg-1">
@@ -44,7 +41,7 @@
                                 <ul></ul>
                             </div>
                             <div class="col-lg-12">
-                                <label for="" class="mb-2"><strong>{{ __('Gallery Images') }} **</strong></label>
+                                <label for="" class="mb-2"><strong>{{ __('Gallery Images') }} *</strong></label>
                                 <form action="{{ route('admin.property.imagesstore') }}" id="my-dropzone"
                                     enctype="multipart/form-data" class="dropzone create">
                                     @csrf
@@ -52,7 +49,9 @@
                                         <input name="file" type="file" multiple />
                                     </div>
                                 </form>
+                                <p class="text-warning mb-0">Image Size : 400 x 200</p>
                                 <p class="em text-danger mb-0" id="errslider_images"></p>
+
                             </div>
 
                             <form id="carForm" action="{{ route($url) }}" method="POST" enctype="multipart/form-data">
@@ -67,7 +66,6 @@
                                             <div class="thumb-preview ">
                                                 <img src="{{ asset('assets/img/noimage.jpg') }}" alt="..."
                                                     class="uploaded-img">
-
                                             </div>
 
                                             <div class="mt-3">
@@ -76,6 +74,11 @@
                                                     <input type="file" class="img-input" name="featured_image">
                                                 </div>
                                             </div>
+
+<p class="text-warning mb-0">Image Size : 310 x 180</p>
+
+
+
                                         </div>
                                     </div>
 
@@ -95,6 +98,11 @@
                                                     <input type="file" class="img-input2" name="floor_planning_image">
                                                 </div>
                                             </div>
+
+<p class="text-warning mb-0">Image Size : 900 x 500</p>
+
+
+
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -113,7 +121,9 @@
                                                     <input type="file" class="img-input3" name="video_image">
                                                 </div>
                                             </div>
+                                            <p class="text-warning mb-0">Image Size : 900 x 500</p>
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -140,6 +150,8 @@
                                                 <option value="business_for_sale">{{ __('Business For Sale') }}</option>
                                             </select>
                                         </div>
+
+                                        
 
                                     </div>
                                     <div class="col-lg-3">

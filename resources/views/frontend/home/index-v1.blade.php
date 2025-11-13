@@ -174,6 +174,12 @@ $version = $basicInfo->theme_version;
     background: #888 !important;
 }
 
+  .main-navbar.navbar-transparent {
+                    background: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)) !important;
+                    transition: background 0.3s ease;
+                    height:110px;
+                }
+
 /* ==== */
 </style>
 
@@ -286,7 +292,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                             <span class="style__postTab">{{ __('Post Property') }}</span>
                         </button>
                         @else
-                        <a class="style__postContainerTab" href="{{ $postPropertyRoute }}">
+                        <a class="style__postContainerTab border-0" href="{{ $postPropertyRoute }}">
                             <span class="style__postTab">{{ __('Post Property') }}</span>
                         </a>
                         @endif
@@ -404,7 +410,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
     <div class="container" style="border-top:none !important;">
         <div class="row">
             <div class="container">
-                <div class="col-12">
+                <div class="col-12 ">
                     <div class="section-title mb-10 new-titles position-relative" data-aos="fade-up">
                         <h2 class="title text-center">Featured Properties</h2>
                         <p class="mt-1" style="font-size:13px; line-height : 1.2;">
@@ -419,7 +425,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
             </div>
 
             <div class="container">
-                <div class="row align-items-stretch">
+                <div class="row align-items-stretch new-ww-mb">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex position-relative px-0" data-aos="fade-up"> 
                         <div class="swiper product-slider w-100">
                             <div class="swiper-wrapper">

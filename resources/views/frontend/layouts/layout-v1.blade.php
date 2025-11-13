@@ -189,7 +189,7 @@
 
     @media (max-width: 767px) {
         body {
-            padding-bottom: 80px;
+            padding-bottom: 59px;
         }
     }
 
