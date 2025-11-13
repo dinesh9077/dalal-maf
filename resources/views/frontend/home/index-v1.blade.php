@@ -888,7 +888,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
             <div class="col-lg-4 b-s-r-div-main">
                 <div class="b-s-r-div ">
                     <img src="{{ asset('assets/front/images/acrs-imag/sale.png') }}" alt="" class="b-s-r-img">
-                    <h5 class="but-title">Sell</h5>
+                    <h5 class="but-title">Sale</h5>
                     <p class="but-title-p">List your property in minutes and connect with serious buyers. With
                         DalalMaf’s wide reach and trusted network, selling your property has never been faster or
                         easier.</p>
