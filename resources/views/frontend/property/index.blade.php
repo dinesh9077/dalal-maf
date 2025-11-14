@@ -593,7 +593,7 @@ $version = $basicInfo->theme_version;
         </div>
         <div class="row properties">
             @forelse ($property_contents as $property_content)
-            <x-property :property="$property_content" :animate="false" class="col-lg-4 col-md-6 mt-4" />
+            <x-property :property="$property_content" :animate="false" class="col-lg-2 col-md-2 mt-4" />
             @empty
             <div class="col-lg-12">
                 <h3 class="text-center mt-5">{{ __('NO PROPERTY FOUND') . '!' }}</h3>

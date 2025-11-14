@@ -275,7 +275,7 @@
 
     /* loader small label */
     .label {
-        color: var(--muted);
+        color: black;
         font-size: 13px
     }
 
