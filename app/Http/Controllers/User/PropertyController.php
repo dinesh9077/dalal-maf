@@ -190,6 +190,7 @@ class PropertyController extends Controller
             if ($request->hasFile('video_image')) {
                 $videoImage = UploadFile::store('assets/img/property/video/', $request->video_image);
             }
+
             $bs = Basic::select('property_approval_status')->first();
             if ($bs->property_approval_status == 1) {
                 $approveStatus = 0;
@@ -221,8 +222,7 @@ class PropertyController extends Controller
                 'longitude' => $request->longitude,
                 'approve_status' => $approveStatus,
                 'furnishing' => $request->furnishing,
-                'possession_date' => $request->possession_date
-
+                'possession_date' => $request->possession_date 
             ]);
 
             $slders = $request->slider_images;

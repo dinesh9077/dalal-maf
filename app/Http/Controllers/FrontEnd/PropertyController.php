@@ -102,6 +102,11 @@ class PropertyController extends Controller
             $type = $request->type ?? [];
         }
 
+        $unitTypes = [];
+        if ($request->filled('unit_type')) {
+            $unitTypes = $request->unit_type ?? [];
+        }
+
         $price = null;
         if ($request->filled('price') && $request->price != 'all') {
             $price = $request->price;
@@ -113,6 +118,9 @@ class PropertyController extends Controller
         } 
 		if ($request->filled('purpose') && $request->purpose == 'business_for_sale') {
             $purpose = ['business_for_sale'];
+        } 
+        if ($request->filled('purpose') && $request->purpose == 'buy') {
+            $purpose = ['sell', 'buy'];
         }
 
         $min = $max = null;
@@ -251,6 +259,10 @@ class PropertyController extends Controller
                     count($amenityIds)
                 );
             })
+           ->when(!empty($unitTypes), function ($query) use ($unitTypes) {
+                $unitTypes = array_values(array_unique($unitTypes)); 
+                $query->whereHas('proertyUnits', fn($q) => $q->whereIn('unit_id', $unitTypes));
+            })
             ->when($price, function ($query) use ($price) {
                 if ($price == 'negotiable') {
                     return $query->where('properties.price', null);
@@ -336,6 +348,8 @@ class PropertyController extends Controller
         $information['all_countries'] = Country::with(['countryContent' => function ($q) use ($language) {
             $q->where('language_id', $language->id);
         }])->get();
+
+        $information['units'] = DB::table('units')->whereStatus(1)->get();
 
         $min = Property::where([['status', 1], ['approve_status', 1]])->min('price');
         $max = Property::where([['status', 1], ['approve_status', 1]])->max('price');

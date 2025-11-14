@@ -349,6 +349,15 @@ class AuthController extends Controller
 
 		$user = auth($guard)->user();
 
+		$relations = [
+			'vendor' => 'vendor_info',
+			'agent' => 'agent_info',
+		];
+
+		if (isset($relations[$authType])) {
+			$user->load($relations[$authType]);
+		}
+
 		if (!$user) {
 			return $this->errorResponse('Unauthorized', 401);
 		}

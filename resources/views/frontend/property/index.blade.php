@@ -368,39 +368,30 @@ $version = $basicInfo->theme_version;
                                     </div> -->
                                     <div class="collapse show">
                                         <div >
-                                            <div class=" custom-checkbox new-animitis-divs">
-                                                <div>
-                                                    <input class="input-checkbox" type="checkbox" name="category[]" id="checkbox34" value="34" >
-                                                    <label for="checkbox34"><span class="animits-div-tab">
-                                                            1 BHK</span></label>
-                                                </div>
-                                                <div>
-                                                    <input class="input-checkbox" type="checkbox" name="category[]" id="checkbox35" value="35">
-                                                    <label for="checkbox35"><span class="animits-div-tab">
-                                                            2 BHK</span></label>
-                                                </div>
-                                                 <div>
-                                                    <input class="input-checkbox" type="checkbox" name="category[]" id="checkbox35" value="35">
-                                                    <label for="checkbox35"><span class="animits-div-tab">
-                                                            3 BHK</span></label>
-                                                </div>
-                                                 <div>
-                                                    <input class="input-checkbox" type="checkbox" name="category[]" id="checkbox35" value="35">
-                                                    <label for="checkbox35"><span class="animits-div-tab">
-                                                            4 BHK</span></label>
-                                                </div>
-                                                 <div>
-                                                    <input class="input-checkbox" type="checkbox" name="category[]" id="checkbox35" value="35">
-                                                    <label for="checkbox35"><span class="animits-div-tab">
-                                                            5 BHK</span></label>
-                                                </div>
-                                                 <div>
-                                                    <input class="input-checkbox" type="checkbox" name="category[]" id="checkbox35" value="35">
-                                                    <label for="checkbox35"><span class="animits-div-tab">
-                                                            6 BHK</span></label>
-                                                </div>
-                                                
-
+                                            @php
+                                                if (!empty(request()->input('unit_type')))
+                                                {
+                                                    $selectedUnitTypes = [];
+                                                    if (is_array(request()->input('unit_type'))) {
+                                                        $selectedUnitTypes = request()->input('unit_type');
+                                                    } else {
+                                                        array_push($selectedUnitTypes, request()->input('unit_type'));
+                                                    }
+                                                } else {
+                                                    $selectedUnitTypes = [];
+                                                }
+                                            @endphp
+                                            <div class=" custom-checkbox new-animitis-divs"> 
+                                                @foreach($units as $unit)
+                                                    <div>
+                                                        <input class="input-checkbox" type="checkbox" name="unit_type[]"
+                                                            id="checkbox{{ $unit->id }}" value="{{ $unit->id }}"
+                                                            {{ in_array($unit->id, $selectedUnitTypes) ? 'checked' : '' }}
+                                                            onchange="updateAmenities('unit_type[]={{ $unit->id }}',this)">
+                                                        <label for="checkbox{{ $unit->id }}"><span class="animits-div-tab">
+                                                                {{ ucwords($unit->unit_name) }}</span></label>
+                                                    </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>

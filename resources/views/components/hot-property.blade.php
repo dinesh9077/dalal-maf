@@ -207,5 +207,5 @@
         </div>
     </div>
 
-    <span class="label new-lables">{{ ucwords(str_replace('_', ' ', $property->purpose)) }}</span>
+    <span class="label new-lables">{{ $property->purpose === "sell" ? "Buy" : ucwords(str_replace('_', ' ', $property->purpose)) }}</span>
 </div>
