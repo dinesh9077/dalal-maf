@@ -203,12 +203,12 @@
                                                 <option value="rent" @if ($property->purpose == 'rent') selected @endif>
                                                     {{ __('Rent') }}
                                                 </option>
-                                                {{-- <option value="sell" @if ($property->purpose == 'sell') selected @endif>
+                                                <option value="sell" @if ($property->purpose == 'sell') selected @endif>
                                                     {{ __('Sell') }}
-                                                </option> --}}
-                                                <option value="buy" @if ($property->purpose == 'buy') selected @endif>
-                                                    {{ __('Buy') }}
                                                 </option>
+                                                {{-- <option value="buy" @if ($property->purpose == 'buy') selected @endif>
+                                                    {{ __('Buy') }}
+                                                </option> --}}
                                                  <option value="lease" @if ($property->purpose == 'lease') selected @endif>
                                                     {{ __('Lease') }}
                                                 </option>

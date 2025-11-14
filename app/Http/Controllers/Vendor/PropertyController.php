@@ -277,6 +277,7 @@ class PropertyController extends Controller
             if ($request->hasFile('video_image')) {
                 $videoImage = UploadFile::store(public_path('assets/img/property/video/'), $request->video_image);
             }
+            
             $bs = Basic::select('property_approval_status')->first();
             if ($bs->property_approval_status == 1) {
                 $approveStatus = 0;

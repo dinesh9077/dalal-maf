@@ -143,8 +143,8 @@
                                                 <option selected disabled value=""> {{ __('Select a Purpose') }}
                                                 </option>
                                                 <option value="rent">{{ __('Rent') }}</option>
-                                                {{-- <option value="sell">{{ __('Sell') }}</option> --}}
-                                                <option value="buy">{{ __('Buy') }}</option>
+                                                <option value="sell">{{ __('Sell') }}</option>
+                                                {{-- <option value="buy">{{ __('Buy') }}</option> --}}
                                                 <option value="lease">{{ __('Lease') }}</option>
                                                 <option value="franchiese">{{ __('Franchiese') }}</option>
                                                 <option value="business_for_sale">{{ __('Business For Sale') }}</option>

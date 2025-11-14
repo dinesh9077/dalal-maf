@@ -129,7 +129,7 @@
                         data-src="{{ asset('assets/img/property/featureds/' . $property->featured_image) }}">
                 </a>
 
-                <span class="HP-lables">{{ ucwords(str_replace('_', ' ', $property->purpose)) }}</span>
+                <span class="HP-lables">{{ $property->purpose === "sell" ? "Buy" : ucwords(str_replace('_', ' ', $property->purpose)) }}</span>
 
 
                 @if (Auth::guard('web')->check())

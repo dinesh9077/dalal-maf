@@ -579,19 +579,27 @@ class HomeController extends Controller
 		if ($request->filled('type')) {
 			$type = $request->type ?? [];
 		}
+		
+		$unitTypes = [];
+        if ($request->filled('unit_type')) {
+            $unitTypes = $request->unit_type ?? [];
+        }
 
         $price = null;
         if ($request->filled('price') && $request->price != 'all') {
             $price = $request->price;
         }
 
-        $purpose = ['rent', 'sell', 'buy', 'lease'];
-        if ($request->filled('purpose') && $request->purpose == 'franchiese') {
-            $purpose = ['franchiese'];
-        } 
+		$purpose = ['rent', 'sell', 'buy', 'lease'];
+		if ($request->filled('purpose') && $request->purpose == 'franchiese') {
+			$purpose = ['franchiese'];
+		}
 		if ($request->filled('purpose') && $request->purpose == 'business_for_sale') {
-            $purpose = ['business_for_sale'];
-        }
+			$purpose = ['business_for_sale'];
+		}
+		if ($request->filled('purpose') && $request->purpose == 'buy') {
+			$purpose = ['sell', 'buy'];
+		}
 
         $min = $max = null;
         if ($request->filled('min') && $request->filled('max')) {
@@ -726,6 +734,10 @@ class HomeController extends Controller
 				'=',
 				count($amenityIds)
 			);
+		})
+		->when(!empty($unitTypes), function ($query) use ($unitTypes) {
+			$unitTypes = array_values(array_unique($unitTypes));
+			$query->whereHas('proertyUnits', fn($q) => $q->whereIn('unit_id', $unitTypes));
 		})
 		->when($price, function ($query) use ($price) {
 			if ($price == 'negotiable') {

@@ -302,20 +302,58 @@ input[type="checkbox"]:checked+label .animits-div-tab {
                                                     @endforeach
                                                 </select>
                                             </div>
-
-                                            <!-- BHK Options -->
-                                            <div class="collapse show">
-                                                <div class="custom-checkbox new-animitis-divs">
-                                                    @foreach ([1,2,3,4,5,6] as $bhk)
+                                            <!-- <div class="form-group mb-20">
+                                                <input type="text" class="form-control filter-input" name="location"
+                                                    placeholder="{{ __('Enter location') }}" style="box-shadow : none"
+                                                    value="{{ request()->input('location') }}">
+                                            </div> -->
+                                            <div class="row">
+                                                {{-- <div class="col-lg-6">
+                                                            <div class="form-group mb-20">
+                                                                <input type="text" class="form-control filter-input"
+                                                                    name="beds" placeholder="{{ __('No. of bed') }}"
+                                                style="box-shadow : none" value="{{ request()->input('beds') }}">
+                                            </div>
+                                        </div> --}}
+                                        <!-- <div class="col-lg-12">
+                                            <div class="form-group mb-20">
+                                                <input type="text" class="form-control filter-input" name="baths"
+                                                    placeholder="{{ __('No. of bath') }}" style="box-shadow : none"
+                                                    value="{{ request()->input('baths') }}">
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <!-- <div class="form-group mb-20">
+                                        <input type="text" class="form-control filter-input" style="box-shadow : none"
+                                            placeholder="{{ __('Enter area Sqft') }}" name="area"
+                                            value="{{ request()->input('area') }}">
+                                    </div> -->
+                                    <div class="collapse show">
+                                        <div >
+                                            @php
+                                                if (!empty(request()->input('unit_type')))
+                                                {
+                                                    $selectedUnitTypes = [];
+                                                    if (is_array(request()->input('unit_type'))) {
+                                                        $selectedUnitTypes = request()->input('unit_type');
+                                                    } else {
+                                                        array_push($selectedUnitTypes, request()->input('unit_type'));
+                                                    }
+                                                } else {
+                                                    $selectedUnitTypes = [];
+                                                }
+                                            @endphp
+                                            <div class=" custom-checkbox new-animitis-divs"> 
+                                                @foreach($units as $unit)
                                                     <div>
-                                                        <input class="input-checkbox" type="checkbox" name="category[]"
-                                                            id="checkbox_bhk{{ $bhk }}" value="{{ $bhk }} BHK">
-                                                        <label for="checkbox_bhk{{ $bhk }}"><span
-                                                                class="animits-div-tab">
-                                                                {{ $bhk }} BHK</span></label>
+                                                        <input class="input-checkbox" type="checkbox" name="unit_type[]"
+                                                            id="checkbox{{ $unit->id }}" value="{{ $unit->id }}"
+                                                            {{ in_array($unit->id, $selectedUnitTypes) ? 'checked' : '' }}
+                                                            onchange="updateAmenities('unit_type[]={{ $unit->id }}',this)">
+                                                        <label for="checkbox{{ $unit->id }}"><span class="animits-div-tab">
+                                                                {{ ucwords($unit->unit_name) }}</span></label>
                                                     </div>
-                                                    @endforeach
-                                                </div>
+                                                @endforeach
                                             </div>
 
                                         </div>
