@@ -10,9 +10,7 @@
             transition: all 0.3s ease-in-out;
             margin-bottom: 20px;
             position: relative;
-            margin-top: 10px;
-            width: 320px; 
-            height: 260px;
+            height: 100%;
             justify-content: space-between;
         }
 
@@ -113,6 +111,7 @@
             display: flex;
             align-items: center;
             line-height: 1.2;
+            font-size: 10px;
         }
 
         .latest-info i {
