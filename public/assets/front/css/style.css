@@ -6840,9 +6840,9 @@ p.cookie-consent__message * {
 
 .new-property-details-down {
     margin-top: 30px;
-    margin-bottom: 30px;
-    padding: 20px 0px;
-    background-color: #F3F3F3;
+    /* margin-bottom: 30px; */
+    /* padding: 20px 0px; */
+    /* background-color: #F3F3F3; */
 }
 
 .new-details-bg-white {
@@ -7220,10 +7220,6 @@ p.cookie-consent__message * {
     z-index: 10;
 }
 
-
-
-
-
 /* ====================== */
 
 .bussiness-f-s-left-btn {
@@ -7318,8 +7314,6 @@ p.cookie-consent__message * {
 }
 }
 
-
-
 .verify-f-s-left-btn {
     position: absolute;
     top: 45%;
@@ -7357,9 +7351,6 @@ p.cookie-consent__message * {
     justify-content: center;
     z-index: 10;
 }
-
-
-
 
 .fren-new-right-btn {
     position: absolute;
@@ -7575,15 +7566,6 @@ p.cookie-consent__message * {
     border-radius: 6px;
 }
 
-
-
-
-
-
-
-
-
-
 /* =========== */
 
 .new-pro-images-grid img {
@@ -7594,14 +7576,12 @@ p.cookie-consent__message * {
     cursor: pointer;
 }
 
-/* ✅ Left big image fix height */
 .new-pro-images-grid .col-md-8 img {
     height: 500px;
 }
 
-/* ✅ Right small images fix height */
 .new-pro-images-grid .col-md-4 img {
-    height: 245px;
+    height: 155px;
 }
 
 .new-pro-overlay {
