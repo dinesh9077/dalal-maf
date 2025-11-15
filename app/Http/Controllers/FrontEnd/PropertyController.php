@@ -49,15 +49,25 @@ class PropertyController extends Controller
         $language = $misc->getLanguage();
         $information['seoInfo'] = $language->seoInfo()->select('meta_keyword_properties', 'meta_description_properties')->first();
 
-        if ($request->has('type') && ($request->type == 'commercial' || $request->type == 'residential')) {
-            $information['categories'] = PropertyCategory::with(['categoryContent' => function ($q) use ($language) {
-                $q->where('language_id', $language->id);
-            }, 'properties'])->where([['status', 1], ['type', $request->type]])->get();
-        } else {
-            $information['categories'] = PropertyCategory::with(['categoryContent' => function ($q) use ($language) {
-                $q->where('language_id', $language->id);
-            }, 'properties'])->where('status', 1)->get();
-        }
+        $information['categories'] = PropertyCategory::with(['categoryContent' => function ($q) use ($language) {
+            $q->where('language_id', $language->id);
+        }, 'properties'])
+        ->where('status', 1)->get();
+
+        // if ($request->has('type')) 
+        // {
+
+        //     $information['categories'] = PropertyCategory::with(['categoryContent' => function ($q) use ($language) {
+        //         $q->where('language_id', $language->id);
+        //     }, 'properties'])
+        //     ->where([['status', 1]])
+        //     ->whereIn('type', $request->type)->get(); 
+        // } else {
+        //     $information['categories'] = PropertyCategory::with(['categoryContent' => function ($q) use ($language) {
+        //         $q->where('language_id', $language->id);
+        //     }, 'properties'])
+        //     ->where('status', 1)->get();
+        // }
  
         $information['bgImg'] = $misc->getBreadcrumb();
         $information['pageHeading'] = $misc->getPageHeading($language);
@@ -360,10 +370,71 @@ class PropertyController extends Controller
             $viewContent = $viewContent->render();
 
             return response()->json(['propertyContents' => $viewContent, 'properties' => $property_contents])->header('Cache-Control', 'no-cache, no-store, must-revalidate');
-        }
-
+        } 
         return view('frontend.property.index', $information);
     }
+
+    public function loadCategoryAmenitiesTypes(Request $request)
+    {
+        // Read types from request; ensure it's always an array
+        $types = $request->input('type', []);
+        if (!is_array($types)) {
+            $types = [$types];
+        }
+
+        $misc = new MiscellaneousController();
+        $language = $misc->getLanguage();
+
+        // Build categories query
+        $categoriesQuery = PropertyCategory::with([
+            'categoryContent' => function ($q) use ($language) {
+                $q->where('language_id', $language->id);
+            },
+            'properties'
+        ])->where('status', 1);
+
+        if (!empty($types)) {
+            $categoriesQuery->whereIn('type', $types);
+        }
+
+        $categories = $categoriesQuery->get();
+
+        // Build amenities query
+        $amenitiesQuery = Amenity::where('status', 1)
+            ->with([
+                'amenityContent' => function ($q) use ($language) {
+                    $q->where('language_id', $language->id);
+                }
+            ])
+            ->orderBy('serial_number');
+
+        if (!empty($types)) {
+            if (!empty($types)) {
+                $amenitiesQuery->where(function ($q) use ($types) {
+                    foreach ($types as $type) {
+                        // orWhereJsonContains available in Laravel 8+. If not, use orWhereRaw with JSON_CONTAINS
+                        $q->orWhereJsonContains('types', $type);
+                    }
+                });
+            }
+        }
+
+        $amenities = $amenitiesQuery->get();
+
+        // Render blade partials to HTML strings
+        $categoriesHtml = view('frontend.property.categories-list', compact('categories'))->render();
+        $amenitiesHtml = view('frontend.property.amenities-list', compact('amenities'))->render();
+
+        // Return HTML (and optionally raw data)
+        return response()->json([
+            'status' => 'success',
+            'categories_html' => $categoriesHtml,
+            'amenities_html' => $amenitiesHtml,
+            'categories' => $categories,   // optional / for debugging
+            'amenities' => $amenities,     // optional / for debugging
+        ]);
+    }
+
 
     public function featuredAll($type)
     { 
@@ -381,7 +452,7 @@ class PropertyController extends Controller
 		};
         return view('frontend.property.featured',compact('property_contents', 'title')); 
     }
- 
+     
     public function details($slug)
     {
 		

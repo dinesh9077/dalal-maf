@@ -92,8 +92,7 @@ function updateAmenities(data, checkbox) {
   const url = getURL();
   const [rawName, rawVal = ""] = String(data).split("=");
   const name = decodeURIComponent(rawName);
-  const value = decodeURIComponent(rawVal);
-
+  const value = decodeURIComponent(rawVal); 
   // Collect current values
   const existing = url.searchParams.getAll(name).filter(Boolean);
 
@@ -111,6 +110,8 @@ function updateAmenities(data, checkbox) {
 
   $(".request-loader").addClass("show");
   pushAndFetch(url);
+
+  eventCapture();
 }
 
 // -----------------------------
@@ -216,10 +217,11 @@ function resetURL() {
 
   // 7) Push state + fetch results
   pushAndFetch(clean);
+  eventCapture();
 }
 
 
-function reset() {
+function reset() { 
   // Uncheck all checkboxes
   document
     .querySelectorAll('input[type="checkbox"]')
@@ -233,7 +235,7 @@ function reset() {
   // Reset URL without fetching (your original reset did not fetch here)
   const url = getURL();
   const clean = new URL(url.origin + url.pathname);
-  pushURL(clean);
+  pushURL(clean);  
 }
 
 function priceRest() {
