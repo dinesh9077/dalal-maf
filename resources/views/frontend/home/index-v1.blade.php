@@ -30,7 +30,22 @@ $version = $basicInfo->theme_version;
         text-transform: capitalize !important;
         border-radius: 5px !important;
     }
+    .ui-widget.ui-widget-content {
+        background: white !important;
+        border: 1px solid #dcdcdc !important;
+        font-size: 14px !important;
+        padding: 2px !important;
+        color: #2b3138 !important;
+        text-transform: capitalize !important;
+        border-radius: 5px !important;
+    }
 
+    .ui-widget.ui-widget-content .ui-menu-item .ui-menu-item-wrapper:hover {
+        background: black !important;
+        border: none !important;
+        color: white !important;
+        outline: none !important;
+        border-radius: 5px !important;
     .ui-widget.ui-widget-content .ui-menu-item .ui-menu-item-wrapper:hover {
         background: black !important;
         border: none !important;
@@ -40,7 +55,14 @@ $version = $basicInfo->theme_version;
 
 
     }
+    }
 
+    .ui-widget.ui-widget-content .ui-menu-item {
+        background: white !important;
+        border: none !important;
+        outline: none !important;
+        color: black !important;
+    }
     .ui-widget.ui-widget-content .ui-menu-item {
         background: white !important;
         border: none !important;
@@ -49,7 +71,10 @@ $version = $basicInfo->theme_version;
     }
 
     .new-main-navbar {
+    .new-main-navbar {
 
+        background-color: transparent !important;
+    }
         background-color: transparent !important;
     }
 
@@ -63,12 +88,32 @@ $version = $basicInfo->theme_version;
         width: 90%;
         z-index: 10;
     }
+    .mobile-search {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        z-index: 10;
+    }
 
     .mobile-search-bar {
         position: relative;
         width: 100%;
     }
+    .mobile-search-bar {
+        position: relative;
+        width: 100%;
+    }
 
+    .mobile-search-input {
+        width: 100%;
+        padding: 10px 40px 10px 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        outline: none;
+    }
     .mobile-search-input {
         width: 100%;
         padding: 10px 40px 10px 15px;
@@ -87,7 +132,22 @@ $version = $basicInfo->theme_version;
         font-size: 18px;
         pointer-events: none;
     }
+    .mobile-search-bar i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #000;
+        font-size: 18px;
+        pointer-events: none;
+    }
 
+    .tabs-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-bottom: 1px solid #f4f5f7;
+    }
     .tabs-wrapper {
         display: flex;
         align-items: center;
@@ -101,7 +161,19 @@ $version = $basicInfo->theme_version;
         align-items: center;
         margin-bottom: 0;
     }
+    .tabs-wrapper .nav-tabs {
+        border: none;
+        display: flex;
+        align-items: center;
+        margin-bottom: 0;
+    }
 
+    .tabs-wrapper .nav-tabs .nav-link {
+        border: none;
+        font-weight: 500;
+        color: #333;
+        background: none;
+    }
     .tabs-wrapper .nav-tabs .nav-link {
         border: none;
         font-weight: 500;
@@ -191,7 +263,7 @@ $version = $basicInfo->theme_version;
     height:110px;
     }
 
-/* ==== */
+    /* ==== */
 </style>
 
 @section('content')
