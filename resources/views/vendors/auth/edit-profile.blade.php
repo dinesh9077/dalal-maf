@@ -1,5 +1,4 @@
 <style>
-
 .login-box {
     width: 400px !important;
     max-width: 90%;
@@ -9,7 +8,7 @@
     box-shadow: 0 8px 12px rgba(31, 92, 163, 0.2);
     padding: 20px 20px;
     margin: 0 auto;
-    height:250px;
+    height: 250px;
 }
 
 .modal-dialog {
@@ -18,11 +17,12 @@
 }
 
 .modal-title {
-    font-family: var(--font-family-base)!important;
+    font-family: var(--font-family-base) !important;
     color: var(--color-dark) !important;
     font-weight: 600 !important;
     line-height: none !important;
-
+    font-size:20px !important;
+    
 }
 
 .login-box .modal-header {
@@ -38,7 +38,7 @@
     color: #6b7280;
     font-size: 14px;
     margin: 0px 0 5px 0;
-    font-weight:500;
+    font-weight: 500;
 }
 
 .login-box .form-group {
@@ -71,7 +71,7 @@
 
 .login-box .btn-send-otp:hover {
     background-color: #6c603c;
-    color:#fff;
+    color: #fff;
 }
 
 .login-box .terms-text {
@@ -80,22 +80,22 @@
     text-align: center;
     cursor: pointer;
 }
+
 .close {
-    /* background-color: #6c603c !important;  */
+    background-color: #6c603c !important; 
     border: none;
     width: 32px;
     height: 32px;
-    border-radius: 50%; 
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 16px;
     transition: all 0.3s ease;
-    cursor: pointer;
 }
 
 .close i {
-    color: #000!important; 
+    color: #fff;
     font-size: 14px;
     transition: color 0.3s ease;
 
@@ -106,11 +106,12 @@
 }
 
 .close:hover i {
-    color: #000; 
+    color: #000;
 }
+
 .model-otp {
     width: 400px !important;
-    height:400px !important;
+    height: 350px !important;
     margin: auto;
     border-radius: 12px;
     overflow: hidden;
@@ -119,15 +120,19 @@
 }
 
 @media(max-width: 350px) {
-    .model-otp { width: 300px !important; }
+    .model-otp {
+        width: 300px !important;
+    }
 }
 
 @media (min-width: 350px) and (max-width: 500px) {
-    .model-otp { width: 340px !important; }
+    .model-otp {
+        width: 340px !important;
+    }
 }
 
 .close-btn-login {
-    position: absolute;
+    /* position: absolute; */
     top: 15px;
     right: 15px;
     width: 28px;
@@ -137,18 +142,20 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    margin-top:10px;
 }
+
 .close-btn-login i {
     color: white;
     font-size: 14px;
 }
+
 .close-btn-login:hover {
     background: #6c603c;
 }
 
-.modal-header.box-p-2 {
-    padding: 40px 24px 10px;
-    border-bottom: none;
+.modal-header {
+    padding: 28px 24px;
 }
 
 #editFrontPhone {
@@ -156,6 +163,7 @@
     font-weight: 600;
     color: #000;
 }
+
 #editPhoneNumber {
     cursor: pointer;
     margin-left: 8px;
@@ -163,14 +171,15 @@
 }
 
 .otp-input-wrapper input.otp-box-input {
-    width: 55px;
-    height: 55px;
+    width: 45px;
+    height: 45px;
     font-size: 20px;
     text-align: center;
     border: 1px solid #dcdcdc;
     border-radius: 8px;
     font-weight: 600;
 }
+
 .otp-input-wrapper input.otp-box-input:focus {
     border-color: #6c603c;
     box-shadow: 0 0 5px rgba(148, 126, 65, 0.4);
@@ -181,6 +190,7 @@
     font-size: 14px;
     text-align: center;
 }
+
 .resend-link {
     color: #6c603c !important;
     font-weight: 600;
@@ -188,8 +198,7 @@
 }
 
 .verify-btn {
-    width: 90%;
-    margin: 20px auto 30px;
+    width: 100%;
     display: block;
     background: #6c603c !important;
     color: white;
@@ -197,8 +206,6 @@
     font-weight: 600;
     border-radius: 6px;
 }
-
-
 </style>
 @extends('vendors.layout')
 
@@ -445,7 +452,7 @@
 
             <div class="modal-header">
                 <h3 class="modal-title">Update Phone</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" style="margin:0px;" data-dismiss="modal" aria-label="Close">
                     <i class="fa fa-times"></i>
                 </button>
             </div>
@@ -465,43 +472,53 @@
 </div>
 
 <div class="modal fade" id="otpVerificationModal" tabindex="-1" role="dialog"
-    aria-labelledby="otpVerificationModalLabel" aria-hidden="true" style="height: fit-content; margin-top:230px;">
+    aria-labelledby="otpVerificationModalLabel" aria-hidden="true" style="height: fit-content;">
     <div class="modal-dialog modal-dialog-centered model-otp" role="document">
         <div class="modal-content model-otp">
 
-            <button type="button" class="close-btn-login" data-dismiss="modal" aria-label="Close">
-                <i class="fa fa-times"></i>
-            </button>
+            <div class="modal-header border-0 p-4" style="display:flex; flex-direction:column;">
 
-            <div class="modal-header box-p-2 " style="display:flex; flex-direction:column;">
-                <h4 class="modal-title">{{ __('Verify your number') }}</h4>
-                <h4  style="color:#000; font-weight:600; margin:0;">
-                    <span id="editFrontPhone">+91-7854875487</span>
-                    <i class="fa fa-pencil" id="editPhoneNumber"></i>
-                </h4>
+                <div class="d-flex justify-content-between align-items-start w-100 mb-2">
+
+                    <div>
+                        <h4 class="modal-title m-0">{{ __('Verify your number') }}</h4>
+                        <h4 class="m-0 mt-1" style="color:#000; font-weight:600;">
+                            <span id="editFrontPhone">+91-7854875487</span>
+                            <i class="fa fa-pencil" id="editPhoneNumber" style="cursor:pointer;"></i>
+                        </h4>
+                    </div>
+
+                    <button type="button" class="close-btn-login" data-dismiss="modal" aria-label="Close"
+                        style=" width:28px; background-color:#6c603c; position:none; height:28px; border-radius:50%; border:none;  align-items:center; justify-content:center;">
+                        <i class="fa fa-times" style="color:#fff;  font-size:14px;"></i>
+                    </button>
+                </div>
+
+                <h5 class="otp-input-wrapper" style="margin-bottom:10px; margin-top:10px; font-size:16px; font-weight:600;">Enter your 4 digit OTP</h5>
+
+                <div class="d-flex otp-input-wrapper" style ="gap:10px;">
+                    <input type="text" maxlength="1" class="otp-box-input form-control" />
+                    <input type="text" maxlength="1" class="otp-box-input form-control" />
+                    <input type="text" maxlength="1" class="otp-box-input form-control" />
+                    <input type="text" maxlength="1" class="otp-box-input form-control" />
+                </div>
+
+                <h5 class="mt-2" style="font-size:16px; font-weight:600;">
+                    Haven't received yet?
+                    <span id="resendOtp" class="resend-link">Resend OTP</span>
+                    <span id="otpTimer" class="timer-text"></span>
+                </h5>
+
+                <button id="verifyOtpBtn" type="button" class="btn verify-btn mt-5"
+                    style="background-color:#6c603c; color:#fff; font-weight:;">
+                    {{ __('Verify') }}
+                </button>
+
             </div>
-
-            <p class="modal-body text-center box-p-3 d-flex gap-2 otp-input-wrapper">Enter your 4 digit OTP</p>
-
-            <div class="d-flex gap-2 otp-input-wrapper">
-                <input type="text" maxlength="1" class="otp-box-input form-control" />
-                <input type="text" maxlength="1" class="otp-box-input form-control" />
-                <input type="text" maxlength="1" class="otp-box-input form-control" />
-                <input type="text" maxlength="1" class="otp-box-input form-control" />
-            </div>
-
-            <p class="resend-text">
-                Haven't received yet?
-                <span id="resendOtp" class="resend-link">Resend OTP</span>
-                <span id="otpTimer" class="timer-text"></span>
-            </p>
-
-            <button id="verifyOtpBtn" type="button" class="btn verify-btn" style="background-color:#6c603c; color:#fff;">
-                {{ __('Verify') }}
-            </button>
         </div>
     </div>
 </div>
+
 
 
 @endsection

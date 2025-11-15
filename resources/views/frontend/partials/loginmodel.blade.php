@@ -32,7 +32,7 @@
 }
 
 .close-btn-login {
-    background-color: #947E41;
+    background-color: #6c603c;
     border-radius: 50px;
     width: 17px;
     font-size: 12px;
@@ -45,7 +45,7 @@
 }
 
 .close-btn-login:hover {
-    background-color: #947E41 !important;
+    background-color: #6c603c !important;
     border-radius: 50px;
     width: 17px;
     font-size: 12px;
@@ -125,7 +125,7 @@
 }
 
 .otp-input-wrapper input.otp-box:focus {
-    border-color: #947E41;
+    border-color: #6c603c;
     box-shadow: 0 0 3px rgba(148, 126, 65, 0.5);
 }
 </style>
@@ -141,7 +141,7 @@
                 
                 <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
                     <h4 class="modal-title" id="exampleModalLongTitle">{{ __('Login / Register') }}</h4>
-                    <button type="button" class="close-btn-login" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close-btn-login" data-bs-dismiss="modal" aria-label="Close">
                         <i class="fa fa-times"></i>
                     </button>
                 </div>
