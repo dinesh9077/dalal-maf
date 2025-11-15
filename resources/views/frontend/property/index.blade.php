@@ -242,15 +242,14 @@ $version = $basicInfo->theme_version;
 
                                             @foreach (['residential', 'commercial', 'industrial'] as $type)
                                             <div>
-                                                <input class="input-checkbox" type="checkbox" name="category[]"
+                                                <input class="input-checkbox" type="checkbox" name="type[]"
                                                     id="checkbox{{ $type }}" value="{{ $type }}"
                                                     {{ in_array($type, $selectedTypes) ? 'checked' : '' }}
                                                     onchange="updateAmenities('type[]={{ $type }}',this)">
                                                 <label for="checkbox{{ $type }}"><span class="animits-div-tab">
                                                         {{ ucwords($type) }}</span></label>
                                             </div>
-                                            @endforeach
-
+                                            @endforeach 
                                         </div>
                                     </div>
                                 </div>
@@ -682,6 +681,50 @@ $version = $basicInfo->theme_version;
                 updateURL(`max=${encodeURIComponent(maxV)}`);
             }, 400);
         });
-    });
+    }); 
+
+    eventCapture();
+
+    function getTypesFromUrl() { 
+        return new URLSearchParams(window.location.search).getAll('type[]') || [];
+    }
+
+    function collectCheckedValues(paramName) {
+        return new URLSearchParams(window.location.search).getAll(paramName) || [];
+    }
+
+    function eventCapture() {
+         // types from URL
+        const types = getTypesFromUrl();
+
+        // categories and amenities from checkboxes on page
+        const categories = collectCheckedValues('category[]'); // values should be slug or id as per your blade
+        const amenities = collectCheckedValues('amenities[]');   // values should be id (recommended) or name
+        
+        const url = "{{ route('frontend.types-wise-load-data') }}"; // blade route
+
+        // Build new params
+        const params = new URLSearchParams();
+
+        // Append types (from URL)
+        types.forEach(t => params.append('type[]', t));
+
+        // Append categories
+        categories.forEach(c => params.append('category[]', c));
+
+        // Append amenities
+        amenities.forEach(a => params.append('amenities[]', a));  
+        $.ajax({
+        url: url + (params.toString() ? ('?' + params.toString()) : ''),
+            method: 'GET',
+            success: function (res) {
+                $('#amenities').html(res.amenities_html);
+                $('#categories').html(res.categories_html);
+            } 
+        });
+    } 
+     
+
+
 </script>
 @endsection

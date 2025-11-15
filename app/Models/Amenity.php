@@ -12,6 +12,10 @@ class Amenity extends Model
     use HasFactory;
     protected $guarded = [];
 
+    protected $casts = [
+        'types' => 'array', // automatically serializes/deserializes JSON -> array
+    ]; 
+
     public function amenityContents()
     {
         return $this->hasMany(AmenityContent::class, 'amenity_id', 'id');

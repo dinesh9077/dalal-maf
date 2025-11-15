@@ -222,7 +222,7 @@
 			}])->get();
 			$information['amenities'] = Amenity::with(['amenityContent' => function ($q) use ($language) {
 				$q->where('language_id', $language->id);
-			}])->where('status', 1)->get();
+			}])->where('status', 1)->whereJsonContains('types', $request->type)->get();
 			
 			$information['propertySettings'] = Basic::select('property_state_status', 'property_country_status')->first();
 			$information['states'] = State::with(['stateContent' => function ($q) use ($language) {
@@ -513,7 +513,7 @@
 			$information['propertyUnities'] = PropertyUnit::where('property_id', $property->id)->get();
 			$information['amenities'] = Amenity::with(['amenityContent' => function ($q) use ($language) {
 				$q->where('language_id', $language->id);
-			}])->where('status', 1)->get();
+			}])->where('status', 1)->whereJsonContains('types', $property->type)->get();
 			
 			$information['propertyCategories'] = PropertyCategory::where([['type', $property->type], ['status', 1]])->with(['categoryContent' => function ($q) use ($language) {
 				$q->where('language_id', $language->id);
@@ -536,9 +536,9 @@
 			
 			if ($property->vendor_id != 0) {
 				$package = VendorPermissionHelper::currentPackagePermission($property->vendor_id);
-				$uploadGImg = $package->number_of_property_gallery_images -  count($information['galleryImages']);
+					$uploadGImg = ($package->number_of_property_gallery_images ?? 0) -  count($information['galleryImages']);
 				} else {
-				$uploadGImg = 999999;
+					$uploadGImg = 999999;
 			}
 			$information['uploadGImg'] = $uploadGImg;
 			$information['url'] = $this->routeName == 'admin.property_inventory.properties' ? 'admin.property_inventory.update_property' : 'admin.property_management.update_property';

@@ -28,6 +28,26 @@
                             <small>{{ __('Click on the dropdown icon to select a icon.') }}</small>
                         </div>
                     </div> 
+                    <div class="form-group">
+                        <label for="">{{ __('Type') . '*' }}</label>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="type_residential" name="types[]" value="residential" class="custom-control-input">
+                            <label for="type_residential" class="custom-control-label">{{ __('Residential') }}</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="type_commercial" name="types[]" value="commercial" class="custom-control-input">
+                            <label for="type_commercial" class="custom-control-label">{{ __('Commercial') }}</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="type_industrial" name="types[]" value="industrial" class="custom-control-input">
+                            <label for="type_industrial" class="custom-control-label">{{ __('Industrial') }}</label>
+                        </div>
+                    </div>
+
+
                     @foreach ($langs as $lang)
                         <div class="form-group {{ $lang->direction == 1 ? 'rtl text-right' : '' }}">
                             <label for="">{{ __('Name') . '*' }} ({{ $lang->name }})</label>

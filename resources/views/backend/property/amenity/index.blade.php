@@ -66,8 +66,9 @@
                                                 <th scope="col">
                                                     <input type="checkbox" class="bulk-check" data-val="all">
                                                 </th>
-                                                <th scope="col">{{ __('Icon') }}</th>
+                                                <th scope="col">{{ __('Icon') }}</th> 
                                                 <th scope="col">{{ __('Name') }}</th>
+                                                <th scope="col">{{ __('Types') }}</th>
                                                 <th scope="col">{{ __('Status') }}</th>
                                                 <th scope="col">{{ __('Serial Number') }}</th>
                                                 <th scope="col">{{ __('Actions') }}</th>
@@ -85,7 +86,10 @@
                                                     </td>
                                                     <td>
                                                         {{ strlen($content->name) > 50 ? mb_substr($content->name, 0, 50, 'UTF-8') . '...' : $content->name }}
-                                                    </td>
+                                                    </td> 
+                                                    <td>
+                                                        {{ $content->amenity->types ? ucwords(implode(', ', $content->amenity->types)) : 'N/A' }}
+                                                    </td> 
                                                     <td>
                                                         @if ($content->amenity->status == 1)
                                                             <h2 class="d-inline-block"><span
@@ -107,28 +111,26 @@
                                                                 {{ __('Select') }}
                                                             </button>
 
-                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
+                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
                                                                 <a class="dropdown-item editBtn" href="#"
                                                                     data-toggle="modal" data-target="#editModal"
                                                                     @foreach ($langs as $lang)
-                                                            @php
-                                                                
-                                                                $amen = \App\Models\AmenityContent::where([["amenity_id",$content->amenity_id],['language_id',$lang->id]])->first();
-                                                            @endphp 
-                                                            data-{{ $lang->code }}_name="{{ $amen?->name }}" @endforeach
+                                                                        @php  
+                                                                            $amen = \App\Models\AmenityContent::where([["amenity_id",$content->amenity_id],['language_id',$lang->id]])->first();
+                                                                        @endphp 
+                                                                        data-{{ $lang->code }}_name="{{ $amen?->name }}" 
+                                                                    @endforeach
                                                                     data-amenity_id="{{ $content->amenity_id }}"
                                                                     data-icon="{{ $content->amenity->icon }}"
                                                                     data-name="{{ $content->amenity->name }}"
+                                                                    data-types="{{ json_encode($content->amenity->types) }}"
                                                                     data-status="{{ $content->amenity->status }}"
                                                                     data-serial_number="{{ $content->amenity->serial_number }}">
                                                                     <span class="btn-label">
                                                                         <i class="fas fa-edit"></i> {{ __('Edit') }}
                                                                     </span>
                                                                 </a>
-
-
-
+ 
                                                                 <form class="deleteForm d-inline-block dropdown-item"
                                                                     action="{{ route('admin.property_specification.delete_amenity') }}"
                                                                     method="post">
@@ -154,8 +156,7 @@
                             @endif
                         </div>
                     </div>
-                </div>
-
+                </div> 
                 <div class="card-footer"></div>
             </div>
         </div>
@@ -166,4 +167,21 @@
 
     {{-- edit modal --}}
     @include('backend.property.amenity.edit')
+@endsection
+@section('script')
+    <script>
+        $('.editBtn').click(function (e) {
+            e.preventDefault();
+
+            const types = $(this).data('types') || []; // parsed array, or empty[]
+
+            // Uncheck ALL first
+            $('.type-checkbox').prop('checked', false);
+
+            // Loop and check the matching ones
+            types.forEach(function (t) {
+                $('.type-checkbox[value="' + t + '"]').prop('checked', true);
+            });
+        });
+    </script>
 @endsection

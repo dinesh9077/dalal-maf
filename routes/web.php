@@ -35,6 +35,7 @@
 
 		Route::get('/location-search', 'FrontEnd\PropertyController@locationSearch')->name('frontend.location.search');
 		Route::get('/properties', 'FrontEnd\PropertyController@index')->name('frontend.properties');
+		Route::get('/types-wise-load-data', 'FrontEnd\PropertyController@loadCategoryAmenitiesTypes')->name('frontend.types-wise-load-data');
 		Route::get('/properties/{type}/all', 'FrontEnd\PropertyController@featuredAll');
 		Route::get('/state-cities', 'FrontEnd\PropertyController@getStateCities')->name('frontend.get_state_cities');
 		Route::get('/cities', 'FrontEnd\PropertyController@getCities')->name('frontend.get_cities');

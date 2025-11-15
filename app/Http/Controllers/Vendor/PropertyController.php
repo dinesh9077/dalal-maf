@@ -174,7 +174,7 @@ class PropertyController extends Controller
         }])->get();
         $information['amenities'] = Amenity::with(['amenityContent' => function ($q) use ($language) {
             $q->where('language_id', $language->id);
-        }])->where('status', 1)->get();
+        }])->where('status', 1)->whereJsonContains('types', $request->type)->get();
         $information['agents'] = Agent::where('vendor_id', Auth::guard('vendor')->user()->id)->get();
         $information['unitTypes'] = Unit::get();
         $information['areas'] = Area::where('status', 1)->get();
@@ -407,7 +407,9 @@ class PropertyController extends Controller
         $information['propertyAmenities'] = PropertyAmenity::where('property_id', $property->id)->get();
         $information['amenities'] = Amenity::with(['amenityContent' => function ($q) use ($language) {
             $q->where('language_id', $language->id);
-        }])->where('status', 1)->get();
+        }])->where('status', 1)
+        ->whereJsonContains('types', $property->type)
+        ->get();
         $information['propertyCategories'] = PropertyCategory::where([['type', $property->type], ['status', 1]])->with(['categoryContent' => function ($q) use ($language) {
             $q->where('language_id', $language->id);
         }])->get();

@@ -1,5 +1,4 @@
- @forelse ($property_contents as $property_content)
-     
+ @forelse ($property_contents as $property_content) 
      <x-property :property="$property_content" class="col-lg-4 col-md-6" />
  @empty
      <div class="col-lg-12">
