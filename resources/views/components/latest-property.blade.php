@@ -14,6 +14,10 @@
             justify-content: space-between;
         }
 
+        .product-latest {
+    height: 260px !important;
+}
+
         .product-latest:hover {
             box-shadow: 0 4px 18px rgba(0,0,0,0.15);
             /* transform: translateY(-3px); */
@@ -106,7 +110,7 @@
         .latest-info li {
             border: 1px solid #e0e0e0;
             border-radius: 6px;
-            padding: 4px 8px;
+            padding: 4px 5px;
             /* background: #fafafa; */
             display: flex;
             align-items: center;

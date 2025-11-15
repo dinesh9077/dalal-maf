@@ -11,8 +11,8 @@
 ----------------------------------------- */
 .home-banner.home-banner-1 {
   /* height: 572px; */
-  height: 400px;
-  /* height: 350px; */
+  /* height: 400px; */
+  height: 350px;
   position: relative;
 }
 
@@ -335,7 +335,7 @@
 }
 @media only screen and   (min-width : 1400px) {
     .new-banner-filters-width{
-        width: 63% !important;
+        width: 62% !important;
         /* width: 60% !important; */
     }
 }
@@ -382,6 +382,7 @@
 @media (max-width: 768px) {
   .view-all-desktop {
     display: none !important;
+    width: auto !important;
   }
 
   .view-all-mobile {

@@ -3292,7 +3292,7 @@ Lazyload CSS
 }
 
 .product-area > .container {
-    border-top: 1px solid #f4f5f7; 
+    border-top: 2px solid #f4f5f7; 
     padding-top: 20px;
 }
 
@@ -5739,7 +5739,7 @@ p.cookie-consent__message * {
 }
 
 .new-images-card {
-    height: 208px !important;
+    height: 180px !important;
     width: 100% !important;
     object-fit: cover !important;
     border-radius: 17px 17px 0px 0px !important;
@@ -6054,6 +6054,15 @@ p.cookie-consent__message * {
     background-color: #fff;
     margin-top: 20px;
 }
+
+.new-company-card:hover{
+
+    transition: ease 2s;
+    border: 2px solid #6c603c;
+
+}
+
+
 @media(max-width:320px){
     .new-company-card{
         padding: 10px 10px;
@@ -6163,9 +6172,9 @@ p.cookie-consent__message * {
 .city-card {
     background: #fff;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
     padding: 10px;
-    margin: 10px 0;
+    margin: 0px 0;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -6178,18 +6187,31 @@ p.cookie-consent__message * {
 }
 
 .city-card img {
-    height: 100px;
+    height: 115px;
     object-fit: cover;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     border-radius: 10px;
 }
 
 .city-card p {
-    margin-top: 5px;
+        margin-top: 12px;
     margin-bottom: 0px;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 12px;
     color: #4d4d4d;
+    width: 50%;
+    border: 1px solid #F8F7F2;
+    text-align: center;
+    padding: 5px;
+    border-radius: 10px;
+        background: #F8F7F2;
+        transition: ease 1s;
+    
+}
+
+.city-card:hover p{
+    background-color: #6c603c;
+    color: white;
 }
 
 .new-city-design {
@@ -6204,7 +6226,7 @@ p.cookie-consent__message * {
 }
 
 .custom-col-5 {
-    flex: 0 0 14%;
+    flex: 0 0 20%;
     max-width: 20%;
 }
 
@@ -7005,7 +7027,7 @@ p.cookie-consent__message * {
     background: white;
     overflow: hidden;
     transition: all 0.3s ease-in-out;
-    padding: 15px;
+    padding: 0px;
     height: 100%;
 }
 
@@ -7013,7 +7035,7 @@ p.cookie-consent__message * {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 0px;
 }
 
 .blog-body {
@@ -7076,8 +7098,8 @@ p.cookie-consent__message * {
 
 .new-primume-prop-img {
   position: absolute;
-    top: -20px;
-    width: 19%;
+    top: 11px;
+    width: 15%;
     right: 0px;
 }
 
@@ -7144,7 +7166,7 @@ p.cookie-consent__message * {
 
 .custom-swiper-btn {
     top: 50%;
-    transform: translateY(-50%);
+    /* transform: translateY(-50%); */
     width: 40px;
     height: 40px;
     background: #fff;
@@ -7161,7 +7183,7 @@ p.cookie-consent__message * {
 
 @media(max-width : 575px) {
     .swiper {
-        overflow: visible !important;
+        overflow: hidden !important;
     }
 
     .swiper-button-next,
@@ -7181,11 +7203,11 @@ p.cookie-consent__message * {
 }
 
 .first-left {
-    left: -10px;
+    left: -5px;
 }
 
 .first-right {
-    right: -10px;
+    right: -5px;
 }
 
 
@@ -7692,10 +7714,21 @@ p.cookie-consent__message * {
     position: relative;
     padding: 30px 25px;
     border-radius: 10px;
-    border: 1px solid #dcdcdc;
-    margin-top: 20px;
+    border: 1px solid #e4e4e4;
+    margin-top: 28px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    transition: ease 1s;
 }
+.why-main-div:hover{
+    border: 1px solid #6c603c ;
+
+
+}
+
+.why-main-div:hover .icons {
+    border-color: #6c603c ;
+}
+
 
 .why-main-div h6 {
     font-size: 22px !important;
@@ -7715,11 +7748,14 @@ p.cookie-consent__message * {
     width: 80px;
     padding: 15px;
     background-color: #F9F6ED;
-    border: 1px solid #92844425;
+    border-left: 1px solid #92844425;
+    border-bottom: 1px solid #92844425;
     position: absolute;
     right: 0px;
     top: 0px;
     border-radius: 0px 8px 0px 20px;
+    transition: ease 1s;
+
 }
 
 
@@ -8175,7 +8211,7 @@ button:hover {
 .product-image-box {
     position: relative;
     overflow: hidden;
-    border-radius: 8px;
+    border-radius: 0px;
     cursor: pointer;
 }
 
@@ -8767,6 +8803,7 @@ button:hover {
 
 .swiper {
     padding: 10px 5px !important;
+        height: fit-content;
 }
 
 #product-slider-pagination{
@@ -8901,10 +8938,12 @@ button:hover {
      /* Extra large devices (≥1200px) */
      @media (min-width: 1280px) {
           .container {
-               max-width: 1280px;
+               max-width: 1250px;
             
           }
      }
+
+  
 
      .new-heart-btn{
         position: absolute;
@@ -8927,4 +8966,71 @@ button:hover {
 
     .new-icon-color{
         margin-inline-end : 2px  !important;
+    }
+
+    .New-FF-div{
+
+        
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .LP_SLider-div{
+        padding: 0px 20px;
+    }
+
+    .BFS_SLider-div{
+        padding: 0px 5px ;
+        margin-top: 10px;
+    }
+
+    .BSR-main-div{   
+        margin-top: 27px;
+    }
+
+    .EDF-sec{
+   
+        margin-top: 7px;
+    }
+
+    .citis-card-de{
+
+        display: flex;
+        gap: 10px;
+    }
+
+    
+
+    .product-image-box{
+            position: relative;
+        overflow: hidden;
+    }
+
+       .product-image-box::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 45px;
+        display: block;
+        z-index: 1;
+        border-radius: 4px;
+        background: linear-gradient(180deg, hsla(0, 0%, 100%, 0), #000);
+        background-blend-mode: multiply;
+        transform: rotate(-180deg);
+    }
+
+    /* BOTTOM GRADIENT OVERLAY */
+    .product-image-box::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        display: block;
+        opacity: .9;
+        background-image: linear-gradient(0deg, #000000 0%, rgba(255, 255, 255, 0) 100%);
     }
