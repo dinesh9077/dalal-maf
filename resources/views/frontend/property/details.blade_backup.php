@@ -27,46 +27,42 @@ $version = $basicInfo->theme_version;
 @endsection
 
 <style>
-    .new-main-navbar {
+.new-main-navbar {
     background-color: #6c603c;
 }
 
+.new-pro-images-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    cursor: pointer;
+}
 
+.new-pro-images-grid .col-md-8 img {
+    height: 500px;
+}
 
-    .new-pro-images-grid img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 12px;
-        cursor: pointer;
-    }
+.new-pro-images-grid .col-md-4 img {
+    height: 245px;
+}
 
-    /* ✅ Left big image fix height */
-    .new-pro-images-grid .col-md-8 img {
-        height: 500px;
-    }
-
-    /* ✅ Right small images fix height */
-    .new-pro-images-grid .col-md-4 img {
-        height: 245px;
-    }
-
-    .new-pro-overlay {
-        position: absolute;
-        top: 0;
-        left: 10px;
-        width: 96%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.4);
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.5rem;
-        border-radius: 12px;
-        transition: 0.3s;
-        cursor: pointer;
-    }
+.new-pro-overlay {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    width: 96%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    border-radius: 12px;
+    transition: 0.3s;
+    cursor: pointer;
+}
 </style>
 
 @section('content')
@@ -131,7 +127,8 @@ $version = $basicInfo->theme_version;
                     <div class="row g-3 new-pro-images-grid">
                         <!-- Left big image -->
                         <div class="col-md-8">
-                            <img src="{{ asset('assets/img/property/featureds/' . $propertyContent->featured_image) }}" data-img="{{ asset('assets/img/property/featureds/' . $propertyContent->featured_image) }}">
+                            <img src="{{ asset('assets/img/property/featureds/' . $propertyContent->featured_image) }}"
+                                data-img="{{ asset('assets/img/property/featureds/' . $propertyContent->featured_image) }}">
                             {{-- <img src="https://picsum.photos/id/1018/800/600"
                         data-bs-toggle="modal" data-bs-target="#newProImagesSingleModal"
                         data-img="https://picsum.photos/id/1018/1200/800" alt="img1"> --}}
@@ -168,8 +165,7 @@ $version = $basicInfo->theme_version;
                                         data-img="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
                                         alt="Slider Image {{ $index+1 }}">
                                     @if($loop->last)
-                                    <div class="new-pro-overlay"
-                                        data-bs-toggle="modal"
+                                    <div class="new-pro-overlay" data-bs-toggle="modal"
                                         data-bs-target="#newProImagesSliderModal">View All</div>
                                     @endif
                                 </div>
@@ -184,8 +180,7 @@ $version = $basicInfo->theme_version;
                                         data-img="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
                                         alt="Slider Image {{ $index+1 }}">
                                     @if($loop->last)
-                                    <div class="new-pro-overlay"
-                                        data-bs-toggle="modal"
+                                    <div class="new-pro-overlay" data-bs-toggle="modal"
                                         data-bs-target="#newProImagesSliderModal">View All</div>
                                     @endif
                                 </div>
@@ -200,8 +195,7 @@ $version = $basicInfo->theme_version;
                                         data-img="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
                                         alt="Slider Image {{ $index+1 }}">
                                     @if($loop->last)
-                                    <div class="new-pro-overlay"
-                                        data-bs-toggle="modal"
+                                    <div class="new-pro-overlay" data-bs-toggle="modal"
                                         data-bs-target="#newProImagesSliderModal">View All</div>
                                     @endif
                                 </div>
@@ -255,16 +249,17 @@ $version = $basicInfo->theme_version;
                                         @foreach($sliders as $index => $slider)
                                         <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
                                             <img src="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
-                                                class="d-block w-100 rounded"
-                                                alt="Slider Image {{ $index+1 }}">
+                                                class="d-block w-100 rounded" alt="Slider Image {{ $index+1 }}">
                                         </div>
                                         @endforeach
                                     </div>
                                     <!-- Controls -->
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#newProImagesCarousel" data-bs-slide="prev">
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#newProImagesCarousel" data-bs-slide="prev">
                                         <span class="carousel-control-prev-icon"></span>
                                     </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#newProImagesCarousel" data-bs-slide="next">
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#newProImagesCarousel" data-bs-slide="next">
                                         <span class="carousel-control-next-icon"></span>
                                     </button>
                                 </div>
@@ -322,8 +317,7 @@ $version = $basicInfo->theme_version;
                             <div class="new-photo-div">
                                 <div class="user-img">
                                     <div class=" new-images-lazy ratio ratio-1-1 rounded-pill">
-                                        <img class="lazyload" src="{{ asset('assets/img/blank-user.jpg') }}"
-                                            data-src="@if (!empty($agent)) {{ $agent->image ? asset('assets/img/agents/' . $agent->image) : asset('assets/img/blank-user.jpg') }}
+                                        <img class="lazyload" src="{{ asset('assets/img/blank-user.jpg') }}" data-src="@if (!empty($agent)) {{ $agent->image ? asset('assets/img/agents/' . $agent->image) : asset('assets/img/blank-user.jpg') }}
                                             @elseif(!empty($vendor))
                                                 {{ $vendor->photo ? asset('assets/admin/img/vendor-photo/' . $vendor->photo) : asset('assets/img/blank-user.jpg') }}
                                                 @else
@@ -333,7 +327,9 @@ $version = $basicInfo->theme_version;
                             </div>
                             <div style="padding: 3px 0px;">
                                 <h3 class="product-title d-flex">
-                                    <a href="{{ route('frontend.properties', ['category' => $propertyContent->categoryContent?->slug]) }}">{{ $propertyContent->title }} <span class="product-category new-pdc-s">
+                                    <a
+                                        href="{{ route('frontend.properties', ['category' => $propertyContent->categoryContent?->slug]) }}">{{ $propertyContent->title }}
+                                        <span class="product-category new-pdc-s">
                                             ({{ $propertyContent->categoryContent?->name }})</span></a>
                                     <ul class="share-link list-unstyled">
                                         <li>
@@ -379,7 +375,8 @@ $version = $basicInfo->theme_version;
                                 <div>
                                     <div class="user-info" style="margin-bottom: 15px;">
                                         <h5 class="m-0">
-                                            <span style="color: #585858; font-weight : 500;">By</span> @if (!empty($agent))
+                                            <span style="color: #585858; font-weight : 500;">By</span> @if
+                                            (!empty($agent))
                                             {{ $agent->agent_info?->first_name . ' ' . $agent->agent_info?->last_name }}
                                             @elseif(!empty($vendor))
                                             {{ $vendor->vendor_info?->name }}
@@ -446,68 +443,58 @@ $version = $basicInfo->theme_version;
 
                             <div class="new-details-bg-white">
 
-                              <div class="col-12">
-                                        <h3 class="mb-40 new-title-pps"> {{ __('Property Overview ') }}</h3>
-                                    </div>
-
-                               <div class="row">
-                                    <div class="col mb-20">
-                                        <strong
-                                            class="mb-1  d-block new-future-tit">Purpose</strong>
-                                        <span class="new-future-tit-ans">Franchiese</span>
-                                    </div>
-                                    <div class="col mb-20">
-                                        <strong
-                                            class="mb-1  d-block new-future-tit">Category</strong>
-                                        <span class="new-future-tit-ans">Building</span>
-                                    </div>
-                                    <div class="col mb-20">
-                                        <strong
-                                            class="mb-1  d-block new-future-tit">Country </strong>
-                                        <span class="new-future-tit-ans">India</span>
-                                    </div>
-                                    <div class="col mb-20">
-                                        <strong
-                                            class="mb-1  d-block new-future-tit">State</strong>
-                                        <span class="new-future-tit-ans">Gijrat</span>
-                                    </div>
-                                    <div class="col mb-20">
-                                        <strong
-                                            class="mb-1  d-block new-future-tit">City</strong>
-                                        <span class="new-future-tit-ans">Surat</span>
-                                    </div>
-                                   
+                                <div class="col-12">
+                                    <h3 class="mb-40 new-title-pps"> {{ __('Property Overview ') }}</h3>
                                 </div>
 
                                 <div class="row">
                                     <div class="col mb-20">
-                                        <strong
-                                            class="mb-1  d-block new-future-tit">Area</strong>
+                                        <strong class="mb-1  d-block new-future-tit">Purpose</strong>
+                                        <span class="new-future-tit-ans">Franchiese</span>
+                                    </div>
+                                    <div class="col mb-20">
+                                        <strong class="mb-1  d-block new-future-tit">Category</strong>
+                                        <span class="new-future-tit-ans">Building</span>
+                                    </div>
+                                    <div class="col mb-20">
+                                        <strong class="mb-1  d-block new-future-tit">Country </strong>
+                                        <span class="new-future-tit-ans">India</span>
+                                    </div>
+                                    <div class="col mb-20">
+                                        <strong class="mb-1  d-block new-future-tit">State</strong>
+                                        <span class="new-future-tit-ans">Gijrat</span>
+                                    </div>
+                                    <div class="col mb-20">
+                                        <strong class="mb-1  d-block new-future-tit">City</strong>
+                                        <span class="new-future-tit-ans">Surat</span>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col mb-20">
+                                        <strong class="mb-1  d-block new-future-tit">Area</strong>
                                         <span class="new-future-tit-ans">varachhha</span>
                                     </div>
                                     <div class="col mb-20">
-                                        <strong
-                                            class="mb-1  d-block new-future-tit">Area (sqft)</strong>
+                                        <strong class="mb-1  d-block new-future-tit">Area (sqft)</strong>
                                         <span class="new-future-tit-ans">1934 sqft</span>
                                     </div>
                                     <div class="col mb-20">
-                                        <strong
-                                            class="mb-1  d-block new-future-tit">Beds</strong>
+                                        <strong class="mb-1  d-block new-future-tit">Beds</strong>
                                         <span class="new-future-tit-ans">2 Beds</span>
                                     </div>
                                     <div class="col mb-20">
-                                        <strong
-                                            class="mb-1  d-block new-future-tit">Baths</strong>
+                                        <strong class="mb-1  d-block new-future-tit">Baths</strong>
                                         <span class="new-future-tit-ans">3 Bath</span>
                                     </div>
                                     <div class="col mb-20">
-                                        <strong
-                                            class="mb-1  d-block new-future-tit">Unit Type</strong>
+                                        <strong class="mb-1  d-block new-future-tit">Unit Type</strong>
                                         <span class="new-future-tit-ans">2Bhk, 3Bhk, 4Bhk</span>
                                     </div>
                                 </div>
 
-                             
+
                             </div>
 
 
@@ -529,7 +516,8 @@ $version = $basicInfo->theme_version;
                                     <div class="col-lg-3 col-sm-6 col-md-4 mb-20">
                                         <strong
                                             class="mb-1  d-block new-future-tit">{{ $property_specification_content?->label }}</strong>
-                                        <span class="new-future-tit-ans">{{ $property_specification_content?->value }}</span>
+                                        <span
+                                            class="new-future-tit-ans">{{ $property_specification_content?->value }}</span>
                                     </div>
                                     @endforeach
                                 </div>
@@ -549,7 +537,8 @@ $version = $basicInfo->theme_version;
                                     <h3 class="mb-20  new-title-pps">{{ __('Amenities') }}</h3>
                                     <ul class="featured-list list-unstyled p-0 mt-20">
                                         @foreach ($amenities as $amenity)
-                                        <li class="d-inline-flex flex-column align-items-center me-3" style="width: 80px;">
+                                        <li class="d-inline-flex flex-column align-items-center me-3"
+                                            style="width: 80px;">
                                             <i class="{{ $amenity->amenity->icon }} mb-1 amenities-icon"></i>
                                             <span class="amenities-title">{{ $amenity->amenityContent?->name }}</span>
                                         </li>
@@ -569,7 +558,8 @@ $version = $basicInfo->theme_version;
                                 ;">
                                         <img class="lazyload" src="{{ asset('assets/front/images/placeholder.png') }}"
                                             data-src="{{ $propertyContent->video_image ? asset('assets/img/property/video/' . $propertyContent->video_image) : asset('assets/front/images/placeholder.png') }}">
-                                        <a href="{{ $propertyContent->video_url }}" class="video-btn youtube-popup p-absolute">
+                                        <a href="{{ $propertyContent->video_url }}"
+                                            class="video-btn youtube-popup p-absolute">
                                             <i class="fas fa-play" style="color: black;"></i>
                                         </a>
                                     </div>
@@ -612,7 +602,8 @@ $version = $basicInfo->theme_version;
                                         <div class="user-img new-user-right-img">
                                             <div class="lazy-container ratio ratio-1-1 rounded-pill">
                                                 @if (!empty($agent))
-                                                <a href="{{ route('frontend.agent.details', ['username' => $agent->username]) }}">
+                                                <a
+                                                    href="{{ route('frontend.agent.details', ['username' => $agent->username]) }}">
                                                     <img class="lazyload" src="{{ asset('assets/img/blank-user.jpg') }}"
                                                         data-src="{{ $agent->image ? asset('assets/img/agents/' . $agent->image) : asset('assets/img/blank-user.jpg') }}">
                                                 </a>
@@ -634,15 +625,18 @@ $version = $basicInfo->theme_version;
                                         </div>
                                         <div class="user-info new-user-right-info">
                                             <h4 class="mb-0">
-                                                <a @if (!empty($agent)) href="{{ route('frontend.agent.details', ['username' => $agent->username]) }}"> {{ $agent->agent_info?->first_name . ' ' . $agent->agent_info?->last_name }}
+                                                <a @if (!empty($agent))
+                                                    href="{{ route('frontend.agent.details', ['username' => $agent->username]) }}">
+                                                    {{ $agent->agent_info?->first_name . ' ' . $agent->agent_info?->last_name }}
                                                     @elseif(!empty($vendor))
-                                                    href="{{ route('frontend.vendor.details', ['username' => $vendor->username]) }}"> {{ $vendor->vendor_info?->name }}
+                                                    href="{{ route('frontend.vendor.details', ['username' => $vendor->username]) }}">
+                                                    {{ $vendor->vendor_info?->name }}
                                                     @else
-                                                    href="{{ route('frontend.vendor.details', ['username' => $admin->username, 'admin' => 'true']) }}"> {{ $admin->first_name . ' ' . $admin->last_name }} @endif
+                                                    href="{{ route('frontend.vendor.details', ['username' => $admin->username, 'admin' => 'true']) }}">
+                                                    {{ $admin->first_name . ' ' . $admin->last_name }} @endif
                                                 </a>
                                             </h4>
-                                            <a class="d-block right-em-ph mt-2"
-                                                href="tel:@if (!empty($agent)) {{ $agent->phone }}
+                                            <a class="d-block right-em-ph mt-2" href="tel:@if (!empty($agent)) {{ $agent->phone }}
                                             @elseif(!empty($vendor))
                                                 {{ $vendor->phone }}
                                             @else
@@ -667,10 +661,10 @@ $version = $basicInfo->theme_version;
                                                 @endif
                                             </a>
 
-                                            <a
-                                                href="mailto:@if (!empty($agent)) {{ $agent->email }}
+                                            <a href="mailto:@if (!empty($agent)) {{ $agent->email }}
                                                 @elseif(!empty($vendor))
-                                                    {{ $vendor->email }} @else {{ $admin->email }} @endif" class="right-em-ph">
+                                                    {{ $vendor->email }} @else {{ $admin->email }} @endif"
+                                                class="right-em-ph">
                                                 @if (!empty($agent))
                                                 {{ $agent->email }}
                                                 @elseif(!empty($vendor))
@@ -706,24 +700,27 @@ $version = $basicInfo->theme_version;
                                     </div>
                                     <div class="form-group mb-20">
                                         <label class="new-right-lable" for="email">Email </label>
-                                        <input type="email" class="form-control new-right-form-control" required name="email"
-                                            placeholder="{{ __('Email Address') }}*" value="{{ old('email') }}">
+                                        <input type="email" class="form-control new-right-form-control" required
+                                            name="email" placeholder="{{ __('Email Address') }}*"
+                                            value="{{ old('email') }}">
                                         @error('email')
                                         <p class=" text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group mb-20">
                                         <label class="new-right-lable" for="Phone">Phone No.</label>
-                                        <input type="number" class="form-control new-right-form-control" name="phone" required
-                                            value="{{ old('phone') }}" placeholder="{{ __('Phone Number') }}*">
+                                        <input type="number" class="form-control new-right-form-control" name="phone"
+                                            required value="{{ old('phone') }}" placeholder="{{ __('Phone Number') }}*">
                                         @error('phone')
                                         <p class=" text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group mb-20">
                                         <label class="new-right-lable" for="Des">Description</label>
-                                        <textarea name="message" id="message" class="form-control new-right-form-control" cols="30" rows="8" required=""
-                                            data-error="Please enter your message" placeholder="{{ __('Message') }}..." style=" min-height: 100px !important;">{{ old('message') }}</textarea>
+                                        <textarea name="message" id="message"
+                                            class="form-control new-right-form-control" cols="30" rows="8" required=""
+                                            data-error="Please enter your message" placeholder="{{ __('Message') }}..."
+                                            style=" min-height: 100px !important;">{{ old('message') }}</textarea>
 
                                         @error('message')
                                         <p class=" text-danger">{{ $message }}</p>
@@ -739,8 +736,8 @@ $version = $basicInfo->theme_version;
                                         @enderror
                                     </div>
                                     @endif
-                                    <button type="submit"
-                                        class="btn btn-md  w-100" style="background-color: black; color : white;">{{ __('Send inquiry') }}</button>
+                                    <button type="submit" class="btn btn-md  w-100"
+                                        style="background-color: black; color : white;">{{ __('Send inquiry') }}</button>
                                 </form>
                             </div>
 
@@ -777,19 +774,19 @@ $version = $basicInfo->theme_version;
                                                         {{ $property->price ? symbolPrice($property->price) : __('Negotiable') }}</span>
                                                 </div>
                                                 <ul class="product-info p-0 list-unstyled d-flex align-items-center">
-                                                    <li class="icon-start" data-tooltip="tooltip" data-bs-placement="top"
-                                                        title="{{ __('Area') }}">
+                                                    <li class="icon-start" data-tooltip="tooltip"
+                                                        data-bs-placement="top" title="{{ __('Area') }}">
                                                         <i class="fal fa-vector-square"></i>
                                                         <span>{{ $property->area }}</span>
                                                     </li>
                                                     @if ($property->type == 'residential')
-                                                    <li class="icon-start" data-tooltip="tooltip" data-bs-placement="top"
-                                                        title="{{ __('Bed') }}">
+                                                    <li class="icon-start" data-tooltip="tooltip"
+                                                        data-bs-placement="top" title="{{ __('Bed') }}">
                                                         <i class="fal fa-bed"></i>
                                                         <span>{{ $property->beds }} </span>
                                                     </li>
-                                                    <li class="icon-start" data-tooltip="tooltip" data-bs-placement="top"
-                                                        title="{{ __('Bath') }}">
+                                                    <li class="icon-start" data-tooltip="tooltip"
+                                                        data-bs-placement="top" title="{{ __('Bath') }}">
                                                         <i class="fal fa-bath"></i>
                                                         <span>{{ $property->bath }} </span>
                                                     </li>
@@ -846,7 +843,8 @@ $version = $basicInfo->theme_version;
                         <span> {{ __('Twitter') }} </span>
                     </div> -->
                         <div class="action-btn">
-                            <a class="instagram btn" target="_blank" href="https://www.instagram.com/{{ config('app.instagram_username') }}">
+                            <a class="instagram btn" target="_blank"
+                                href="https://www.instagram.com/{{ config('app.instagram_username') }}">
                                 <i class="fab fa-instagram"></i>
                             </a>
                             <br>

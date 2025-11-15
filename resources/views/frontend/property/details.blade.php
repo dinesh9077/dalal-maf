@@ -125,137 +125,6 @@ $version = $basicInfo->theme_version;
 
     <div class="container">
         <div class="row gx-xl-5" data-aos="fade-up">
-
-            <div>
-                <div class="mb-5">
-                    <div class="row g-3 new-pro-images-grid">
-                        <div class="col-md-8">
-                            <img src="{{ asset('assets/img/property/featureds/' . $propertyContent->featured_image) }}"
-                                data-img="{{ asset('assets/img/property/featureds/' . $propertyContent->featured_image) }}">
-                        </div>
-                        <div class="col-md-4 d-grid gap-3">
-                            <div class="row g-3">
-                                @php
-                                $count = $sliders->count();
-                                @endphp
-                                @if ($count == 2)
-                                @foreach ($sliders->take(2) as $index => $slider)
-                                <div class="col-12 {{ $loop->last ? 'overlay-container position-relative' : '' }}">
-                                    <img src="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
-                                        data-img="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
-                                        alt="Slider Image {{ $index + 1 }}">
-                                    @if ($loop->last)
-                                    <div class="new-pro-overlay" data-bs-toggle="modal"
-                                        data-bs-target="#newProImagesSliderModal">View All</div>
-                                    @endif
-                                </div>
-                                @endforeach
-                                @endif
-                                @if ($count == 3)
-                                @foreach ($sliders->take(3) as $index => $slider)
-                                <div class="{{ $loop->last ? 'col-12 overlay-container position-relative' : 'col-6' }}">
-                                    <img src="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
-                                        data-img="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
-                                        alt="Slider Image {{ $index + 1 }}">
-                                    @if ($loop->last)
-                                    <div class="new-pro-overlay" data-bs-toggle="modal"
-                                        data-bs-target="#newProImagesSliderModal">View All</div>
-                                    @endif
-                                </div>
-                                @endforeach
-                                @endif
-                                @if ($count >= 4)
-                                @foreach ($sliders->take(4) as $index => $slider)
-                                <div class="col-6 {{ $loop->last ? 'overlay-container position-relative' : '' }}">
-                                    <img src="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
-                                        data-img="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
-                                        alt="Slider Image {{ $index + 1 }}">
-                                    @if ($loop->last)
-                                    <div class="new-pro-overlay" data-bs-toggle="modal"
-                                        data-bs-target="#newProImagesSliderModal">View All</div>
-                                    @endif
-                                </div>
-                                @endforeach
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- Slider Popup Modal -->
-                <div class="modal fade" id="newProImagesSliderModal" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-xl">
-                        <div class="modal-content bg-dark">
-                            <div id="newProImagesCarousel" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-inner" style="object-fit: cover; height : 500px;">
-                                    @foreach ($sliders as $index => $slider)
-                                    <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                        <img src="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
-                                            class="d-block w-100 rounded" alt="Slider Image {{ $index + 1 }}">
-                                    </div>
-                                    @endforeach
-                                </div>
-                                <!-- Controls -->
-                                <button class="carousel-control-prev" type="button"
-                                    data-bs-target="#newProImagesCarousel" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon"></span>
-                                </button>
-                                <button class="carousel-control-next" type="button"
-                                    data-bs-target="#newProImagesCarousel" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon"></span>
-                                </button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <!-- <div class="col-12">
-                     <div class="product-single-gallery mb-40">
-
-                        <div class="slider-navigation">
-                            <button type="button" title="Slide prev" class="slider-btn slider-btn-prev">
-                                <i class="fal fa-angle-left"></i>
-                            </button>
-                            <button type="button" title="Slide next" class="slider-btn slider-btn-next">
-                                <i class="fal fa-angle-right"></i>
-                            </button>
-                        </div>
-                        <div class="swiper product-single-slider">
-                            <div class="swiper-wrapper">
-                                @foreach ($sliders as $slider)
-    <div class="swiper-slide">
-                                    <figure class="radius-lg lazy-container ratio ratio-16-11">
-                                        <a href="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
-                                            class="lightbox-single">
-                                            <img class="lazyload" src="assets/images/placeholder.png"
-                                                data-src="{{ asset('assets/img/property/slider-images/' . $slider->image) }}">
-                                        </a>
-                                    </figure>
-                                </div>
-    @endforeach
-
-                            </div>
-                        </div>
-
-                        <div class="swiper slider-thumbnails">
-                            <div class="swiper-wrapper">
-                                @foreach ($sliders as $slider)
-    <div class="swiper-slide">
-                                    <div class="thumbnail-img lazy-container radius-md ratio ratio-16-11">
-                                        <img class="lazyload" src="assets/images/placeholder.png"
-                                            data-src="{{ asset('assets/img/property/slider-images/' . $slider->image) }}">
-                                    </div>
-                                </div>
-    @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             <div class="col-12 product-single-details">
                 <div class="new-property-details">
                     <div class="new-pp-s-des">
@@ -361,7 +230,7 @@ $version = $basicInfo->theme_version;
                             </div>
                             <!-- </a> -->
 
-                            <div class="product-price mt-2" >
+                            <div class="product-price mt-2">
                                 <span class="new-price" style="color:#2b3138 !important;">{{ __('Price:') }}
                                     {{ $propertyContent->price ? symbolPrice($propertyContent->price) : __('Negotiable') }}</span>
                             </div>
@@ -528,258 +397,392 @@ $version = $basicInfo->theme_version;
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
+
+            <div>
+
+                <div class="row g-3 new-pro-images-grid" style="margin:10px 0px;">
+                    <div class="row new-pro-images-grid col-md-8 col-lg-8">
+                        <div class="col-lg-9">
+                            <img src="{{ asset('assets/img/property/featureds/' . $propertyContent->featured_image) }}"
+                                data-img="{{ asset('assets/img/property/featureds/' . $propertyContent->featured_image) }}">
+                        </div>
+                        <div class=" col-lg-3 col-md-4 d-grid ">
+                            <div class="row g-3">
+                                @php
+                                $count = $sliders->count();
+                                @endphp
+                                @if ($count == 2)
+                                @foreach ($sliders->take(2) as $index => $slider)
+                                <div class="col-12 {{ $loop->last ? 'overlay-container position-relative' : '' }}">
+                                    <img src="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
+                                        data-img="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
+                                        alt="Slider Image {{ $index + 1 }}">
+                                    @if ($loop->last)
+                                    <div class="new-pro-overlay" data-bs-toggle="modal"
+                                        data-bs-target="#newProImagesSliderModal">View All</div>
+                                    @endif
+                                </div>
+                                @endforeach
+                                @endif
+                                @if ($count == 3)
+                                @foreach ($sliders->take(3) as $index => $slider)
+                                <div
+                                    class="{{ $loop->last ? 'col-12 overlay-container position-relative' : 'col-12' }}">
+                                    <img src="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
+                                        data-img="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
+                                        alt="Slider Image {{ $index + 1 }}">
+                                    @if ($loop->last)
+                                    <div class="new-pro-overlay" data-bs-toggle="modal"
+                                        data-bs-target="#newProImagesSliderModal">View All</div>
+                                    @endif
+                                </div>
+                                @endforeach
+                                @endif
+                                @if ($count >= 4)
+                                @foreach ($sliders->take(4) as $index => $slider)
+                                <div class="col-12 {{ $loop->last ? 'overlay-container position-relative' : '' }}">
+                                    <img src="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
+                                        data-img="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
+                                        alt="Slider Image {{ $index + 1 }}">
+                                    @if ($loop->last)
+                                    <div class="new-pro-overlay" data-bs-toggle="modal"
+                                        data-bs-target="#newProImagesSliderModal">View All</div>
+                                    @endif
+                                </div>
+                                @endforeach
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-xl-12 mt-3 new-property-details-down">
+                            <div class="product-single-details" data-aos="fade-up">
+
+
+                                <div class="new-details-bg-white">
+
+                                    <div class="col-12">
+                                        <h3 class="mb-40 new-title-pps"> {{ __('Property Overview ') }}</h3>
+                                    </div>
+
+                                    <div class="pro-over-main">
+                                        <div class="pro-over-detail-box">
+                                            <strong class="pro-over-title">Purpose</strong>
+                                            <span
+                                                class="new-future-tit-ans">{{ ucwords(str_replace('_', ' ', $propertyContent->purpose)) }}
+                                            </span>
+                                        </div>
+                                        <div class="pro-over-detail-box">
+                                            <strong class="pro-over-title">Category</strong>
+                                            <span
+                                                class="new-future-tit-ans">{{ $propertyContent->categoryContent?->name }}</span>
+                                        </div>
+                                        @if ($propertyContent->property->country)
+                                        <div class="pro-over-detail-box">
+                                            <strong class="pro-over-title">Country</strong>
+                                            <span
+                                                class="new-future-tit-ans">{{ $propertyContent->property->country?->getContent($propertyContent->language_id)?->name }}</span>
+                                        </div>
+                                        @endif
+                                        @if ($propertyContent->property->state)
+                                        <div class="pro-over-detail-box">
+                                            <strong class="pro-over-title">State</strong>
+                                            <span
+                                                class="new-future-tit-ans">{{ $propertyContent->property->state?->getContent($propertyContent->language_id)?->name }}</span>
+                                        </div>
+                                        @endif
+                                        @if ($propertyContent->property->city)
+                                        <div class="pro-over-detail-box">
+                                            <strong class="pro-over-title">City</strong>
+                                            <span
+                                                class="new-future-tit-ans">{{ $propertyContent->property->city?->getContent($propertyContent->language_id)?->name }}</span>
+                                        </div>
+                                        @endif
+                                        @if ($propertyContent->property->areaContent)
+                                        <div class="pro-over-detail-box">
+                                            <strong class="pro-over-title">Area</strong>
+                                            <span
+                                                class="new-future-tit-ans">{{ $propertyContent->property->areaContent?->name }}</span>
+                                        </div>
+                                        @endif
+                                        <div class="pro-over-detail-box">
+                                            <strong class="pro-over-title">Area (sqft)</strong>
+                                            <span class="new-future-tit-ans">{{ $propertyContent->area }}</span>
+                                        </div>
+                                        @if ($propertyContent->beds)
+                                        <div class="pro-over-detail-box">
+                                            <strong class="pro-over-title">Beds</strong>
+                                            <span class="new-future-tit-ans">{{ $propertyContent->beds }}</span>
+                                        </div>
+                                        @endif
+                                        @if ($propertyContent->bath)
+                                        <div class="pro-over-detail-box">
+                                            <strong class="pro-over-title">Baths</strong>
+                                            <span class="new-future-tit-ans">{{ $propertyContent->bath }}</span>
+                                        </div>
+                                        @endif
+                                        @if ($propertyContent->units)
+                                        <div class="pro-over-detail-box">
+                                            <strong class="pro-over-title">Unit Type</strong>
+                                            @foreach ($propertyContent->units as $unit)
+                                            <span class="new-future-tit-ans">{{ $unit }}</span>
+                                            @endforeach
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+
+
+
+                                <div class="new-details-bg-white mt-5">
+                                    @if (count($propertyContent->propertySpacifications) > 0)
+                                    <div class="row" class="mb-20">
+                                        <div class="col-12">
+                                            <h3 class="mb-40 new-title-pps"> {{ __('Additional Features ') }}</h3>
+                                        </div>
+
+                                        @foreach ($propertyContent->propertySpacifications as $specification)
+                                        @php
+                                        $property_specification_content =
+                                        App\Models\Property\SpacificationCotent::where(
+                                        [
+                                        ['property_spacification_id', $specification->id],
+                                        ['language_id', $language->id],
+                                        ],
+                                        )->first();
+                                        @endphp
+                                        <div class="col-lg-3 col-sm-6 col-md-4 mb-20">
+                                            <strong
+                                                class="mb-1  d-block new-future-tit">{{ $property_specification_content?->label }}</strong>
+                                            <span
+                                                class="new-future-tit-ans">{{ $property_specification_content?->value }}</span>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="pb-20"></div>
+                                    @endif
+
+
+                                    <div class="product-desc">
+                                        <h3 class="mb-20 mt-20 new-title-pps">{{ __('Property Description') }}</h3>
+                                        <p class="summernote-content">{!! $propertyContent->description !!}</p>
+                                    </div>
+                                </div>
+
+                                @if (count($amenities) > 0)
+                                <div class="new-details-bg-white mt-5">
+                                    <div class="product-featured ">
+                                        <h3 class="mb-20  new-title-pps">{{ __('Amenities') }}</h3>
+                                        <ul class="featured-list list-unstyled p-0 mt-20">
+                                            @foreach ($amenities as $amenity)
+                                            <li class="d-inline-flex flex-column align-items-center me-3"
+                                                style="width: 80px;">
+                                                <i class="{{ $amenity->amenity->icon }} mb-1 amenities-icon"></i>
+                                                <span
+                                                    class="amenities-title">{{ $amenity->amenityContent?->name }}</span>
+                                            </li>
+                                            @endforeach
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                @endif
+
+                                @if (!empty($propertyContent->video_url))
+                                <div class="new-details-bg-white mt-5">
+                                    <div class="product-video">
+                                        <h3 class="mb-20 new-title-pps"> {{ __('Video') }}</h3>
+                                        <div class="lazy-container radius-lg ratio ratio-16-11" style="width: 70%;">
+                                            <img class="lazyload"
+                                                src="{{ asset('assets/front/images/placeholder.png') }}"
+                                                data-src="{{ $propertyContent->video_image ? asset('assets/img/property/video/' . $propertyContent->video_image) : asset('assets/front/images/placeholder.png') }}">
+                                            <a href="{{ $propertyContent->video_url }}"
+                                                class="video-btn youtube-popup p-absolute">
+                                                <i class="fas fa-play" style="color: black;"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                @endif
+
+                                @if (!empty($propertyContent->floor_planning_image))
+                                <div class="new-details-bg-white mt-5">
+                                    <div class="product-planning mb-40">
+                                        <h3 class="mb-20 new-title-pps">{{ __('Floor Planning') }}</h3>
+                                        <div class="lazy-container radius-lg ratio ratio-16-11 border">
+                                            <img class="lazyload" src="assets/images/placeholder.png"
+                                                data-src="{{ asset('assets/img/property/plannings/' . $propertyContent->floor_planning_image) }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+
+                                @if (!empty($propertyContent->latitude) && !empty($propertyContent->longitude))
+                                <div class="new-details-bg-white mt-5">
+                                    <div class="product-location mb-40">
+                                        <h3 class="mb-20 new-title-pps">{{ __('Location') }}</h3>
+                                        <div class="lazy-container radius-lg ratio ratio-21-9 border">
+                                            <iframe class="lazyload"
+                                                src="https://maps.google.com/maps?q={{ $propertyContent->latitude }},{{ $propertyContent->longitude }}&hl={{ $currentLanguageInfo->code }}&z=14&amp;output=embed"></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 new-pro-images-grid col-xl-3 mt-3">
+                        <aside class="sidebar-widget-area mb-10" data-aos="fade-up">
+                            <div class="widget widget-recent radius-md mb-30  new-widgets-color"
+                                style="border: 1px solid #ced4dd; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);">
+                                <h3 class="title">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#products" aria-expanded="true" aria-controls="products">
+                                        {{ __('Similar  Property') }}
+                                    </button>
+                                </h3>
+                                <div id="products" class="collapse show">
+                                    <div class="accordion-body p-0">
+                                        @foreach ($relatedProperty as $property)
+                                        <div class="product-default product-inline mt-20 new-hover">
+                                            <figure class="product-img">
+                                                <a href="{{ route('frontend.property.details', $property->slug) }}"
+                                                    class="lazy-container ratio ratio-1-1 radius-md">
+                                                    <img class="lazyload" src="assets/images/placeholder.png"
+                                                        data-src="{{ asset('assets/img/property/featureds/' . $property->featured_image) }}">
+                                                </a>
+                                            </figure>
+                                            <div class="px-3">
+                                                <h6 class="product-title"><a
+                                                        href="{{ route('frontend.property.details', $property->slug) }}">{{ $property->title }}</a>
+                                                </h6>
+                                                <span class="product-location icon-start"> <i
+                                                        class="fal fa-map-marker-alt"></i>
+                                                    {{ $property->city->getContent($property->language_id)?->name }}
+                                                    {{ $property->isStateActive ? ', ' . $property->state?->getContent($property->language_id)?->name : '' }}
+                                                    {{ $property->isCountryActive ? ', ' . $property->country?->getContent($property->language_id)?->name : '' }}</span>
+                                                <div class="product-price">
+
+                                                    <span class="new-price">{{ __('Price:') }}
+                                                        {{ $property->price ? symbolPrice($property->price) : __('Negotiable') }}</span>
+                                                </div>
+                                                <ul class="product-info p-0 list-unstyled d-flex align-items-center">
+                                                    <li class="icon-start" data-tooltip="tooltip"
+                                                        data-bs-placement="top" title="{{ __('Area') }}">
+                                                        <i class="fal fa-vector-square"></i>
+                                                        <span>{{ $property->area }}</span>
+                                                    </li>
+                                                    @if ($property->type == 'residential')
+                                                    <li class="icon-start" data-tooltip="tooltip"
+                                                        data-bs-placement="top" title="{{ __('Bed') }}">
+                                                        <i class="fal fa-bed"></i>
+                                                        <span>{{ $property->beds }} </span>
+                                                    </li>
+                                                    <li class="icon-start" data-tooltip="tooltip"
+                                                        data-bs-placement="top" title="{{ __('Bath') }}">
+                                                        <i class="fal fa-bath"></i>
+                                                        <span>{{ $property->bath }} </span>
+                                                    </li>
+                                                    @endif
+
+                                                </ul>
+                                            </div>
+                                        </div><!-- product-default -->
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+
+
+
+                <!-- Slider Popup Modal -->
+                <div class="modal fade" id="newProImagesSliderModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                        <div class="modal-content bg-dark">
+                            <div id="newProImagesCarousel" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner" style="object-fit: cover; height : 500px;">
+                                    @foreach ($sliders as $index => $slider)
+                                    <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                                        <img src="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
+                                            class="d-block w-100 rounded" alt="Slider Image {{ $index + 1 }}">
+                                    </div>
+                                    @endforeach
+                                </div>
+                                <!-- Controls -->
+                                <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#newProImagesCarousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon"></span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                    data-bs-target="#newProImagesCarousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon"></span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- <div class="col-12">
+                     <div class="product-single-gallery mb-40">
+
+                        <div class="slider-navigation">
+                            <button type="button" title="Slide prev" class="slider-btn slider-btn-prev">
+                                <i class="fal fa-angle-left"></i>
+                            </button>
+                            <button type="button" title="Slide next" class="slider-btn slider-btn-next">
+                                <i class="fal fa-angle-right"></i>
+                            </button>
+                        </div>
+                        <div class="swiper product-single-slider">
+                            <div class="swiper-wrapper">
+                                @foreach ($sliders as $slider)
+    <div class="swiper-slide">
+                                    <figure class="radius-lg lazy-container ratio ratio-16-11">
+                                        <a href="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
+                                            class="lightbox-single">
+                                            <img class="lazyload" src="assets/images/placeholder.png"
+                                                data-src="{{ asset('assets/img/property/slider-images/' . $slider->image) }}">
+                                        </a>
+                                    </figure>
+                                </div>
+    @endforeach
+
+                            </div>
+                        </div>
+
+                        <div class="swiper slider-thumbnails">
+                            <div class="swiper-wrapper">
+                                @foreach ($sliders as $slider)
+    <div class="swiper-slide">
+                                    <div class="thumbnail-img lazy-container radius-md ratio ratio-16-11">
+                                        <img class="lazyload" src="assets/images/placeholder.png"
+                                            data-src="{{ asset('assets/img/property/slider-images/' . $slider->image) }}">
+                                    </div>
+                                </div>
+    @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
         </div>
     </div>
 
     <div class="new-property-details-down">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-9 col-xl-9 mt-3">
 
-                    <div class="product-single-details" data-aos="fade-up">
-
-
-                        <div class="new-details-bg-white">
-
-                            <div class="col-12">
-                                <h3 class="mb-40 new-title-pps"> {{ __('Property Overview ') }}</h3>
-                            </div>
-
-                            <div class="pro-over-main">
-                                <div class="pro-over-detail-box">
-                                    <strong class="pro-over-title">Purpose</strong>
-                                    <span
-                                        class="new-future-tit-ans">{{ ucwords(str_replace('_', ' ', $propertyContent->purpose)) }}
-                                    </span>
-                                </div>
-                                <div class="pro-over-detail-box">
-                                    <strong class="pro-over-title">Category</strong>
-                                    <span
-                                        class="new-future-tit-ans">{{ $propertyContent->categoryContent?->name }}</span>
-                                </div>
-                                @if ($propertyContent->property->country)
-                                <div class="pro-over-detail-box">
-                                    <strong class="pro-over-title">Country</strong>
-                                    <span
-                                        class="new-future-tit-ans">{{ $propertyContent->property->country?->getContent($propertyContent->language_id)?->name }}</span>
-                                </div>
-                                @endif
-                                @if ($propertyContent->property->state)
-                                <div class="pro-over-detail-box">
-                                    <strong class="pro-over-title">State</strong>
-                                    <span
-                                        class="new-future-tit-ans">{{ $propertyContent->property->state?->getContent($propertyContent->language_id)?->name }}</span>
-                                </div>
-                                @endif
-                                @if ($propertyContent->property->city)
-                                <div class="pro-over-detail-box">
-                                    <strong class="pro-over-title">City</strong>
-                                    <span
-                                        class="new-future-tit-ans">{{ $propertyContent->property->city?->getContent($propertyContent->language_id)?->name }}</span>
-                                </div>
-                                @endif
-                                @if ($propertyContent->property->areaContent)
-                                <div class="pro-over-detail-box">
-                                    <strong class="pro-over-title">Area</strong>
-                                    <span
-                                        class="new-future-tit-ans">{{ $propertyContent->property->areaContent?->name }}</span>
-                                </div>
-                                @endif
-                                <div class="pro-over-detail-box">
-                                    <strong class="pro-over-title">Area (sqft)</strong>
-                                    <span class="new-future-tit-ans">{{ $propertyContent->area }}</span>
-                                </div>
-                                @if ($propertyContent->beds)
-                                <div class="pro-over-detail-box">
-                                    <strong class="pro-over-title">Beds</strong>
-                                    <span class="new-future-tit-ans">{{ $propertyContent->beds }}</span>
-                                </div>
-                                @endif
-                                @if ($propertyContent->bath)
-                                <div class="pro-over-detail-box">
-                                    <strong class="pro-over-title">Baths</strong>
-                                    <span class="new-future-tit-ans">{{ $propertyContent->bath }}</span>
-                                </div>
-                                @endif
-                                @if ($propertyContent->units)
-                                <div class="pro-over-detail-box">
-                                    <strong class="pro-over-title">Unit Type</strong>
-                                    @foreach ($propertyContent->units as $unit)
-                                    <span class="new-future-tit-ans">{{ $unit }}</span>
-                                    @endforeach
-                                </div>
-                                @endif
-                            </div>
-                        </div>
-
-
-
-                        <div class="new-details-bg-white mt-5">
-                            @if (count($propertyContent->propertySpacifications) > 0)
-                            <div class="row" class="mb-20">
-                                <div class="col-12">
-                                    <h3 class="mb-40 new-title-pps"> {{ __('Additional Features ') }}</h3>
-                                </div>
-
-                                @foreach ($propertyContent->propertySpacifications as $specification)
-                                @php
-                                $property_specification_content = App\Models\Property\SpacificationCotent::where(
-                                [
-                                ['property_spacification_id', $specification->id],
-                                ['language_id', $language->id],
-                                ],
-                                )->first();
-                                @endphp
-                                <div class="col-lg-3 col-sm-6 col-md-4 mb-20">
-                                    <strong
-                                        class="mb-1  d-block new-future-tit">{{ $property_specification_content?->label }}</strong>
-                                    <span
-                                        class="new-future-tit-ans">{{ $property_specification_content?->value }}</span>
-                                </div>
-                                @endforeach
-                            </div>
-                            <div class="pb-20"></div>
-                            @endif
-
-
-                            <div class="product-desc">
-                                <h3 class="mb-20 mt-20 new-title-pps">{{ __('Property Description') }}</h3>
-                                <p class="summernote-content">{!! $propertyContent->description !!}</p>
-                            </div>
-                        </div>
-
-                        @if (count($amenities) > 0)
-                        <div class="new-details-bg-white mt-5">
-                            <div class="product-featured ">
-                                <h3 class="mb-20  new-title-pps">{{ __('Amenities') }}</h3>
-                                <ul class="featured-list list-unstyled p-0 mt-20">
-                                    @foreach ($amenities as $amenity)
-                                    <li class="d-inline-flex flex-column align-items-center me-3" style="width: 80px;">
-                                        <i class="{{ $amenity->amenity->icon }} mb-1 amenities-icon"></i>
-                                        <span class="amenities-title">{{ $amenity->amenityContent?->name }}</span>
-                                    </li>
-                                    @endforeach
-
-                                </ul>
-                            </div>
-                        </div>
-                        @endif
-
-                        @if (!empty($propertyContent->video_url))
-                        <div class="new-details-bg-white mt-5">
-                            <div class="product-video">
-                                <h3 class="mb-20 new-title-pps"> {{ __('Video') }}</h3>
-                                <div class="lazy-container radius-lg ratio ratio-16-11" style="width: 70%;">
-                                    <img class="lazyload" src="{{ asset('assets/front/images/placeholder.png') }}"
-                                        data-src="{{ $propertyContent->video_image ? asset('assets/img/property/video/' . $propertyContent->video_image) : asset('assets/front/images/placeholder.png') }}">
-                                    <a href="{{ $propertyContent->video_url }}"
-                                        class="video-btn youtube-popup p-absolute">
-                                        <i class="fas fa-play" style="color: black;"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                        </div>
-                        @endif
-
-                        @if (!empty($propertyContent->floor_planning_image))
-                        <div class="new-details-bg-white mt-5">
-                            <div class="product-planning mb-40">
-                                <h3 class="mb-20 new-title-pps">{{ __('Floor Planning') }}</h3>
-                                <div class="lazy-container radius-lg ratio ratio-16-11 border">
-                                    <img class="lazyload" src="assets/images/placeholder.png"
-                                        data-src="{{ asset('assets/img/property/plannings/' . $propertyContent->floor_planning_image) }}">
-                                </div>
-                            </div>
-                        </div>
-                        @endif
-
-                        @if (!empty($propertyContent->latitude) && !empty($propertyContent->longitude))
-                        <div class="new-details-bg-white mt-5">
-                            <div class="product-location mb-40">
-                                <h3 class="mb-20 new-title-pps">{{ __('Location') }}</h3>
-                                <div class="lazy-container radius-lg ratio ratio-21-9 border">
-                                    <iframe class="lazyload"
-                                        src="https://maps.google.com/maps?q={{ $propertyContent->latitude }},{{ $propertyContent->longitude }}&hl={{ $currentLanguageInfo->code }}&z=14&amp;output=embed"></iframe>
-                                </div>
-                            </div>
-                        </div>
-                        @endif
-                    </div>
-                </div>
-                <div class="col-lg-3 col-xl-3 mt-3">
-                    <aside class="sidebar-widget-area mb-10" data-aos="fade-up">
-                        <div class="widget widget-recent radius-md mb-30  new-widgets-color"
-                            style="border: 1px solid #ced4dd; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);">
-                            <h3 class="title">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#products" aria-expanded="true" aria-controls="products">
-                                    {{ __('Similar  Property') }}
-                                </button>
-                            </h3>
-                            <div id="products" class="collapse show">
-                                <div class="accordion-body p-0">
-                                    @foreach ($relatedProperty as $property)
-                                    <div class="product-default product-inline mt-20 new-hover">
-                                        <figure class="product-img">
-                                            <a href="{{ route('frontend.property.details', $property->slug) }}"
-                                                class="lazy-container ratio ratio-1-1 radius-md">
-                                                <img class="lazyload" src="assets/images/placeholder.png"
-                                                    data-src="{{ asset('assets/img/property/featureds/' . $property->featured_image) }}">
-                                            </a>
-                                        </figure>
-                                        <div class="px-3">
-                                            <h6 class="product-title"><a
-                                                    href="{{ route('frontend.property.details', $property->slug) }}">{{ $property->title }}</a>
-                                            </h6>
-                                            <span class="product-location icon-start"> <i
-                                                    class="fal fa-map-marker-alt"></i>
-                                                {{ $property->city->getContent($property->language_id)?->name }}
-                                                {{ $property->isStateActive ? ', ' . $property->state?->getContent($property->language_id)?->name : '' }}
-                                                {{ $property->isCountryActive ? ', ' . $property->country?->getContent($property->language_id)?->name : '' }}</span>
-                                            <div class="product-price">
-
-                                                <span class="new-price">{{ __('Price:') }}
-                                                    {{ $property->price ? symbolPrice($property->price) : __('Negotiable') }}</span>
-                                            </div>
-                                            <ul class="product-info p-0 list-unstyled d-flex align-items-center">
-                                                <li class="icon-start" data-tooltip="tooltip" data-bs-placement="top"
-                                                    title="{{ __('Area') }}">
-                                                    <i class="fal fa-vector-square"></i>
-                                                    <span>{{ $property->area }}</span>
-                                                </li>
-                                                @if ($property->type == 'residential')
-                                                <li class="icon-start" data-tooltip="tooltip" data-bs-placement="top"
-                                                    title="{{ __('Bed') }}">
-                                                    <i class="fal fa-bed"></i>
-                                                    <span>{{ $property->beds }} </span>
-                                                </li>
-                                                <li class="icon-start" data-tooltip="tooltip" data-bs-placement="top"
-                                                    title="{{ __('Bath') }}">
-                                                    <i class="fal fa-bath"></i>
-                                                    <span>{{ $property->bath }} </span>
-                                                </li>
-                                                @endif
-
-                                            </ul>
-                                        </div>
-                                    </div><!-- product-default -->
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                    </aside>
-                </div>
-            </div>
         </div>
     </div>
 </div>

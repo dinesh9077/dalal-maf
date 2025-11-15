@@ -1,237 +1,238 @@
 @extends('users.layout')
 
 @section('content')
-    <div class="page-header">
-        <h4 class="page-title">{{ __('Edit Profile') }}</h4>
-        <ul class="breadcrumbs">
-            <li class="nav-home">
-                <a href="{{ route('user.dashboard') }}">
-                    <i class="flaticon-home"></i>
-                </a>
-            </li>
-            <li class="separator">
-                <i class="flaticon-right-arrow"></i>
-            </li>
-            <li class="nav-item">
-                <a href="#">{{ __('Edit Profile') }}</a>
-            </li>
-        </ul>
-    </div>
+<div class="page-header">
+    <h4 class="page-title">{{ __('Edit Profile') }}</h4>
+    <ul class="breadcrumbs">
+        <li class="nav-home">
+            <a href="{{ route('user.dashboard') }}">
+                <i class="flaticon-home"></i>
+            </a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">{{ __('Edit Profile') }}</a>
+        </li>
+    </ul>
+</div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card-title">{{ __('Edit Profile') }}</div>
-                        </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-title">{{ __('Edit Profile') }}</div>
                     </div>
                 </div>
+            </div>
 
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-8 mx-auto">
-                            <div class="alert alert-danger pb-1 dis-none" id="carErrors">
-                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                <ul></ul>
-                            </div>
-                            <form action="{{ route('user.update_profile') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label for="">{{ __('Photo') }}</label>
-                                            <br>
-                                            <div class="thumb-preview">
-                                                @if (Auth::guard('web')->user()->image != null)
-                                                    <img src="{{ asset('assets/img/users/' . Auth::guard('web')->user()->image) }}"
-                                                        alt="..." class="uploaded-img">
-                                                @else
-                                                    <img src="{{ asset('assets/img/noimage.jpg') }}" alt="..."
-                                                        class="uploaded-img">
-                                                @endif
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="alert alert-danger pb-1 dis-none" id="carErrors">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <ul></ul>
+                        </div>
+                        <form action="{{ route('user.update_profile') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="">{{ __('Photo') }}</label>
+                                        <br>
+                                        <div class="thumb-preview">
+                                            @if (Auth::guard('web')->user()->image != null)
+                                            <img src="{{ asset('assets/img/users/' . Auth::guard('web')->user()->image) }}"
+                                                alt="..." class="uploaded-img">
+                                            @else
+                                            <img src="{{ asset('assets/img/noimage.jpg') }}" alt="..."
+                                                class="uploaded-img">
+                                            @endif
 
+                                        </div>
+
+                                        <div class="mt-3">
+                                            <div role="button" class="btn btn-primary btn-sm upload-btn">
+                                                {{ __('Choose Photo') }}
+                                                <input type="file" class="img-input" name="image">
                                             </div>
-
-                                            <div class="mt-3">
-                                                <div role="button" class="btn btn-primary btn-sm upload-btn">
-                                                    {{ __('Choose Photo') }}
-                                                    <input type="file" class="img-input" name="image">
-                                                </div>
-                                                <p id="editErr_photo" class="mt-1 mb-0 text-danger em"></p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-30">
-                                            <label for="" class="mb-1">{{ __('Name') . ' *' }}</label>
-                                            <input type="text" class="form-control new-eds-progile"
-                                                value="{{ Auth::guard('web')->user()->name }}"
-                                                placeholder="{{ __('Name') }}" name="name">
-                                            @error('name')
-                                                <p class="text-danger mt-1">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-30">
-                                            <label for="" class="mb-1">{{ __('Username') . ' *' }}</label>
-                                            <input type="text" class="form-control new-eds-progile"
-                                                placeholder="{{ __('Username') }}" name="username"
-                                                value="{{ Auth::guard('web')->user()->username }}">
-                                            @error('username')
-                                                <p class="text-danger mt-1">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-30">
-                                            <label for="" class="mb-1">{{ __('Email') . ' *' }}</label>
-                                            <input type="email" class="form-control new-eds-progile"
-                                                placeholder="{{ __('Email') }}" name="email"
-                                                value="{{ Auth::guard('web')->user()->email }}">
-                                            @error('email')
-                                                <p class="text-danger mt-1">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    {{-- PHONE --}}
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>{{ __('Phone') }}</label>
-                                            <div class="input-group">
-                                                <input type="tel" value="{{ Auth::guard('web')->user()->phone }}"
-                                                    class="form-control" id="phone" maxlength="10" pattern="\d{10}"
-                                                    data-original-phone="{{ Auth::guard('web')->user()->phone }}" disabled>
-                                                <div class="input-group-append">
-                                                    <button type="button" class="btn btn-outline-primary"
-                                                        id="btnEditModal">Edit</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-30">
-                                            <label for="" class="mb-1">{{ __('Country') . ' *' }}</label>
-                                            <input type="text" class="form-control new-eds-progile"
-                                                placeholder="{{ __('Country') }}" name="country"
-                                                value="{{ Auth::guard('web')->user()->country }}">
-                                            @error('country')
-                                                <p class="text-danger mt-1">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-30">
-                                            <label for="" class="mb-1">{{ __('City') . ' *' }}</label>
-                                            <input type="text" class="form-control new-eds-progile"
-                                                placeholder="{{ __('City') }}" name="city"
-                                                value="{{ Auth::guard('web')->user()->city }}">
-                                            @error('city')
-                                                <p class="text-danger mt-1">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-30">
-                                            <label for="" class="mb-1">{{ __('State') . ' *' }}</label>
-                                            <input type="text" class="form-control new-eds-progile"
-                                                placeholder="{{ __('State') }}" name="state"
-                                                value="{{ Auth::guard('web')->user()->state }}">
-                                            @error('state')
-                                                <p class="text-danger mt-1">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="form-group mb-30">
-                                            <label for="" class="mb-1">{{ __('Zip Code') . ' *' }}</label>
-                                            <input type="text" class="form-control new-eds-progile"
-                                                placeholder="{{ __('Zip Code') }}" name="zip_code"
-                                                value="{{ Auth::guard('web')->user()->zip_code }}">
-                                            @error('zip_code')
-                                                <p class="text-danger mt-1">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-12">
-                                        <div class="form-group mb-30">
-                                            <label for="" class="mb-1">{{ __('Address') . ' *' }}</label>
-                                            <textarea name="address" id="" class="form-control new-eds-progile" rows="3"
-                                                placeholder="{{ __('Address') }}" style="min-height: 55px;">{{ Auth::guard('web')->user()->address }}</textarea>
-                                            @error('address')
-                                                <p class="text-danger mt-1">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-12 mb-15">
-                                        <div class="form-button">
-                                            <button type="submit"
-                                                class="btn btn-lg btn-primary">{{ __('Update Profile') }}</button>
+                                            <p id="editErr_photo" class="mt-1 mb-0 text-danger em"></p>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group mb-30">
+                                        <label for="" class="mb-1">{{ __('Name') . ' *' }}</label>
+                                        <input type="text" class="form-control new-eds-progile"
+                                            value="{{ Auth::guard('web')->user()->name }}"
+                                            placeholder="{{ __('Name') }}" name="name">
+                                        @error('name')
+                                        <p class="text-danger mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group mb-30">
+                                        <label for="" class="mb-1">{{ __('Username') . ' *' }}</label>
+                                        <input type="text" class="form-control new-eds-progile"
+                                            placeholder="{{ __('Username') }}" name="username"
+                                            value="{{ Auth::guard('web')->user()->username }}">
+                                        @error('username')
+                                        <p class="text-danger mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group mb-30">
+                                        <label for="" class="mb-1">{{ __('Email') . ' *' }}</label>
+                                        <input type="email" class="form-control new-eds-progile"
+                                            placeholder="{{ __('Email') }}" name="email"
+                                            value="{{ Auth::guard('web')->user()->email }}">
+                                        @error('email')
+                                        <p class="text-danger mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                {{-- PHONE --}}
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>{{ __('Phone') }}</label>
+                                        <div class="input-group">
+                                            <input type="tel" value="{{ Auth::guard('web')->user()->phone }}"
+                                                class="form-control" id="phone" maxlength="10" pattern="\d{10}"
+                                                data-original-phone="{{ Auth::guard('web')->user()->phone }}" disabled>
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-outline-primary"
+                                                    id="btnEditModal">Edit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group mb-30">
+                                        <label for="" class="mb-1">{{ __('Country') . ' *' }}</label>
+                                        <input type="text" class="form-control new-eds-progile"
+                                            placeholder="{{ __('Country') }}" name="country"
+                                            value="{{ Auth::guard('web')->user()->country }}">
+                                        @error('country')
+                                        <p class="text-danger mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group mb-30">
+                                        <label for="" class="mb-1">{{ __('City') . ' *' }}</label>
+                                        <input type="text" class="form-control new-eds-progile"
+                                            placeholder="{{ __('City') }}" name="city"
+                                            value="{{ Auth::guard('web')->user()->city }}">
+                                        @error('city')
+                                        <p class="text-danger mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group mb-30">
+                                        <label for="" class="mb-1">{{ __('State') . ' *' }}</label>
+                                        <input type="text" class="form-control new-eds-progile"
+                                            placeholder="{{ __('State') }}" name="state"
+                                            value="{{ Auth::guard('web')->user()->state }}">
+                                        @error('state')
+                                        <p class="text-danger mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group mb-30">
+                                        <label for="" class="mb-1">{{ __('Zip Code') . ' *' }}</label>
+                                        <input type="text" class="form-control new-eds-progile"
+                                            placeholder="{{ __('Zip Code') }}" name="zip_code"
+                                            value="{{ Auth::guard('web')->user()->zip_code }}">
+                                        @error('zip_code')
+                                        <p class="text-danger mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="form-group mb-30">
+                                        <label for="" class="mb-1">{{ __('Address') . ' *' }}</label>
+                                        <textarea name="address" id="" class="form-control new-eds-progile" rows="3"
+                                            placeholder="{{ __('Address') }}"
+                                            style="min-height: 55px;">{{ Auth::guard('web')->user()->address }}</textarea>
+                                        @error('address')
+                                        <p class="text-danger mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 mb-15">
+                                    <div class="form-button">
+                                        <button type="submit"
+                                            class="btn btn-lg btn-primary">{{ __('Update Profile') }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
+            </div>
 
-                {{-- <div class="card-footer">
+            {{-- <div class="card-footer">
                     <div class="row">
                         <div class="col-12 text-center">
                             <button type="submit"class="btn btn-lg btn-primary">{{ __('Update Profile') }}</button>
-                        </div>
-                    </div>
-                </div> --}}
-            </div>
         </div>
     </div>
-    <div class="modal fade" id="customerPhoneModal" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content model-new" style="box-shadow: 0 8px 12px rgba(31, 92, 163, .2); ">
-                <div class="modal-header box-p"
-                    style="justify-content: space-between; flex-direction: column; align-items: flex-start; border-bottom:none;">
-                    <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
-                        <h4 class="modal-title" id="exampleModalLongTitle">{{ __('Update Phone') }}</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i class="fa fa-xmark"></i>
-                        </button>
+</div> --}}
+</div>
+</div>
+</div>
+<div class="modal fade" id="customerPhoneModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content model-new" style="box-shadow: 0 8px 12px rgba(31, 92, 163, .2); ">
+            <div class="modal-header box-p"
+                style="justify-content: space-between; flex-direction: column; align-items: flex-start; border-bottom:none;">
+                <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+                    <h4 class="modal-title" id="exampleModalLongTitle">{{ __('Update Phone') }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body  box-p-1">
+
+                <div class="row no-gutters">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="">{{ __('Phone') }}</label>
+                            <input type="text" name="phone" id="in_phone"
+                                value="{{ Auth::guard('web')->user()->phone }}" class="form-control new-form-designs">
+                            <p id="editErr_in_phone" class="mt-2 mb-0 text-danger em"></p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="modal-body  box-p-1">
-
-                    <div class="row no-gutters">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label for="">{{ __('Phone') }}</label>
-                                <input type="text" name="phone" id="in_phone" value="{{ Auth::guard('web')->user()->phone }}"
-                                    class="form-control new-form-designs">
-                                <p id="editErr_in_phone" class="mt-2 mb-0 text-danger em"></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer" style="border-top:none;">
-                        <button id="sendOtp" type="button" class="btn btn-primary btn-sm"
-                            style="background: #6c603c ; margin-top : 20px; ">
-                            {{ __('Send OTP') }}
-                        </button>
-                    </div>
+                <div class="modal-footer" style="border-top:none;">
+                    <button id="sendOtp" type="button" class="btn btn-primary btn-sm"
+                        style="background: #6c603c ; margin-top : 20px; ">
+                        {{ __('Send OTP') }}
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="otpVerificationModal" tabindex="-1" role="dialog"
+<div class="modal fade" id="otpVerificationModal" tabindex="-1" role="dialog"
     aria-labelledby="otpVerificationModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered model-otp" role="document">
         <div class="modal-content model-otp">
@@ -267,7 +268,7 @@
 
                 <div>
                     <p style="text-align:left; margin-top:5px;">
-                        Haven't received yet? 
+                        Haven't received yet?
                         <span id="resendOtp" style="color:#6c603c; cursor:pointer; text-decoration:underline;">
                             Resend OTP
                         </span>
@@ -296,21 +297,21 @@
 
 @endsection
 @section('script')
-    <script>
-        document.getElementById('phone').addEventListener('input', function(e) {
-            this.value = this.value.replace(/\D/g, '');
-            // Limit to 10 digits
-            if (this.value.length > 10) {
-                this.value = this.value.slice(0, 10);
-            }
-        });
+<script>
+document.getElementById('phone').addEventListener('input', function(e) {
+    this.value = this.value.replace(/\D/g, '');
+    // Limit to 10 digits
+    if (this.value.length > 10) {
+        this.value = this.value.slice(0, 10);
+    }
+});
 
-        $('#btnEditModal').click(function() {
-            $('#customerPhoneModal').modal('show');
-        })
+$('#btnEditModal').click(function() {
+    $('#customerPhoneModal').modal('show');
+})
 
-        $(document).ready(function() {
-    $('#customerPhoneModal').on('show.bs.modal', function(event) { 
+$(document).ready(function() {
+    $('#customerPhoneModal').on('show.bs.modal', function(event) {
         let button = $(event.relatedTarget);
         let action = button.data('action');
         $(this).data('action', action);
@@ -342,12 +343,11 @@
         }
     });
 
-    $('#editPhoneNumber').on('click', function() 
-    {
-        const phone = $(this).attr('data-phone'); 
+    $('#editPhoneNumber').on('click', function() {
+        const phone = $(this).attr('data-phone');
         $('#in_phone').val(phone);
         $('#customerPhoneModal').modal('show');
-        $('#otpVerificationModal').modal('hide');  
+        $('#otpVerificationModal').modal('hide');
     });
 
     // Send OTP
@@ -362,7 +362,7 @@
 
         $('#editErr_in_phone').text('');
         $(this).prop('disabled', true).text('Sending...');
-        $('#editFrontPhone').text('+91-'+phone);
+        $('#editFrontPhone').text('+91-' + phone);
         $('#editPhoneNumber').attr('data-phone', phone);
         $.ajax({
             url: '{{ route("user.phone.send-otp") }}', // Update this route
@@ -378,7 +378,7 @@
                 $('#otpVerificationModal').modal('show');
 
                 $('#otpVerificationModal').data('phone', phone);
-                $('#otpVerificationModal').data('action', action);  
+                $('#otpVerificationModal').data('action', action);
             },
             error: function(xhr) {
                 $('#editErr_in_phone').text(xhr.responseJSON.message ||
@@ -440,9 +440,9 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
 });
 
 // === RESEND + 10-MIN EXPIRY (non-breaking) ===============================
-(function () {
-    const OTP_VALID_MS = 10 * 60 * 1000;          // 10 minutes validity
-    const RESEND_COOLDOWN_MS = 30 * 1000;         // 30s anti-spam cooldown
+(function() {
+    const OTP_VALID_MS = 10 * 60 * 1000; // 10 minutes validity
+    const RESEND_COOLDOWN_MS = 30 * 1000; // 30s anti-spam cooldown
 
     let otpExpiryAt = null;
     let resendCooldownUntil = 0;
@@ -467,7 +467,10 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
                 $p.append($timer);
             }
         }
-        return { $resend, $timer };
+        return {
+            $resend,
+            $timer
+        };
     }
 
     function fmt(ms) {
@@ -478,8 +481,14 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
     }
 
     function clearAllIntervals() {
-        if (otpTimerInterval) { clearInterval(otpTimerInterval); otpTimerInterval = null; }
-        if (resendTimerInterval) { clearInterval(resendTimerInterval); resendTimerInterval = null; }
+        if (otpTimerInterval) {
+            clearInterval(otpTimerInterval);
+            otpTimerInterval = null;
+        }
+        if (resendTimerInterval) {
+            clearInterval(resendTimerInterval);
+            resendTimerInterval = null;
+        }
     }
 
     function setVerifyEnabled(enabled) {
@@ -487,37 +496,49 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
     }
 
     function startOtpValidityTimer() {
-        const { $timer } = ensureAnchors();
+        const {
+            $timer
+        } = ensureAnchors();
         if (!otpExpiryAt) otpExpiryAt = Date.now() + OTP_VALID_MS;
 
         if (otpTimerInterval) clearInterval(otpTimerInterval);
         otpTimerInterval = setInterval(() => {
             const remaining = otpExpiryAt - Date.now();
             if (remaining <= 0) {
-                clearInterval(otpTimerInterval); 
+                clearInterval(otpTimerInterval);
                 setVerifyEnabled(false);
                 // Gentle inline hint
                 $('#customerOtpError').text('OTP expired. Please tap “Resend OTP”.').show();
                 return;
             }
-           // $timer && $timer.text(`Code expires in ${fmt(remaining)}`);
+            // $timer && $timer.text(`Code expires in ${fmt(remaining)}`);
         }, 1000);
         // immediate draw
         const remainingNow = otpExpiryAt - Date.now();
-       // $timer && $timer.text(`Code expires in ${fmt(remainingNow)}`);
+        // $timer && $timer.text(`Code expires in ${fmt(remainingNow)}`);
         setVerifyEnabled(true);
         $('#customerOtpError').hide();
     }
 
     function setResendEnabled(enabled, labelOverride) {
-        const { $resend } = ensureAnchors();
+        const {
+            $resend
+        } = ensureAnchors();
         if (!$resend.length) return;
 
         if (enabled) {
-            $resend.css({ pointerEvents: 'auto', opacity: 1, textDecoration: 'underline' });
+            $resend.css({
+                pointerEvents: 'auto',
+                opacity: 1,
+                textDecoration: 'underline'
+            });
             $resend.text(labelOverride || 'Resend OTP');
         } else {
-            $resend.css({ pointerEvents: 'none', opacity: 0.5, textDecoration: 'none' });
+            $resend.css({
+                pointerEvents: 'none',
+                opacity: 0.5,
+                textDecoration: 'none'
+            });
             if (labelOverride) $resend.text(labelOverride);
         }
     }
@@ -538,19 +559,19 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
         };
         resendTimerInterval = setInterval(tick, 1000);
         tick(); // draw immediately
-    } 
+    }
     // Wire into your existing flows:
 
     // 1) When "Send OTP" succeeds (your existing success callback),
     //    we hook via the modal show event to ensure timer starts every time it opens.
-    $('#otpVerificationModal').on('shown.bs.modal', function () {
-        otpExpiryAt = Date.now() + OTP_VALID_MS;   // reset validity window on each send
+    $('#otpVerificationModal').on('shown.bs.modal', function() {
+        otpExpiryAt = Date.now() + OTP_VALID_MS; // reset validity window on each send
         startOtpValidityTimer();
-        startResendCooldown();                      // small cooldown before allowing another resend
+        startResendCooldown(); // small cooldown before allowing another resend
     });
 
     // 2) Block verification if expired (non-destructive addition to your handler)
-    $('#verifyOtpBtn').off('click.otpExpiryGuard').on('click.otpExpiryGuard', function () {
+    $('#verifyOtpBtn').off('click.otpExpiryGuard').on('click.otpExpiryGuard', function() {
         if (otpExpiryAt && Date.now() > otpExpiryAt) {
             $('#otp_error').text('OTP expired. Please resend a new code.').show();
             setVerifyEnabled(false);
@@ -561,11 +582,11 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
     });
 
     // 3) Handle "Resend OTP" click
-    $(document).on('click', '#resendOtp', function () {
+    $(document).on('click', '#resendOtp', function() {
         // cooldown guard
         if (resendCooldownUntil && Date.now() < resendCooldownUntil) return;
 
-        const phone = $('#otpVerificationModal').data('phone'); 
+        const phone = $('#otpVerificationModal').data('phone');
         if (!phone) {
             $('#customerOtpError').text('Phone number missing. Please go back and enter it again.').show();
             return;
@@ -581,7 +602,7 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
                 // Optionally tell backend we're refreshing the same OTP flow:
                 // reason: 'resend'
             },
-            success: function () {
+            success: function() {
                 // Reset input boxes visually
                 $('.otp-box').val('');
                 $('#customerOtpInput').val('');
@@ -593,8 +614,9 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
 
                 $('#customerOtpError').hide();
             },
-            error: function (xhr) {
-                const msg = (xhr.responseJSON && xhr.responseJSON.message) || 'Unable to resend OTP right now.';
+            error: function(xhr) {
+                const msg = (xhr.responseJSON && xhr.responseJSON.message) ||
+                    'Unable to resend OTP right now.';
                 $('#customerOtpError').text(msg).show();
                 // Let user try again soon
                 setResendEnabled(true, 'Resend OTP');
@@ -603,14 +625,14 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
     });
 
     // 4) Clean up timers when the OTP modal closes
-    $('#otpVerificationModal').on('hide.bs.modal', function () {
+    $('#otpVerificationModal').on('hide.bs.modal', function() {
         clearAllIntervals();
     });
 
     // 5) Also ensure when you jump back to "edit phone" we clean timers
-    $('#editPhoneNumber').on('click', function () {
+    $('#editPhoneNumber').on('click', function() {
         clearAllIntervals();
     });
 })();
-    </script>
+</script>
 @endsection

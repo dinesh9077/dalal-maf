@@ -1,5 +1,4 @@
 <style>
-
 .login-box {
     width: 400px !important;
     max-width: 90%;
@@ -9,6 +8,7 @@
     box-shadow: 0 8px 12px rgba(31, 92, 163, 0.2);
     padding: 20px 20px;
     margin: 0 auto;
+    height: 250px;
 }
 
 .modal-dialog {
@@ -17,11 +17,12 @@
 }
 
 .modal-title {
-    font-family: var(--font-family-base)!important;
+    font-family: var(--font-family-base) !important;
     color: var(--color-dark) !important;
     font-weight: 600 !important;
     line-height: none !important;
-
+    font-size:20px !important;
+    
 }
 
 .login-box .modal-header {
@@ -37,7 +38,7 @@
     color: #6b7280;
     font-size: 14px;
     margin: 0px 0 5px 0;
-    font-weight:500;
+    font-weight: 500;
 }
 
 .login-box .form-group {
@@ -69,7 +70,8 @@
 }
 
 .login-box .btn-send-otp:hover {
-    background-color: #5a5233;
+    background-color: #6c603c;
+    color: #fff;
 }
 
 .login-box .terms-text {
@@ -78,192 +80,132 @@
     text-align: center;
     cursor: pointer;
 }
+
 .close {
     background-color: #6c603c !important; 
     border: none;
     width: 32px;
     height: 32px;
-    border-radius: 50%; 
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 16px;
     transition: all 0.3s ease;
-    cursor: pointer;
 }
 
 .close i {
-    color: #fff; 
+    color: #fff;
     font-size: 14px;
     transition: color 0.3s ease;
 
 }
 
 .close:hover {
-    background-color: #6c603c; 
+    /* background-color: #6c603c;  */
 }
 
 .close:hover i {
-    color: #000; 
-}
-.otp-box {
-    width: 400px;
-    border-radius: 10px;
-    background: #fff;
-    padding: 25px 30px;
-    position: relative;
-    box-shadow: 0 8px 12px rgba(31, 92, 163, 0.15);
-    border: none;
-    margin: auto;
+    color: #000;
 }
 
-@media (max-width: 480px) {
-    .otp-box {
-        width: 90%;
-        padding: 20px;
+.model-otp {
+    width: 400px !important;
+    height: 350px !important;
+    margin: auto;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    position: relative;
+}
+
+@media(max-width: 350px) {
+    .model-otp {
+        width: 300px !important;
     }
 }
 
-/* Close button */
+@media (min-width: 350px) and (max-width: 500px) {
+    .model-otp {
+        width: 340px !important;
+    }
+}
+
 .close-btn-login {
-    position: absolute;
+    /* position: absolute; */
     top: 15px;
     right: 15px;
-    background-color: #947E41;
+    width: 28px;
+    height: 28px;
     border: none;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: 0.3s;
-}
-
-.close-btn-login:hover {
-    background-color: #947E41;
-    color: #000;
+    margin-top:10px;
 }
 
 .close-btn-login i {
+    color: white;
     font-size: 14px;
 }
 
-/* Header */
-.otp-header {
-    margin-bottom: 15px;
-    margin-top: 10px;
+.close-btn-login:hover {
+    background: #6c603c;
 }
 
-.otp-title {
+.modal-header {
+    padding: 28px 24px;
+}
+
+#editFrontPhone {
     font-size: 18px;
     font-weight: 600;
-    color: #333;
-    margin-bottom: 6px;
-}
-
-.otp-number {
-    font-size: 16px;
     color: #000;
+}
+
+#editPhoneNumber {
+    cursor: pointer;
+    margin-left: 8px;
+    color: #6c603c;
+}
+
+.otp-input-wrapper input.otp-box-input {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+    text-align: center;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
     font-weight: 600;
 }
 
-.otp-number i {
-    color: #6c603c;
-    font-size: 13px;
-    margin-left: 6px;
-    cursor: pointer;
-}
-
-/* Subtitle */
-.otp-subtitle {
-    text-align: left;
-    font-size: 14px;
-    color: #666;
-    margin: 15px 0 8px;
-}
-
-/* OTP Inputs */
-.otp-inputs {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-}
-
-.otp-box-input {
-    width: 60px;
-    height: 45px;
-    font-size: 18px;
-    text-align: center;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-}
-
-.otp-box-input:focus {
+.otp-input-wrapper input.otp-box-input:focus {
     border-color: #6c603c;
-    box-shadow: 0 0 3px rgba(148, 126, 65, 0.5);
-    outline: none;
+    box-shadow: 0 0 5px rgba(148, 126, 65, 0.4);
 }
 
-/* Resend + Timer */
 .resend-text {
-    text-align: left;
-    margin-top: 8px;
+    margin-top: 15px;
     font-size: 14px;
-    color: #666;
+    text-align: center;
 }
 
 .resend-link {
-    color: #6c603c;
+    color: #6c603c !important;
+    font-weight: 600;
     cursor: pointer;
-    text-decoration: underline;
 }
 
-.timer-text {
-    margin-left: 8px;
-    color: #9ca3af;
-}
-
-/* Verify Button */
 .verify-btn {
-    background-color: #6c603c !important;
-    color: #fff !important;
-    border: none;
-    border-radius: 6px;
+    width: 100%;
+    display: block;
+    background: #6c603c !important;
+    color: white;
     padding: 10px;
     font-weight: 600;
-    width: 100%;
-    margin-top: 20px;
-    transition: 0.3s;
-}
-
-.verify-btn:hover {
-    background-color: #6c603c;
-}
-.otp-inputs {
-    display: flex;
-    justify-content: center; /* center boxes */
-    gap: 10px; /* spacing between boxes */
-}
-
-.otp-box-input {
-    width: 40px;              /* ✅ smaller width for 1 digit */
-    height: 45px;
-    font-size: 18px;
-    text-align: center;
-    border: 1px solid #ccc;
     border-radius: 6px;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-
-.otp-box-input:focus {
-    border-color: #6c603c;
-    box-shadow: 0 0 4px rgba(108, 96, 60, 0.4);
-    outline: none;
-}
-
 </style>
 @extends('vendors.layout')
 
@@ -509,13 +451,11 @@
         <div class="modal-content login-box">
 
             <div class="modal-header">
-                <h3 class="modal-title">Login / Register</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h3 class="modal-title">Update Phone</h3>
+                <button type="button" class="close" style="margin:0px;" data-dismiss="modal" aria-label="Close">
                     <i class="fa fa-times"></i>
                 </button>
             </div>
-
-            <p class="login-subtitle">Please enter your Phone Number</p>
 
             <div class="form-group mt-3">
                 <label for="in_phone">Phone</label>
@@ -527,51 +467,58 @@
             <button id="sendOtp" type="button" class="btn btn-send-otp w-100 mt-4">
                 {{ __('Send OTP') }}
             </button>
-
-            <p class="terms-text mt-3">Terms and conditions</p>
-
         </div>
     </div>
 </div>
 
 <div class="modal fade" id="otpVerificationModal" tabindex="-1" role="dialog"
-    aria-labelledby="otpVerificationModalLabel" aria-hidden="true">
+    aria-labelledby="otpVerificationModalLabel" aria-hidden="true" style="height: fit-content;">
     <div class="modal-dialog modal-dialog-centered model-otp" role="document">
-        <div class="modal-content otp-box" style="width:400px;">
+        <div class="modal-content model-otp">
 
-            <button type="button" class="close-btn-login" data-dismiss="modal" aria-label="Close">
-                <i class="fa fa-times"></i>
-            </button>
+            <div class="modal-header border-0 p-4" style="display:flex; flex-direction:column;">
 
-            <div class="otp-header">
-                <h4 class="otp-title">{{ __('Verify your number') }}</h4>
-                <h4 class="otp-number">
-                    <span id="editFrontPhone">+91-7854875487</span>
-                    <i class="fa fa-pencil" id="editPhoneNumber"></i>
-                </h4>
+                <div class="d-flex justify-content-between align-items-start w-100 mb-2">
+
+                    <div>
+                        <h4 class="modal-title m-0">{{ __('Verify your number') }}</h4>
+                        <h4 class="m-0 mt-1" style="color:#000; font-weight:600;">
+                            <span id="editFrontPhone">+91-7854875487</span>
+                            <i class="fa fa-pencil" id="editPhoneNumber" style="cursor:pointer;"></i>
+                        </h4>
+                    </div>
+
+                    <button type="button" class="close-btn-login" data-dismiss="modal" aria-label="Close"
+                        style=" width:28px; background-color:#6c603c; position:none; height:28px; border-radius:50%; border:none;  align-items:center; justify-content:center;">
+                        <i class="fa fa-times" style="color:#fff;  font-size:14px;"></i>
+                    </button>
+                </div>
+
+                <h5 class="otp-input-wrapper" style="margin-bottom:10px; margin-top:10px; font-size:16px; font-weight:600;">Enter your 4 digit OTP</h5>
+
+                <div class="d-flex otp-input-wrapper" style ="gap:10px;">
+                    <input type="text" maxlength="1" class="otp-box-input form-control" />
+                    <input type="text" maxlength="1" class="otp-box-input form-control" />
+                    <input type="text" maxlength="1" class="otp-box-input form-control" />
+                    <input type="text" maxlength="1" class="otp-box-input form-control" />
+                </div>
+
+                <h5 class="mt-2" style="font-size:16px; font-weight:600;">
+                    Haven't received yet?
+                    <span id="resendOtp" class="resend-link">Resend OTP</span>
+                    <span id="otpTimer" class="timer-text"></span>
+                </h5>
+
+                <button id="verifyOtpBtn" type="button" class="btn verify-btn mt-5"
+                    style="background-color:#6c603c; color:#fff; font-weight:;">
+                    {{ __('Verify') }}
+                </button>
+
             </div>
-
-            <p class="otp-subtitle d-flex gap-2 otp-input-wrapper">Enter your 4 digit OTP</p>
-
-            <div class="otp-inputs">
-                <input type="text" maxlength="1" class="otp-box-input form-control" />
-                <input type="text" maxlength="1" class="otp-box-input form-control" />
-                <input type="text" maxlength="1" class="otp-box-input form-control" />
-                <input type="text" maxlength="1" class="otp-box-input form-control" />
-            </div>
-
-            <p class="resend-text">
-                Haven't received yet?
-                <span id="resendOtp" class="resend-link">Resend OTP</span>
-                <span id="otpTimer" class="timer-text"></span>
-            </p>
-
-            <button id="verifyOtpBtn" type="button" class="btn verify-btn" style="background-color:#6c6003;">
-                {{ __('Verify') }}
-            </button>
         </div>
     </div>
 </div>
+
 
 
 @endsection
