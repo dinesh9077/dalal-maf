@@ -10,6 +10,8 @@
 	Home Banner CSS
 ----------------------------------------- */
 .home-banner.home-banner-1 {
+  /* height: 572px; */
+  /* height: 400px; */
   height: 350px;
   position: relative;
 }
@@ -19,6 +21,7 @@
   width: 100%;
   position: relative;
 }
+
 
 .hero-image::before {
   content: '';
@@ -61,23 +64,20 @@
 .home-banner.home-banner-1 .banner-filter-form .nav {
   gap: 20px;
   border-radius: 10px 10px 0 0;
-  /* border-bottom: 1px solid #dcdcdc; */
-  /* background: rgba(var(--color-primary-rgb), 0.13); */
+
 }
 
 .home-banner.home-banner-1 .banner-filter-form .nav .nav-link {
   position: relative;
   border-radius: 10px 10px 0 0;
-  color: #42526E;
-  /* color: var(--color-dark); */
-  font-weight: var(--font-medium);
-  font-weight: var(--font-bold);
-  margin-bottom: -2px;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 0px;
   margin-inline: 0;
   border: none;
   cursor: pointer;
-  /* background-color: white; */
-  /* margin-right: 4px; */
+
 }
 
 @media(max-width : 400px) {
@@ -95,7 +95,6 @@
   margin-inline-end: 0;
   height: 100%;
   width: 2px;
-  /* background: var(--border-color); */
 }
 
 .home-banner.home-banner-1 .banner-filter-form .nav .nav-link:is(.active, :hover) {
@@ -103,15 +102,12 @@
   background-color: var(--color-white);
   border: none;
   border-bottom: 2px solid #747474;
-  padding-bottom: 8px;
-  /* border-bottom-color: var(--color-white); */
+  padding-bottom: 6px;
 }
 
 .home-banner.home-banner-1 .banner-filter-form .tab-content,
 .home-banner.home-banner-1 .banner-filter-form .form-wrapper {
-  border-radius: 18px;
-  /* border-start-start-radius: 0; */
-  border-color: var(--color-secondary);
+  border-radius: 23px;
 }
 
 .home-banner.home-banner-1 .banner-filter-form .btn-primary {
@@ -125,7 +121,7 @@
 
 
 .home-des-border {
-  border-right: 1px solid #ebecf0;
+  /* border-right: 1px solid #ebecf0; */
 }
 
 @media(max-width : 767px) {
@@ -200,20 +196,17 @@
 
 .section-title {
   text-align: left;
-  /* or center if needed */
 }
 
 .section-title .title {
   position: relative;
   display: inline-block;
-  /* so underline matches text width if desired */
-  font-size: 21px;
+  font-size: 30px;
   font-weight: 600;
-  color: #3b382c;
+  color: #334155;
 }
 
 @media(max-width : 500px) {
-
   .section-title .title {
     font-size: 20px;
   }
@@ -224,10 +217,10 @@
     position: absolute;
     left: 0;
     bottom: -7px;
-    width: 54px;
+    width: 75px;
     height: 3px;
-    background-color: #3B382C;
-    border-radius: 66px;
+    background-color: #334155;
+    border-radius: 51px;
 }
 
 
@@ -342,7 +335,8 @@
 }
 @media only screen and   (min-width : 1400px) {
     .new-banner-filters-width{
-        width: 60% !important;
+        width: 62% !important;
+        /* width: 60% !important; */
     }
 }
 
@@ -388,6 +382,7 @@
 @media (max-width: 768px) {
   .view-all-desktop {
     display: none !important;
+    width: auto !important;
   }
 
   .view-all-mobile {

@@ -10,11 +10,13 @@
             transition: all 0.3s ease-in-out;
             margin-bottom: 20px;
             position: relative;
-            margin-top: 10px;
-            width: 320px; 
-            height: 260px;
+            height: 100%;
             justify-content: space-between;
         }
+
+        .product-latest {
+    height: 260px !important;
+}
 
         .product-latest:hover {
             box-shadow: 0 4px 18px rgba(0,0,0,0.15);
@@ -108,11 +110,12 @@
         .latest-info li {
             border: 1px solid #e0e0e0;
             border-radius: 6px;
-            padding: 4px 8px;
+            padding: 4px 5px;
             /* background: #fafafa; */
             display: flex;
             align-items: center;
             line-height: 1.2;
+            font-size: 10px;
         }
 
         .latest-info i {

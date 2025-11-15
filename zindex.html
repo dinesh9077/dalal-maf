@@ -1,73 +1,179 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Phone Input</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<style>
-.phone-input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cards → Details (2-column)</title>
+  <style>
+    :root{
+      --bg:#f6f7fb; --panel:#ffffff; --accent:#4f46e5; --muted:#6b7280;
+    }
+    *{box-sizing:border-box}
+    body{font-family:Inter, system-ui, Arial; margin:0; min-height:100vh; background:var(--bg); color:#111}
 
-.flag-icon {
-  position: absolute;
-  left: 10px;
-  width: 24px;
-  height: 16px;
-}
+    .container{max-width:1100px; margin:32px auto; padding:20px}
 
-.flag-icon img {
-  width: 100%;
-  height: auto;
-  border-radius: 2px;
-}
+    /* layout */
+    .layout{display:flex; gap:20px}
+    .left, .right{background:var(--panel); border-radius:12px; padding:18px; box-shadow:0 6px 20px rgba(17,24,39,0.06)}
+    .left{flex:1; min-width:260px; display:flex; flex-direction:column; gap:14px}
+    .right{width:320px}
 
-.phone-input {
-  padding-left: 50px; /* space for flag */
-  font-size: 16px;
-}
-</style>
+    /* right: round cards */
+    .cards{display:flex; flex-direction:column; gap:14px}
+    .card-btn{display:flex; align-items:center; gap:12px; padding:10px; border-radius:12px; cursor:pointer; user-select:none; transition:transform .18s ease, box-shadow .18s ease, background .18s ease; outline:none; border:1px solid transparent}
+    .card-btn:focus{box-shadow:0 6px 18px rgba(79,70,229,0.12); transform:translateY(-2px)}
+    .card-btn:hover{transform:translateY(-2px)}
+
+    .avatar{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:white}
+    .title{font-size:15px;font-weight:600}
+    .subtitle{font-size:13px;color:var(--muted)}
+
+    .card-btn.active{background:linear-gradient(135deg, rgba(79,70,229,0.06), rgba(99,102,241,0.03)); border-color:rgba(79,70,229,0.12); box-shadow:0 8px 24px rgba(79,70,229,0.06)}
+
+    /* left: details */
+    .empty{flex:1; display:grid; place-items:center; color:var(--muted)}
+    .detail{display:none; gap:10px;}
+    .detail.visible{display:flex}
+
+    .detail-header{display:flex; gap:14px; align-items:center}
+    .detail-avatar{width:84px;height:84px;border-radius:18px;display:grid;place-items:center;font-size:28px;color:white;font-weight:700}
+    .detail-title{font-size:20px;font-weight:700}
+    .detail-meta{color:var(--muted); font-size:14px}
+
+    .detail-body{background:#fbfbfe;border-radius:10px;padding:12px; color:#222}
+
+    .actions{margin-top:auto; display:flex; gap:10px}
+    .btn{padding:10px 14px;border-radius:10px;border:0; cursor:pointer}
+    .btn.primary{background:var(--accent); color:white}
+    .btn.ghost{background:transparent;border:1px solid #e6e9f7;color:var(--accent)}
+
+    /* small screens */
+    @media (max-width:880px){
+      .layout{flex-direction:column}
+      .right{width:100%}
+    }
+  </style>
 </head>
-<body class="p-5">
+<body>
+  <div class="container">
+    <h2 style="margin:0 0 12px">5 Round Cards → Left details</h2>
 
-<div class="phone-input-wrapper">
-  <span class="flag-icon">
-    <img src="https://flagcdn.com/w20/in.png" alt="India Flag">
-  </span>
-  <input type="text" id="in_phone" class="form-control phone-input" value="+91 " maxlength="20">
-</div>
-<p id="editErr_in_phone" class="mt-2 mb-0 text-danger em"></p>
+    <div class="layout">
+      <div class="left" id="detailPanel" aria-live="polite">
+        <div class="empty" id="emptyState">
+          <div>
+            <p style="font-size:18px;margin:0 0 6px">किसी कार्ड पर क्लिक करें</p>
+            <p style="margin:0;color:var(--muted)">दाईं ओर से कार्ड चुनें और इसकी जानकारी यहाँ खुलेगी।</p>
+          </div>
+        </div>
 
-<script>
-const phoneInput = document.getElementById("in_phone");
-const fixedPrefix = "+91 ";
+        <!-- detail templates will be injected here -->
+      </div>
 
-phoneInput.addEventListener("focus", () => {
-  if (!phoneInput.value.startsWith(fixedPrefix)) {
-    phoneInput.value = fixedPrefix;
-  }
-});
+      <aside class="right">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <strong>कार्ड सूची</strong>
+          <small style="color:var(--muted)">5 आइटम</small>
+        </div>
 
-phoneInput.addEventListener("keydown", (e) => {
-  // Prevent backspacing or moving before prefix
-  if (
-    phoneInput.selectionStart <= fixedPrefix.length &&
-    (e.key === "Backspace" || e.key === "ArrowLeft")
-  ) {
-    e.preventDefault();
-  }
-});
+        <div class="cards" role="list" id="cardsList">
+          <!-- Cards created by JS for clarity (also included below for fallback) -->
+        </div>
+      </aside>
+    </div>
+  </div>
 
-phoneInput.addEventListener("input", () => {
-  if (!phoneInput.value.startsWith(fixedPrefix)) {
-    const userText = phoneInput.value.replace(/\D/g, ""); // keep digits
-    phoneInput.value = fixedPrefix + userText;
-  }
-});
-</script>
+  <script>
+    // Sample data for 5 cards
+    const data = [
+      {id:1, title:'Project A', subtitle:'Solar installation', color:'#ef4444', details:'Project A is a rooftop solar installation completed in March 2025. Capacity: 5 kW. Status: Operational.'},
+      {id:2, title:'Project B', subtitle:'Battery backup', color:'#f97316', details:'Project B includes a 10 kWh battery pack for night-time backup and load shifting.'},
+      {id:3, title:'Project C', subtitle:'EV Charger', color:'#f59e0b', details:'Project C integrates an EV charger with smart scheduling and monitoring.'},
+      {id:4, title:'Project D', subtitle:'Grid-tied', color:'#10b981', details:'Project D is a grid-tied micro inverter system with real-time export monitoring.'},
+      {id:5, title:'Project E', subtitle:'Community', color:'#6366f1', details:'Project E is a community solar program powering common areas and streetlights.'}
+    ];
 
+    const cardsList = document.getElementById('cardsList');
+    const detailPanel = document.getElementById('detailPanel');
+    const emptyState = document.getElementById('emptyState');
+
+    function createCard(item){
+      const btn = document.createElement('button');
+      btn.className = 'card-btn';
+      btn.setAttribute('role','listitem');
+      btn.setAttribute('aria-pressed','false');
+      btn.tabIndex = 0;
+
+      btn.innerHTML = `
+        <div class="avatar" style="background:${item.color}">${item.title.charAt(0)}</div>
+        <div style="flex:1;text-align:left">
+          <div class="title">${item.title}</div>
+          <div class="subtitle">${item.subtitle}</div>
+        </div>`;
+
+      btn.addEventListener('click', ()=> showDetail(item, btn));
+      btn.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') { e.preventDefault(); btn.click(); } });
+
+      return btn;
+    }
+
+    function showDetail(item, btn){
+      // deactivate other buttons
+      document.querySelectorAll('.card-btn').forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed','true');
+
+      // hide empty state
+      emptyState.style.display = 'none';
+
+      // remove existing details and insert new
+      document.querySelectorAll('.detail').forEach(d=>d.remove());
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'detail visible';
+      wrapper.innerHTML = `
+        <div class="detail-header">
+          <div class="detail-avatar" style="background:${item.color}">${item.title.charAt(0)}</div>
+          <div>
+            <div class="detail-title">${item.title}</div>
+            <div class="detail-meta">${item.subtitle} • ID #${item.id}</div>
+          </div>
+        </div>
+        <div class="detail-body">
+          <p style="margin:0 0 8px">${item.details}</p>
+          <ul style="margin:0 0 0 18px;color:var(--muted)">
+            <li>Estimated completion: <strong>Q1 2025</strong></li>
+            <li>Technician: <strong>Team Alpha</strong></li>
+            <li>Warranty: <strong>5 years</strong></li>
+          </ul>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" onclick="alert('Edit ${item.title}')">Edit</button>
+          <button class="btn ghost" onclick="alert('More about ${item.title}')">More</button>
+        </div>
+      `;
+
+      // small visual entrance
+      wrapper.style.opacity = 0;
+      wrapper.style.transform = 'translateY(6px)';
+      detailPanel.appendChild(wrapper);
+      requestAnimationFrame(()=>{
+        wrapper.style.transition = 'opacity .28s ease, transform .28s ease';
+        wrapper.style.opacity = 1;
+        wrapper.style.transform = 'translateY(0)';
+      });
+
+      // scroll into view in case of small screens
+      wrapper.scrollIntoView({behavior:'smooth', block:'nearest'});
+    }
+
+    // render cards
+    data.forEach(d=> cardsList.appendChild(createCard(d)));
+
+    // optional: open first by default
+    // showDetail(data[0], document.querySelectorAll('.card-btn')[0]);
+  </script>
 </body>
 </html>
