@@ -422,50 +422,42 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 </section>
 
 @if($featured_properties->isNotEmpty())
-<section class="product-area featured-product pt-100 pb-20">
-    <div class="container" style="border-top:none !important;">
-        <div class="row">
-            <div class="container">
-                <div class="col-12 ">
-                    <div class="section-title mb-10 new-titles position-relative" data-aos="fade-up">
-                        <h2 class="title text-center">Featured Properties</h2>
-                        <!-- <p class="mt-1" style="font-size:13px; line-height : 1.2;">
-                            Handpicked and premium listings showcased for you.
-                            Explore top-rated homes, offices, and commercial spaces that stand out.
-                        </p>  -->
-                  
-                        <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-desktop"
-                            style="padding: 10px 20px;">View All</a>
+<section class="product-area popular-product product-1 pt-100 pb-20 relative">
+    <div class="container border-0">
+        <div class="row" style="position: relative;">
+            <div class="section-title mb-10 new-titles position-relative aos-init aos-animate" data-aos="fade-up">
+                    <h2 class="title">Featured Properties</h2>
+                     <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-desktop"
+                    style="padding: 10px 20px;">View All</a>
+                </div>
+
+            <div   data-aos="fade-up">
+                <div class="swiper product-slider">
+                    <div class="swiper-wrapper">
+                           @forelse ($featured_properties as $property)
+                            <div class="swiper-slide">
+                                <x-property :property="$property" />
+                            </div>
+                            @empty
+                            <div class="p-3 text-center w-100">
+                                <h3 class="mb-0">{{ __('No Featured Property Found') }}</h3>
+                            </div>
+                            @endforelse
                     </div>
+                </div>
+
+     
+                <div class="swiper-button-prev first-left custom-swiper-btn">
+                    
+                </div>
+                <div class="swiper-button-next first-right custom-swiper-btn">
+                  
                 </div>
             </div>
 
-            <div class="container">
-                <div class="row align-items-stretch new-ww-mb">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex position-relative px-0" data-aos="fade-up">
-                        <div class="swiper product-slider w-100">
-                            <div class="swiper-wrapper">
-                                @forelse ($featured_properties as $property)
-                                <div class="swiper-slide">
-                                    <x-property :property="$property" />
-                                </div>
-                                @empty
-                                <div class="p-3 text-center w-100">
-                                    <h3 class="mb-0">{{ __('No Featured Property Found') }}</h3>
-                                </div>
-                                @endforelse
-                            </div>
-                            <div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
-                        </div>
-                        <div class="swiper-button-prev first-left custom-swiper-btn"></div>
-                        <div class="swiper-button-next first-right custom-swiper-btn"></div>
-                    </div>
-                </div>
-
-                <div class="text-center">
-                    <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
-                        style="padding: 10px 20px;">View All</a>
-                </div>
+            <div style="text-align: center;">
+                 <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
+                style="padding: 10px 20px;">View All</a>
             </div>
         </div>
     </div>
@@ -476,28 +468,17 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 @if($hotProperties->isNotEmpty())
 <section class="product-area featured-product pt-20 pb-10">
     <div class="container">
-        <div class="row">
-            <div class="container">
-                <div class="col-12">
-                    <div class="section-title mb-10 new-titles" data-aos="fade-up" style="position: relative;">
+        <div class="row" style="position: relative;">
+            <div class="section-title mb-10 new-titles" data-aos="fade-up" style="position: relative;">
                         <h2 class="title" style="text-align : center;">Hot Properties</h2>
-                        <!-- <p class="mt-1" style="font-size:13px; line-height : 1.2;">
-                            Handpicked and premium listings showcased for you.
-                            Explore top-rated homes, offices, and commercial spaces that stand out.
-                        </p> -->
                         <a href="{{ url('properties/is_hot/all') }}" class="vs-btn vs-new-set-btn view-all-desktop"
                             style="padding: 10px 20px;">
                             View All
                         </a>
                     </div>
-                </div>
-            </div>
 
-            <div class="container">
-                <div class="row align-items-stretch">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex" style="position: relative;"
-                        data-aos="fade-up">
-                        <div class="swiper product-slider w-100">
+            <div  data-aos="fade-up">
+                  <div class="swiper product-slider w-100">
                             <div class="swiper-wrapper">
                                 @forelse ($hotProperties as $property)
                                 <div class="swiper-slide">
@@ -514,16 +495,18 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
                         <div class="swiper-button-prev first-left custom-swiper-btn"></div>
                         <div class="swiper-button-next first-right custom-swiper-btn"></div>
-                    </div>
-                </div>
 
-                <div class="text-center mt-2 mt-sm-2">
+              
+            </div>
+
+
+              <div class="text-center mt-2 mt-sm-2">
                     <a href="{{ url('properties/is_hot/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
                         style="padding: 10px 20px;">
                         View All
                     </a>
                 </div>
-            </div>
+                
         </div>
     </div>
 </section>
@@ -533,25 +516,20 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 @if($recommendedProperties->isNotEmpty())
 <section class="product-area featured-product pt-20 pb-20">
     <div class="container">
-        <div class="row">
-            <div class="container">
-                <div class="col-12">
-                    <div class="section-title  mb-30 new-titles" data-aos="fade-up" style="position: relative;">
+        <div class="row"  style="position: relative;">
+             <div class="section-title  mb-10 new-titles" data-aos="fade-up" style="position: relative;">
                         <h2 class="title" style="text-align : center;">Recommended Properties</h2>
-                        <p class="mt-1" style="font-size:13px; line-height : 1.2;">Handpicked and premium listings showcased for you.
-                            Explore top-rated homes, offices, and commercial spaces that stand out.</p>
+                        <!-- <p class="mt-1" style="font-size:13px; line-height : 1.2;">Handpicked and premium listings showcased for you.
+                            Explore top-rated homes, offices, and commercial spaces that stand out.</p> -->
                         <a href="{{ url('properties/is_recommended/all') }}" class="vs-btn vs-new-set-btn"
                             style="padding: 10px 20px;">View All</a>
 
                     </div>
-                </div>
-            </div>
 
-            <div class="container ">
-                <div class="row align-items-stretch ">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex " style="position: relative;"
-                        data-aos="fade-up">
-                        <div class="swiper product-slider w-100">
+            <div   data-aos="fade-up">
+
+
+                 <div class="swiper product-slider w-100">
                             <div class="swiper-wrapper">
                                 @forelse ($recommendedProperties as $property)
                                 <div class="swiper-slide">
@@ -567,8 +545,8 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                         </div>
                         <div class="swiper-button-prev first-left custom-swiper-btn"></div>
                         <div class="swiper-button-next first-right custom-swiper-btn"></div>
-                    </div>
-                </div>
+
+
             </div>
         </div>
     </div>
@@ -583,10 +561,10 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                 <div class="col-12">
                     <div class="section-title mb-10 new-titles" data-aos="fade-up" style="position: relative;">
                         <h2 class="title" style="text-align : center;">Fast Selling Properties</h2>
-                        <p class="mt-1" style="font-size:13px; line-height : 1.2;">
+                        <!-- <p class="mt-1" style="font-size:13px; line-height : 1.2;">
                             Handpicked and premium listings showcased for you.
                             Explore top-rated homes, offices, and commercial spaces that stand out.
-                        </p>
+                        </p> -->
                         <a href="{{ url('properties/is_fast_selling/all') }}"
                             class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 10px 20px;">
                             View All
@@ -636,45 +614,47 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 <section class="product-area popular-product product-1 relative" >
     <img src="{{ asset('assets/front/images/new-images/new-primume-properties.png') }}" alt=""
         class="new-primume-prop-img">
-    <div class="container pt-30 pb-30">
-        <div class="row">
-            <div class="col-12">
-                <div class="section-title prop-pad" data-aos="fade-up">
-                    <h2 class="title">{{ $propertySecInfo->title }}</h2>
+        <div class="container pt-30 pb-30">
+         <div>
+               <div class="row">
+                <div class="col-12">
+                    <div class="section-title prop-pad" data-aos="fade-up">
+                        <h2 class="title">{{ $propertySecInfo->title }}</h2>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12">
-                <div class="tab-content" data-aos="fade-up">
-                    <div class="row new-padding-width-res" style="position: relative; margin-top : 15px;">
-                        <!-- Slider wrapper -->
-                        <div class="swiper LP-new-slider">
-                            <div class="swiper-wrapper">
-                                @forelse ($properties as $property)
-                                @if($property->property_type == 'partial')
-                                <div class="swiper-slide">
-                                    <x-latest-property :property="$property"  />
+                <div class="col-12 LP_SLider-div">
+                    <div class="tab-content" data-aos="fade-up">
+                        <div class="row new-padding-width-res" style="position: relative; margin-top : 15px;">
+                          
+                            <div class="swiper LP-new-slider">
+                                <div class="swiper-wrapper">
+                                    @forelse ($properties as $property)
+                                    @if($property->property_type == 'partial')
+                                    <div class="swiper-slide">
+                                        <x-latest-property :property="$property"  />
+                                    </div>
+                                    @endif
+                                    @empty
+                                    <div class="p-3 text-center mb-30">
+                                        <h3 class="mb-0">{{ __('No Properties Found') }}</h3>
+                                    </div>
+                                    @endforelse
                                 </div>
-                                @endif
-                                @empty
-                                <div class="p-3 text-center mb-30">
-                                    <h3 class="mb-0">{{ __('No Properties Found') }}</h3>
-                                </div>
-                                @endforelse
                             </div>
-                        </div>
 
-                        <!-- Navigation arrows -->
-                        <div class="LP-new-left-btn">
-                            <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
-                        </div>
-                        <div class="LP-new-right-btn">
-                            <img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
+          
+                            <div class="LP-new-left-btn">
+                                <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
+                            </div>
+                            <div class="LP-new-right-btn">
+                                <img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+         </div>
         </div>
-    </div>
 </section>
 @endif
 
@@ -693,7 +673,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
             </div>
         </div>
 
-        <div class="row  new-padding-width-res" style="position : relative;">
+        <div class="row BFS_SLider-div" style="position : relative;">
             <!-- Slider wrapper -->
             <div class="swiper bussiness-f-s-slider">
                 <div class="swiper-wrapper">
@@ -721,7 +701,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 </section>
 
 
-<section class="product-area popular-product product-1 relative" style="background:#F8F7F1; overflow:visible;">
+<section class="product-area popular-product product-1 relative" >
     <div class="container pt-30 pb-30">
         <div class="row" style="position: relative;">
             <div class="col-12">
@@ -762,7 +742,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 </section>
 
 
-<div class="container pt-30 pb-30 upcoming-projects" data-aos="fade-up">
+<div class="container pt-30 pb-30 upcoming-projects" data-aos="fade-up" style="border-top: 2px solid #f4f5f7;">
 
     <div class="row">
         <div class="col-12">
@@ -790,8 +770,8 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                         class="upcoming-projects-img">
 
                     <div class="upcomming-card-body">
-                        <h5>{{ $project->title }}</h5>
-                        <p class="text-muted">{{ \Illuminate\Support\Str::limit($project->address, 35) }}</p>
+                        <h5> {{ \Illuminate\Support\Str::limit($project->title, 10) }}</h5>
+                        <p class="text-muted">{{ \Illuminate\Support\Str::limit($project->address, 30) }}</p>
                         <h6 class="up-price">
                             {{ symbolPrice($project->min_price) }}
                             <small class="text-muted">Starting</small>
@@ -841,7 +821,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
             <h2 class="title">Explore Property Types</h2>
         </div>
 
-        <div class="aps-slide-wrapper " style="margin-top : 30px;" data-aos="fade-up">
+        <div class="aps-slide-wrapper " style="margin-top : 12px;" data-aos="fade-up">
             <!-- Left Arrow -->
             <button class="arrow-button arrow-left" id="arrowLeft"><img
                     src="{{ asset('assets/front/images/new-images/left.png') }}" alt=""></button>
@@ -886,7 +866,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                 every detail with care and expertise.</p> -->
         </div>
 
-        <div class="row">
+        <div class="row BSR-main-div">
             <div class="col-lg-4 b-s-r-div-main">
                 <div class="b-s-r-div ">
                     <img src="{{ asset('assets/front/images/acrs-imag/buy.png') }}" alt="" class="b-s-r-img">
@@ -1162,21 +1142,23 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
         <div class="row ">
             <!-- City Card Start -->
             @forelse ($cities as $city)
-            <div class="custom-col-5 mt-3" data-aos="fade-up">
+            <div class="custom-col-5 mt-3 p-0" data-aos="fade-up" >
                 <a href="{{ route('frontend.properties', ['city' => $city->name]) }}" class="text-center"
                     style="display: block; text-decoration: none; color: inherit;">
-                    <div class="city-card text-center">
+                    <div class="city-card text-start">
                         <img class="lazyload blur-up"
                             data-src="{{ asset('assets/img/property-city/' . $city->image) }}">
-                        <p>{{ $city->name }}</p>
-                        <p>
-                            {{ $city->propertyCount }}
-                            @if ($city->propertyCount > 0)
-                            {{ __('Properties') }}
-                            @else
-                            {{ __('Property') }}
-                            @endif
-                        </p>
+                        <div class="citis-card-de">
+                            <p>{{ $city->name }}</p>
+                            <p>
+                                {{ $city->propertyCount }}
+                                @if ($city->propertyCount > 0)
+                                {{ __('Properties') }}
+                                @else
+                                {{ __('Property') }}
+                                @endif
+                            </p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -1358,7 +1340,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                 <div class="blog-card">
                     <img src="{{ asset('assets/img/blogs/' . $blog->image) }}" class="blog-img" alt="Blog Image">
                     <div class="blog-body">
-                        <h5 class="blog-title">{{ $blog->title }}</h5>
+                        <h5 class="blog-title"> {{ \Illuminate\Support\Str::limit(strip_tags($blog->title), 40) }}</h5>
                         <p class="blog-text">{{ \Illuminate\Support\Str::limit(strip_tags($blog->content), 90) }}</p>
                         <a href="{{ route('blog_details', ['slug' => $blog->slug]) }}" class="show-more">Show More →</a>
                     </div>
