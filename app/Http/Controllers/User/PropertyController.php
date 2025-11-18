@@ -102,7 +102,7 @@ class PropertyController extends Controller
         }])->get();
         $information['amenities'] = Amenity::with(['amenityContent' => function ($q) use ($language) {
             $q->where('language_id', $language->id);
-        }])->where('status', 1)->get();
+        }])->where('status', 1)->whereJsonContains('types', $request->type)->get();
         $information['unitTypes'] = Unit::get();
         $information['areas'] = Area::where('status', 1)->get();
         return view('users.property.create', $information);
@@ -190,6 +190,7 @@ class PropertyController extends Controller
             if ($request->hasFile('video_image')) {
                 $videoImage = UploadFile::store('assets/img/property/video/', $request->video_image);
             }
+
             $bs = Basic::select('property_approval_status')->first();
             if ($bs->property_approval_status == 1) {
                 $approveStatus = 0;
@@ -221,8 +222,7 @@ class PropertyController extends Controller
                 'longitude' => $request->longitude,
                 'approve_status' => $approveStatus,
                 'furnishing' => $request->furnishing,
-                'possession_date' => $request->possession_date
-
+                'possession_date' => $request->possession_date 
             ]);
 
             $slders = $request->slider_images;
@@ -330,7 +330,7 @@ class PropertyController extends Controller
         $information['propertyAmenities'] = PropertyAmenity::where('property_id', $property->id)->get();
         $information['amenities'] = Amenity::with(['amenityContent' => function ($q) use ($language) {
             $q->where('language_id', $language->id);
-        }])->where('status', 1)->get();
+        }])->where('status', 1)->whereJsonContains('types', $property->type)->get();
         $information['specifications'] = Spacification::where('property_id', $property->id)->get();
         $information['propertyUnities'] = PropertyUnit::where('property_id', $property->id)->get();
         $information['unitTypes']	= Unit::Where('status',1)->get();

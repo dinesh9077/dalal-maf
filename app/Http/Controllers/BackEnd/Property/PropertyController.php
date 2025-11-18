@@ -222,7 +222,7 @@
 			}])->get();
 			$information['amenities'] = Amenity::with(['amenityContent' => function ($q) use ($language) {
 				$q->where('language_id', $language->id);
-			}])->where('status', 1)->get();
+			}])->where('status', 1)->whereJsonContains('types', $request->type)->get();
 			
 			$information['propertySettings'] = Basic::select('property_state_status', 'property_country_status')->first();
 			$information['states'] = State::with(['stateContent' => function ($q) use ($language) {
@@ -377,32 +377,32 @@
 				}
 				
 				$property = Property::create([
-                'property_type' => $this->routeName == 'admin.property_inventory.store_property' ? 'full' : 'partial',
-                'vendor_id' => $request->vendor_id ?? 0,
-                'agent_id' => $request->agent_id,
-                'category_id' => $request->category_id,
-                'country_id' => $request->country_id,
-                'area_id' => $request->area_id,
-                'state_id' => $request->state_id,
-                'city_id' => $request->city_id,
-                'featured_image' => $featuredImgName,
-                'floor_planning_image' => $floorPlanningImage,
-                'video_image' => $videoImage,
-                'price' => $request->price,
-                'purpose' => $request->purpose,
-                'type' => $request->type,
-				'address' => $request->address,
-                'notes' => $request->notes ?? '',
-                'beds' => $request->beds ?? 0,
-                'bath' => $request->bath ?? 0,
-                'area' => $request->area ?? 0,
-                'video_url' => $request->video_url,
-                'status' => $request->status,
-                'latitude' => $request->latitude,
-                'longitude' => $request->longitude,
-                'approve_status' => 1,
-                'furnishing' => $request->furnishing,
-                'possession_date' => $request->possession_date
+					'property_type' => $this->routeName == 'admin.property_inventory.store_property' ? 'full' : 'partial',
+					'vendor_id' => $request->vendor_id ?? 0,
+					'agent_id' => $request->agent_id,
+					'category_id' => $request->category_id,
+					'country_id' => $request->country_id,
+					'area_id' => $request->area_id,
+					'state_id' => $request->state_id,
+					'city_id' => $request->city_id,
+					'featured_image' => $featuredImgName,
+					'floor_planning_image' => $floorPlanningImage,
+					'video_image' => $videoImage,
+					'price' => $request->price,
+					'purpose' => $request->purpose,
+					'type' => $request->type,
+					'address' => $request->address,
+					'notes' => $request->notes ?? '',
+					'beds' => $request->beds ?? 0,
+					'bath' => $request->bath ?? 0,
+					'area' => $request->area ?? 0,
+					'video_url' => $request->video_url,
+					'status' => $request->status,
+					'latitude' => $request->latitude,
+					'longitude' => $request->longitude,
+					'approve_status' => 1,
+					'furnishing' => $request->furnishing,
+					'possession_date' => $request->possession_date
 				]);
 				
 				$slders = $request->slider_images;
@@ -513,7 +513,7 @@
 			$information['propertyUnities'] = PropertyUnit::where('property_id', $property->id)->get();
 			$information['amenities'] = Amenity::with(['amenityContent' => function ($q) use ($language) {
 				$q->where('language_id', $language->id);
-			}])->where('status', 1)->get();
+			}])->where('status', 1)->whereJsonContains('types', $property->type)->get();
 			
 			$information['propertyCategories'] = PropertyCategory::where([['type', $property->type], ['status', 1]])->with(['categoryContent' => function ($q) use ($language) {
 				$q->where('language_id', $language->id);
@@ -536,9 +536,9 @@
 			
 			if ($property->vendor_id != 0) {
 				$package = VendorPermissionHelper::currentPackagePermission($property->vendor_id);
-				$uploadGImg = $package->number_of_property_gallery_images -  count($information['galleryImages']);
+					$uploadGImg = ($package->number_of_property_gallery_images ?? 0) -  count($information['galleryImages']);
 				} else {
-				$uploadGImg = 999999;
+					$uploadGImg = 999999;
 			}
 			$information['uploadGImg'] = $uploadGImg;
 			$information['url'] = $this->routeName == 'admin.property_inventory.properties' ? 'admin.property_inventory.update_property' : 'admin.property_management.update_property';

@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Project\Project;
 use App\Models\Property\Property;
 use App\Models\Property\PropertyContact;
-use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Authenticatable; 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -20,6 +20,15 @@ class Agent extends Model implements AuthenticatableContract, JWTSubject
     protected $casts = [
         'permissions' => 'array',
     ];
+ 
+    protected $appends = [
+        'full_image',
+    ];
+
+    public function getFullImageAttribute()
+    {
+        return $this->image ? url('/') . '/assets/img/agents/' . $this->image : null;
+    }
 
     public function vendor()
     {

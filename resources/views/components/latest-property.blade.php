@@ -189,7 +189,7 @@
     <div class="product-latest">
       
         <span class="property-purpose-tag">
-            {{ strtoupper(str_replace('_', ' ', $property->purpose)) }}
+            {{ $property->purpose === "sell" ? "Buy" : ucwords(str_replace('_', ' ', $property->purpose)) }}
         </span>
 
         <div class="latest-content">

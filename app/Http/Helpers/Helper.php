@@ -322,34 +322,60 @@
 			return [$guard, $map[$authType]['column'], $map[$authType]['inquiry']]; 
 		}
 	}
-
+ 
 	if (!function_exists('msgClubSendSms')) {
 		function msgClubSendSms(string $phone_no, string $message)
 		{
-			try { 
+			try {
 				$authKey = "78a47e619c9e6c3a35305b952d4da46";
 				$senderId = "DLALMF";
 
-				$apiUrl = 'http://msg.msgclub.net/rest/services/sendSMS/sendGroupSms'; 
+				$apiUrl = 'http://msg.msgclub.net/rest/services/sendSMS/sendGroupSms';
 				$params = [
 					'AUTH_KEY' => $authKey,
 					'message' => $message,
 					'senderId' => $senderId,
 					'routeId' => '1',
 					'mobileNos' => $phone_no,
-					'smsContentType' => 'english', 
+					'smsContentType' => 'english',
 				];
 
+				// 🔥 Log request
+				Log::info('MSGCLUB SMS - Request', [
+					'url' => $apiUrl,
+					'params' => $params,
+				]);
+
+				// Send request
 				$response = Http::timeout(10)->get($apiUrl, $params);
 
-				if ($response->successful())
-				{ 
+				// 🔥 Log raw response
+				// Log::info('MSGCLUB SMS - Response', [
+				//     'status' => $response->status(),
+				//     'body'   => $response->body(),
+				// ]);
+
+				if ($response->successful()) {
 					return $response->body();
-				} else { 
-					return false;
 				}
 
-			} catch (\Throwable $e) { 
+				// 🔥 Log non-success HTTP cases
+				Log::warning('MSGCLUB SMS - Non-successful request', [
+					'status' => $response->status(),
+					'body' => $response->body(),
+				]);
+
+				return false;
+
+			} catch (\Throwable $e) {
+
+				// 🔥 Log exceptional errors
+				Log::error('MSGCLUB SMS - Exception', [
+					'message' => $e->getMessage(),
+					'line' => $e->getLine(),
+					'file' => $e->getFile(),
+				]);
+
 				return false;
 			}
 		}

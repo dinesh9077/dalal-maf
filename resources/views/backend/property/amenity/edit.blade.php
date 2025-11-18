@@ -30,6 +30,25 @@
                         </div>
                     </div> 
 
+                    <div class="form-group">
+                        <label for="">{{ __('Type') . '*' }}</label>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="in_residential" name="types[]" value="residential" class="type-checkbox custom-control-input">
+                            <label for="in_residential" class="custom-control-label">{{ __('Residential') }}</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="in_commercial" name="types[]" value="commercial" class="type-checkbox custom-control-input">
+                            <label for="in_commercial" class="custom-control-label">{{ __('Commercial') }}</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="in_industrial" name="types[]" value="industrial" class="type-checkbox custom-control-input">
+                            <label for="in_industrial" class="custom-control-label">{{ __('Industrial') }}</label>
+                        </div>
+                    </div> 
+
                     @foreach ($langs as $lan)
                         <div class="form-group {{ $lan->direction == 1 ? 'rtl text-right' : '' }}">
                             <label for="">{{ __('Name') . '*' }} ({{ $lan->name }})</label>

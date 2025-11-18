@@ -129,7 +129,7 @@ class PropertyController extends Controller
         }])->get();
         $information['amenities'] = Amenity::with(['amenityContent' => function ($q) use ($language) {
             $q->where('language_id', $language->id);
-        }])->where('status', 1)->get();
+        }])->where('status', 1)->whereJsonContains('types', $request->type)->get();
         $information['unitTypes'] = Unit::get();
         $information['areas'] = Area::where('status', 1)->get();
         if($this->routeName == 'agent.property_inventory.create_property') {
@@ -370,7 +370,7 @@ class PropertyController extends Controller
         $information['propertyAmenities'] = PropertyAmenity::where('property_id', $property->id)->get();
         $information['amenities'] = Amenity::with(['amenityContent' => function ($q) use ($language) {
             $q->where('language_id', $language->id);
-        }])->where('status', 1)->get();
+        }])->where('status', 1)->whereJsonContains('types', $property->type)->get();
         $information['specifications'] = Spacification::where('property_id', $property->id)->get();
         $information['propertyUnities'] = PropertyUnit::where('property_id', $property->id)->get();
         $information['unitTypes']	= Unit::Where('status',1)->get();
