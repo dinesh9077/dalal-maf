@@ -252,12 +252,14 @@ input[type="checkbox"]:checked+label .animits-div-tab {
                                             @foreach (['residential', 'commercial', 'industrial'] as $type)
                                             <div>
                                                 <input class="input-checkbox" type="checkbox" name="type[]"
+                                                <input class="input-checkbox" type="checkbox" name="type[]"
                                                     id="checkbox{{ $type }}" value="{{ $type }}"
                                                     {{ in_array($type, $selectedTypes) ? 'checked' : '' }}
                                                     onchange="updateAmenities('type[]={{ $type }}',this)">
                                                 <label for="checkbox{{ $type }}"><span class="animits-div-tab">
                                                         {{ ucwords($type) }}</span></label>
                                             </div>
+                                            @endforeach 
                                             @endforeach 
                                         </div>
                                     </div>
