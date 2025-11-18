@@ -110,7 +110,7 @@ $version = $basicInfo->theme_version;
 'subtitle' => __('Projects'),
 ])
 
-<div class="projects-area" style="padding: 10px 0px;">
+<div class="projects-area" style="padding: 10px 0px; margin-top: 130px;">
 
 <a href="https://wa.me/9925133440" target="_blank">
     <div class="whatsapp-btn" data-aos="fade-up">
@@ -123,23 +123,23 @@ $version = $basicInfo->theme_version;
         <div class="row">
             <div class="col-12">
                 <div class="product-sort-area mb-0" data-aos="fade-up">
-                    <div class="row align-items-center">
-                        <div class="col-lg-8">
+                    <div class="row align-items-start">
+                        <div class="col-lg-8 mb-0">
                             <form action="{{ route('frontend.projects') }}" method="GET">
-                                <div class="project-filter-form radius-md pb-10">
+                                <div class="project-filter-form radius-md">
                                     <div class="row">
                                         <div class="col-lg-3 mb-10">
                                             <input type="search" name="title" class="form-control"
                                                 placeholder="{{ __('Search By Title') }}"
-                                                value="{{ request()->input('title') }}">
+                                                value="{{ request()->input('title') }}" style="height : 42px;">
                                         </div>
                                         <div class="col-lg-3 mb-10">
                                             <input type="search" name="location" class="form-control"
                                                 placeholder="{{ __('Search By Location') }}"
-                                                value="{{ request()->input('location') }}">
+                                                value="{{ request()->input('location') }}" style="height : 42px;">
                                         </div>
                                          <div class="col-lg-3 mb-10">
-                                             <select class="form-control" name="vendor_id">
+                                             <select class="form-control" name="vendor_id" style="height : 42px;     line-height: 38px;">
                                                  <option value="">{{ __('Select Vendor') }}</option>
                                                  @foreach($vendor as $vendors)
                                                  <option value="{{ $vendors->id }}" {{ request()->input('vendor_id') == $vendors->id ? 'selected' : '' }}>{{ $vendors->username }}</option>
@@ -147,7 +147,7 @@ $version = $basicInfo->theme_version;
                                              </select>
                                         </div> 
                                         <div class="col-lg-3 mb-10">
-                                            <button class="btn btn-lg btn-primary w-100" style="background : #6c603c;" type="submit">
+                                            <button class="btn btn-lg btn-primary w-100" style="background : #6c603c; height : 42px;     line-height: 12px;" type="submit">
                                                 <i class="fal fa-search"></i> {{ __('Search') }}
                                             </button>
                                         </div>

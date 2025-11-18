@@ -14,10 +14,10 @@
 </div> -->
 <!-- Page title end-->
 
-<div class=" header-next " >
+<!-- <div class=" header-next " >
 <div class="section-title title-center title-inline mb-40 aos-init aos-animate" style="margin-top : 150px !important;">
     <div class="title" style="font-weight : bolder !important;">
     {{ !empty($title) ? $title : '' }}
     </div>
 </div>
-</div>
+</div> -->

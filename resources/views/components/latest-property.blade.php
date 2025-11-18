@@ -12,6 +12,7 @@
             position: relative;
             height: 100%;
             justify-content: space-between;
+            border: 1px solid var(--border-color);
         }
 
         .product-latest {
