@@ -209,10 +209,20 @@ input[type="checkbox"]:checked+label .animits-div-tab {
 
                 <div class="widget-offcanvas offcanvas offcanvas-start" tabindex="-1" id="widgetOffcanvas"
                     aria-labelledby="widgetOffcanvas">
-                    <div class="offcanvas-header px-20">
+                    <div class="offcanvas-header px-20" style="
+    justify-content: space-between;
+">
                         <h4 class="offcanvas-title">{{ __('Filter') }}</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                            data-bs-target="#widgetOffcanvas" aria-label="Close"></button>
+                        <button type="button"  data-bs-dismiss="offcanvas"
+                            data-bs-target="#widgetOffcanvas" aria-label="Close" style="
+    width: fit-content;
+    background: transparent;
+    padding: 0px;
+">
+<i class="fas fa-close" style="    color: black;
+    font-size: 22px;
+"></i>
+                        </button>
                     </div>
 
                     <div class="offcanvas-body p-3 p-xl-0">
@@ -447,7 +457,7 @@ input[type="checkbox"]:checked+label .animits-div-tab {
             <!-- SIDEBAR LEFT END -->
             <div class="col-xl-12">
 
-                <div class="filter-top-row d-flex align-items-center d-none d-lg-flex  gap-3">
+                <div class="filter-top-row d-flex align-items-center d-none d-md-flex  gap-3">
 
                     <input type="text" class="form-control filter-input" name="title"
                         placeholder="Enter Properties Name" value="{{ request()->input('title') }}"
@@ -472,7 +482,7 @@ input[type="checkbox"]:checked+label .animits-div-tab {
 
                     <button type="button" class="filter-btn" data-bs-toggle="offcanvas"
                         data-bs-target="#widgetOffcanvas">
-                        <i class="fa-solid fa-sliders" style="color:#6c603c;"></i>
+                        <i class="fa-solid fa-sliders filt-ico" ></i>
                     </button>
 
                 </div>
@@ -481,7 +491,7 @@ input[type="checkbox"]:checked+label .animits-div-tab {
                 <div class="product-sort-area mb-10" data-aos="fade-up">
                     <div class="row justify-content-sm-end">
 
-                        <div class="col-sm-5 d-xl-none">
+                        <div class="col-sm-5 d-md-none">
                             <button class="btn btn-sm btn-outline icon-end radius-sm mb-15" type="button"
                                 data-bs-toggle="offcanvas" data-bs-target="#widgetOffcanvas">
                                 {{ __('Filter') }} <i class="fal fa-filter"></i>
@@ -489,7 +499,7 @@ input[type="checkbox"]:checked+label .animits-div-tab {
                         </div>
 
                         <div class="col-sm-7">
-                            <ul class="product-sort-list text-sm-end list-unstyled mb-15 d-block d-xl-none">
+                            <ul class="product-sort-list text-sm-end list-unstyled mb-15 d-block d-md-none">
                                 <li class="item">
                                     <div class="sort-item d-flex align-items-center">
                                         <label class="color-dark me-2 font-sm flex-auto">{{ __('Sort By') }} :</label>

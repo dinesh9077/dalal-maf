@@ -152,6 +152,8 @@
     text-transform: capitalize;
 }
 
+
+
 .header-area .main-navbar .menu-dropdown .nav-link:hover {
    background-color: #6c603c;
 }
@@ -713,3 +715,64 @@ width: 38%;
     transform: scale(1);
   }
 }
+
+
+/* ==== */
+
+   .more-option {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                }
+
+                .btn-wishlist-header {
+                    background: transparent;
+                    border: none;
+                    position: relative;
+                    font-size: 20px;
+                    cursor: pointer;
+                    color: #333;
+                }
+
+                .btn-wishlist-header:hover i {
+                    color: #e74c3c;
+                }
+
+                .wishlist-count-html {
+                    position: absolute;
+                    top: -5px;
+                    right: -8px;
+                    background: #e74c3c;
+                    color: #fff;
+                    border-radius: 50%;
+                    font-size: 11px;
+                    padding: 2px 5px;
+                    min-width: 16px;
+                    text-align: center;
+                    line-height: 1;
+                }
+
+              
+
+                .main-navbar.navbar-scrolled {
+                    background: #6c603c !important;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                }
+
+                .main-navbar {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    z-index: 1030;
+                }
+
+                .WI-item{
+                    display: none;
+                }
+
+                @media(max-width : 575px){
+                     .WI-item{
+                    display: block;
+                } 
+                }

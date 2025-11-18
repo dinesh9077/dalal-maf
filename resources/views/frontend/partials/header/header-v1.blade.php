@@ -82,8 +82,19 @@
                 <span class="style__postTab">{{ __('Post Property') }}</span>
             </a>
             @endif
-            
-            
+                <div class="item WI-item">
+                    @if ($authType != 'guest')
+                    <a href="{{ $authType === 'user'
+                            ? route('user.wishlist')
+                            : ($authType === 'agent'
+                                ? route('vendor.wishlist')
+                                : route('vendor.wishlist')) }}" class="btn-wishlist-header position-relative"
+                        title="{{ __('My Wishlist') }}">
+                        <i class="fas fa-heart text-danger"></i>
+                        <span class="wishlist-count-html">0</span>
+                    </a>
+                    @endif
+                </div>
         </div>
     </div>
 
@@ -227,61 +238,19 @@
                     </div>
                 </div>
 
-                {{-- Small CSS for better UI --}}
-                <style>
-                .more-option {
-                    display: flex;
-                    align-items: center;
-                    gap: 12px;
-                }
 
-                .btn-wishlist-header {
-                    background: transparent;
-                    border: none;
-                    position: relative;
-                    font-size: 20px;
-                    cursor: pointer;
-                    color: #333;
-                }
-
-                .btn-wishlist-header:hover i {
-                    color: #e74c3c;
-                }
-
-                .wishlist-count-html {
-                    position: absolute;
-                    top: -5px;
-                    right: -8px;
-                    background: #e74c3c;
-                    color: #fff;
-                    border-radius: 50%;
-                    font-size: 11px;
-                    padding: 2px 5px;
-                    min-width: 16px;
-                    text-align: center;
-                    line-height: 1;
-                }
 
               
 
-                .main-navbar.navbar-scrolled {
-                    background: #6c603c !important;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                }
-
-                .main-navbar {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    z-index: 1030;
-                }
-                </style>
+       
 
 
             </nav>
         </div>
     </div>
+
+    
+          
 </header>
 <script>
 document.addEventListener('DOMContentLoaded', function() {

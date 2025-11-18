@@ -30,6 +30,7 @@ $version = $basicInfo->theme_version;
         text-transform: capitalize !important;
         border-radius: 5px !important;
     }
+
     .ui-widget.ui-widget-content {
         background: white !important;
         border: 1px solid #dcdcdc !important;
@@ -46,15 +47,16 @@ $version = $basicInfo->theme_version;
         color: white !important;
         outline: none !important;
         border-radius: 5px !important;
-    .ui-widget.ui-widget-content .ui-menu-item .ui-menu-item-wrapper:hover {
-        background: black !important;
-        border: none !important;
-        color: white !important;
-        outline: none !important;
-        border-radius: 5px !important;
+
+        .ui-widget.ui-widget-content .ui-menu-item .ui-menu-item-wrapper:hover {
+            background: black !important;
+            border: none !important;
+            color: white !important;
+            outline: none !important;
+            border-radius: 5px !important;
 
 
-    }
+        }
     }
 
     .ui-widget.ui-widget-content .ui-menu-item {
@@ -63,6 +65,7 @@ $version = $basicInfo->theme_version;
         outline: none !important;
         color: black !important;
     }
+
     .ui-widget.ui-widget-content .ui-menu-item {
         background: white !important;
         border: none !important;
@@ -71,10 +74,11 @@ $version = $basicInfo->theme_version;
     }
 
     .new-main-navbar {
-    .new-main-navbar {
+        .new-main-navbar {
 
-        background-color: transparent !important;
-    }
+            background-color: transparent !important;
+        }
+
         background-color: transparent !important;
     }
 
@@ -88,6 +92,7 @@ $version = $basicInfo->theme_version;
         width: 90%;
         z-index: 10;
     }
+
     .mobile-search {
         position: absolute;
         top: 100%;
@@ -101,6 +106,7 @@ $version = $basicInfo->theme_version;
         position: relative;
         width: 100%;
     }
+
     .mobile-search-bar {
         position: relative;
         width: 100%;
@@ -114,6 +120,7 @@ $version = $basicInfo->theme_version;
         font-size: 16px;
         outline: none;
     }
+
     .mobile-search-input {
         width: 100%;
         padding: 10px 40px 10px 15px;
@@ -132,6 +139,7 @@ $version = $basicInfo->theme_version;
         font-size: 18px;
         pointer-events: none;
     }
+
     .mobile-search-bar i {
         position: absolute;
         right: 15px;
@@ -148,6 +156,7 @@ $version = $basicInfo->theme_version;
         gap: 10px;
         border-bottom: 1px solid #f4f5f7;
     }
+
     .tabs-wrapper {
         display: flex;
         align-items: center;
@@ -161,6 +170,7 @@ $version = $basicInfo->theme_version;
         align-items: center;
         margin-bottom: 0;
     }
+
     .tabs-wrapper .nav-tabs {
         border: none;
         display: flex;
@@ -174,6 +184,7 @@ $version = $basicInfo->theme_version;
         color: #333;
         background: none;
     }
+
     .tabs-wrapper .nav-tabs .nav-link {
         border: none;
         font-weight: 500;
@@ -258,9 +269,9 @@ $version = $basicInfo->theme_version;
 
 
 
-  .main-navbar.navbar-transparent {
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)) !important;
-    height:110px;
+    .main-navbar.navbar-transparent {
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)) !important;
+        height: 110px;
     }
 
     /* ==== */
@@ -300,11 +311,11 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                 </div>
             </div>
         </div>
-        
+
 
         <!-- <img src="{{ asset('assets/front/images/acrs-imag/HOUSE-1.png') }}" class="home-hero-imahes-new" alt=""> -->
 
-        
+
 
         @php
         $tabs = [
@@ -359,7 +370,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
                 {{-- Tabs --}}
                 <div class="tabs-wrapper">
-                    <ul class="nav nav-tabs mb-0" >
+                    <ul class="nav nav-tabs mb-0">
                         @foreach($tabs as $key => $label)
                         <li class="nav-item">
                             <button class="nav-link {{ $loop->first ? 'active' : '' }}" data-bs-toggle="tab"
@@ -371,7 +382,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                     </ul>
 
                     {{-- Post Property Button --}}
-                    <div class="post-property-btn" >
+                    <div class="post-property-btn">
                         @if ($authType === 'guest')
                         <button type="button" class="style__postContainerTab" data-bs-toggle="modal"
                             style="border:none; " data-bs-target="#customerPhoneModal" data-action="post_property">
@@ -404,8 +415,8 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                             <div class="grid-item home-des-border">
                                 <div class="form-group">
                                     <label for="city_{{ $key }}" class="icon-end">City</label>
-                                    <select name="city" id="city_{{ $key }}" class="form-control select2" >
-                                        <option value="" >{{ __('Select City') }}</option>
+                                    <select name="city" id="city_{{ $key }}" class="form-control select2">
+                                        <option value="">{{ __('Select City') }}</option>
                                         @foreach ($cities as $city)
                                         <option value="{{ $city->name }}">{{ $city->name }}</option>
                                         @endforeach
@@ -461,7 +472,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                                 <label style="margin-bottom: 6px;">{{ __('Price') }}:</label>
 
                                 <div data-range-value="filterPriceSlider_{{ $key }}_value" style="margin-bottom: 5px;color: black;font-size: 14px;">
-                                        {{ symbolPrice($min) }} - {{ symbolPrice($max) }}
+                                    {{ symbolPrice($min) }} - {{ symbolPrice($max) }}
                                 </div>
 
                                 <div data-range-slider="filterPriceSlider_{{ $key }}"></div>
@@ -498,38 +509,30 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
     <div class="container border-0">
         <div class="row" style="position: relative;">
             <div class="section-title mb-10 new-titles position-relative aos-init aos-animate" data-aos="fade-up">
-                    <h2 class="title">Featured Properties</h2>
-                     <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-desktop"
+                <h2 class="title">Featured Properties</h2>
+                <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-desktop"
                     style="padding: 10px 20px;">View All</a>
-                </div>
+            </div>
 
-            <div   data-aos="fade-up">
-                <div class="swiper product-slider">
+
+            <div data-aos="fade-up" class="position-relative">
+                <div class="swiper featured-slider">
                     <div class="swiper-wrapper">
-                           @forelse ($featured_properties as $property)
-                            <div class="swiper-slide">
-                                <x-property :property="$property" />
-                            </div>
-                            @empty
-                            <div class="p-3 text-center w-100">
-                                <h3 class="mb-0">{{ __('No Featured Property Found') }}</h3>
-                            </div>
-                            @endforelse
+                        @foreach($featured_properties as $property)
+                        <div class="swiper-slide">
+                            <x-property :property="$property" />
+                        </div>
+                        @endforeach
                     </div>
                 </div>
 
-     
-                <div class="swiper-button-prev first-left custom-swiper-btn">
-                    
-                </div>
-                <div class="swiper-button-next first-right custom-swiper-btn">
-                  
-                </div>
+                <div class="swiper-button-prev featured-prev custom-swiper-btn"></div>
+                <div class="swiper-button-next featured-next custom-swiper-btn"></div>
             </div>
 
             <div style="text-align: center;">
-                 <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
-                style="padding: 10px 20px;">View All</a>
+                <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
+                    style="padding: 10px 20px;">View All</a>
             </div>
         </div>
     </div>
@@ -542,43 +545,36 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
     <div class="container">
         <div class="row" style="position: relative;">
             <div class="section-title mb-10 new-titles" data-aos="fade-up" style="position: relative;">
-                        <h2 class="title" style="text-align : center;">Hot Properties</h2>
-                        <a href="{{ url('properties/is_hot/all') }}" class="vs-btn vs-new-set-btn view-all-desktop"
-                            style="padding: 10px 20px;">
-                            View All
-                        </a>
-                    </div>
+                <h2 class="title" style="text-align : center;">Hot Properties</h2>
+                <a href="{{ url('properties/is_hot/all') }}" class="vs-btn vs-new-set-btn view-all-desktop"
+                    style="padding: 10px 20px;">
+                    View All
+                </a>
+            </div>
 
-            <div  data-aos="fade-up">
-                  <div class="swiper product-slider w-100">
-                            <div class="swiper-wrapper">
-                                @forelse ($hotProperties as $property)
-                                <div class="swiper-slide">
-                                    <x-hot-property :property="$property" />
-                                </div>
-                                @empty
-                                <div class="p-3 text-center mb-30 w-100">
-                                    <h3 class="mb-0">{{ __('No Hot Property Found') }}</h3>
-                                </div>
-                                @endforelse
-                            </div>
-                            <div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
+            <div data-aos="fade-up" class="position-relative">
+                <div class="swiper hot-slider">
+                    <div class="swiper-wrapper">
+                        @foreach($hotProperties as $property)
+                        <div class="swiper-slide">
+                            <x-hot-property :property="$property" />
                         </div>
+                        @endforeach
+                    </div>
+                </div>
 
-                        <div class="swiper-button-prev first-left custom-swiper-btn"></div>
-                        <div class="swiper-button-next first-right custom-swiper-btn"></div>
-
-              
+                <div class="swiper-button-prev hot-prev custom-swiper-btn"></div>
+                <div class="swiper-button-next hot-next custom-swiper-btn"></div>
             </div>
 
 
-              <div class="text-center mt-2 mt-sm-2">
-                    <a href="{{ url('properties/is_hot/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
-                        style="padding: 10px 20px;">
-                        View All
-                    </a>
-                </div>
-                
+            <div class="text-center mt-2 mt-sm-2">
+                <a href="{{ url('properties/is_hot/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
+                    style="padding: 10px 20px;">
+                    View All
+                </a>
+            </div>
+
         </div>
     </div>
 </section>
@@ -588,38 +584,38 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 @if($recommendedProperties->isNotEmpty())
 <section class="product-area featured-product pt-20 pb-20">
     <div class="container">
-        <div class="row"  style="position: relative;">
-             <div class="section-title  mb-10 new-titles" data-aos="fade-up" style="position: relative;">
-                        <h2 class="title" style="text-align : center;">Recommended Properties</h2>
-                        <!-- <p class="mt-1" style="font-size:13px; line-height : 1.2;">Handpicked and premium listings showcased for you.
-                            Explore top-rated homes, offices, and commercial spaces that stand out.</p> -->
-                        <a href="{{ url('properties/is_recommended/all') }}" class="vs-btn vs-new-set-btn"
-                            style="padding: 10px 20px;">View All</a>
+        <div class="row" style="position: relative;">
+            <div class="section-title  mb-10 new-titles" data-aos="fade-up" style="position: relative;">
+                <h2 class="title" style="text-align : center;">Recommended Properties</h2>
 
-                    </div>
-
-            <div   data-aos="fade-up">
-
-
-                 <div class="swiper product-slider w-100">
-                            <div class="swiper-wrapper">
-                                @forelse ($recommendedProperties as $property)
-                                <div class="swiper-slide">
-                                    <x-property :property="$property" />
-                                </div>
-                                @empty
-                                <div class="p-3 text-center mb-30 w-100">
-                                    <h3 class="mb-0">{{ __('No Recommended Property Found') }}</h3>
-                                </div>
-                                @endforelse
-                            </div>
-                            <div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
-                        </div>
-                        <div class="swiper-button-prev first-left custom-swiper-btn"></div>
-                        <div class="swiper-button-next first-right custom-swiper-btn"></div>
-
+                <a href="{{ url('properties/is_recommended/all') }}" class="vs-btn vs-new-set-btn view-all-desktop"
+                    style="padding: 10px 20px;">View All</a>
 
             </div>
+
+            <div data-aos="fade-up" class="position-relative">
+                <div class="swiper recommended-slider">
+                    <div class="swiper-wrapper">
+                        @foreach($recommendedProperties as $property)
+                        <div class="swiper-slide">
+                            <x-property :property="$property" />
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="swiper-button-prev recommended-prev custom-swiper-btn"></div>
+                <div class="swiper-button-next recommended-next custom-swiper-btn"></div>
+            </div>
+
+             <div class="text-center mt-2 mt-sm-2">
+                <a href="{{ url('properties/is_recommended/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
+                    style="padding: 10px 20px;">
+                    View All
+                </a>
+            </div>
+
+
         </div>
     </div>
 </section>
@@ -628,46 +624,33 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 @if($fastSellingProperties->isNotEmpty())
 <section class="product-area featured-product pt-20 pb-20">
     <div class="container">
-        <div class="row">
-            <div class="container">
-                <div class="col-12">
-                    <div class="section-title mb-10 new-titles" data-aos="fade-up" style="position: relative;">
+        <div class="row"  style="position: relative;">
+
+         <div class="section-title mb-10 new-titles" data-aos="fade-up" style="position: relative;">
                         <h2 class="title" style="text-align : center;">Fast Selling Properties</h2>
-                        <!-- <p class="mt-1" style="font-size:13px; line-height : 1.2;">
-                            Handpicked and premium listings showcased for you.
-                            Explore top-rated homes, offices, and commercial spaces that stand out.
-                        </p> -->
+
                         <a href="{{ url('properties/is_fast_selling/all') }}"
                             class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 10px 20px;">
                             View All
                         </a>
                     </div>
-                </div>
-            </div>
 
-            <div class="container">
-                <div class="row align-items-stretch">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex" style="position: relative;"
-                        data-aos="fade-up">
-                        <div class="swiper product-slider w-100">
-                            <div class="swiper-wrapper">
-                                @forelse ($fastSellingProperties as $property)
-                                <div class="swiper-slide">
-                                    <x-property :property="$property" />
-                                </div>
-                                @empty
-                                <div class="p-3 text-center mb-30 w-100">
-                                    <h3 class="mb-0">{{ __('No Fast Selling Property Found') }}</h3>
-                                </div>
-                                @endforelse
+
+              <div data-aos="fade-up" class="position-relative">
+                    <div class="swiper fast-selling-slider">
+                        <div class="swiper-wrapper">
+                            @foreach($fastSellingProperties as $property)
+                            <div class="swiper-slide">
+                                <x-property :property="$property" />
                             </div>
-                            <div class="swiper-pagination position-static mb-30" id="product-slider-pagination"></div>
+                            @endforeach
                         </div>
-
-                        <div class="swiper-button-prev first-left custom-swiper-btn"></div>
-                        <div class="swiper-button-next first-right custom-swiper-btn"></div>
                     </div>
+
+                    <div class="swiper-button-prev fast-prev custom-swiper-btn"></div>
+                    <div class="swiper-button-next fast-next custom-swiper-btn"></div>
                 </div>
+
 
                 <div class="text-center">
                     <a href="{{ url('properties/is_fast_selling/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
@@ -675,20 +658,20 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                         View All
                     </a>
                 </div>
-            </div>
+
+
         </div>
     </div>
 </section>
 @endif
 
-
 @if ($secInfo->property_section_status == 1)
-<section class="product-area popular-product product-1 relative" >
+<section class="product-area popular-product product-1 relative">
     <img src="{{ asset('assets/front/images/new-images/new-primume-properties.png') }}" alt=""
         class="new-primume-prop-img">
-        <div class="container pt-30 pb-30">
-         <div>
-               <div class="row">
+    <div class="container pt-30 pb-30">
+        <div>
+            <div class="row">
                 <div class="col-12">
                     <div class="section-title prop-pad" data-aos="fade-up">
                         <h2 class="title">{{ $propertySecInfo->title }}</h2>
@@ -697,13 +680,13 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                 <div class="col-12 LP_SLider-div">
                     <div class="tab-content" data-aos="fade-up">
                         <div class="row new-padding-width-res" style="position: relative; margin-top : 15px;">
-                          
+
                             <div class="swiper LP-new-slider">
                                 <div class="swiper-wrapper">
                                     @forelse ($properties as $property)
                                     @if($property->property_type == 'partial')
                                     <div class="swiper-slide">
-                                        <x-latest-property :property="$property"  />
+                                        <x-latest-property :property="$property" />
                                     </div>
                                     @endif
                                     @empty
@@ -714,7 +697,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                                 </div>
                             </div>
 
-          
+
                             <div class="LP-new-left-btn">
                                 <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
                             </div>
@@ -725,8 +708,8 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                     </div>
                 </div>
             </div>
-         </div>
         </div>
+    </div>
 </section>
 @endif
 
@@ -773,7 +756,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 </section>
 
 
-<section class="product-area popular-product product-1 relative" >
+<section class="product-area popular-product product-1 relative">
     <div class="container pt-30 pb-30">
         <div class="row" style="position: relative;">
             <div class="col-12">
@@ -842,7 +825,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
                         class="upcoming-projects-img">
 
                     <div class="upcomming-card-body">
-                        <h5> {{ \Illuminate\Support\Str::limit($project->title, 10) }}</h5>
+                        <h5> {{ \Illuminate\Support\Str::limit($project->title, 25) }}</h5>
                         <p class="text-muted">{{ \Illuminate\Support\Str::limit($project->address, 30) }}</p>
                         <h6 class="up-price">
                             {{ symbolPrice($project->min_price) }}
@@ -866,7 +849,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
 </div>
 
-<section class="city-section">
+<!-- <section class="city-section">
     <img src="{{ asset('assets/front/images/acrs-imag/building-vector.png') }}" alt="" class="building-vector">
     <div class="container">
         <div class="city-details">
@@ -881,6 +864,25 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
             <div style="margin-top: 30px;">
                 <a href="{{ route('frontend.properties') }}" class="find-your-btn">Find Your Perfect Property with Dala
                     Maaf</a>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<section class="new-city-section" data-aos="fade-up">
+    <div class="container">
+        <div class="row FTP-box">
+            <div class="col-lg-3 col-md-3 col-sm-12 p-0 FTP-images">
+                <img src="{{ asset('assets/img/ftp-img.jpg') }}" alt="">
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-12  FTP-content">
+                <h6>First-time buyer, investor, or renter? Dala Maaf connects you to trusted properties in prime locations your real estate partner.</h6>
+                <p>Looking for your dream home, the right investment, or the best rental deal? Dala Maaf makes it simple. With thousands of verified listings, expert insights, and user-friendly search options, you can buy, sell, or rent properties with complete confidence.</p>
+                <p>Whether you’re a first-time buyer, an investor, or someone searching for the perfect rental, Dala Maaf connects you to trusted property options across prime locations. It’s more than a platform—it’s your partner in real estate.</p>
+                <div style="margin-top: 20px;">
+                    <a href="{{ route('frontend.properties') }}" class="new-find-your-btn">Find Your Perfect Property with Dala
+                        Maaf</a>
+                </div>
             </div>
         </div>
     </div>
@@ -1214,7 +1216,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
         <div class="row ">
             <!-- City Card Start -->
             @forelse ($cities as $city)
-            <div class="custom-col-5 mt-3 p-0" data-aos="fade-up" >
+            <div class="custom-col-5 mt-3 p-0" data-aos="fade-up">
                 <a href="{{ route('frontend.properties', ['city' => $city->name]) }}" class="text-center"
                     style="display: block; text-decoration: none; color: inherit;">
                     <div class="city-card text-start">
@@ -1683,91 +1685,55 @@ return asset('assets/img/hero/static/' . $img);
 
 
     document.addEventListener('DOMContentLoaded', function() {
-        // query the buttons inside this slider container
-        const prevBtn = document.querySelector('.product-slider .swiper-button-prev');
-        const nextBtn = document.querySelector('.product-slider .swiper-button-next');
 
-        var productSwiper = new Swiper(".product-slider", {
-            loop: false,
-            spaceBetween: 20,
-            pagination: {
-                el: "#product-slider-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            autoplay: {
-                delay: 4000,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: true,
-            },
-            breakpoints: {
-                320: {
-                    slidesPerView: 1
-                },
-                576: {
-                    slidesPerView: 2
-                },
-                991: {
-                    slidesPerView: 3
-                },
-                1200: {
-                    slidesPerView: 4
-                },
-                1400: {
-                    slidesPerView: 4
-                },
-                1600: {
-                    slidesPerView: 4
-                }
-            },
+        function initCustomSlider(cls, next, prev) {
 
-            // keep Swiper aware of DOM changes (useful if your slides are rendered after load)
-            observer: true,
-            observeParents: true,
-
-            // attach events to update nav visibility
-            on: {
-                init: function() {
-                    updateNav(this);
+            const swiper = new Swiper(cls, {
+                loop: false,
+                spaceBetween: 20,
+                autoplay: {
+                    delay: 3500,
+                    disableOnInteraction: false,
                 },
-                slideChange: function() {
-                    updateNav(this);
-                },
-                resize: function() {
-                    updateNav(this);
-                },
-                breakpoint: function() {
-                    updateNav(this);
-                },
-                observerUpdate: function() {
-                    updateNav(this);
-                }
-            }
-        });
 
-        // function to hide/show nav buttons
-        function updateNav(swiper) {
-            // safety: if buttons don't exist, do nothing
-            if (!prevBtn || !nextBtn) return;
+                navigation: {
+                    nextEl: next,
+                    prevEl: prev,
+                },
 
-            // If slider is "locked" (not enough slides for current view) hide both
-            // swiper.isLocked is true when no sliding possible
-            const notEnoughSlides = swiper.isLocked || (swiper.slides.length <= (swiper.params.slidesPerView || 1));
-            if (notEnoughSlides) {
-                prevBtn.classList.add('hidden');
-                nextBtn.classList.add('hidden');
-                return;
-            }
+                simulateTouch: false, // mouse se slide nahi hoga
+                allowTouchMove: false, // finger drag disable
 
-            // show/hide based on position
-            if (swiper.isBeginning) prevBtn.classList.add('hidden');
-            else prevBtn.classList.remove('hidden');
-            if (swiper.isEnd) nextBtn.classList.add('hidden');
-            else nextBtn.classList.remove('hidden');
+                breakpoints: {
+                    320: {
+                        slidesPerView: 1
+                    },
+                    576: {
+                        slidesPerView: 2
+                    },
+                    991: {
+                        slidesPerView: 3
+                    },
+                    1200: {
+                        slidesPerView: 4
+                    },
+                },
+            });
+
+            // mouse hover → pause
+            document.querySelector(cls).addEventListener("mouseenter", () => swiper.autoplay.stop());
+
+            // mouse leave → resume
+            document.querySelector(cls).addEventListener("mouseleave", () => swiper.autoplay.start());
+
+            return swiper;
         }
+
+        // INIT 4 SLIDERS
+        initCustomSlider(".featured-slider", ".featured-next", ".featured-prev");
+        initCustomSlider(".hot-slider", ".hot-next", ".hot-prev");
+        initCustomSlider(".recommended-slider", ".recommended-next", ".recommended-prev");
+        initCustomSlider(".fast-selling-slider", ".fast-next", ".fast-prev");
     });
 
 
