@@ -9274,9 +9274,9 @@ button:hover {
     position: relative;
 }
 .VD_SP_div span{
-       position: absolute;
+    position: absolute;
     bottom: 15px;
-    z-index: 999;
+    z-index: 99;
     left: 10px;
     color: black !important;
     background: white;

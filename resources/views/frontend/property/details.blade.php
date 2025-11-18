@@ -841,73 +841,73 @@ $version = $basicInfo->theme_version;
                             
                          
                     </div>
-                    <aside class="sidebar-widget-area mb-10" data-aos="fade-up">
-                        <div class="widget widget-recent radius-md mb-30  new-widgets-color"
-                            style="box-shadow: rgba(90, 114, 123, 0.11) 0px 7px 30px 0px;">
-                            <h3 class="title">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#products" aria-expanded="true" aria-controls="products">
-                                    {{ __('Similar  Property') }}
-                                </button>
-                            </h3>
-                            <div id="products" class="collapse show">
-                                <div class="accordion-body p-0">
-                                    @foreach ($relatedProperty as $property)
-                                    <div class="product-default product-inline mt-20 new-hover">
-                                        <figure class="product-img VD_SP_div">
-                                            <a href="{{ route('frontend.property.details', $property->slug) }}"
-                                                class="lazy-container ratio ratio-1-1 radius-md">
-                                                <img class="lazyload" src="assets/images/placeholder.png"
-                                                    data-src="{{ asset('assets/img/property/featureds/' . $property->featured_image) }}">
-                                            </a>
-                                            <span class="product-location icon-start "> <i
-                                                    class="fal fa-map-marker-alt"></i>
-                                                {{ $property->city->getContent($property->language_id)?->name }}
-                                                {{ $property->isStateActive ? ', ' . $property->state?->getContent($property->language_id)?->name : '' }}
-                                                {{ $property->isCountryActive ? ', ' . $property->country?->getContent($property->language_id)?->name : '' }}</span>
+                    @if(!empty($relatedProperty))
+                        <aside class="sidebar-widget-area mb-10" data-aos="fade-up">
+                            <div class="widget widget-recent radius-md mb-30  new-widgets-color"
+                                style="box-shadow: rgba(90, 114, 123, 0.11) 0px 7px 30px 0px;">
+                                
+                                <h3 class="title">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#products" aria-expanded="true" aria-controls="products">
+                                        {{ __('Similar  Property') }}
+                                    </button>
+                                </h3>
+                                <div id="products" class="collapse show">
+                                    <div class="accordion-body p-0">
+                                        @foreach ($relatedProperty as $property)
+                                        <div class="product-default product-inline mt-20 new-hover">
+                                            <figure class="product-img VD_SP_div">
+                                                <a href="{{ route('frontend.property.details', $property->slug) }}"
+                                                    class="lazy-container ratio ratio-1-1 radius-md">
+                                                    <img class="lazyload" src="assets/images/placeholder.png"
+                                                        data-src="{{ asset('assets/img/property/featureds/' . $property->featured_image) }}">
+                                                </a>
+                                                <span class="product-location icon-start "> <i
+                                                        class="fal fa-map-marker-alt"></i>
+                                                    {{ $property->city->getContent($property->language_id)?->name }}
+                                                    {{ $property->isStateActive ? ', ' . $property->state?->getContent($property->language_id)?->name : '' }}
+                                                    {{ $property->isCountryActive ? ', ' . $property->country?->getContent($property->language_id)?->name : '' }}</span>
 
 
-                                        </figure>
-                                        <div class="px-2">
-                                            <h6 class="product-title "><a
-                                                    href="{{ route('frontend.property.details', $property->slug) }}" style="font-size: 12px;">{{ $property->title }}</a>
-                                            </h6>
+                                            </figure>
+                                            <div class="px-2">
+                                                <h6 class="product-title "><a
+                                                        href="{{ route('frontend.property.details', $property->slug) }}" style="font-size: 12px;">{{ $property->title }}</a>
+                                                </h6>
 
-                                            <div class="product-price">
+                                                <div class="product-price">
 
-                                                <span class="new-price">{{ __('Price:') }}
-                                                    {{ $property->price ? symbolPrice($property->price) : __('Negotiable') }}</span>
+                                                    <span class="new-price">{{ __('Price:') }}
+                                                        {{ $property->price ? symbolPrice($property->price) : __('Negotiable') }}</span>
+                                                </div>
+                                                <ul class="product-info p-0 list-unstyled d-flex align-items-center">
+                                                    <li class="icon-start" data-tooltip="tooltip" data-bs-placement="top"
+                                                        title="{{ __('Area') }}">
+                                                        <i class="fal fa-vector-square"></i>
+                                                        <span>{{ $property->area }}</span>
+                                                    </li>
+                                                    @if ($property->type == 'residential')
+                                                    <li class="icon-start" data-tooltip="tooltip" data-bs-placement="top"
+                                                        title="{{ __('Bed') }}">
+                                                        <i class="fal fa-bed"></i>
+                                                        <span>{{ $property->beds }} </span>
+                                                    </li>
+                                                    <li class="icon-start" data-tooltip="tooltip" data-bs-placement="top"
+                                                        title="{{ __('Bath') }}">
+                                                        <i class="fal fa-bath"></i>
+                                                        <span>{{ $property->bath }} </span>
+                                                    </li>
+                                                    @endif
+
+                                                </ul>
                                             </div>
-                                            <ul class="product-info p-0 list-unstyled d-flex align-items-center">
-                                                <li class="icon-start" data-tooltip="tooltip" data-bs-placement="top"
-                                                    title="{{ __('Area') }}">
-                                                    <i class="fal fa-vector-square"></i>
-                                                    <span>{{ $property->area }}</span>
-                                                </li>
-                                                @if ($property->type == 'residential')
-                                                <li class="icon-start" data-tooltip="tooltip" data-bs-placement="top"
-                                                    title="{{ __('Bed') }}">
-                                                    <i class="fal fa-bed"></i>
-                                                    <span>{{ $property->beds }} </span>
-                                                </li>
-                                                <li class="icon-start" data-tooltip="tooltip" data-bs-placement="top"
-                                                    title="{{ __('Bath') }}">
-                                                    <i class="fal fa-bath"></i>
-                                                    <span>{{ $property->bath }} </span>
-                                                </li>
-                                                @endif
-
-                                            </ul>
-                                        </div>
-                                    </div><!-- product-default -->
-                                    @endforeach
+                                        </div><!-- product-default -->
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-
-
-
-                    </aside>
+                            </div> 
+                        </aside>
+                    @endif
                 </div>
             </div>
         </div>

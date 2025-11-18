@@ -132,6 +132,12 @@ class PropertyController extends Controller
         if ($request->filled('purpose') && $request->purpose == 'buy') {
             $purpose = ['sell', 'buy'];
         }
+        if ($request->filled('purpose') && $request->purpose == 'rent') {
+            $purpose = ['rent'];
+        }
+        if ($request->filled('purpose') && $request->purpose == 'lease') {
+            $purpose = ['lease'];
+        } 
 
         $min = $max = null;
         if ($request->filled('min') && $request->filled('max')) {
