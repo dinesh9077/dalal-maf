@@ -464,31 +464,34 @@ class PropertyController extends Controller
         $information['pageHeading'] = $misc->getPageHeading($language);
         $propertyContent = Content::where('slug', $slug)->firstOrFail();
 		 
-        $property = Content::query()
-            ->where('property_contents.language_id', $language->id)
-            ->where('property_contents.property_id', $propertyContent->property_id)
-            ->leftJoin('properties', 'property_contents.property_id', 'properties.id')
-            ->where([['properties.status', 1]])
-            ->when('properties.vendor_id' != 0, function ($query) {
+        $baseQuery = Content::query()
+        ->where('property_contents.language_id', $language->id)
+        ->where('property_contents.property_id', $propertyContent->property_id)
+        ->leftJoin('properties', 'property_contents.property_id', 'properties.id')
+        ->where([['properties.status', 1]]);
 
+        if (!auth()->guard('admin')->check()){
+            $baseQuery->when('properties.vendor_id' != 0, function ($query) { 
                 $query->leftJoin('memberships', 'properties.vendor_id', '=', 'memberships.vendor_id')
-                    ->where(function ($query) {
-                        $query->where([
-                            ['memberships.status', '=', 1],
-                            ['memberships.start_date', '<=', now()->format('Y-m-d')],
-                            ['memberships.expire_date', '>=', now()->format('Y-m-d')],
-                        ])->orWhere('properties.vendor_id', '=', 0);
-                    });
-            })
-            ->when('properties.vendor_id' != 0, function ($query) {
+                ->where(function ($query) {
+                    $query->where([
+                        ['memberships.status', '=', 1],
+                        ['memberships.start_date', '<=', now()->format('Y-m-d')],
+                        ['memberships.expire_date', '>=', now()->format('Y-m-d')],
+                    ])->orWhere('properties.vendor_id', '=', 0);
+                });
+            });
+
+            $baseQuery->when('properties.vendor_id' != 0, function ($query) {
                 return $query->leftJoin('vendors', 'properties.vendor_id', '=', 'vendors.id')
                     ->where(function ($query) {
                         $query->where('vendors.status', '=', 1)->orWhere('properties.vendor_id', '=', 0);
                     });
-            })
+            });
+        }
 
-            ->with(['propertySpacifications', 'galleryImages'])
-            ->select('properties.*', 'property_contents.*', 'properties.id as propertyId', 'property_contents.id as contentId')->firstOrFail();
+        $property = $baseQuery->with(['propertySpacifications', 'galleryImages'])
+        ->select('properties.*', 'property_contents.*', 'properties.id as propertyId', 'property_contents.id as contentId')->firstOrFail();
  
         $information['propertyContent'] = $property;
         $information['sliders'] =  $property->galleryImages;
