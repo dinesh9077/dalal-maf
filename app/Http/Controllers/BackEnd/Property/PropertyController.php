@@ -490,11 +490,17 @@
 			$property = Property::findOrFail($request->property);
 			
 			if ($request->approve_status == 1) {
-				$property->update(['approve_status' => 1]);
+				$property->update([
+					'approve_status' => 1,
+					'is_new' => 1  // Mark as seen when approved
+				]);
 				
 				Session::flash('success', 'Property Approved Successfully!');
 				} else {
-				$property->update(['approve_status' => 2]);
+				$property->update([
+					'approve_status' => 2,
+					'is_new' => 1  // Mark as seen when rejected
+				]);
 				
 				Session::flash('success', 'Property Reject Successfully!');
 			}
