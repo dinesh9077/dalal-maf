@@ -5990,7 +5990,7 @@ p.cookie-consent__message * {
 
 .new-aps-titles-bag {
     /* width: 278px; */
-    height: auto;
+    max-height: 210px;
     border-radius: 15px;
     margin: 15px;
     overflow: hidden;
@@ -6005,6 +6005,7 @@ p.cookie-consent__message * {
     object-fit: cover;
     margin-bottom: 20px;
     width: 100px;
+    height: 100px;
 }
 
 .new-type-title {
