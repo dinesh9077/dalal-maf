@@ -529,8 +529,12 @@
                             </div>
                         </div>
 
-                        <div class="swiper-button-prev featured-prev custom-swiper-btn"></div>
-                        <div class="swiper-button-next featured-next custom-swiper-btn"></div>
+                        <div class="swiper-button-prev featured-prev custom-swiper-btn">
+                                                <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
+                        </div>
+                        <div class="swiper-button-next featured-next custom-swiper-btn">
+                                                <img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
+                        </div>
                     </div>
 
                     <div style="text-align: center;">
@@ -566,8 +570,12 @@
                             </div>
                         </div>
 
-                        <div class="swiper-button-prev hot-prev custom-swiper-btn"></div>
-                        <div class="swiper-button-next hot-next custom-swiper-btn"></div>
+                        <div class="swiper-button-prev hot-prev custom-swiper-btn">
+                                                <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">                                    
+                        </div>
+                        <div class="swiper-button-next hot-next custom-swiper-btn">
+                                                <img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
+                        </div>
                     </div>
 
 
@@ -607,8 +615,13 @@
                             </div>
                         </div>
 
-                        <div class="swiper-button-prev recommended-prev custom-swiper-btn"></div>
-                        <div class="swiper-button-next recommended-next custom-swiper-btn"></div>
+                        <div class="swiper-button-prev recommended-prev custom-swiper-btn">
+                                                <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
+                        </div>
+                        <div class="swiper-button-next recommended-next custom-swiper-btn">
+                                                <img src="{{ asset('assets/front/images/new-images/right.png') }}" alt="">
+
+                        </div>
                     </div>
 
                     <div class="text-center mt-2 mt-sm-2">
@@ -650,8 +663,12 @@
                             </div>
                         </div>
 
-                        <div class="swiper-button-prev fast-prev custom-swiper-btn"></div>
-                        <div class="swiper-button-next fast-next custom-swiper-btn"></div>
+                        <div class="swiper-button-prev fast-prev custom-swiper-btn">
+                                                <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
+                        </div>
+                        <div class="swiper-button-next fast-next custom-swiper-btn">
+                                                <img src="{{ asset('assets/front/images/new-images/right.png') }}" alt="">
+                        </div>
                     </div>
 
 
@@ -676,13 +693,20 @@
                 <div>
                     <div class="row">
                         <div class="col-12">
-                            <div class="section-title prop-pad" data-aos="fade-up">
+                            <div class="section-title prop-pad new-titles" data-aos="fade-up" style="position: relative;">
                                 <h2 class="title">{{ $propertySecInfo->title }}</h2>
+
+                                 <a href="{{ url('properties/is_fast_selling/all') }}"
+                            class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 10px 20px;">
+                            View All
+                        </a>
+
+
                             </div>
                         </div>
                         <div class="col-12 LP_SLider-div">
                             <div class="tab-content" data-aos="fade-up">
-                                <div class="row new-padding-width-res" style="position: relative; margin-top : 15px;">
+                                <div class="row new-padding-width-res " style="position: relative; margin-top : 15px;">
 
                                     <div class="swiper LP-new-slider">
                                         <div class="swiper-wrapper">
@@ -699,6 +723,11 @@
                                             @endforelse
                                         </div>
                                     </div>
+
+                                     <div style="text-align: center;">
+                        <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
+                            style="padding: 10px 20px;">View All</a>
+                    </div>
 
 
                                     <div class="LP-new-left-btn">
@@ -723,8 +752,15 @@
         <div class="container pt-30 pb-30 ">
             <div class="row">
                 <div class="col-12">
-                    <div class="section-title  aos-init aos-animate" data-aos="fade-up">
+                    <div class="section-title  aos-init aos-animate" data-aos="fade-up" style="position: relative;">
                         <h2 class="title">Business For Sale</h2>
+
+                            <a href="{{ url('properties/is_fast_selling/all') }}"
+                            class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 10px 20px;">
+                            View All
+                        </a>
+
+
                         <!-- <p class="mt-1" style="font-size:13px; line-height : 1.2;">Explore a wide range of businesses up for sale. From retail
                             outlets to commercial setups, find the right opportunity to invest and grow.
                         </p> -->
@@ -748,6 +784,11 @@
                     </div>
                 </div>
 
+                 <div style="text-align: center;">
+                        <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
+                            style="padding: 10px 20px;">View All</a>
+                    </div>
+
                 <!-- Navigation arrows -->
                 <div class="bussiness-f-s-left-btn">
                     <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
@@ -764,8 +805,13 @@
         <div class="container pt-30 pb-30">
             <div class="row" style="position: relative;">
                 <div class="col-12">
-                    <div class="section-title mb-10 aos-init aos-animate" data-aos="fade-up">
+                    <div class="section-title mb-10 aos-init aos-animate" data-aos="fade-up" style="position : relative;">
                         <h2 class="title">Franchiese</h2>
+
+                           <a href="{{ url('properties/is_fast_selling/all') }}"
+                            class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 10px 20px;">
+                            View All
+                        </a>
                         <!-- <p class="mt-1" style="font-size:13px; line-height : 1.2;">Join hands with Dala Maaf and become a part of a growing
                             network. Unlock business opportunities with our easy-to-start franchise model.</p> -->
                     </div>
@@ -786,6 +832,11 @@
                                 </div>
                             @endforelse
                         </div>
+                    </div>
+
+                     <div style="text-align: center;">
+                        <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
+                            style="padding: 10px 20px;">View All</a>
                     </div>
 
                     <!-- Navigation Buttons -->
@@ -907,8 +958,8 @@
 
                 <div class="aps-slide-wrapper " style="margin-top : 12px;" data-aos="fade-up">
                     <!-- Left Arrow -->
-                    <button class="arrow-button arrow-left" id="arrowLeft"><img
-                            src="{{ asset('assets/front/images/new-images/left.png') }}" alt=""></button>
+                    <div class="arrow-button arrow-left" id="arrowLeft"><img
+                            src="{{ asset('assets/front/images/new-images/left.png') }}" alt=""></div>
 
                     <!-- Slider -->
                     <div class="aps-slider ">
@@ -929,8 +980,9 @@
                     </div>
 
                     <!-- Right Arrow -->
-                    <button class="arrow-button arrow-right" id="arrowRight"><img
-                            src="{{ asset('assets/front/images/new-images/Right.png') }}" alt=""></button>
+                    <div class="arrow-button arrow-right" id="arrowRight"><img
+                            src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
+                    </div>
                 </div>
 
 
@@ -966,7 +1018,7 @@
                     <div class="b-s-r-div ">
                         <img src="{{ asset('assets/front/images/acrs-imag/sale.png') }}" alt=""
                             class="b-s-r-img">
-                        <h5 class="but-title">Sale</h5>
+                        <h5 class="but-title">Sell</h5>
                         <p class="but-title-p">List your property in minutes and connect with serious buyers. With
                             DalalMaf’s wide reach and trusted network, selling your property has never been faster or
                             easier.</p>
@@ -1482,7 +1534,7 @@
 
         <a href="{{ route('frontend.properties', ['purpose' => 'business_for_sale']) }}" class="menu-item">
             <i class="fas fa-user"></i>
-            <span>Business for Sale</span>
+            <span>Business for Sell</span>
         </a>
     </div>
 

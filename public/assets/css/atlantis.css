@@ -2339,15 +2339,15 @@ body {
 }
 
 .btn-toggle {
-  color: #fff !important;
+  color: #8d9498 !important;
 }
 
 .logo-header[data-background-color] .navbar-toggler .navbar-toggler-icon {
-  color: #ffffff !important;
+  color: #8d9498 !important;
 }
 
 .logo-header[data-background-color] .more {
-  color: #ffffff !important;
+  color: #8d9498 !important;
 }
 
 .logo-header[data-background-color="white"] .navbar-toggler .navbar-toggler-icon,

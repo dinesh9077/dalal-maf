@@ -3,11 +3,15 @@
   color:  black !important;
 }
 
+
 .logo-header .nav-toggle {
     position: absolute;
     top: 0;
     z-index: 5;
+
 }
+
+
 
 .sidebar.sidebar-style-2 .nav.nav-primary>.nav-item.active>a {
    background-color: rgba(199, 199, 199, 0.2) !important;
@@ -45,18 +49,15 @@
             </a>
         @endif
 
-        <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
-            data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon">
                 <i class="icon-menu"></i>
             </span>
         </button>
         <button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
-
         <div class="nav-toggle">
             <button class="btn btn-toggle toggle-sidebar">
-                <i class="icon-menu" style="background-color: transparent; padding : 10px; font-size : 15px; border-radius : 7px
-                ; border : 1px solid #000000ff;"></i>
+                <i class="icon-menu"></i>
             </button>
         </div>
     </div>

@@ -1,12 +1,11 @@
-<div {{ $attributes }} style="position: relative;">
-    <style>
+ <style>
         .product-latest {
             display: flex;
             flex-direction: column;
             background: #fff;
             border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            /* overflow: hidden; */
             transition: all 0.3s ease-in-out;
             margin-bottom: 20px;
             position: relative;
@@ -16,11 +15,11 @@
         }
 
         .product-latest {
-    height: 260px !important;
-}
+            height: 100% !important;
+        }
 
         .product-latest:hover {
-            box-shadow: 0 4px 18px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
             /* transform: translateY(-3px); */
         }
 
@@ -38,7 +37,7 @@
             border-top-right-radius: 8px;
             border-bottom-right-radius: 8px;
             line-height: 1.2;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
             z-index: 3;
             white-space: nowrap;
         }
@@ -48,16 +47,16 @@
             align-items: flex-start;
             padding: 10px 15px 12px;
             margin-top: 38px;
-            flex: 1;
+            /* flex: 1; */
             overflow: hidden;
-			gap:10px;
+            gap: 10px;
         }
 
 
         .latest-image-box {
             flex: 0 0 90px;
             height: 90px;
-            width:  90px;
+            width: 90px;
             border-radius: 100px;
             overflow: hidden;
             position: relative;
@@ -99,6 +98,7 @@
             font-weight: 600;
             color: #222;
         }
+
         .latest-info {
             display: flex;
             flex-wrap: wrap;
@@ -147,6 +147,7 @@
             text-decoration: none;
             transition: all 0.3s ease;
             width: 48%;
+            height: 41px;
             text-align: center;
         }
 
@@ -186,6 +187,8 @@
         }
     </style>
 
+
+<div {{ $attributes }} style="position: relative; height : 100%;">
     <div class="product-latest">
 
         <span class="property-purpose-tag">
@@ -196,9 +199,9 @@
             <div class="latest-image-box">
                 <a href="{{ route('frontend.property.details', ['slug' => $property->slug ?? $property->propertyContent->slug]) }}">
                     <img class="lazyload"
-                         src="assets/images/placeholder.png"
-                         data-src="{{ asset('assets/img/property/featureds/' . $property->featured_image) }}"
-                         alt="{{ $property->title ?? $property->propertyContent->title }}">
+                        src="assets/images/placeholder.png"
+                        data-src="{{ asset('assets/img/property/featureds/' . $property->featured_image) }}"
+                        alt="{{ $property->title ?? $property->propertyContent->title }}">
                 </a>
             </div>
 
@@ -225,8 +228,8 @@
                 <ul class="latest-info p-0 list-unstyled d-flex align-items-center flex-wrap">
                     <li><i class="fal fa-vector-square"></i> {{ $property->area }} Sqft</li>
                     @if ($property->type == 'residential')
-                        <li><i class="fal fa-bed"></i> {{ $property->beds }} Beds</li>
-                        <li><i class="fal fa-bath"></i> {{ $property->bath }} Baths</li>
+                    <li><i class="fal fa-bed"></i> {{ $property->beds }} Beds</li>
+                    <li><i class="fal fa-bath"></i> {{ $property->bath }} Baths</li>
                     @endif
                 </ul>
             </div>
@@ -234,38 +237,38 @@
 
         <div class="latest-footer">
             @if (Auth::guard('web')->check())
-                @php
-                    $user_id = Auth::guard('web')->user()->id;
-                    $checkWishList = checkWishList($property->id, $user_id,'user');
-                @endphp
+            @php
+            $user_id = Auth::guard('web')->user()->id;
+            $checkWishList = checkWishList($property->id, $user_id,'user');
+            @endphp
             @elseif(Auth::guard('vendor')->check())
-                @php
-                    $user_id = Auth::guard('vendor')->user()->id;
-                    $checkWishList = checkWishList($property->id, $user_id,'vendor');
-                @endphp
+            @php
+            $user_id = Auth::guard('vendor')->user()->id;
+            $checkWishList = checkWishList($property->id, $user_id,'vendor');
+            @endphp
             @elseif(Auth::guard('agent')->check())
-                @php
-                    $user_id = Auth::guard('agent')->user()->id;
-                    $checkWishList = checkWishList($property->id, $user_id,'agent');
-                @endphp
+            @php
+            $user_id = Auth::guard('agent')->user()->id;
+            $checkWishList = checkWishList($property->id, $user_id,'agent');
+            @endphp
             @else
-                @php
-                    $checkWishList = false;
-                @endphp
+            @php
+            $checkWishList = false;
+            @endphp
             @endif
             @if (!Auth::guard('vendor')->check() && !Auth::guard('web')->check() && !Auth::guard('agent')->check())
-                <a type="button" class="btn-wishlist" data-bs-toggle="modal" data-bs-target="#customerPhoneModal" data-action="login">
-                    <i class="fal fa-heart"></i>
-                </a>
+            <a type="button" class="btn-wishlist" data-bs-toggle="modal" data-bs-target="#customerPhoneModal" data-action="login">
+                <i class="fal fa-heart"></i>
+            </a>
             @else
-                <a href="javascript:void(0);"
-                   class="btn-wishlist {{ $checkWishList ? 'wishlist-active' : '' }}"
-                   data-id="{{ $property->id }}"
-                   data-action="{{ $checkWishList ? 'remove' : 'add' }}"
-                   data-add-url="{{ route('addto.wishlist', $property->id) }}"
-                   data-remove-url="{{ route('remove.wishlist', $property->id) }}">
-                    <i class="fal fa-heart"></i> {{ $checkWishList ? __('Saved') : __('Wishlist') }}
-                </a>
+            <a href="javascript:void(0);"
+                class="btn-wishlist {{ $checkWishList ? 'wishlist-active' : '' }}"
+                data-id="{{ $property->id }}"
+                data-action="{{ $checkWishList ? 'remove' : 'add' }}"
+                data-add-url="{{ route('addto.wishlist', $property->id) }}"
+                data-remove-url="{{ route('remove.wishlist', $property->id) }}">
+                <i class="fal fa-heart"></i> {{ $checkWishList ? __('Saved') : __('Wishlist') }}
+            </a>
             @endif
 
             <a href="{{ route('frontend.property.details', $property->slug ?? $property->propertyContent->slug) }}" class="view-btn">
