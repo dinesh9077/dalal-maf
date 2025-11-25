@@ -39,9 +39,6 @@
                                 <div class="card-title">{{ __('Update SEO Informations') }}</div>
                             </div>
 
-                            <div class="col-lg-2">
-                                @includeIf('backend.partials.languages')
-                            </div>
                         </div>
                     </div>
 

@@ -100,10 +100,6 @@
                                 <div class="col-lg-10">
                                     <div class="card-title">{{ __('Update Testimonial Section') }}</div>
                                 </div>
-
-                                <div class="col-lg-2">
-                                    @includeIf('backend.partials.languages')
-                                </div>
                             </div>
                         </div>
 
@@ -172,10 +168,6 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="card-title">{{ __('Testimonials') }}</div>
-                        </div>
-
-                        <div class="col-lg-3">
-                            @includeIf('backend.partials.languages')
                         </div>
 
                         <div class="col-lg-4 offset-lg-1 mt-2 mt-lg-0">

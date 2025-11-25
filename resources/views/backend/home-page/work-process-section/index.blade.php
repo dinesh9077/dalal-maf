@@ -36,9 +36,6 @@
                             <div class="card-title">{{ __('Update Work Process Section') }}</div>
                         </div>
 
-                        <div class="col-lg-4">
-                            @includeIf('backend.partials.languages')
-                        </div>
                     </div>
                 </div>
 
@@ -91,9 +88,6 @@
                             <div class="card-title">{{ __('Wrok Processes') }}</div>
                         </div>
 
-                        <div class="col-lg-3">
-                            @includeIf('backend.partials.languages')
-                        </div>
 
                         <div class="col-lg-4 offset-lg-1 mt-2 mt-lg-0">
                             <a href="#" data-toggle="modal" data-target="#createModal"

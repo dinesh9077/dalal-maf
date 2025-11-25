@@ -40,9 +40,6 @@
                                 <div class="card-title">{{ __('Update Page Headings') }}</div>
                             </div>
 
-                            <div class="col-lg-2">
-                                @includeIf('backend.partials.languages')
-                            </div>
                         </div>
                     </div>
 

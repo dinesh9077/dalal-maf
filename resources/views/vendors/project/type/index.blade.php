@@ -36,10 +36,6 @@
                             <div class="card-title d-inline-block">{{ __('Project Types') }}</div>
                         </div>
 
-                        <div class="col-lg-3">
-                            @includeIf('backend.partials.languages')
-                        </div>
-
                         <div class="col-lg-4 offset-lg-1 mt-2 mt-lg-0">
                             <a class="btn btn-info btn-sm float-right d-inline-block mx-2"
                                 href="{{ route('vendor.project_management.projects', ['language' => $defaultLang->code]) }}">
@@ -116,11 +112,11 @@
                                                             href="#" data-toggle="modal" data-target="#editModal"
                                                             data-id="{{ $type->id }}"
                                                             data-project_id="{{ $type->project_id }}"
-                                                            @foreach ($langs as $lang) 
+                                                            @foreach ($langs as $lang)
                                                             @php
-                                                                $projectType = \App\Models\Project\ProjectTypeContent::where([['language_id',$lang->id] ,['project_type_id',$type->id]])->first(); 
+                                                                $projectType = \App\Models\Project\ProjectTypeContent::where([['language_id',$lang->id] ,['project_type_id',$type->id]])->first();
                                                             @endphp
-                                                            
+
                                                             data-{{ $lang->code }}_name="{{ @$projectType->name }}"
                                                             data-{{ $lang->code }}_min_area="{{ @$projectType->min_area }}"
                                                             data-{{ $lang->code }}_max_area="{{ @$projectType->max_area }}"

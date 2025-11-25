@@ -36,9 +36,6 @@
                             <div class="card-title d-inline-block">{{ __('Quick Links') }}</div>
                         </div>
 
-                        <div class="col-lg-3">
-                            @includeIf('backend.partials.languages')
-                        </div>
 
                         <div class="col-lg-4 offset-lg-1 mt-2 mt-lg-0">
                             <a href="#" class="btn btn-sm btn-primary float-lg-right float-left" data-toggle="modal"

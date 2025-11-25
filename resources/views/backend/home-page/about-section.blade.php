@@ -123,10 +123,6 @@
                         <div class="col-lg-9">
                             <div class="card-title">{{ __('About Section Information') }}</div>
                         </div>
-
-                        <div class="col-lg-3">
-                            @includeIf('backend.partials.languages')
-                        </div>
                     </div>
                 </div>
 
@@ -189,7 +185,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </form>
                         </div>
                     </div>

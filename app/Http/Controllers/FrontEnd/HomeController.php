@@ -1,7 +1,7 @@
 <?php
-	
+
 	namespace App\Http\Controllers\FrontEnd;
-	
+
 	use App\Http\Controllers\Controller;
 	use App\Http\Controllers\FrontEnd\MiscellaneousController;
 	use App\Models\BasicSettings\Basic;
@@ -33,55 +33,55 @@
 	use Illuminate\Http\Request;
 	use Session;
 	use Illuminate\Support\Facades\Cache;
-	
+
 	class HomeController extends Controller
 	{
-		
+
 		public function index(Request $request)
 		{
 			$themeVersion = Basic::query()->pluck('theme_version')->first();
-			
+
 			$secInfo = Section::query()->first();
-			
+
 			$misc = new MiscellaneousController();
-			
+
 			$language = $misc->getLanguage();
-			
+
 			$queryResult['language'] = $language;
-			
+
 			$queryResult['seoInfo'] = $language->seoInfo()->select('meta_keyword_home', 'meta_description_home')->first();
-			
+
 			if ($secInfo->counter_section_status == 1) {
 				$queryResult['counterSectionImage'] = Basic::query()->pluck('counter_section_image')->first();
 				$queryResult['counterSectionInfo'] = CounterSection::where('language_id', $language->id)->first();
 				$queryResult['counters'] = $language->counterInfo()->orderByDesc('id')->get();
 			}
-			
+
 			$queryResult['currencyInfo'] = $this->getCurrencyInfo();
-			
+
 			$queryResult['secInfo'] = $secInfo;
-			
-			
+
+
 			// for real estate query
-			
+
 			if ($themeVersion == 2) {
 				$queryResult['sliderInfos'] = $language->sliderInfo()->orderByDesc('id')->get();
 				$queryResult['packages'] = Package::where([['status', 1], ['is_featured', 1]])->get();
 				$queryResult['pricingSecInfo'] = $language->pricingSection()->first();
 			}
-			
+
 			if ($themeVersion != 2) {
 				$queryResult['heroStatic'] = $language->heroStatic()->first();
 				// $queryResult['heroImg'] = Basic::query()->pluck('hero_static_img')->first();
 				$heroImg = Basic::query()->pluck('hero_static_img')->first();
 				$queryResult['heroImg'] = $heroImg ? json_decode($heroImg, true) : [];
 			}
-			
+
 			if ($secInfo->property_section_status == 1) {
 				$queryResult['propertySecInfo'] = PropertySection::where('language_id', $language->id)->first();
 			}
-			
-			
+
+
 			if ($themeVersion != 3) {
 				$queryResult['featuredSecInfo'] = FeatureSection::where('language_id', $language->id)->first();
 			}
@@ -91,28 +91,28 @@
 			if ($themeVersion == 1) {
 				$queryResult['citySecInfo'] = CitySection::where('language_id', $language->id)->first();
 			}
-			
+
 			if ($secInfo->testimonial_section_status == 1) {
 				$queryResult['testimonialSecInfo'] = $language->testimonialSection()->first();
 				$queryResult['testimonials'] = $language->testimonial()->orderByDesc('id')->get();
 				$queryResult['testimonialSecImage'] = Basic::query()->pluck('testimonial_section_image')->first();
 			}
-			
+
 			if ($themeVersion == 2 && $secInfo->call_to_action_section_status == 1) {
 				$queryResult['callToActionSectionImage'] = Basic::query()->pluck('call_to_action_section_image')->first();
 				$queryResult['callToActionSecInfo'] = $language->callToActionSection()->first();
 			}
-			
+
 			if ($themeVersion == 1 && $secInfo->subscribe_section_status == 1) {
 				$queryResult['subscribeSectionImage'] = Basic::query()->pluck('subscribe_section_img')->first();
 				$queryResult['subscribeSecInfo'] = $language->subscribeSection()->first();
 			}
-			
+
 			if ($secInfo->work_process_section_status == 1 && ($themeVersion == 2 || $themeVersion == 3)) {
 				$queryResult['workProcessSecInfo'] = $language->workProcessSection()->first();
 				$queryResult['processes'] = $language->workProcess()->orderBy('serial_number', 'asc')->get();
 			}
-			 
+
 			$all_proeprty_categories = PropertyCategory::where('status', 1)
 			->with(['categoryContent' => function ($q) use ($language) {
 				$q->where('language_id', $language->id);
@@ -122,11 +122,11 @@
 			}])
 			->orderBy('serial_number', 'asc')
 			->get();
-			
+
 			/* $allCities = City::where('status', 1)->with(['cityContent' => function ($q) use ($language) {
 				$q->where('language_id', $language->id);
 			}])->get();
-			
+
 			$queryResult['all_cities'] = $allCities;  */
 			/* $queryResult['all_states'] = State::with(['stateContent' => function ($q) use ($language) {
 				$q->where('language_id', $language->id);
@@ -135,7 +135,7 @@
 				$q->where('language_id', $language->id);
 			}])->get();  */
 			$queryResult['all_proeprty_categories'] = $all_proeprty_categories;
-			
+
 			// Reusable base query builder for all property sections
 			$baseQuery = Property::query()
 				->join('property_contents', 'property_contents.property_id', '=', 'properties.id')
@@ -171,6 +171,7 @@
 			// 1️⃣ Latest Properties
 			// ------------------------------------------------------------
 			$queryResult['properties'] = (clone $baseQuery)
+        ->distinct('properties.id')
 				->latest('properties.created_at')
 				->take(8)
 				->get();
@@ -183,6 +184,7 @@
 					['properties.purpose', 'business_for_sale'],
 					['properties.property_type', 'partial']
 				])
+         ->distinct('properties.id')
 				->latest('properties.created_at')
 				->get();
 
@@ -194,65 +196,70 @@
 					['properties.purpose', 'franchiese'],
 					['properties.property_type', 'partial']
 				])
+        ->distinct('properties.id')
 				->latest('properties.created_at')
 				->get();
 
 			// ------------------------------------------------------------
 			// 4️⃣ Featured Properties
 			// ------------------------------------------------------------
-			$queryResult['featured_properties'] = (clone $baseQuery) 
+			$queryResult['featured_properties'] = (clone $baseQuery)
 				->where('properties.is_featured', 1)
 				->select(
-					'properties.*', 
+					'properties.*',
 					'property_contents.slug',
 					'property_contents.title',
 					'property_contents.address',
 					'property_contents.language_id'
 				)
+        ->distinct('properties.id')
 				->inRandomOrder()
 				->take(10)
 				->get();
-				
-			$queryResult['hotProperties'] = (clone $baseQuery) 
+
+			$queryResult['hotProperties'] = (clone $baseQuery)
 				->where('properties.is_hot', 1)
 				->select(
-					'properties.*', 
+					'properties.*',
 					'property_contents.slug',
 					'property_contents.title',
 					'property_contents.address',
 					'property_contents.language_id'
 				)
+        ->distinct('properties.id')
 				->inRandomOrder()
 				->take(10)
 				->get();
-				
-			$queryResult['fastSellingProperties'] = (clone $baseQuery) 
+
+			$queryResult['fastSellingProperties'] = (clone $baseQuery)
 				->where('properties.is_fast_selling', 1)
 				->select(
-					'properties.*', 
+					'properties.*',
 					'property_contents.slug',
 					'property_contents.title',
 					'property_contents.address',
 					'property_contents.language_id'
 				)
+        ->distinct('properties.id')
 				->inRandomOrder()
 				->take(10)
 				->get();
-				
-			$queryResult['recommendedProperties'] = (clone $baseQuery) 
+
+			$queryResult['recommendedProperties'] = (clone $baseQuery)
 				->where('properties.is_recommended', 1)
 				->select(
-					'properties.*', 
+					'properties.*',
 					'property_contents.slug',
 					'property_contents.title',
 					'property_contents.address',
 					'property_contents.language_id'
 				)
+        ->distinct('properties.id')
 				->inRandomOrder()
 				->take(10)
 				->get();
- 
-			
+
+
 			if ($themeVersion == 1 && $secInfo->project_section_status == 1) {
 
 				// --- Base query for projects ---
@@ -320,14 +327,14 @@
 					->get();
 			}
 
-			
+
 			$queryResult['aboutImg'] = Basic::query()->select('about_section_image1', 'about_section_image2', 'about_section_video_link')->first();
 			$queryResult['aboutInfo'] =  AboutSection::where('language_id', $language->id)->first();
-			
+
 			if ($themeVersion == 1 && $secInfo->vendor_section_status == 1) {
-				
+
 				$queryResult['vendorInfo'] =  VendorSection::where('language_id', $language->id)->first();
-				
+
 				$queryResult['vendors'] = Vendor::join('memberships', 'memberships.vendor_id', 'vendors.id')
 				->where([
 				['memberships.status', 1],
@@ -341,27 +348,27 @@
 				}, 'agents'])
 				->select('vendors.*')->inRandomOrder()->take(5)->get();
 			}
-			
+
 			if ($themeVersion == 1 && $secInfo->why_choose_us_section_status == 1) {
 				$queryResult['whyChooseUsImg'] = Basic::query()->select('why_choose_us_section_img1', 'why_choose_us_section_img2', 'why_choose_us_section_video_link')->first();
 				$queryResult['whyChooseUsInfo'] =  WhyChooseUs::where('language_id', $language->id)->first();
 			}
-			
-			
+
+
 			if ($themeVersion == 1 && $secInfo->cities_section_status == 1) {
 				$cities =  City::where([['status', 1], ['featured', 1]])->orderBy('serial_number', 'asc')->get();
 				$cities->map(function ($city) use ($language) {
 					$city['propertyCount'] = $city->cityProperties()->count();
 					$city['name'] = $city->getContent($language->id)->name;
 				});
-				
+
 				$queryResult['cities'] =  $cities;
 			}
-			
+
 			if (($themeVersion == 2 || $themeVersion == 3) && $secInfo->brand_section_status == 1) {
 				$queryResult['brands'] = BrandSection::get();
 			}
-			
+
 			// --- Property min & max ---
 			$propertyStats = Property::query()
 				->where('status', 1)
@@ -376,7 +383,7 @@
 			$queryResult['cityCount'] = Cache::remember('city_count', 600, fn() => City::count());
 			$queryResult['userCount'] = Cache::remember('user_count', 600, fn() => User::count());
 			$queryResult['vendorCount'] = Cache::remember('vendor_count', 600, fn() => Vendor::count());
-			 
+
 			if ($themeVersion == 1) {
 				return view('frontend.home.index-v1', $queryResult);
 				} elseif ($themeVersion == 2) {
@@ -385,23 +392,23 @@
 				return view('frontend.home.index-v3', $queryResult);
 			}
 		}
-		 
+
 		//about
 		public function about()
 		{
 			$misc = new MiscellaneousController();
-			
+
 			$language = $misc->getLanguage();
-			
+
 			$queryResult['seoInfo'] = $language->seoInfo()->select('meta_keywords_about_page', 'meta_description_about_page')->first();
-			
+
 			$queryResult['pageHeading'] = $misc->getPageHeading($language);
-			
+
 			$queryResult['bgImg'] = $misc->getBreadcrumb();
 			$secInfo = Section::query()->first();
 			$queryResult['secInfo'] = $secInfo;
-			
-			
+
+
 			if ($secInfo->about_section_status == 1) {
 				$queryResult['aboutImg'] = Basic::query()->select('about_section_image1', 'about_section_image2', 'about_section_video_link')->first();
 				$queryResult['aboutInfo'] =  AboutSection::where('language_id', $language->id)->first();
@@ -410,31 +417,31 @@
 				$queryResult['whyChooseUsImg'] = Basic::query()->select('why_choose_us_section_img1', 'why_choose_us_section_img2', 'why_choose_us_section_video_link')->first();
 				$queryResult['whyChooseUsInfo'] =  WhyChooseUs::where('language_id', $language->id)->first();
 			}
-			
+
 			if ($secInfo->work_process_section_status == 1) {
 				$queryResult['workProcessSecInfo'] = $language->workProcessSection()->first();
 				$queryResult['processes'] = $language->workProcess()->orderBy('serial_number', 'asc')->get();
 			}
-			
-			
+
+
 			if ($secInfo->testimonial_section_status == 1) {
 				$queryResult['testimonialSecInfo'] = $language->testimonialSection()->first();
 				$queryResult['testimonials'] = $language->testimonial()->orderByDesc('id')->get();
 				$queryResult['testimonialSecImage'] = Basic::query()->pluck('testimonial_section_image')->first();
 			}
-			
+
 			return view('frontend.about', $queryResult);
 		}
 		public function pricing()
 		{
 			$misc = new MiscellaneousController();
-			
+
 			$language = $misc->getLanguage();
-			
+
 			$queryResult['seoInfo'] = $language->seoInfo()->select('meta_keywords_pricing_page', 'meta_description_pricing_page')->first();
-			
+
 			$queryResult['pageHeading'] = $misc->getPageHeading($language);
-			
+
 			$queryResult['bgImg'] = $misc->getBreadcrumb();
 			$queryResult['packages'] = Package::where('status', 1)->get();
 			return view('frontend.pricing', $queryResult);

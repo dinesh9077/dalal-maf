@@ -28,7 +28,7 @@
     </div>
 
     <div class="row">
-        
+
         @if ($settings->theme_version == 2 || $settings->theme_version == 3)
             <div class="col-md-6">
                 <div class="card">
@@ -38,9 +38,6 @@
                                 <div class="card-title">{{ __('Update Category Section') }}</div>
                             </div>
 
-                            <div class="col-lg-4">
-                                @includeIf('backend.partials.languages')
-                            </div>
                         </div>
                     </div>
 
@@ -71,7 +68,7 @@
                                             </div>
                                         @endif
                                     </div>
-                                   
+
                                 </form>
                             </div>
                         </div>

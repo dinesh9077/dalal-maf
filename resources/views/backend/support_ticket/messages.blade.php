@@ -144,12 +144,12 @@
                               <img class="avatar-img rounded-circle"
                                 src="{{ asset('assets/admin/img/vendor-photo/' . $vendor->photo) }}" alt="user-photo">
                             @else
-                              <img class="avatar-img rounded-circle" src="{{ asset('assets/img/blank_user.jpg') }}"
-                                alt="user-photo">
+                              <img class="avatar-img rounded-circle" src="{{ asset('assets/img/blank-user.jpg') }}"
+                                  alt="user-photo">
                             @endif
                           @else
-                            <img class="avatar-img rounded-circle" src="{{ asset('assets/img/blank_user.jpg') }}"
-                              alt="user-photo">
+                            <img class="avatar-img rounded-circle" src="{{ asset('assets/img/blank-user.jpg') }}"
+                                  alt="user-photo">
                           @endif
 
 

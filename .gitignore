@@ -1,4 +1,4 @@
-/node_modules   
+/node_modules
 .env.backup
 .phpunit.result.cache
 docker-compose.override.yml
@@ -7,7 +7,8 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 "dalal.sharenow.live/installable.zip"
-"dalal.sharenow.live/installable.zip" 
+"dalal.sharenow.live/installable.zip"
 /.idea
 /.vscode
 .env
+public/assets/img

@@ -25,7 +25,7 @@
     </div>
 
     <div class="row">
-       
+
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
@@ -34,9 +34,6 @@
                             <div class="card-title">{{ __('Counter Informations') }}</div>
                         </div>
 
-                        <div class="col-lg-3">
-                            @includeIf('backend.partials.languages')
-                        </div>
 
                         <div class="col-lg-4 offset-lg-1 mt-2 mt-lg-0">
                             <a href="#" data-toggle="modal" data-target="#createModal"

@@ -214,7 +214,10 @@
 
                 <span class="latest-location">
                     <i class="fal fa-map-marker-alt"></i>
-                    {{ $property->city->getContent($property->language_id)?->name }}
+                     {{ $property->areaContent?->name
+                          ? $property->areaContent->name . ', ' . ($property->city?->getContent($property->language_id)?->name ?? '')
+                          : ($property->city?->getContent($property->language_id)?->name ?? '') }}
+                    {{-- {{ $property->city->getContent($property->language_id)?->name }} --}}
                     {{ $property->isStateActive ? ', ' . $property->state?->getContent($property->language_id)?->name : '' }}
                 </span>
 

@@ -36,9 +36,6 @@
                             <div class="card-title">{{ __('Update City Section') }}</div>
                         </div>
 
-                        <div class="col-lg-4">
-                            @includeIf('backend.partials.languages')
-                        </div>
                     </div>
                 </div>
 

@@ -35,10 +35,6 @@
             <div class="col-lg-10">
               <div class="card-title">{{ __('Update Product Section') }}</div>
             </div>
-
-            <div class="col-lg-2">
-              @includeIf('backend.partials.languages')
-            </div>
           </div>
         </div>
 

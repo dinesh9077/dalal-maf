@@ -297,11 +297,11 @@
                             <!-- <h1 class="title title-colors">{{ $heroStatic->title }}</h1> -->
                             <!-- <h1 class="title">{{ $heroStatic->title }}</h1> -->
                             <!-- <p class="text title-colors">
-           
+
                                 {{ $heroStatic->text }}
           </p> -->
                             <!-- <div style="  margin-top: 40px;">
-           
+
                                 <a href="{{ route('frontend.properties') }}" class="home-hero-inq-btn">Make an Inquiry</a>
           </div> -->
                         </div>
@@ -1172,7 +1172,7 @@
                         We’re here to help you with all your real estate needs.
 					</h5>
                     <p>
-						
+
                         Whether you’re buying, selling, renting, or just exploring options — our team is ready to guide you every step of the way.
 					</p>
 				</div>
@@ -1204,7 +1204,7 @@
 						</div>
                         <button type="submit">Submit Message</button>
 					</form>
-					
+
 				</div>
 			</div>
 		</div>
@@ -1330,7 +1330,7 @@
                     <span class="city-tag">Rajkot</span>
                     <span class="city-tag">Bhavnagar</span>
 				</div>
-				
+
 			</div> --}}
 
 
@@ -1365,7 +1365,7 @@
      <p class="text mb-30">
      {{ $testimonialSecInfo?->content }}
      </p>
-     
+
      <div class="slider-navigation scroll-animate">
      <button type="button" title="Slide prev" class="slider-btn slider-btn-prev">
      <i class="fal fa-angle-left"></i>
@@ -1391,8 +1391,8 @@
     <img class="lazyload"
      data-src="{{ asset('assets/img/clients/' . $testimonial->image) }}">
     @endif
-     
-     
+
+
      </div>
      </div>
      <div class="client-content mt-30">
@@ -1406,7 +1406,7 @@
      <span class="designation">{{ $testimonial->occupation }}</span>
      </div>
      <div class="ratings">
-     
+
      <div class="rate">
      <div class="rating-icon"
      style="width: {{ $testimonial->rating * 20 }}%"></div>
@@ -1561,7 +1561,7 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script>
-      $(document).ready(function () { 
+      $(document).ready(function () {
         // allCategories = [{id:1, name:"", slug:"", type:"residential"}, ...]
         var allCategories = @json($all_proeprty_categories);
 
@@ -1578,7 +1578,7 @@
                 filtered = allCategories.filter(cat => cat.type === selectedType);
             } else {
                 filtered = allCategories; // show all
-            } 
+            }
             // Generate option HTML
             let options = `<option selected disabled value="">Select Category</option>`;
             options += `<option value="all">All</option>`;

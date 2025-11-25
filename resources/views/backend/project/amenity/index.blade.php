@@ -36,10 +36,7 @@
                             <div class="card-title d-inline-block">{{ __('Amenities') }}</div>
                         </div>
 
-                        <div class="col-lg-3">
-                            @includeIf('backend.partials.languages')
-                        </div>
-
+                        
                         <div class="col-lg-4 offset-lg-1 mt-2 mt-lg-0">
                             <a href="#" data-toggle="modal" data-target="#createModal"
                                 class="btn btn-primary btn-sm float-lg-right float-left"><i class="fas fa-plus"></i>
@@ -103,9 +100,9 @@
                                                             data-toggle="modal" data-target="#editModal"
                                                             @foreach ($langs as $lang)
                                                             @php
-                                                                
+
                                                                 $amen = \App\Models\Project\ProjectAmenities::where([["index",$amenity->index],['language_id',$lang->id]])->first();
-                                                            @endphp 
+                                                            @endphp
                                                             data-index="{{ $amen->index }}"
                                                             data-{{ $lang->code }}_name="{{ $amen->name }}" @endforeach
                                                    data-icon="{{ $amenity->icon }}"
@@ -117,7 +114,7 @@
                                                             </span>
                                                         </a>
 
-                                                        <form class="deleteForm d-inline-block" 
+                                                        <form class="deleteForm d-inline-block"
                                                             method="post">
                                                             @csrf
                                                             <button type="submit"

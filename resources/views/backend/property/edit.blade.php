@@ -92,7 +92,7 @@
                                                             <i class="fa fa-times rmvbtndb"
                                                                 data-indb="{{ $item->id }}"></i>
                                                         </td>
-                                                        
+
                                                     </tr>
                                                 @endforeach
                                             </table>
@@ -222,7 +222,7 @@
                                                 <option value="business_for_sale" @if ($property->purpose == 'business_for_sale') selected @endif>
                                                     {{ __('Business For Sale') }}
                                                 </option>
-                                            </select> 
+                                            </select>
                                         </div>
 
                                     </div>
@@ -326,7 +326,7 @@
                                             <input type="text"
                                                 name="address"
                                                 placeholder="Enter Address"
-                                                value="{{ @$peoperty->address }}"
+                                                value="{{ @$property->address }}"
                                                 class="form-control">
                                         </div>
                                     </div>
@@ -756,11 +756,11 @@
          $('#purpose').on('change', function() {
             const val = this.value;
             const hideFields = val === 'franchiese' || val === 'business_for_sale';
-            
+
             // toggle visibility
             $('.hideBath, .hideSqft').toggle(!hideFields);
             $('.hideNotes').toggle(hideFields);
-             
+
             // reset values
             $('input[name="bath"], input[name="area"]').val(0);
             $('input[name="notes"]').val('');

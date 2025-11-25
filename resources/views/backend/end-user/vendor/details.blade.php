@@ -278,10 +278,6 @@
                                     <div class="card-title d-inline-block">{{ __('All Properties') }}</div>
                                 </div>
 
-                                <div class="col-lg-3">
-                                    @includeIf('backend.partials.languages')
-                                </div>
-
                                 <div class="col-lg-4 offset-lg-1 mt-2 mt-lg-0">
 
                                     <button class="btn btn-danger btn-sm float-right mr-2 d-none bulk-delete"
@@ -430,4 +426,4 @@
         @includeIf('backend.end-user.vendor.edit-next-package')
         @includeIf('backend.end-user.vendor.add-next-package')
     @endsection
-    
+
