@@ -4,11 +4,7 @@
 {{-- this style will be applied when the direction of language is right-to-left --}}
 @includeIf('backend.partials.rtl_style')
 
-<style>
-    .form-group{
-        padding: 0px !important;
-    }
-</style>
+
 
 @section('content')
 <div class="page-header">
@@ -81,7 +77,7 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-3 mt-3 mt-lg-0">
-                                    <div class="form-group">
+                                    <div class="form-group" style="padding: 0px !important;">
                                         <input type="text" name="title" value="{{ request()->input('title') }}"
                                             class="form-control" placeholder="Title">
                                     </div>
@@ -90,7 +86,7 @@
                         </form>
                     </div>
                     <div class="col-lg-2">
-                        <div class="form-group" style="height: 42.19px;">
+                        <div class="form-group" style="height: 42.19px; padding: 0px !important;">
                             @includeIf('vendors.partials.languages')
                         </div>
                     </div>
@@ -300,7 +296,7 @@
                     <input type="hidden" id="in_property_id" name="property_id" value="{{ old('property_id') }}">
 
 
-                    <div class="form-group">
+                    <div class="form-group" style="padding: 0px !important;">
                         <label for=""> {{ __('Select Pricing *') }}</label>
                         <div class="row mt-2 justify-content-center">
 
@@ -345,7 +341,7 @@
                         <p class="mt-2 text-danger">{{ $message }}</p>
                     </div>
                     @enderror
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-2" style="padding: 0px !important;">
                         <label for="payment-gateway"> {{ __('Select Payment Method *') }}</label>
                         <select name="gateway" id="payment-gateway" required class="form-control select">
                             <option selected disabled value="">
@@ -385,7 +381,7 @@
                     @endif
                     @if ($onlineGateway->keyword == 'authorize.net')
                     <div id="authorize-net-input" class="  d-none  ">
-                        <div class="form-group  ">
+                        <div class="form-group  " style="padding: 0px !important;">
                             <input type="number" class="form-control" id="anetCardNumber"
                                 name="anetCardNumber" placeholder="{{ __('Enter Your Card Number') }}"
                                 autocomplete="off">
@@ -395,7 +391,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group ">
+                        <div class="form-group " style="padding: 0px !important;">
                             <input type="text" class="form-control" id="anetExpMonth" name="anetExpMonth"
                                 placeholder="{{ __('Enter Expiry Month') }}" autocomplete="off">
                             <p class="mt-2 text-danger" id="anetExpMonth-error"></p>
@@ -404,7 +400,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group  ">
+                        <div class="form-group  " style="padding: 0px !important;">
                             <input type="text" class="form-control" id="anetExpYear" name="anetExpYear"
                                 placeholder="{{ __('Enter Expiry Year') }}" autocomplete="off">
                             @error('anetExpYear')
@@ -412,7 +408,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group  ">
+                        <div class="form-group  " style="padding: 0px !important;">
                             <input type="text" class="form-control" id="anetCardCode" name="anetCardCode"
                                 placeholder="{{ __('Enter Card Code') }}" autocomplete="off">
                             @error('anetCardCode')
@@ -431,20 +427,20 @@
                         id="{{ 'offline-gateway-' . $offlineGateway->id }}">
 
                         @if (!is_null($offlineGateway->short_description))
-                        <div class="form-group mb-4">
+                        <div class="form-group mb-4" style="padding: 0px !important;">
                             <label>{{ __('Description') }}</label>
                             <p>{{ $offlineGateway->short_description }}</p>
                         </div>
                         @endif
 
                         @if (!is_null($offlineGateway->instructions))
-                        <div class="form-group mb-4">
+                        <div class="form-group mb-4" style="padding: 0px !important;">
                             <label>{{ __('Instructions') }}</label>
                             <p>{!! $offlineGateway->instructions !!}</p>
                         </div>
                         @endif
                         @if ($offlineGateway->has_attachment == 1)
-                        <div class="form-group mb-4">
+                        <div class="form-group mb-4" style="padding: 0px !important;">
                             <label>{{ __('Attachment/Recipient Image') }} *</label>
                             <br>
                             <input type="file" name="attachment" class="form-control">

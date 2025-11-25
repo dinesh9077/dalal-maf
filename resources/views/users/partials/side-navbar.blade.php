@@ -18,13 +18,13 @@
                         <span>
                             {{ Auth::guard('web')->user()->username }}
                             <span class="user-level">{{ Auth::guard('web')->user()->user_type }}</span>
-                            <span class="caret"></span>
+                            <!-- <span class="caret"></span> -->
                         </span>
                     </a>
 
                     <div class="clearfix"></div>
 
-                    <div class="collapse in" id="adminProfileMenu">
+                    <!-- <div class="collapse in" id="adminProfileMenu">
                         <ul class="nav">
                             <li>
                                 <a href="{{ route('user.edit_profile') }}">
@@ -44,7 +44,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 

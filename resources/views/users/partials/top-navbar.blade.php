@@ -5,8 +5,8 @@
 
         @if (!empty($websiteInfo->logo))
             <a href="{{ route('index') }}" class="logo" target="_blank">
-                <img src="{{ asset('assets/img/' . $websiteInfo->logo) }}" alt="logo" class="navbar-brand"
-                    width="120">
+               <img src="{{ asset('assets/front/images/new-images/Logo-black.png') }}" alt="logo" class="navbar-brand"
+                    width="150">
             </a>
         @endif
 

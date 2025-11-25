@@ -94,13 +94,13 @@
         <span class="line"></span>
     </div> -->
 
-    <div class="projects-details-area pt-100 pb-70 project-details-bg" id="tapDown">
+    <div class="projects-details-area pt-50 pb-70" id="tapDown">
         <div class="container">
             <div class="row">
-                <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12" >
+                <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 vd-new-shadow-left" >
                     <div class="new-details-bg-white new-span-f-s">
                         <div class="project-desc" data-aos="fade-up">
-                            <h3 class="mb-20">{{ __('Project Overview') }}</h3>
+                            <h3 class="new-title-pps">{{ __('Project Overview') }}</h3>
                             <p class="summernote-content" >
                                 {!! $project->description !!}
                             </p>
@@ -123,15 +123,15 @@
                             </p>
                         </div> -->
                     </div>
-                    <div class="pb-20"></div>
+                   
                     
 
             
 
                     <div class="new-details-bg-white" >
                         <div class="project-location" data-aos="fade-up">
-                            <h3 class="mb-20"> {{ __('Location') }}</h3>
-                            <div class="lazy-container radius-lg ratio ratio-21-8 border">
+                            <h3 class="new-title-pps"> {{ __('Location') }}</h3>
+                            <div class="lazy-container radius-lg ratio ratio-21-8 border mt-4">
                                 <iframe class="lazyload"
                                     src="https://maps.google.com/maps?q={{ $project->latitude }},{{ $project->longitude }}&hl={{ $currentLanguageInfo->code }};z=15&amp;output=embed"></iframe>
                             </div>
@@ -139,18 +139,16 @@
                     </div>
                     
 
-                        <div class="pb-20"></div>
+                       
 
                     <div class="new-details-bg-white">
                         <div class="project-planning" data-aos="fade-up">
-                            <h3 class="mb-20">{{ __('Floor Planning') }}</h3>
+                            <h3 class="new-title-pps">{{ __('Floor Planning') }}</h3>
                             <div class="row">
                                 @foreach ($floorPlanImages as $floorplan)
-                                    <div class="col-lg-4">
-                                        <div >
-                                            <img class="lazyload blur-up radius-lg" src="assets/images/placeholder.png"
+                                    <div class="col-lg-4  mt-4">
+                                                                                    <img class="lazyload blur-up radius-lg" src="assets/images/placeholder.png"
                                                 data-src="{{ asset('assets/img/project/floor-paln-images/' . $floorplan->image) }}">
-                                        </div>
                                     </div>
                                 @endforeach
 
@@ -161,17 +159,16 @@
                     </div>
                     
 
-                        <div class="pb-20"></div>
+                       
                     
                         @if (count($project->projectTypeContents) > 0)
                             <div class="new-details-bg-white project-type mb-10" data-aos="fade-up">
-                                <h3 class="mb-20">{{ __('Project Types') }}</h3>
+                                <h3 class="new-title-pps">{{ __('Project Types') }}</h3>
                                 <div class="row">
                                     @foreach ($project->projectTypeContents as $typeContent)
-                                        <div class="col-lg-4 col-md-6">
-                                            <div class="card mb-30 Pro-ty-card">
-                                                <div class="">
-                                                    <ul class="m-0 p-0">
+                                        <div class="col-lg-4 col-md-6 mt-4">
+                                            <div class="card Pro-ty-card">
+                                                <ul class="m-0 p-0">
                                                         <li class="d-flex align-items-center">
                                                             <span class="font-lg color-dark">{{ __('Area') }}</span>
                                                             <span class="icon-start"> <i
@@ -197,7 +194,6 @@
                                                                     class="ico-home"></i>{{ $typeContent?->unit }}</span>
                                                         </li>
                                                     </ul>
-                                                </div>
                                             </div>
                                         </div>
                                     @endforeach
@@ -205,16 +201,16 @@
                             </div>
                         @endif
                        
-                        <div class="pb-20"></div>
+                       
 
                     <div class="new-details-bg-white">
                         <div class="project-gallery" data-aos="fade-up">
-                            <h3 class="mb-20"> {{ __('Project Gallery Images') }} </h3>
+                            <h3 class="new-title-pps"> {{ __('Project Gallery Images') }} </h3>
                             <div class="row masonry-gallery grid gallery-popup">
                                 <div class="col-lg-4 col-md-6 grid-sizer"></div>
                                 @foreach ($galleryImages as $gallery)
                                     <div class="col-lg-4 col-md-6 grid-item ">
-                                        <div class="card radius-md" style="    box-shadow: none;">
+                                        <div class="card radius-md" style="backdrop-filter: none;    box-shadow: none;">
                                             <a href="{{ asset('assets/img/project/gallery-images/' . $gallery->image) }}"
                                                 class="card-img">
                                                 <img src="{{ asset('assets/img/project/gallery-images/' . $gallery->image) }}" style="height : 300px;   object-fit: cover;border-radius: 20px;">
@@ -230,9 +226,9 @@
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
                     @if (count($project->specifications) > 0)
                         <div class="row" data-aos="fade-up">
-                            <div class="new-details-bg-white" style="background-color: white; border: 1px solid #ced4dd;box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);">
+                            <div class="new-details-bg-white vd-new-shadow-left " style="background-color: white; padding : 25px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);">
                                 <div class="col-12">
-                                    <h3 class="mb-20">{{ __('Features') }}</h3>
+                                    <h3 class="new-title-pps">{{ __('Features') }}</h3>
                                 </div>
 
                                 @foreach ($project->specifications as $specification)
@@ -242,7 +238,7 @@
                                             ['language_id', $language->id],
                                         ])->first();
                                     @endphp
-                                    <div class="col-12 mb-20">
+                                    <div class="col-12 mb-20 mt-4">
                                         <strong class="mb-1 text-dark">{{ $project_specification_content?->label }}</strong>
                                         <br>
                                         <span>{{ $project_specification_content?->value }}</span>
@@ -250,7 +246,7 @@
                                 @endforeach
                             </div>
                         </div>
-                        <!-- <div class="pb-20"></div> -->
+                        <!-- -->
                     @endif
                 </div>
             </div>

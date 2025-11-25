@@ -33,11 +33,11 @@
                                 <span class="user-level">{{ $roleInfo->name }}</span>
                             @endif
 
-                            <span class="caret"></span>
+                            <!-- <span class="caret"></span> -->
                         </span>
                     </a>
 
-                    <div class="clearfix"></div>
+                    <!-- <div class="clearfix"></div>
 
                     <div class="collapse in" id="adminProfileMenu">
                         <ul class="nav">
@@ -59,7 +59,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
