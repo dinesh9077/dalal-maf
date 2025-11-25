@@ -35,10 +35,6 @@
                         <div class="col-lg-8">
                             <div class="card-title">{{ __('Update Property Section') }}</div>
                         </div>
-
-                        <div class="col-lg-4">
-                            @includeIf('backend.partials.languages')
-                        </div>
                     </div>
                 </div>
 

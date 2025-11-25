@@ -30,10 +30,6 @@
                             <div class="card-title d-inline-block">{{ __('Popups') }}</div>
                         </div>
 
-                        <div class="col-lg-3">
-                            @includeIf('backend.partials.languages')
-                        </div>
-
                         <div class="col-lg-4 offset-lg-1 mt-2 mt-lg-0">
                             <a href="{{ route('admin.announcement_popups.select_popup_type') }}"
                                 class="btn btn-primary btn-sm float-right"><i class="fas fa-plus"></i>

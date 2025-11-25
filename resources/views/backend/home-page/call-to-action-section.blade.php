@@ -91,10 +91,6 @@
                         <div class="col-lg-8">
                             <div class="card-title">{{ __('Update Call To Action Section') }}</div>
                         </div>
-
-                        <div class="col-lg-4">
-                            @includeIf('backend.partials.languages')
-                        </div>
                     </div>
                 </div>
 
@@ -127,7 +123,7 @@
                                 </div>
 
                                 <div class="row">
-                                    
+
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label for="">{{ __('Video URL') }}</label>
@@ -135,7 +131,7 @@
                                                 value="{{ empty($data->video_url) ? '' : $data->video_url }}"
                                                 placeholder="Enter Video URL">
                                         </div>
-                                    </div> 
+                                    </div>
 
                                     <div class="col-lg-12">
                                         <div class="form-group">

@@ -122,10 +122,6 @@
                         <div class="col-lg-9">
                             <div class="card-title">{{ __('Why Choose Us Section Information') }}</div>
                         </div>
-
-                        <div class="col-lg-3">
-                            @includeIf('backend.partials.languages')
-                        </div>
                     </div>
                 </div>
 

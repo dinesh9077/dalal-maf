@@ -30,9 +30,6 @@
                             <div class="card-title">{{ __('Menu Builder') }}</div>
                         </div>
 
-                        <div class="col-lg-2">
-                            @includeIf('backend.partials.languages')
-                        </div>
                     </div>
                 </div>
 
@@ -69,7 +66,7 @@
                                                 data-type="contact"
                                                 class="addToMenus btn btn-primary btn-sm float-right">{{ __('Add To Menus') }}</a>
                                         </li>
- 
+
 
                                         <li class="list-group-item">
                                             {{ __('Partner') }} <a href="" data-text="{{ __('Partner') }}"
@@ -77,7 +74,7 @@
                                                 class="addToMenus btn btn-primary btn-sm float-right">{{ __('Add To Menus') }}</a>
                                         </li>
 
- 
+
                                         <li class="list-group-item">
                                             {{ __('Blog') }} <a href="" data-text="{{ __('Blog') }}"
                                                 data-type="blog"
@@ -89,7 +86,7 @@
                                                 data-type="faq"
                                                 class="addToMenus btn btn-primary btn-sm float-right">{{ __('Add To Menus') }}</a>
                                         </li>
- 
+
 
                                         <li class="list-group-item">
                                             {{ __('About Us') }} <a href="" data-text="{{ __('About Us') }}"
@@ -148,7 +145,7 @@
                                                 <label for="href">{{ __('URL') }}</label>
                                                 <input type="url" class="form-control item-menu ltr" name="href"
                                                     placeholder="Enter Menu URL">
-                                            </div>  
+                                            </div>
                                         </div>
 
                                         <div id="withoutUrl" class="dis-none">
@@ -216,7 +213,7 @@
         const menuBuilderUrl = "{{ route('admin.menu_builder.update_menus') }}";
 
 
-        $(function () { 
+        $(function () {
             var menuBuilderForm = $('#menu-builder-form');
             var $target         = menuBuilderForm.find('#target');
             var $projectEntity  = menuBuilderForm.find('#projectEntity');
@@ -267,7 +264,7 @@
                 if (selectedValue === '_project') {
                   showProjectMode();
                 } else {
-                    showManualMode(); 
+                    showManualMode();
                     menuBuilderForm.find('input[name="text"]').val('');
                     menuBuilderForm.find('input[name="href"]').val('');
                 }
@@ -305,26 +302,26 @@
             //         showProjectMode();
             //         }
 
-            //     }, 1000);   
+            //     }, 1000);
             // });
 
             $(document).on("click", ".btnEdit", function (e) {
                 e.preventDefault();
 
                 var $li = $(this).closest("li");
-                var t   = $li.data();    
-                if(t.target === "_project")  
+                var t   = $li.data();
+                if(t.target === "_project")
                 {
                     showProjectMode();
                     setTimeout(() => {
                         $projectEntity.val(t.vendor_id).trigger('change');
-                    }, 500);    
+                    }, 500);
                 }
                 else
                 {
-                    showManualMode(); 
+                    showManualMode();
                 }
-             
+
             });
         });
 

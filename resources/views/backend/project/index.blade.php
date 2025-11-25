@@ -94,7 +94,7 @@
                         <div class="col-lg-10 col-md-12 col-sm-12">
                              <form action="{{ route('admin.project_management.projects') }}" method="get"
                                 id="carSearchForm">
-                              
+
                                     <div class="row  g-2 align-items-center">
                                         <div class="col-sm-12 col-md-12 col-lg mt-2 mt-md-2 mt-lg-0">
                                             <div class="form-group">
@@ -126,11 +126,7 @@
                                                     class="form-control" placeholder="Title" style="height : 39px;">
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-md-12 col-lg mt-2 mt-md-2 mt-lg-0">
-                                            <div class="form-group"  >
-                                                @includeIf('backend.partials.languages')
-                                            </div>
-                                        </div>
+
                                         <div style="margin-right: 10px;" class="mt-2 mt-md-0 mt-lg-0">
                                             <a href="{{ route('admin.project_management.create_project') }}"
                                                 class="btn btn-primary btn-sm  float-lg-right" style="padding: 10px 12px;"><i class="fas fa-plus"></i>
@@ -142,7 +138,7 @@
                                                 {{ __('Delete') }}</button>
                                         </div>
                                     </div>
-                                
+
                             </form>
                         </div>
 
@@ -349,10 +345,10 @@
 <script>
     "use strict";
     var stripe_key = "";
-</script> 
+</script>
 <script src="{{ asset('assets/js/feature-payment.js') }}"></script>
 <script>
-	
+
 	$('.bulk-delete').on('click', function (e) {
 		e.preventDefault();
 		swal({
@@ -374,19 +370,19 @@
 				$(".request-loader").addClass('show');
 				let href = $(this).data('href');
 				let ids = [];
-				
+
 				// take ids of checked one's
 				$(".bulk-check:checked").each(function () {
 					if ($(this).data('val') != 'all') {
 						ids.push($(this).data('val'));
 					}
 				});
-				
+
 				let fd = new FormData();
 				for (let i = 0; i < ids.length; i++) {
 					fd.append('ids[]', ids[i]);
 				}
-				
+
 				$.ajax({
 					url: href,
 					method: 'POST',
@@ -395,7 +391,7 @@
 					processData: false,
 					success: function (data) {
 						$(".request-loader").removeClass('show');
-						
+
 						if (data.status == "success") {
 							location.reload();
 						}
@@ -406,7 +402,7 @@
 			}
 		});
 	});
-	 
+
 </script>
 
 

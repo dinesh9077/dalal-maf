@@ -396,7 +396,9 @@ $version = $basicInfo->theme_version;
                                         {{ $propertyContent->address }}
                                     </span>
                                     <span style="color: black;">
-                                        {{ $propertyContent->property->city?->getContent($propertyContent->language_id)?->name }}
+                                        {{ ($propertyContent->property->areaContent?->name ?? '') .
+                                        ', ' .
+                                        ($propertyContent->property->city?->getContent($propertyContent->language_id)?->name) }}
                                         {{ $propertyContent->property->isStateActive ? ', ' . $propertyContent->property->state?->getContent($propertyContent->language_id)?->name : '' }}
                                         {{ $propertyContent->property->isCountryActive ? ', ' . $propertyContent->property->country?->getContent($propertyContent->language_id)?->name : '' }}
                                     </span>

@@ -49,7 +49,7 @@
             padding: 10px 15px 12px;
             margin-top: 38px;
             flex: 1;
-            overflow: hidden; 
+            overflow: hidden;
 			gap:10px;
         }
 
@@ -68,7 +68,7 @@
             height: 100%;
             object-fit: cover;
             /* border-radius: 100px; */
-  
+
         }
 
         .latest-details {
@@ -177,7 +177,7 @@
             border-color: #e6e6e6;
         }
 
- 
+
         @media (max-width: 767px) {
             .product-latest {
                 width: 100%;
@@ -187,7 +187,7 @@
     </style>
 
     <div class="product-latest">
-      
+
         <span class="property-purpose-tag">
             {{ $property->purpose === "sell" ? "Buy" : ucwords(str_replace('_', ' ', $property->purpose)) }}
         </span>
@@ -211,7 +211,10 @@
 
                 <span class="latest-location">
                     <i class="fal fa-map-marker-alt"></i>
-                    {{ $property->city->getContent($property->language_id)?->name }}
+                     {{ $property->areaContent?->name
+                          ? $property->areaContent->name . ', ' . ($property->city?->getContent($property->language_id)?->name ?? '')
+                          : ($property->city?->getContent($property->language_id)?->name ?? '') }}
+                    {{-- {{ $property->city->getContent($property->language_id)?->name }} --}}
                     {{ $property->isStateActive ? ', ' . $property->state?->getContent($property->language_id)?->name : '' }}
                 </span>
 
@@ -233,17 +236,17 @@
             @if (Auth::guard('web')->check())
                 @php
                     $user_id = Auth::guard('web')->user()->id;
-                    $checkWishList = checkWishList($property->id, $user_id,'user'); 
+                    $checkWishList = checkWishList($property->id, $user_id,'user');
                 @endphp
             @elseif(Auth::guard('vendor')->check())
                 @php
                     $user_id = Auth::guard('vendor')->user()->id;
-                    $checkWishList = checkWishList($property->id, $user_id,'vendor'); 
+                    $checkWishList = checkWishList($property->id, $user_id,'vendor');
                 @endphp
             @elseif(Auth::guard('agent')->check())
                 @php
                     $user_id = Auth::guard('agent')->user()->id;
-                    $checkWishList = checkWishList($property->id, $user_id,'agent'); 
+                    $checkWishList = checkWishList($property->id, $user_id,'agent');
                 @endphp
             @else
                 @php
@@ -252,7 +255,7 @@
             @endif
             @if (!Auth::guard('vendor')->check() && !Auth::guard('web')->check() && !Auth::guard('agent')->check())
                 <a type="button" class="btn-wishlist" data-bs-toggle="modal" data-bs-target="#customerPhoneModal" data-action="login">
-                    <i class="fal fa-heart"></i> 
+                    <i class="fal fa-heart"></i>
                 </a>
             @else
                 <a href="javascript:void(0);"

@@ -26,11 +26,6 @@
             <div class="col-lg-4">
               <div class="card-title d-inline-block">{{ __('Banner') }}</div>
             </div>
-
-            <div class="col-lg-4">
-              @includeIf('backend.partials.languages')
-            </div>
-
             <div class="col-lg-4 mt-2 mt-lg-0">
               <a href="#" data-toggle="modal" data-target="#createModal"
                 class="btn btn-primary btn-sm float-lg-right float-left"><i class="fas fa-plus"></i>

@@ -604,9 +604,9 @@ $version = $basicInfo->theme_version;
                                 @endforeach
                             </div>
 
-                            
-                            
-                            
+
+
+
                         </div>
                         @endif
 
@@ -838,14 +838,14 @@ $version = $basicInfo->theme_version;
                                 </div>
                             </div>
                             </div>
-                            
-                         
+
+
                     </div>
                     @if(!empty($relatedProperty))
                         <aside class="sidebar-widget-area mb-10" data-aos="fade-up">
                             <div class="widget widget-recent radius-md mb-30  new-widgets-color"
                                 style="box-shadow: rgba(90, 114, 123, 0.11) 0px 7px 30px 0px;">
-                                
+
                                 <h3 class="title">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#products" aria-expanded="true" aria-controls="products">
@@ -864,7 +864,9 @@ $version = $basicInfo->theme_version;
                                                 </a>
                                                 <span class="product-location icon-start "> <i
                                                         class="fal fa-map-marker-alt"></i>
-                                                    {{ $property->city->getContent($property->language_id)?->name }}
+                                                    {{ $property->areaContent?->name
+                                                        ? $property->areaContent->name . ', ' . ($property->city?->getContent($property->language_id)?->name ?? '')
+                                                        : ($property->city?->getContent($property->language_id)?->name ?? '') }}
                                                     {{ $property->isStateActive ? ', ' . $property->state?->getContent($property->language_id)?->name : '' }}
                                                     {{ $property->isCountryActive ? ', ' . $property->country?->getContent($property->language_id)?->name : '' }}</span>
 
@@ -905,7 +907,7 @@ $version = $basicInfo->theme_version;
                                         @endforeach
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
                         </aside>
                     @endif
                 </div>

@@ -30,9 +30,6 @@
                             <div class="card-title d-inline-block">{{ __('FAQs') }}</div>
                         </div>
 
-                        <div class="col-lg-3">
-                            @includeIf('backend.partials.languages')
-                        </div>
 
                         <div class="col-lg-4 offset-lg-1 mt-2 mt-lg-0">
                             <a href="#" data-toggle="modal" data-target="#createModal"

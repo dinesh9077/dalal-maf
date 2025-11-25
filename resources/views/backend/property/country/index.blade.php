@@ -36,9 +36,6 @@
                             <div class="card-title d-inline-block">{{ __('Countries') }}</div>
                         </div>
 
-                        <div class="col-lg-3">
-                            @includeIf('backend.partials.languages')
-                        </div>
 
                         <div class="col-lg-4 offset-lg-1 mt-2 mt-lg-0">
                             <a href="#" data-toggle="modal" data-target="#createModal"
@@ -97,9 +94,9 @@
                                                                     data-id="{{ $country->id }}"
                                                                     @foreach ($languages as $lang)
                                                             @php
-                                                                
+
                                                                 $coun = \App\Models\Property\CountryContent::where([["country_id",$country->id],['language_id',$lang->id]])->first();
-                                                            @endphp 
+                                                            @endphp
                                                             data-{{ $lang->code }}_name="{{ $coun?->name }}" @endforeach
                                                                     <span class="btn-label">
                                                                     <i class="fas fa-edit"></i> {{ __('Edit') }}
