@@ -245,7 +245,7 @@
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
         border-radius: 14px;
         padding: 18px;
-        box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6);
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);
         backdrop-filter: blur(6px);
     }
 

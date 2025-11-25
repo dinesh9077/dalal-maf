@@ -34,11 +34,11 @@
 
     <!--====== Start Blog Section ======-->
 
-    <div class="blog-details-area pt-100 pb-70">
+    <div class="blog-details-area pt-30 pb-70">
         <div class="container">
             <div class="row justify-content-center gx-xl-5">
-                <div class="col-lg-8">
-                    <div class="blog-description mb-40">
+                <div class="col-lg-8" >
+                    <div class="blog-description mb-40" style="background-color: white;     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.09); padding : 10px; border-radius : 10px;">
                         <article class="item-single">
                             <div class="image radius-md">
                                 <div class="lazy-container ratio ratio-16-9">
@@ -76,9 +76,9 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <aside class="sidebar-widget-area">
-                        <div class="widget widget-search radius-md mb-30">
+                <div class="col-lg-4" >
+                    <aside class="sidebar-widget-area" style="background-color: white;     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.09); padding : 10px; border-radius : 10px;">
+                        <div class="widget widget-search radius-md mb-30 p-3">
 
                             <h4 class="title mb-15">{{ __('Search Posts') }}</h4>
                             <form class="search-form radius-md" action="{{ route('blog') }}" method="GET">
@@ -94,7 +94,7 @@
                                 </button>
                             </form>
                         </div>
-                        <div class="widget widget-blog-categories radius-md mb-30">
+                        <div class="widget widget-blog-categories radius-md mb-30 p-3">
                             <h3 class="title mb-15">{{ __('Categories') }}</h3>
                             <ul class="list-unstyled m-0">
 
@@ -109,7 +109,7 @@
 
                             </ul>
                         </div>
-                        <div class="widget widget-post radius-md mb-30">
+                        <div class="widget widget-post radius-md mb-30 p-3">
                             <h3 class="title mb-15">{{ __('Recent Posts') }}</h3>
                             @foreach ($recent_blogs as $blog)
                                 <article class="article-item mb-30">

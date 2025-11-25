@@ -18,13 +18,13 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
                         <span>
                             {{ Auth::guard('agent')->user()->username }}
                             <span class="user-level">{{ __('Staff') }}</span>
-                            <span class="caret"></span>
+                            <!-- <span class="caret"></span> -->
 						</span>
 					</a>
 					
                     <div class="clearfix"></div>
 					
-                    <div class="collapse in" id="adminProfileMenu">
+                    <!-- <div class="collapse in" id="adminProfileMenu">
                         <ul class="nav">
                             <li>
                                 <a href="{{ route('agent.edit.profile') }}">
@@ -44,7 +44,7 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
 								</a>
 							</li>
 						</ul>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			

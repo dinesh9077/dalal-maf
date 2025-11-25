@@ -4005,7 +4005,7 @@ Lazyload CSS
 
 .footer-area .footer-widget .footer-links li {
     position: relative;
-    overflow: hidden;
+    /* overflow: hidden; */
     margin-bottom: 20px;
     line-height: 1;
     color: var(--color-gray-1);
@@ -5990,7 +5990,7 @@ p.cookie-consent__message * {
 
 .new-aps-titles-bag {
     /* width: 278px; */
-    height: auto;
+    max-height: 210px;
     border-radius: 15px;
     margin: 15px;
     overflow: hidden;
@@ -6901,7 +6901,7 @@ p.cookie-consent__message * {
 }
 
 .new-details-bg-white {
-  background-color: white;
+    background-color: white;
     width: auto;
     /* border-radius: 12px; */
     margin: 0px 25px;
@@ -6909,7 +6909,7 @@ p.cookie-consent__message * {
     border-top: 1px solid #dcdcdc;
 }
 
-.new-details-bg-white:nth-child(1){
+.new-details-bg-white:nth-child(1) {
     border-top: none;
 
 }
@@ -6927,8 +6927,8 @@ p.cookie-consent__message * {
 }
 
 .new-future-tit-ans {
-   color: #828282;
-    font-size:  14px;
+    color: #828282;
+    font-size: 14px;
     font-weight: 500;
 }
 
@@ -7033,6 +7033,8 @@ p.cookie-consent__message * {
     justify-content: center;
     z-index: 10;
 }
+
+
 
 .arrow-left-pro {
     left: -10px;
@@ -7217,6 +7219,7 @@ p.cookie-consent__message * {
 .swiper-button-next::after {
     font-size: 18px;
     color: #000;
+    display: none;
 }
 
 @media(max-width : 575px) {
@@ -7546,6 +7549,9 @@ p.cookie-consent__message * {
     display: none !important;
 }
 
+.arrow-button-pro:hover{
+    background-color: white !important;
+}
 
 .arrow-button-pro.hidden {
     display: none !important;
@@ -9202,7 +9208,7 @@ button:hover {
 
 /* ===== */
 
-.VD-pages{
+.VD-pages {
     margin-top: 130px !important;
 }
 
@@ -9215,65 +9221,67 @@ button:hover {
 
 /* =================== */
 
-.swiper-button-prev{
+.swiper-button-prev {
     left: -10px;
 }
 
-.swiper-button-next{
-     right: -10px;
+.swiper-button-next {
+    right: -10px;
 }
 
-  .FPD_div{
-       border: 1px solid #dcdcdc;
+.FPD_div {
+    border: 1px solid #dcdcdc;
     background: white;
     box-shadow: none;
     border-radius: 20px;
     margin-top: 10px;
 }
 
-.FPD-box{
+.FPD-box {
     border-radius: 17px 17px 0px 0px !important;
 }
 
-.VD-title{
+.VD-title {
     display: flex;
     gap: 15px;
     align-items: baseline;
-        justify-content: space-between;
-        margin-bottom: 20px;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 
-@media(max-width : 991px){
-.VD-title{
-    flex-direction: column;
-}
+@media(max-width : 991px) {
+    .VD-title {
+        flex-direction: column;
+    }
 }
 
 
-@media(max-width : 767px){
-.product-price{
-    flex-direction: column;
-    align-items: start;
+@media(max-width : 767px) {
+    .product-price {
+        flex-direction: column;
+        align-items: start;
+    }
 }
-}
-.share-btn{
+
+.share-btn {
 
     padding: 8px 21px;
     margin-right: 10px;
-    background: #f2f2f2 ;
+    background: #f2f2f2;
     border-radius: 5px;
 }
 
 
-.vd-new-shadow-left{
+.vd-new-shadow-left {
     box-shadow: rgba(90, 114, 123, 0.11) 0px 7px 30px 0px;
     border-radius: 10px;
 }
 
-.VD_SP_div{
+.VD_SP_div {
     position: relative;
 }
-.VD_SP_div span{
+
+.VD_SP_div span {
     position: absolute;
     bottom: 15px;
     z-index: 99;
@@ -9285,11 +9293,12 @@ button:hover {
     font-size: 10px !important;
 }
 
-.VD_SP_div span i{
+.VD_SP_div span i {
     font-size: 10px !important;
     color: black !important;
 
 }
+
 .new-title-pps {
     position: relative;
     display: inline-block;
@@ -9302,30 +9311,31 @@ button:hover {
     bottom: -10px;
     width: 75px;
     height: 3px;
-    background-color: #212529 ;
+    background-color: #212529;
     border-radius: 51px;
 }
 
-.new-hover{
+.new-hover {
     border: none !important;
 }
 
 @media(max-width : 575px) {
 
-    .mo-location-text{
+    .mo-location-text {
         font-size: 12px !important;
     }
 
     .product-price .new-price {
-margin-bottom: 7px;
+        margin-bottom: 7px;
         font-size: 14px !important;
     }
 
-    .PTTs{
-            font-size: 14px;
+    .PTTs {
+        font-size: 14px;
     }
-    .new-pdc-s{
-            font-size: 14px;
+
+    .new-pdc-s {
+        font-size: 14px;
 
     }
 
@@ -9333,14 +9343,15 @@ margin-bottom: 7px;
         padding: 6px 14px;
     }
 
-    .new-top-pp{
+    .new-top-pp {
         margin-top: 20px;
     }
 }
 
 @media(max-width : 767px) {
 
- .new-top-pp{
+    .new-top-pp {
         margin-top: 20px;
     }
 }
+

@@ -86,7 +86,7 @@ $version = $basicInfo->theme_version;
 <section class="about-section" style="padding:0px 0px;">
     <div class="container">
 
-        <!-- <div class="section-title title-center title-inline mb-40 aos-init aos-animate" data-aos="fade-up">
+        <!-- <div class="section-title title-center title-inline mb-40 aos-init aos-animate" data-aos="fade-up" style="margin-top : 150px !important;">
                         <h2 class="title">About Us</h2>
             </div> -->
 
