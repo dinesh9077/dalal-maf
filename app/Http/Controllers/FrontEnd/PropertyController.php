@@ -442,22 +442,41 @@ class PropertyController extends Controller
     }
 
 
-    public function featuredAll($type)
-    { 
-        $property_contents = Property::where([['properties.status', 1], ['properties.approve_status', 1]])
-		->join('property_contents', 'properties.id', 'property_contents.property_id')
-		->where($type, 1)
-		->get(); 
-		
-		$title = match ($type) {
-			'is_featured' => 'Featured Properties',
-			'is_hot' => 'Hot Properties',
-			'is_recommended' => 'Recommended Properties',
-			'is_fast_selling' => 'Fast Selling Properties',
-			default => 'Properties',
-		};
-        return view('frontend.property.featured',compact('property_contents', 'title')); 
+public function featuredAll($type)
+{ 
+    $query = Property::where([['properties.status', 1], ['properties.approve_status', 1]])
+        ->join('property_contents', 'properties.id', 'property_contents.property_id')
+        ->leftJoin('vendors', 'properties.vendor_id', '=', 'vendors.id')
+        ->leftJoin('memberships', function($join) {
+            $join->on('properties.vendor_id', '=', 'memberships.vendor_id')
+                ->where('memberships.status', '=', 1)
+                ->where('memberships.start_date', '<=', Carbon::now()->format('Y-m-d'))
+                ->where('memberships.expire_date', '>=', Carbon::now()->format('Y-m-d'));
+        })
+        ->where(function($query) {
+            $query->where('properties.vendor_id', '=', 0)
+                ->orWhere(function($query) {
+                    $query->where('vendors.status', '=', 1)
+                          ->whereNotNull('memberships.id');
+                });
+        });
+
+    if ($type === 'latest') {
+        $property_contents = $query->orderBy('properties.created_at', 'desc')->get();
+        $title = 'Latest';
+    } else {
+        $property_contents = $query->where($type, 1)->get();
+        $title = match ($type) {
+            'is_featured' => 'Featured',
+            'is_hot' => 'Hot',
+            'is_recommended' => 'Recommended',
+            'is_fast_selling' => 'Fast Selling',
+            default => '',
+        };
     }
+    
+    return view('frontend.property.featured', compact('property_contents', 'title')); 
+}
      
     public function details($slug)
     {

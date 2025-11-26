@@ -169,20 +169,19 @@
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="form-group">
-                                                                <label>{{ __('Country') }}</label>
-                                                                <input type="text" value="" class="form-control"
-                                                                    name="{{ $language->code }}_country"
-                                                                    placeholder="{{ __('Enter Country') }}">
-                                                                <p id="editErr_{{ $language->code }}_country"
-                                                                    class="mt-1 mb-0 text-danger em"></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <div class="form-group">
                                                                 <label>{{ __('City') }}</label>
-                                                                <input type="text" value="" class="form-control"
-                                                                    name="{{ $language->code }}_city"
-                                                                    placeholder="{{ __('Enter City') }}">
+                                                                <select class="form-control vendor-city"
+                                                                        name="{{ $language->code }}_city_id"
+                                                                        data-lang="{{ $language->code }}">
+                                                                    <option value="">{{ __('Select City') }}</option>
+                                                                    @foreach($cities as $city)
+                                                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                {{-- hidden city name (stored same as before) --}}
+                                                                <input type="hidden" class="vendor-city-name"
+                                                                       name="{{ $language->code }}_city"
+                                                                       data-lang="{{ $language->code }}">
                                                                 <p id="editErr_{{ $language->code }}_city"
                                                                     class="mt-1 mb-0 text-danger em"></p>
                                                             </div>
@@ -190,9 +189,20 @@
                                                         <div class="col-lg-4">
                                                             <div class="form-group">
                                                                 <label>{{ __('State') }}</label>
-                                                                <input type="text" value="" class="form-control"
-                                                                    name="state" placeholder="{{ __('Enter State') }}">
+                                                                <input type="text" value="" class="form-control vendor-state"
+                                                                       name="{{ $language->code }}_state"
+                                                                       data-lang="{{ $language->code }}" readonly>
                                                                 <p id="editErr_{{ $language->code }}_state"
+                                                                    class="mt-1 mb-0 text-danger em"></p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group">
+                                                                <label>{{ __('Country') }}</label>
+                                                                <input type="text" value="" class="form-control vendor-country"
+                                                                       name="{{ $language->code }}_country"
+                                                                       data-lang="{{ $language->code }}" readonly>
+                                                                <p id="editErr_{{ $language->code }}_country"
                                                                     class="mt-1 mb-0 text-danger em"></p>
                                                             </div>
                                                         </div>
@@ -271,15 +281,56 @@
 @endsection
 @section('script')
     <script>
-      document.getElementById('phone').addEventListener('input', function (e) {
-
-          // Remove any non-digit characters
+      // Phone: only digits, max 10
+      document.getElementById('phone').addEventListener('input', function () {
           this.value = this.value.replace(/\D/g, '');
-
-          // Limit to 10 digits
           if (this.value.length > 10) {
               this.value = this.value.slice(0, 10);
           }
+      });
+
+      // City dropdown per language -> auto-fill state & country
+      document.querySelectorAll('.vendor-city').forEach(function (select) {
+          select.addEventListener('change', function () {
+              const lang = this.getAttribute('data-lang');
+              const cityId = this.value;
+              const cityName = this.options[this.selectedIndex]?.text || '';
+
+              const cityNameInput = document.querySelector(
+                  `.vendor-city-name[data-lang="${lang}"]`
+              );
+              const stateInput = document.querySelector(
+                  `.vendor-state[data-lang="${lang}"]`
+              );
+              const countryInput = document.querySelector(
+                  `.vendor-country[data-lang="${lang}"]`
+              );
+
+              if (cityNameInput) {
+                  cityNameInput.value = cityName;
+              }
+
+              if (!stateInput || !countryInput) {
+                  return;
+              }
+
+              if (cityId) {
+                  fetch(`{{ route('admin.user_management.registered_user.getCityDetails', '') }}/${cityId}`)
+                      .then(response => response.json())
+                      .then(data => {
+                          stateInput.value = data.state_name || '';
+                          countryInput.value = data.country_name || '';
+                      })
+                      .catch(error => {
+                          console.error('Error fetching city details:', error);
+                          stateInput.value = '';
+                          countryInput.value = '';
+                      });
+              } else {
+                  stateInput.value = '';
+                  countryInput.value = '';
+              }
+          });
       });
     </script>
   @endsection

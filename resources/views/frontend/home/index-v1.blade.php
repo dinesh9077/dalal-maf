@@ -538,8 +538,11 @@
                     </div>
 
                     <div style="text-align: center;">
-                        <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
-                            style="padding: 10px 20px;">View All</a>
+                 
+
+                        <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 10px 20px;">View All</a>
+
+                   
                     </div>
                 </div>
             </div>
@@ -696,8 +699,7 @@
                             <div class="section-title prop-pad new-titles" data-aos="fade-up" style="position: relative;">
                                 <h2 class="title">{{ $propertySecInfo->title }}</h2>
 
-                                 <a href="{{ url('properties/is_fast_selling/all') }}"
-                            class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 10px 20px;">
+                                 <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 10px 20px;">
                             View All
                         </a>
 
@@ -725,8 +727,7 @@
                                     </div>
 
                                      <div style="text-align: center;">
-                        <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
-                            style="padding: 10px 20px;">View All</a>
+                        <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 10px 20px;">View All</a>
                     </div>
 
 
@@ -753,10 +754,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-title  aos-init aos-animate" data-aos="fade-up" style="position: relative;">
-                        <h2 class="title">Business For Sale</h2>
+                        <h2 class="title">Business For Sale Properties</h2>
 
-                            <a href="{{ url('properties/is_fast_selling/all') }}"
-                            class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 10px 20px;">
+                            <a href="{{ route('frontend.properties', ['purpose' => 'business_for_sale', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 10px 20px;">
                             View All
                         </a>
 
@@ -785,8 +785,7 @@
                 </div>
 
                  <div style="text-align: center;">
-                        <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
-                            style="padding: 10px 20px;">View All</a>
+                        <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 10px 20px;">View All</a>
                     </div>
 
                 <!-- Navigation arrows -->
@@ -806,10 +805,9 @@
             <div class="row" style="position: relative;">
                 <div class="col-12">
                     <div class="section-title mb-10 aos-init aos-animate" data-aos="fade-up" style="position : relative;">
-                        <h2 class="title">Franchiese</h2>
+                        <h2 class="title">Franchise Properties</h2>
 
-                           <a href="{{ url('properties/is_fast_selling/all') }}"
-                            class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 10px 20px;">
+                           <a href="{{ route('frontend.properties', ['purpose' => 'franchiese', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 10px 20px;">
                             View All
                         </a>
                         <!-- <p class="mt-1" style="font-size:13px; line-height : 1.2;">Join hands with Dala Maaf and become a part of a growing
@@ -835,8 +833,7 @@
                     </div>
 
                      <div style="text-align: center;">
-                        <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
-                            style="padding: 10px 20px;">View All</a>
+                        <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 10px 20px;">View All</a>
                     </div>
 
                     <!-- Navigation Buttons -->

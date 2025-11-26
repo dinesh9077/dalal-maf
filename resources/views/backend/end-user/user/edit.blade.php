@@ -110,23 +110,31 @@
                   </div>
                   <div class="col-lg-4">
                     <div class="form-group">
-                      <label>{{ __('Country*') }}</label>
-                      <input type="text" value="{{ $user->country }}" class="form-control" name="country">
-                      <p id="editErr_country" class="mt-1 mb-0 text-danger em"></p>
-                    </div>
-                  </div>
-                  <div class="col-lg-4">
-                    <div class="form-group">
                       <label>{{ __('City*') }}</label>
-                      <input type="text" value="{{ $user->city }}" class="form-control" name="city">
+                      <select class="form-control" id="city_id" name="city_id" required>
+                        <option value="">{{ __('Select City') }}</option>
+                        @foreach($cities as $city)
+                          <option value="{{ $city->id }}" {{ $user->city == $city->name ? 'selected' : '' }}>{{ $city->name }}</option>
+                        @endforeach
+                      </select>
+                      <input type="hidden" id="city_name" name="city" value="{{ $user->city }}">
                       <p id="editErr_city" class="mt-1 mb-0 text-danger em"></p>
                     </div>
                   </div>
                   <div class="col-lg-4">
                     <div class="form-group">
                       <label>{{ __('State*') }}</label>
-                      <input type="text" value="{{ $user->state }}" class="form-control" name="state">
+                      <input type="text" class="form-control" id="state" name="state" value="{{ $user->state }}" readonly>
+                      <input type="hidden" id="state_id" name="state_id">
                       <p id="editErr_state" class="mt-1 mb-0 text-danger em"></p>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <label>{{ __('Country*') }}</label>
+                      <input type="text" class="form-control" id="country" name="country" value="{{ $user->country }}" readonly>
+                      <input type="hidden" id="country_id" name="country_id">
+                      <p id="editErr_country" class="mt-1 mb-0 text-danger em"></p>
                     </div>
                   </div>
                   <div class="col-lg-4">
@@ -161,16 +169,61 @@
       </div>
     </div>
   @endsection
-    @section('script')
+  @section('script')
     <script>
+      // Phone field: allow only 10 digits
       document.getElementById('phone').addEventListener('input', function (e) {
-
-          // Remove any non-digit characters
           this.value = this.value.replace(/\D/g, '');
-
-          // Limit to 10 digits
           if (this.value.length > 10) {
               this.value = this.value.slice(0, 10);
+          }
+      });
+
+      // City change: update hidden city name and fetch state/country
+      document.getElementById('city_id').addEventListener('change', function () {
+          const cityId = this.value;
+          const cityName = this.options[this.selectedIndex].text;
+
+          document.getElementById('city_name').value = cityName;
+
+          if (cityId) {
+              // Fetch state and country for selected city
+              fetch(`{{ route('admin.user_management.registered_user.getCityDetails', '') }}/${cityId}`)
+                  .then(response => response.json())
+                  .then(data => {
+                      document.getElementById('state').value = data.state_name;
+                      document.getElementById('state_id').value = data.state_id ?? '';
+                      document.getElementById('country').value = data.country_name;
+                      document.getElementById('country_id').value = data.country_id ?? '';
+                  })
+                  .catch(error => {
+                      console.error('Error fetching city details:', error);
+                      document.getElementById('state').value = '';
+                      document.getElementById('state_id').value = '';
+                      document.getElementById('country').value = '';
+                      document.getElementById('country_id').value = '';
+                  });
+          } else {
+              document.getElementById('state').value = '';
+              document.getElementById('state_id').value = '';
+              document.getElementById('country').value = '';
+              document.getElementById('country_id').value = '';
+          }
+      });
+
+      // On page load: if a city is pre-selected, trigger change to fill state/country
+      document.addEventListener('DOMContentLoaded', function () {
+          const citySelect = document.getElementById('city_id');
+          if (citySelect && citySelect.value) {
+              citySelect.dispatchEvent(new Event('change'));
+          }
+      });
+
+      // Ensure Update button submits the form
+      document.getElementById('updateBtn').addEventListener('click', function (e) {
+          const form = document.getElementById('ajaxEditForm');
+          if (form) {
+              form.submit();
           }
       });
     </script>
