@@ -38,9 +38,9 @@
         <div class="container">
             <div class="row justify-content-center gx-xl-5">
                 <div class="col-lg-8" >
-                    <div class="blog-description mb-40" style="background-color: white;     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.09); padding : 10px; border-radius : 10px;">
+                    <div class="blog-description mb-40" style="background-color: white;     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.09); padding : 10px; border-radius : 20px;">
                         <article class="item-single">
-                            <div class="image radius-md">
+                            <div class="image new-b-15">
                                 <div class="lazy-container ratio ratio-16-9">
                                     <img class="lazyload" src="{{ asset('assets/front/images/placeholder.png') }}"
                                         data-src="{{ asset('assets/img/blogs/' . $details->image) }}">
@@ -77,7 +77,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4" >
-                    <aside class="sidebar-widget-area" style="background-color: white;     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.09); padding : 10px; border-radius : 10px;">
+                    <aside class="sidebar-widget-area" style="background-color: white;     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.09); padding : 10px; border-radius : 20px;">
                         <div class="widget widget-search radius-md mb-30 p-3">
 
                             <h4 class="title mb-15">{{ __('Search Posts') }}</h4>
