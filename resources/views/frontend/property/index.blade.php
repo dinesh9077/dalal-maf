@@ -524,9 +524,24 @@
                             style="box-shadow:none; line-height:45px;" onchange="updateURL('listArea='+$(this).val())">
                             <option value="">{{ __('Select Area') }}</option>
                             @foreach ($all_areas as $area)
-                                <option value="{{ $area->name }}">{{ $area->name }}</option>
+                                <option value="{{ $area->name }}" {{ request('listArea') == $area->name ? 'selected' : '' }}>{{ $area->name }}</option>
                             @endforeach
                         </select>
+    @if (!request()->has('purpose') ||
+        (request()->has('purpose') && !in_array(request('purpose'), ['business_for_sale', 'franchiese'])))
+                                                        
+        <select name="purpose" class="form-control form-select" 
+            style="box-shadow:none; line-height:45px; min-width: 120px;" 
+            onchange="updateURL('purpose='+$(this).val())">
+            <option value="">Select Purpose</option>
+            <option value="rent"  {{ request('purpose') == 'rent' ? 'selected' : '' }}>Rent</option>
+            <option value="buy"   {{ request('purpose') == 'buy' ? 'selected' : '' }}>Buy</option>
+            <option value="lease" {{ request('purpose') == 'lease' ? 'selected' : '' }}>Lease</option>
+        </select>
+                                                        
+    @endif
+
+
 
                         <select class="form-select sort-select" name="sort"
                             onchange="updateURL('sort='+$(this).val())">
