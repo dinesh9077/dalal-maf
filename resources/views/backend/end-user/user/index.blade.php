@@ -39,19 +39,19 @@
                 <i class="flaticon-interface-5"></i> {{ __('Delete') }}
               </button>
 
-              <form  action="{{ route('admin.user_management.registered_users') }}" method="GET">
+              {{-- <form  action="{{ route('admin.user_management.registered_users') }}" method="GET">
                 <input name="info" type="text" class="form-control minw-230"
                   placeholder="Search By Username or Email ID"
                   value="{{ !empty(request()->input('info')) ? request()->input('info') : '' }}">
-                  
-              </form>
-            </div>
 
+              </form> --}}
+            </div>
+{{--
               <div class="col-lg-2"  style="text-align: end;">
                       <a href="{{ request()->fullUrlWithQuery(['export' => 1]) }}" class="btn btn-dark btn-sm" style="padding : 11px;" >
                           <i class="fa fa-file-excel"></i> Export to Excel
                       </a>
-              </div>
+              </div> --}}
           </div>
         </div>
 
@@ -62,7 +62,7 @@
                 <h3 class="text-center mt-2">{{ __('NO USER FOUND') . '!' }}</h3>
               @else
                 <div class="table-responsive">
-                  <table class="table table-striped mt-3">
+                  <table class="table table-striped mt-3" id="basic-datatables-user">
                     <thead>
                       <tr>
                         <th scope="col">
@@ -74,6 +74,7 @@
                         <th scope="col">{{ __('Phone') }}</th>
                         {{-- <th scope="col">{{ __('Email Status') }}</th> --}}
                         <th scope="col">{{ __('Account Status') }}</th>
+                        <th scope="col">{{ __('Created At') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
                       </tr>
                     </thead>
@@ -123,6 +124,7 @@
                               </select>
                             </form>
                           </td>
+                          <td>{{ optional($user->created_at)->format('d-m-Y') }}</td>
                           <td>
                             <div class="dropdown">
                               <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
@@ -167,11 +169,11 @@
         </div>
 
         <div class="card-footer">
-          <div class="mt-3 text-center">
+          {{-- <div class="mt-3 text-center">
             <div class="d-inline-block mx-auto">
               {{ $users->appends(['info' => request()->input('info')])->links() }}
             </div>
-          </div>
+          </div> --}}
         </div>
       </div>
     </div>

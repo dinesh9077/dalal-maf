@@ -92,7 +92,7 @@ function updateAmenities(data, checkbox) {
   const url = getURL();
   const [rawName, rawVal = ""] = String(data).split("=");
   const name = decodeURIComponent(rawName);
-  const value = decodeURIComponent(rawVal); 
+  const value = decodeURIComponent(rawVal);
   // Collect current values
   const existing = url.searchParams.getAll(name).filter(Boolean);
 
@@ -221,7 +221,7 @@ function resetURL() {
 }
 
 
-function reset() { 
+function reset() {
   // Uncheck all checkboxes
   document
     .querySelectorAll('input[type="checkbox"]')
@@ -235,7 +235,7 @@ function reset() {
   // Reset URL without fetching (your original reset did not fetch here)
   const url = getURL();
   const clean = new URL(url.origin + url.pathname);
-  pushURL(clean);  
+  pushURL(clean);
 }
 
 function priceRest() {

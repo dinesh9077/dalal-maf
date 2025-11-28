@@ -12,3 +12,4 @@ yarn-error.log
 /.vscode
 .env
 public/assets/img
+public/assets/admin

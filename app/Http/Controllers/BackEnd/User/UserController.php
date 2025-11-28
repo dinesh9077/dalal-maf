@@ -44,7 +44,7 @@ class UserController extends Controller
       }
 
       // ✅ Normal pagination for listing
-      $users = $query->orderByDesc('id')->paginate(10);
+      $users = $query->orderByDesc('id')->get();
 
       return view('backend.end-user.user.index', compact('users'));
   }

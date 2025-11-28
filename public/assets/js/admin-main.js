@@ -696,8 +696,66 @@ $(function ($) {
 
   // DataTable Start
   $('#basic-datatables').DataTable({
-    ordering: false,
-    responsive: true
+      ordering: false,
+      responsive: true,
+      // dom: 'Bfrtip',
+      // buttons: [
+      //     {
+      //         extend: 'excelHtml5',
+      //         title: 'Exported_Data',
+      //         exportOptions: {
+      //             columns: [1,2,3,4],
+      //             format: {
+      //                 body: function (data, row, col) {
+      //                     // Create a temporary div to parse HTML safely
+      //                     return $('<div>').html(data).text();
+      //                 }
+      //             }
+      //         }
+      //     }
+      // ]
+  });
+  $('#basic-datatables-user').DataTable({
+      ordering: false,
+      responsive: true,
+      dom: 'Bfrtip',
+      buttons: [
+          {
+              extend: 'excelHtml5',
+              text: 'Export to Excel',
+              title: 'User Data',
+              exportOptions: {
+                  columns: [1,2,3,4,6],
+                  format: {
+                      body: function (data, row, col) {
+                          // Create a temporary div to parse HTML safely
+                          return $('<div>').html(data).text();
+                      }
+                  }
+              }
+          }
+      ]
+  });
+  $('#basic-datatables-property').DataTable({
+      ordering: false,
+      responsive: true,
+      dom: 'Bfrtip',
+      buttons: [
+          {
+              extend: 'excelHtml5',
+              text: 'Export to Excel',
+              title: 'Property Data',
+              exportOptions: {
+                  columns: [1,2,3,4,5,6,7],
+                  format: {
+                      body: function (data, row, col) {
+                          // Create a temporary div to parse HTML safely
+                          return $('<div>').html(data).text();
+                      }
+                  }
+              }
+          }
+      ]
   });
   // DataTable End
 

@@ -51,7 +51,7 @@
             max-width: 100%;
         }
 
-        
+
     :root {
         --color-primary: {
                 {
@@ -654,9 +654,9 @@
 							}
 
 						} else {
-							if (window.toastr) {
-								toastr.error(response.message || 'Action failed');
-							}
+							// if (window.toastr) {
+							// 	toastr.error(response.message || 'Action failed');
+							// }
 						}
 					},
 					error: function(xhr) {

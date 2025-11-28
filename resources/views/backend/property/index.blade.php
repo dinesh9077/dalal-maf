@@ -39,17 +39,58 @@
                             <form action="{{ route($search_url) }}" method="get" id="carSearchForm">
                                 <div class="row g-2 align-items-center">
                                     <div class="col-sm-12 col-md-12 col-lg mt-2 mt-md-2 mt-lg-0">
+                                        @php
+                                          $dropdownItems = collect();
+
+                                          // Add vendors
+                                          foreach ($vendors as $v) {
+                                              if (!empty(trim($v->username))) {
+                                                $dropdownItems->push([
+                                                    'value' => 'vendor_'.$v->id,
+                                                    'label' => $v->username.'(Vendor) '
+                                                ]);
+                                              }
+                                          }
+
+                                          // Add agents
+                                          foreach ($agents as $a) {
+                                              if (!empty(trim($a->username))) {
+                                                $dropdownItems->push([
+                                                    'value' => 'agent_'.$a->id,
+                                                    'label' => $a->username.'(Agent) '
+                                                ]);
+                                              }
+                                          }
+
+                                          // Add users
+                                          foreach ($users as $u) {
+                                              if (!empty(trim($u->username))) {
+                                                $dropdownItems->push([
+                                                    'value' => 'user_'.$u->id,
+                                                    'label' => $u->username.'(User) '
+                                                ]);
+                                              }
+                                          }
+                                        @endphp
+
                                         <select name="vendor_id" class="form-select select2"
-                                            onchange="document.getElementById('carSearchForm').submit()">
-                                            <option value="">{{ __('All') }}</option>
-                                            <option value="admin" @selected(request()->input('vendor_id') == 'admin')>
+                                                onchange="document.getElementById('carSearchForm').submit()">
+
+                                            <option value="" @selected(!request()->has('vendor_id') || request()->input('vendor_id') === '')>
+                                                {{ __('All') }}
+                                            </option>
+
+                                            <option value="admin" @selected(request()->input('vendor_id') === 'admin')>
                                                 {{ Auth::guard('admin')->user()->username }} ({{ __('Admin') }})
                                             </option>
-                                            @foreach ($vendors as $vendor)
-                                                <option @selected($vendor->id == request()->input('vendor_id')) value="{{ $vendor->id }}">
-                                                    {{ $vendor->username }}
+
+                                            @foreach ($dropdownItems as $item)
+                                                <option value="{{ $item['value'] }}"
+                                                        @selected($item['value'] == request()->input('vendor_id'))>
+                                                    {{ $item['label'] }}
                                                 </option>
                                             @endforeach
+
                                         </select>
                                     </div>
 
@@ -96,20 +137,20 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-sm-12 col-md-12 col-lg mt-2 mt-md-2 mt-lg-0" style="height: 39px;">
+                                    {{-- <div class="col-sm-12 col-md-12 col-lg mt-2 mt-md-2 mt-lg-0" style="height: 39px;">
                                         <input type="text" name="title" value="{{ request()->input('title') }}"
                                             class="form-control" placeholder="Title">
-                                    </div>
+                                    </div> --}}
 
                                     {{-- <div class="col-sm-12 col-md-12 col-lg mt-2 mt-md-2 mt-lg-0" style="height: 39px;">
                                     @includeIf('backend.partials.languages')
 								</div> --}}
-                                    <div class="col-sm-12 col-md-12 col-lg mt-2 mt-md-2 mt-lg-0">
+                                    {{-- <div class="col-sm-12 col-md-12 col-lg mt-2 mt-md-2 mt-lg-0">
                                         <a href="{{ request()->fullUrlWithQuery(['export' => 1]) }}"
                                             class="btn btn-dark btn-sm" style="padding : 10px;">
                                             <i class="fa fa-file-excel"></i> Export to Excel
                                         </a>
-                                    </div>
+                                    </div> --}}
 
                                     <div style="margin-right: 10px;" class=" mt-2 mt-md-0 mt-lg-0">
                                         <a href="{{ route('admin.property_management.type') }}"
@@ -137,7 +178,7 @@
                                 <h3 class="text-center">{{ __('NO PROPERTY FOUND!') }}</h3>
                             @else
                                 <div class="table-responsive">
-                                    <table class="table table-striped mt-3">
+                                    <table class="table table-striped mt-3" id="basic-datatables-property">
                                         <thead>
                                             <tr>
                                                 <th scope="col">
@@ -383,10 +424,10 @@
                 </div>
 
                 <div class="card-footer">
-                    {{ $properties->appends([
+                    {{-- {{ $properties->appends([
                             'vendor_id' => request()->input('vendor_id'),
                             'title' => request()->input('title'),
-                        ])->links() }}
+                        ])->links() }} --}}
                 </div>
 
             </div>

@@ -249,7 +249,6 @@ $(document).ready(function () {
 
   // Form Submit with AJAX Request Start
   $("#PropertySubmit").on('click', function (e) {
-
     $(e.target).attr('disabled', true);
     $(".request-loader").addClass("show");
 
@@ -283,6 +282,7 @@ $(document).ready(function () {
       contentType: false,
       processData: false,
       success: function (data) {
+
         $(e.target).attr('disabled', false);
         $('.request-loader').removeClass('show');
 

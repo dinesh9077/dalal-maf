@@ -28,7 +28,7 @@ class SupportTicketController extends Controller
 
         $queryResult['bgImg'] = $misc->getBreadcrumb();
 
-        $collection = SupportTicket::where([['user_id', Auth::guard('web')->user()->id], ['user_type', 'user']])->orderBy('id', 'desc')->paginate(10);
+        $collection = SupportTicket::where([['user_id', Auth::guard('web')->user()->id], ['user_type', 'user']])->orderBy('id', 'desc')->get();
         // $queryResult['collection'] = $collection;
         //For frontend view
         // return view('frontend.user.support_ticket.index', $queryResult);

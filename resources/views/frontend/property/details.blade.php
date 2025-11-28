@@ -760,16 +760,27 @@ $version = $basicInfo->theme_version;
                                                 ?? Auth::guard('web')->user();
                                                 @endphp
 
-
-                                                <form action="{{ route('property_contact') }}" method="POST" class="mt-4">
+                                                  <form action="{{ route('property_contact') }}" method="POST" class="mt-4">
                                                     @csrf
                                                     @if (!empty($agent))
-                                                    <input type="hidden" name="vendor_id" value="{{ $agent->vendor_id }}">
-                                                    <input type="hidden" name="agent_id" value="{{ $agent->id ?? '' }}">
-                                                    @elseif(!empty($vendor) && empty($agent))
-                                                    <input type="hidden" name="vendor_id" value="{{ $vendor->id }}">
+                                                        <input type="hidden" name="vendor_id" value="{{ $agent->vendor_id }}">
+                                                        <input type="hidden" name="agent_id" value="{{ $agent->id }}">
+                                                        <input type="hidden" name="user_id" value="0">
+
+                                                    @elseif (!empty($vendor))
+                                                        <input type="hidden" name="vendor_id" value="{{ $vendor->id }}">
+                                                        <input type="hidden" name="agent_id" value="0">
+                                                        <input type="hidden" name="user_id" value="0">
+
+                                                    @elseif (!empty($user))
+                                                        <input type="hidden" name="vendor_id" value="0">
+                                                        <input type="hidden" name="agent_id" value="0">
+                                                        <input type="hidden" name="user_id" value="{{ $user->id }}">
+
                                                     @else
-                                                    <input type="hidden" name="vendor_id" value="0">
+                                                        <input type="hidden" name="vendor_id" value="0">
+                                                        <input type="hidden" name="agent_id" value="0">
+                                                        <input type="hidden" name="user_id" value="0">
                                                     @endif
 
                                                     <input type="hidden" name="property_id"

@@ -392,7 +392,7 @@
                   }
                 @endphp
                 @if (is_null($roleInfo) || (!empty($rolePermissions) && in_array('Property Messages', $rolePermissions)))
-                    <li class="nav-item @if (request()->routeIs('admin.property_message.index')) active @endif">
+                    <li class="nav-item @if (request()->routeIs('admin.property_message.index')) active @elseif(request()->routeIs('admin.status.index')) active @endif">
                               <a data-toggle="collapse" href="#inquiryManagement">
                                   <i class="fal fa-receipt"></i>
                                   <p>{{ 'Inquiry Management' }}</p><i class="{{ $inquiry_unread_class }}" style="margin-left: 10px;"><b>{{ $inquiryUnread != 0 ?  $inquiryUnread : '' }}</b></i>
@@ -400,7 +400,7 @@
                               </a>
 
                         <div id="inquiryManagement" class="collapse
-                          @if (request()->routeIs('admin.property_message.index')) show @endif">
+                          @if (request()->routeIs('admin.property_message.index')) show @elseif (request()->routeIs('admin.status.index')) show @endif">
                             <ul class="nav nav-collapse">
                                 <li class="{{ request()->routeIs('admin.property_message.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.property_message.index') }}">
@@ -666,7 +666,8 @@
                             @elseif (request()->routeIs('admin.edit_management.vendor_edit')) active
                             @elseif (request()->routeIs('admin.vendor_management.settings')) active
                             @elseif (request()->routeIs('admin.vendor_management.vendor.change_password')) active
-                            @elseif (request()->routeIs('admin.vendor_management.vendor.vendor_kyc')) active @endif">
+                            @elseif (request()->routeIs('admin.vendor_management.vendor.vendor_kyc')) active
+                            @elseif (request()->routeIs('admin.vendor_management.vendor_kyc')) active @endif">
                         <a data-toggle="collapse" href="#vendor">
                             <i class="la flaticon-users"></i>
                             <p>{{ 'Partners Management' }}</p><i class="{{ $partner_unread_class }}" style="margin-left: 10px;"><b>{{ $partnerUnread != 0 ?  $partnerUnread : '' }}</b></i>

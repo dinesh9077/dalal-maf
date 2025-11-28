@@ -31,7 +31,7 @@
             <div class="col-lg-6">
               <div class="card-title d-inline-block">{{ __('Payment Log') }}</div>
             </div>
-            
+
             <div class="col-lg-6 ">
               <form action="{{ url()->current() }}" class="d-inline-block float-lg-right">
                 <input class="form-control" type="text" name="search"
@@ -48,7 +48,7 @@
                 <h3 class="text-center">{{ __('NO MEMBERSHIP FOUND') }}</h3>
               @else
                 <div class="table-responsive">
-                  <table class="table table-striped mt-3">
+                  <table class="table table-striped mt-3" id="basic-datatables">
                     <thead>
                       <tr>
                         <th scope="col">{{ __('Transaction Id') }}</th>
@@ -206,9 +206,9 @@
         </div>
         <div class="card-footer">
           <div class="row">
-            <div class="d-inline-block mx-auto">
+            {{-- <div class="d-inline-block mx-auto">
               {{ $memberships->links() }}
-            </div>
+            </div> --}}
           </div>
         </div>
       </div>

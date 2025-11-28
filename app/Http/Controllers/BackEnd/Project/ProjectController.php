@@ -94,7 +94,7 @@ class ProjectController extends Controller
             ->where('project_contents.language_id', $language_id)
             ->select('projects.*')
             ->orderBy('id', 'desc')
-            ->paginate(10);
+            ->get();
 
 
         $data['vendors'] = Vendor::where('id', '!=', 0)->get();
@@ -527,16 +527,16 @@ class ProjectController extends Controller
     }
 
     public function bulkDestroy(Request $request)
-    { 
-		$propertyIds = $request->ids; 
+    {
+		$propertyIds = $request->ids;
 		if (empty($propertyIds) || !is_array($propertyIds)) {
 			return response()->json([
 			'status' => 'error',
 			'message' => 'No projects IDs provided.'
 			]);
-		} 
-		
-		DB::beginTransaction(); 
+		}
+
+		DB::beginTransaction();
 		try
 		{
 			foreach ($propertyIds as $id) {
@@ -546,10 +546,10 @@ class ProjectController extends Controller
 			return response()->json([
 				'status' => 'success',
 				'message' => 'Projects deleted successfully!'
-			]); 
-		} 
+			]);
+		}
 		catch (\Exception $e)
-		{ 
+		{
 			DB::rollBack();
 			return response()->json([
 				'status' => 'error',

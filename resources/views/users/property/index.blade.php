@@ -40,12 +40,12 @@
                                 id="carSearchForm">
                                 <div class="row">
 
-                                    <div class="col-lg-12">
+                                    {{-- <div class="col-lg-12">
                                         <div class="form-group">
                                             <input type="text" name="title" value="{{ request()->input('title') }}"
                                                 class="form-control" placeholder="Title">
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </form>
                         </div>
@@ -74,7 +74,7 @@
                                 <h3 class="text-center">{{ __('NO PROPERTIY FOUND!') }}</h3>
                             @else
                                 <div class="table-responsive">
-                                    <table class="table table-striped mt-3">
+                                    <table class="table table-striped mt-3" id="basic-datatables">
                                         <thead>
                                             <tr>
                                                 <th scope="col">
@@ -200,10 +200,10 @@
                 </div>
 
                 <div class="card-footer">
-                    {{ $properties->appends([
+                    {{-- {{ $properties->appends([
                             'vendor_id' => request()->input('vendor_id'),
                             'title' => request()->input('title'),
-                        ])->links() }}
+                        ])->links() }} --}}
                 </div>
 
             </div>

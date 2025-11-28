@@ -46,6 +46,11 @@
 {{-- datatables bootstrap js --}}
 <script type="text/javascript" src="{{ asset('assets/js/datatables.bootstrap4.min.js') }}"></script>
 
+{{-- datatables export excel --}}
+<script src="{{ asset('assets/js/datatables-button.js') }}"></script>
+<script src="{{ asset('assets/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('assets/js/jszip.min.js') }}"></script>
+
 {{-- dropzone js --}}
 <script type="text/javascript" src="{{ asset('assets/js/dropzone.min.js') }}"></script>
 

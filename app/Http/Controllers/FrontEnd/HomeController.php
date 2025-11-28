@@ -332,7 +332,6 @@
 			$queryResult['aboutInfo'] =  AboutSection::where('language_id', $language->id)->first();
 
 			if ($themeVersion == 1 && $secInfo->vendor_section_status == 1) {
-
 				$queryResult['vendorInfo'] =  VendorSection::where('language_id', $language->id)->first();
 
 				$queryResult['vendors'] = Vendor::join('memberships', 'memberships.vendor_id', 'vendors.id')

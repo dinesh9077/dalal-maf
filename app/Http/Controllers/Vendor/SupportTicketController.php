@@ -32,7 +32,7 @@ class SupportTicketController extends Controller
             return $query->where('status',  $status);
         })
             ->orderByDesc('id')
-            ->paginate(10);
+            ->get();
 
         return view('vendors.support_ticket.index', compact('collection'));
     }
@@ -201,7 +201,7 @@ class SupportTicketController extends Controller
         //delete all support ticket
         $support_ticket = SupportTicket::find($id);
         if ($support_ticket) {
-            //delete conversation 
+            //delete conversation
             $messages = $support_ticket->messages()->get();
             foreach ($messages as $message) {
                 @unlink(public_path('assets/admin/img/support-ticket/' . $message->file));

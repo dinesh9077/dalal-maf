@@ -99,6 +99,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if(session('success'))
+                                      <div class="alert alert-success alert-dismissible fade show">
+                                          {{ session('success') }}
+                                          <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                      </div>
+                                  @endif
 
                                 <form action="{{ route('admin.property.imagesstore') }}" id="my-dropzone"
                                     enctype="multipart/formdata" class="dropzone create">
@@ -135,7 +141,7 @@
                                                     <input type="file" class="img-input" name="featured_image">
                                                 </div>
                                             </div>
-<p class="text-warning mb-0">Image Size :  310 x 180</p>
+                                <p class="text-warning mb-0">Image Size :  310 x 180</p>
 
                                         </div>
                                     </div>

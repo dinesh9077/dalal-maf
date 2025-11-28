@@ -62,12 +62,12 @@
                 <i class="flaticon-interface-5"></i> {{ __('Delete') }}
               </button>
 
-              <form  action="{{ route('admin.vendor_management.registered_vendor') }}" method="GET">
-              <!-- <form class="float-right" action="{{ route('admin.vendor_management.registered_vendor') }}" method="GET"> -->
+              {{-- <form  action="{{ route('admin.vendor_management.registered_vendor') }}" method="GET">
+
                 <input name="info" type="text" class="form-control min-230"
                   placeholder="Search By Username or Email ID"
                   value="{{ !empty(request()->input('info')) ? request()->input('info') : '' }}">
-              </form>
+              </form> --}}
             </div>
           </div>
         </div>
@@ -79,7 +79,7 @@
                 <h3 class="text-center">{{ __('NO VENDOR FOUND') . '!' }}</h3>
               @else
                 <div class="table-responsive">
-                  <table class="table table-striped mt-3">
+                  <table class="table table-striped mt-3" id="basic-datatables">
                     <thead>
                       <tr>
                         <th scope="col">
@@ -200,11 +200,11 @@
         </div>
 
         <div class="card-footer">
-          <div class="row">
+          {{-- <div class="row">
             <div class="d-inline-block mx-auto">
               {{ $vendors->appends(['info' => request()->input('info')])->links() }}
             </div>
-          </div>
+          </div> --}}
         </div>
       </div>
     </div>
