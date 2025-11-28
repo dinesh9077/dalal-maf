@@ -603,13 +603,22 @@
 			updateWishlistHtml();
 
 			// Function: Update Wishlist Count in Header
-			function updateWishlistHtml() {
-				$.get("{{ route('wishlist.count') }}", function(res) {
-					if (res.status === 'success') {
-						$('.wishlist-count-html').text(res.count);
-                }
-            });
-    }
+	function updateWishlistHtml() {
+    $.get("{{ route('wishlist.count') }}", function(res) {
+        if (res && res.status === 'success') {
+            // Always show: (7)
+            const formatted = '(' + res.count + ')';
+
+            // Header heart icon
+            $('.wishlist-count-html').text(formatted);
+
+            // Dropdown count
+            $('.wishlist-count-dropdown').text(formatted);
+        }
+    });
+}
+
+
 
     // Handle Wishlist Button Click (Add / Remove)
 			$(document).on('click', '.btn-wishlist', function(e) {

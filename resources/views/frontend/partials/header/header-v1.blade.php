@@ -101,7 +101,7 @@
                             : route('vendor.wishlist')) }}"
                     class="btn-wishlist-header position-relative" title="{{ __('My Wishlist') }}">
                     <i class="fas fa-heart text-danger"></i>
-                    <span class="wishlist-count-html">{{ $wishlistCount }}</span>
+                    <span class="wishlist-count-html">({{ $wishlistCount }})</span>
                 </a>
                 @endif
             </div>
@@ -219,7 +219,8 @@
                                     : route('vendor.wishlist')) }}"
                                         class="dropdown-item" title="{{ __('My Wishlist') }}">
                                         My Wishlist
-                                        <span >({{ $wishlistCount }})</span>
+                                       <span class="wishlist-count-dropdown">({{ $wishlistCount }})</span>
+
                                     </a>
                                     @endif
                                 </li>
