@@ -282,6 +282,8 @@
             <img src="{{ asset('assets/front/images/new-images/whatsapp.png') }}" alt="WhatsApp">
         </div>
     </a>
+
+    
     @php
         $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.jpg';
     @endphp
@@ -685,7 +687,7 @@
         </section>
     @endif
 
-    @if ($secInfo->property_section_status == 1 && $properties->isNotEmpty())
+   @if ($secInfo->property_section_status == 1)
         <section class="product-area popular-product product-1 relative">
             <img src="{{ asset('assets/front/images/new-images/new-primume-properties.png') }}" alt=""
                 class="new-primume-prop-img">
@@ -728,42 +730,23 @@
                         <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
                             style="padding: 8px 20px;">View All</a>
                     </div>
-                </div>
-                
-                <div class="row" style="position: relative;">
-                    <div class="swiper LP-new-slider">
-                        <div class="swiper-wrapper">
-                            @forelse ($properties as $property)
-                                @if ($property->property_type == 'partial')
-                                    <div class="swiper-slide">
-                                        <x-latest-property :property="$property" class="col-12" />
+
+
+                                    <div class="LP-new-left-btn">
+                                        <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
                                     </div>
-                                @endif
-                            @empty
-                                <div class="p-3 text-center mb-30 w-100">
-                                    <h3 class="mb-0">{{ __('No Properties Found') }}</h3>
+                                    <div class="LP-new-right-btn">
+                                        <img src="{{ asset('assets/front/images/new-images/Right.png') }}"
+                                            alt="">
+                                    </div>
                                 </div>
-                            @endforelse
+                            </div>
                         </div>
-                    </div>
-
-                    <div style="text-align: center; margin-top: 20px;">
-                        <a href="{{ route('frontend.properties', ['sort' => 'new']) }}" class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 10px 20px;">
-                            View All
-                        </a>
-                    </div>
-
-                    <div class="LP-new-left-btn">
-                        <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
-                    </div>
-                    <div class="LP-new-right-btn">
-                        <img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
                     </div>
                 </div>
             </div>
         </section>
     @endif
-
 
 
     <section class="product-area popular-product product-1 relative">

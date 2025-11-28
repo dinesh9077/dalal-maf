@@ -9434,11 +9434,58 @@ button:hover {
 }
 
 .new-radios-box-filter{
-    display: flex;
-    justify-content: end;
+   display: flex;
+    justify-content: space-between;
     border-bottom: 1px solid #dcdcdc;
-padding-bottom: 6px;
+    padding-bottom: 6px;
     margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-    text-align: left;
+.Sort-content{
+display: flex; 
+align-items: baseline; 
+justify-content: end;
+gap: 4px;
+}
+
+
+@media(max-width : 575px){
+.Sort-content{
+    justify-content: start;
+}
+}
+
+.RR-1{
+
+    width: fit-content;
+    padding: 0px;
+    border-radius: 10px;
+}
+
+@media(max-width : 991px){
+.RR-1{
+    margin-left: 20px;
+}
+}
+
+
+.RR-1 button{
+    height: 42px; 
+    padding: 13px;
+    width: fit-content;
+    border-radius: 13px;
+    font-size: 12px;
+}
+
+
+.s-btn-ff-pro{
+    width: fit-content;
+    background: #6c603c;
+    height: 42px;
+    border-radius: 13px;
+    line-height: 12px;
+    padding: 14px;
+    margin: 0px 10px;
+}
