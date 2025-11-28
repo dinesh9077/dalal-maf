@@ -214,9 +214,9 @@ class PropertyController extends Controller
 
         // Check if we're viewing latest properties
         $isLatestView = $request->has('sort') && $request->sort === 'new';
-        
+
         $propertyQuery = Property::where([['properties.status', 1], ['properties.approve_status', 1]]);
-        
+
         if ($isLatestView) {
             // For latest view, include all property types
             $propertyQuery->whereIn('properties.property_type', ['partial', 'full']);
@@ -224,7 +224,7 @@ class PropertyController extends Controller
             // For other views, keep the existing filter
             $propertyQuery->where('properties.property_type', 'partial');
         }
-        
+
         $property_contents = $propertyQuery
             ->join('property_contents', 'properties.id', 'property_contents.property_id')
             ->join('property_categories', 'property_categories.id', 'properties.category_id')
@@ -303,7 +303,7 @@ class PropertyController extends Controller
                     return $query;
             }
             })
-        
+
             ->when($min, function ($query) use ($min, $max, $price) {
                 if ($price == 'fixed' || empty($price)) {
                     return $query->where('properties.price', '>=', $min)
@@ -364,7 +364,7 @@ class PropertyController extends Controller
                     'property_country_contents.name as country_name')
             ->orderBy($order_by_column, $order)
             ->paginate(12);
-           
+
         $information['property_contents'] = $property_contents;
         $information['contents'] = $property_contents;
 
@@ -381,10 +381,10 @@ class PropertyController extends Controller
 
         $information['units'] = DB::table('units')->whereStatus(1)->get();
 
-        // $min = Property::where([['status', 1], ['approve_status', 1]])->min('price');
-        // $max = Property::where([['status', 1], ['approve_status', 1]])->max('price');
-        // $information['min'] = intval($min);
-        // $information['max'] = intval($max);
+        $min = Property::where([['status', 1], ['approve_status', 1]])->min('price');
+        $max = Property::where([['status', 1], ['approve_status', 1]])->max('price');
+        $information['min'] = intval($min);
+        $information['max'] = intval($max);
         if ($request->ajax()) {
             $viewContent = View::make('frontend.property.property',  $information);
             $viewContent = $viewContent->render();
@@ -457,7 +457,7 @@ class PropertyController extends Controller
 
 
 public function featuredAll($type)
-    { 
+    {
         $property_contents = Property::where([['properties.status', 1], ['properties.approve_status', 1]])
           ->join('property_contents', 'properties.id', 'property_contents.property_id')
           ->where($type, 1)
