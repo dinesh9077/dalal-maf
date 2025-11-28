@@ -120,6 +120,9 @@ class VendorManagementController extends Controller
         $language = Language::query()->where('code', '=', $request->language)->first();
         $information['language'] = $language;
         $information['languages'] = Language::get();
+        // load all cities for city dropdown
+        $information['cities'] = \App\Models\Property\CityContent::all();
+
         return view('backend.end-user.vendor.create', $information);
     }
 
@@ -379,6 +382,8 @@ class VendorManagementController extends Controller
         $vendor = Vendor::where('id', $id)->firstOrFail();
         $information['vendor'] = $vendor;
         $information['currencyInfo'] = $this->getCurrencyInfo();
+        // load all cities for city dropdown
+        $information['cities'] = \App\Models\Property\CityContent::all();
         return view('backend.end-user.vendor.edit', $information);
     }
 

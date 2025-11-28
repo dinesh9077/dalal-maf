@@ -303,6 +303,9 @@ Route::prefix('/admin')->middleware('auth:admin')->group(function () {
   Route::prefix('/user-management')->middleware('permission:User Management')->group(function () {
     // registered user route
     Route::get('/registered-users', 'BackEnd\User\UserController@index')->name('admin.user_management.registered_users');
+    
+    // Get city details for dropdown (used in user create/edit forms)
+    Route::get('/get-city-details/{cityId}', 'BackEnd\User\UserController@getCityDetails')->name('admin.user_management.registered_user.getCityDetails');
 
     Route::get('/create', 'BackEnd\User\UserController@create')->name('admin.user_management.registered_user.create');
     Route::post('/store', 'BackEnd\User\UserController@store')->name('admin.user_management.registered_user.store');

@@ -191,7 +191,7 @@ class PropertyController extends Controller
         if ($request->filled('sort')) 
         {
             if ($request['sort'] == 'new') {
-                $order_by_column = 'properties.id';
+                $order_by_column = 'properties.created_at';
                 $order = 'desc';
             } elseif ($request['sort'] == 'old') {
                 $order_by_column = 'properties.id';
@@ -211,23 +211,36 @@ class PropertyController extends Controller
             $order = 'desc';
         }
 
-        $property_contents = Property::where('property_type','partial')->where([['properties.status', 1], ['properties.approve_status', 1]])
+        // Check if we're viewing latest properties
+        $isLatestView = $request->has('sort') && $request->sort === 'new';
+        
+        $propertyQuery = Property::where([['properties.status', 1], ['properties.approve_status', 1]]);
+        
+        if ($isLatestView) {
+            // For latest view, include all property types
+            $propertyQuery->whereIn('properties.property_type', ['partial', 'full']);
+        } else {
+            // For other views, keep the existing filter
+            $propertyQuery->where('properties.property_type', 'partial');
+        }
+        
+        $property_contents = $propertyQuery
             ->join('property_contents', 'properties.id', 'property_contents.property_id')
             ->join('property_categories', 'property_categories.id', 'properties.category_id')
             ->where('property_contents.language_id', $language->id)
             ->leftJoin('vendors', 'properties.vendor_id', '=', 'vendors.id')
-            ->leftJoin('areas', 'properties.area_id', '=', 'areas.id')
-            ->leftJoin('property_city_contents', function ($join) use ($language) {
-                $join->on('properties.city_id', '=', 'property_city_contents.city_id')
-                    ->where('property_city_contents.language_id', $language->id);
-            })
-            ->leftJoin('property_state_contents', function ($join) use ($language) {
-                $join->on('properties.state_id', '=', 'property_state_contents.state_id')
-                    ->where('property_state_contents.language_id', $language->id);
-            })
-            ->leftJoin('property_country_contents', function ($join) use ($language) {
-                $join->on('properties.country_id', '=', 'property_country_contents.country_id')
-                    ->where('property_country_contents.language_id', $language->id);
+                ->leftJoin('areas', 'properties.area_id', '=', 'areas.id')
+                ->leftJoin('property_city_contents', function ($join) use ($language) {
+                    $join->on('properties.city_id', '=', 'property_city_contents.city_id')
+                        ->where('property_city_contents.language_id', $language->id);
+                })
+                ->leftJoin('property_state_contents', function ($join) use ($language) {
+                    $join->on('properties.state_id', '=', 'property_state_contents.state_id')
+                        ->where('property_state_contents.language_id', $language->id);
+                })
+                ->leftJoin('property_country_contents', function ($join) use ($language) {
+                    $join->on('properties.country_id', '=', 'property_country_contents.country_id')
+                        ->where('property_country_contents.language_id', $language->id);
             })
             ->leftJoin('memberships', function ($join) {
                 $join->on('properties.vendor_id', '=', 'memberships.vendor_id')
@@ -267,33 +280,33 @@ class PropertyController extends Controller
             })
             ->when(!empty($amenityIds), function ($query) use ($amenityIds) {
                 $query->whereHas(
-                    'proertyAmenities',
-                    function ($q) use ($amenityIds) {
-                        $q->whereIn('amenity_id', $amenityIds);
-                    },
-                    '=',
-                    count($amenityIds)
-                );
+                'proertyAmenities',
+                function ($q) use ($amenityIds) {
+                    $q->whereIn('amenity_id', $amenityIds);
+                },
+                '=',
+                count($amenityIds)
+            );
             })
            ->when(!empty($unitTypes), function ($query) use ($unitTypes) {
-                $unitTypes = array_values(array_unique($unitTypes)); 
+            $unitTypes = array_values(array_unique($unitTypes));
                 $query->whereHas('proertyUnits', fn($q) => $q->whereIn('unit_id', $unitTypes));
             })
             ->when($price, function ($query) use ($price) {
-                if ($price == 'negotiable') {
+            if ($price == 'negotiable') {
                     return $query->where('properties.price', null);
-                } elseif ($price == 'fixed') {
+            } elseif ($price == 'fixed') {
 
                     return $query->where('properties.price', '!=', null);
                 } else {
                     return $query;
-                }
+            }
             })
-
+        
             ->when($min, function ($query) use ($min, $max, $price) {
                 if ($price == 'fixed' || empty($price)) {
                     return $query->where('properties.price', '>=', $min)
-                        ->where('properties.price', '<=', $max);
+                ->where('properties.price', '<=', $max);
                 } else {
                     return $query;
                 }
@@ -311,8 +324,8 @@ class PropertyController extends Controller
                 return $query->where('property_contents.title', 'LIKE', '%' . $title . '%');
             })
             ->when($location, function ($query) use ($location) {
-                // Split by comma
-                $parts = array_map('trim', explode(',', $location));
+            // Split by comma
+            $parts = array_map('trim', explode(',', $location));
 
                 $areaName   = $parts[0] ?? null; // e.g. "Pasodara Patiya" or "Surat"
                 $cityName   = $parts[1] ?? null; // e.g. "Surat"
@@ -350,7 +363,7 @@ class PropertyController extends Controller
                     'property_country_contents.name as country_name')
             ->orderBy($order_by_column, $order)
             ->paginate(12);
-
+           
         $information['property_contents'] = $property_contents;
         $information['contents'] = $property_contents;
 
@@ -442,7 +455,7 @@ class PropertyController extends Controller
     }
 
 
-    public function featuredAll($type)
+public function featuredAll($type)
     { 
         $property_contents = Property::where([['properties.status', 1], ['properties.approve_status', 1]])
 		->join('property_contents', 'properties.id', 'property_contents.property_id')

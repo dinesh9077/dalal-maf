@@ -538,7 +538,7 @@
                     </div>
 
                     <div style="text-align: center;">
-                        <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
+                        <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-mobile"
                             style="padding: 8px 20px;">View All</a>
                     </div>
                 </div>
@@ -558,7 +558,7 @@
                             View All
                         </a>
                     </div>
-
+                                              
                     <div data-aos="fade-up" class="position-relative">
                         <div class="swiper hot-slider">
                             <div class="swiper-wrapper">
@@ -685,7 +685,7 @@
         </section>
     @endif
 
-    @if ($secInfo->property_section_status == 1)
+    @if ($secInfo->property_section_status == 1 && $properties->isNotEmpty())
         <section class="product-area popular-product product-1 relative">
             <img src="{{ asset('assets/front/images/new-images/new-primume-properties.png') }}" alt=""
                 class="new-primume-prop-img">
@@ -728,18 +728,36 @@
                         <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
                             style="padding: 8px 20px;">View All</a>
                     </div>
-
-
-                                    <div class="LP-new-left-btn">
-                                        <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
+                </div>
+                
+                <div class="row" style="position: relative;">
+                    <div class="swiper LP-new-slider">
+                        <div class="swiper-wrapper">
+                            @forelse ($properties as $property)
+                                @if ($property->property_type == 'partial')
+                                    <div class="swiper-slide">
+                                        <x-latest-property :property="$property" class="col-12" />
                                     </div>
-                                    <div class="LP-new-right-btn">
-                                        <img src="{{ asset('assets/front/images/new-images/Right.png') }}"
-                                            alt="">
-                                    </div>
+                                @endif
+                            @empty
+                                <div class="p-3 text-center mb-30 w-100">
+                                    <h3 class="mb-0">{{ __('No Properties Found') }}</h3>
                                 </div>
-                            </div>
+                            @endforelse
                         </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 20px;">
+                        <a href="{{ route('frontend.properties', ['sort' => 'new']) }}" class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 10px 20px;">
+                            View All
+                        </a>
+                    </div>
+
+                    <div class="LP-new-left-btn">
+                        <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
+                    </div>
+                    <div class="LP-new-right-btn">
+                        <img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
                     </div>
                 </div>
             </div>
@@ -753,9 +771,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-title  aos-init aos-animate" data-aos="fade-up" style="position: relative;">
-                        <h2 class="title">Business For Sale</h2>
+                        <h2 class="title">Business For Sale Properties</h2>
 
-                            <a href="{{ url('properties/is_fast_selling/all') }}"
+                            <a href="{{ route('frontend.properties', ['purpose' => 'business_for_sale', 'sort' => 'latest']) }}"
                             class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 8px 20px;">
                             View All
                         </a>
@@ -785,7 +803,7 @@
                 </div>
 
                  <div style="text-align: center;">
-                        <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
+                        <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-mobile"
                             style="padding: 8px 20px;">View All</a>
                     </div>
 
@@ -806,9 +824,9 @@
             <div class="row" style="position: relative;">
                 <div class="col-12">
                     <div class="section-title mb-10 aos-init aos-animate" data-aos="fade-up" style="position : relative;">
-                        <h2 class="title">Franchiese</h2>
+                        <h2 class="title">Franchise Properties</h2>
 
-                           <a href="{{ url('properties/is_fast_selling/all') }}"
+                           <a href="{{ route('frontend.properties', ['purpose' => 'franchiese', 'sort' => 'latest']) }}"
                             class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 8px 20px;">
                             View All
                         </a>
@@ -835,7 +853,7 @@
                     </div>
 
                      <div style="text-align: center;">
-                        <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
+                        <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-mobile"
                             style="padding: 8px 20px;">View All</a>
                     </div>
 

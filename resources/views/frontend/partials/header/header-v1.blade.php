@@ -45,6 +45,16 @@
     // First letter for avatar
     $initial = $authUser ? strtoupper(substr($authUser->username ?? 'U', 0, 1)) : null;
 
+    // Wishlist count per auth type
+    $wishlistCount = 0;
+    if ($authType === 'user') {
+        $wishlistCount = \App\Models\Property\Wishlist::where('user_id', $user->id)->count();
+    } elseif ($authType === 'vendor') {
+        $wishlistCount = \App\Models\Property\Wishlist::where('vendor_id', $vendor->id)->count();
+    } elseif ($authType === 'agent') {
+        $wishlistCount = \App\Models\Property\Wishlist::where('agent_id', $agent->id)->count();
+    }
+
     // Post Property route
     if ($authType === 'vendor' && $vendor->email) {
     $postPropertyRoute = route('vendor.property_management.type');
@@ -91,7 +101,7 @@
                             : route('vendor.wishlist')) }}"
                     class="btn-wishlist-header position-relative" title="{{ __('My Wishlist') }}">
                     <i class="fas fa-heart text-danger"></i>
-                    <span class="wishlist-count-html">0</span>
+                    <span class="wishlist-count-html">({{ $wishlistCount }})</span>
                 </a>
                 @endif
             </div>
@@ -209,7 +219,8 @@
                                     : route('vendor.wishlist')) }}"
                                         class="dropdown-item" title="{{ __('My Wishlist') }}">
                                         My Wishlist
-                                        <span >(0)</span>
+                                       <span class="wishlist-count-dropdown">({{ $wishlistCount }})</span>
+
                                     </a>
                                     @endif
                                 </li>
