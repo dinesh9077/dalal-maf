@@ -433,7 +433,7 @@ class AdminController extends Controller
         // Keep for 5 mins
         Cache::put('visitors', $visitors, now()->addMinutes(5));
 
-        return response()->json(['success' => true]);
+        return response()->noContent();
     }
 
     public function removeVisitor(Request $request)

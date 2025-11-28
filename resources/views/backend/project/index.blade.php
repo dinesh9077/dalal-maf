@@ -1,7 +1,7 @@
 @extends('backend.layout')
 
 {{-- this style will be applied when the direction of language is right-to-left --}}
-@includeIf('backend.partials.rtl_style')
+@includeIf('backend.partials.rtl-style')
 
 @section('content')
     <div class="page-header">
@@ -120,12 +120,12 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-md-12 col-lg mt-2 mt-md-2 mt-lg-0">
+                                        {{-- <div class="col-sm-12 col-md-12 col-lg mt-2 mt-md-2 mt-lg-0">
                                             <div class="form-group">
                                                 <input type="text" name="title" value="{{ request()->input('title') }}"
                                                     class="form-control" placeholder="Title" style="height : 39px;">
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div style="margin-right: 10px;" class="mt-2 mt-md-0 mt-lg-0">
                                             <a href="{{ route('admin.project_management.create_project') }}"
@@ -152,7 +152,7 @@
                                 <h3 class="text-center">{{ __('NO PROJECT FOUND!') }}</h3>
                             @else
                                 <div class="table-responsive">
-                                    <table class="table table-striped mt-3">
+                                    <table class="table table-striped mt-3" id="basic-datatables">
                                         <thead>
                                             <tr>
                                                 <th scope="col">
@@ -329,10 +329,10 @@
                 </div>
 
                 <div class="card-footer">
-                    {{ $projects->appends([
+                    {{-- {{ $projects->appends([
                             'vendor_id' => request()->input('vendor_id'),
                             'title' => request()->input('title'),
-                        ])->links() }}
+                        ])->links() }} --}}
                 </div>
 
             </div>

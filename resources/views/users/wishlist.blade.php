@@ -30,7 +30,7 @@
                 <h3 class="text-center mt-2">{{ __('NO WISHLIST FOUND ') . '!' }}</h3>
               @else
                 <div class="table-responsive">
-                  <table class="table table-striped mt-3">
+                  <table class="table table-striped mt-3" id="basic-datatables">
                     <thead>
                       <tr>
                           <th>{{ __('Serial') }}</th>
@@ -75,7 +75,7 @@
         </div>
 
         <div class="card-footer">
-          {{ $wishlists->links() }}
+          {{-- {{ $wishlists->links() }} --}}
         </div>
       </div>
     </div>

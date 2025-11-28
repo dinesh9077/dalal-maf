@@ -45,7 +45,7 @@
                 <h3 class="text-center mt-2">{{ __('NO SUPPORT TICKETS FOUND ') . '!' }}</h3>
               @else
                 <div class="table-responsive">
-                  <table class="table table-striped mt-3">
+                  <table class="table table-striped mt-3" id="basic-datatables">
                     <thead>
                       <tr>
                         <th scope="col">{{ __('Ticket ID') }}</th>
@@ -109,7 +109,7 @@
         </div>
 
         <div class="card-footer">
-          {{ $collection->links() }}
+          {{-- {{ $collection->links() }} --}}
         </div>
       </div>
     </div>

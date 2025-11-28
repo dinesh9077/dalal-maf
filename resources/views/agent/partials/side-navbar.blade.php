@@ -12,7 +12,7 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
 					class="avatar-img rounded-circle">
                     @endif
 				</div>
-				
+
                 <div class="info">
                     <a data-toggle="collapse" href="#adminProfileMenu" aria-expanded="true">
                         <span>
@@ -21,9 +21,9 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
                             <!-- <span class="caret"></span> -->
 						</span>
 					</a>
-					
+
                     <div class="clearfix"></div>
-					
+
                     <!-- <div class="collapse in" id="adminProfileMenu">
                         <ul class="nav">
                             <li>
@@ -31,13 +31,13 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
                                     <span class="link-collapse">{{ __('Edit Profile') }}</span>
 								</a>
 							</li>
-							
+
                             <li>
                                 <a href="{{ route('agent.change_password') }}">
                                     <span class="link-collapse">{{ __('Change Password') }}</span>
 								</a>
 							</li>
-							
+
                             <li>
                                 <a href="{{ route('agent.logout') }}">
                                     <span class="link-collapse">{{ __('Logout') }}</span>
@@ -47,8 +47,8 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
 					</div> -->
 				</div>
 			</div>
-			
-			
+
+
             <ul class="nav nav-primary">
                 {{-- search --}}
                 <div class="row mb-3">
@@ -61,7 +61,7 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
 						</form>
 					</div>
 				</div>
-				
+
                 {{-- dashboard --}}
                 <li class="nav-item @if (request()->routeIs('agent.dashboard')) active @endif">
                     <a href="{{ route('agent.dashboard') }}">
@@ -69,7 +69,7 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
                         <p>{{ __('Dashboard') }}</p>
 					</a>
 				</li>
-				
+
                 @if ($userCurrentPackage)
                 @if(in_array('property_management', Auth::guard('agent')->user()->permissions ?? []))
 				<li
@@ -83,7 +83,7 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
 						<p>{{ __('Property Management') }}</p>
 						<span class="caret"></span>
 					</a>
-					
+
 					<div id="propertyManagement"
 					class="collapse
 					@if (request()->routeIs('agent.property_management.create_property')) show
@@ -92,14 +92,14 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
 					@elseif (request()->routeIs('agent.property_management.type')) show @endif
 					">
 						<ul class="nav nav-collapse">
-							
+
 							<li
 							class="{{ request()->routeIs('agent.property_management.create_property') || request()->routeIs('agent.property_management.type') ? 'active' : '' }}">
 								<a href="{{ route('agent.property_management.type') }}">
 									<span class="sub-item">{{ __('Add Property') }}</span>
 								</a>
 							</li>
-							
+
 							<li
 							class="@if (request()->routeIs('agent.property_management.properties')) active
 							@elseif (request()->routeIs('agent.property_management.edit')) active @endif">
@@ -112,26 +112,26 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
 					</div>
 				</li>
 				@endif
-				
+
 				{{-- <li class="nav-item  @if (request()->routeIs('agent.property_message.index')) active @endif">
 					<a href="{{ route('agent.property_message.index') }}">
 						<i class="fas fa-comment"></i>
 						<p>{{ __('Property Messages') }}</p>
 					</a>
 				</li> --}}
-				
+
 				{{-- Property inventory --}}
                 @if(in_array('property_inventory', Auth::guard('agent')->user()->permissions ?? []))
                 @php
 				$unreadCountInventory = Helper::unreadProeprties('full');
-				
+
 				$add_unread__inventory_class = "";
 				if($unreadCountInventory != 0)
 				{
 				$add_unread__inventory_class = 'text-danger-glow blink';
 				}
                 @endphp
-				
+
 				<li class="nav-item
 				@if (request()->routeIs('agent.property_inventory.create_property')) active
 				@elseif (request()->routeIs('agent.property_inventory.properties')) active
@@ -145,7 +145,7 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
 						<p>{{ __('Property inventory') }}</p><i class="{{ $add_unread__inventory_class }}" style="margin-left: 10px;"><b>{{ $unreadCountInventory != 0 ?  $unreadCountInventory : '' }}</b></i>
 						<span class="caret"></span>
 					</a>
-					
+
 					<div id="inventoryManagement"
 					class="collapse
 					@if (request()->routeIs('agent.property_inventory.create_property')) show
@@ -170,7 +170,7 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
 									<span class="sub-item">{{ __('Add Inventory') }}</span>
 								</a>
 							</li>
-							
+
 							<li
 							class="{{ request()->routeIs('agent.property_inventory.properties') ||
 							request()->routeIs('agent.property_inventory.edit')
@@ -197,9 +197,9 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
 					</div>
 				</li>
 				@endif
-				
+
                 {{-- end property inventory  --}}
-				
+
                 {{-- Start Customer  --}}
                 @if(in_array('property_inventory', Auth::guard('agent')->user()->permissions ?? []))
 				<li class="nav-item  @if (request()->routeIs('agent.customer_management.list')) active @endif">
@@ -210,7 +210,7 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
 				</li>
 				@endif
                 {{-- end Customer  --}}
-				
+
                 {{-- Start Account --}}
 				@if(in_array('accounting', Auth::guard('agent')->user()->permissions ?? []))
 				<li class="nav-item @if (request()->routeIs('agent.sales-bill.index')) active @endif">
@@ -221,7 +221,7 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
 				</li>
 				@endif
                 {{-- end Account  --}}
-				
+
 				{{-- Project management  start --}}
 				@if(in_array('project', Auth::guard('agent')->user()->permissions ?? []))
 				<li
@@ -234,7 +234,7 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
 						<p>{{ __('Project Management') }}</p>
 						<span class="caret"></span>
 					</a>
-					
+
 					<div id="projectManagement"
 					class="collapse
 					@if (request()->routeIs('agent.project_management.create_project')) show
@@ -243,14 +243,14 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
 					@elseif(request()->routeIs('agent.project_management.project_types')) show @endif
 					">
 						<ul class="nav nav-collapse">
-							
+
 							<li
 							class="{{ request()->routeIs('agent.project_management.create_project') ? 'active' : '' }}">
 								<a href="{{ route('agent.project_management.create_project') }}">
 									<span class="sub-item">{{ __('Add Project') }}</span>
 								</a>
 							</li>
-							
+
 							<li
 							class="{{ request()->routeIs('agent.project_management.projects') ||
 							request()->routeIs('agent.project_management.project_types') ||
@@ -266,21 +266,21 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
 					</div>
 				</li>
 				@endif
-				
+
 				<li class="nav-item @if (request()->routeIs('aagent.inquiry')) active @endif">
                     <a href="{{ route('agent.inquiry') }}">
                         <i class="fas fa-comment"></i>
-                        <p>{{ __('Sent Inquiery') }}</p>
+                        <p>{{ __('Sent Inquiry') }}</p>
 					</a>
 				</li>
-				
+
 				<li class="nav-item @if (request()->routeIs('agent.wishlist')) active @endif">
                     <a href="{{ route('agent.wishlist') }}">
                         <i class="fas fa-heart"></i>
                         <p>{{ __('My Wishlists') }}</p>
 					</a>
-				</li> 
-				
+				</li>
+
 				{{-- Project Management end  --}}
                 @endif
                 {{-- <li class="nav-item @if (request()->routeIs('agent.edit.profile')) active @endif">
@@ -295,7 +295,7 @@ data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'whit
                         <p>{{ __('Change Password') }}</p>
 					</a>
 				</li>
-				
+
                 <li class="nav-item @if (request()->routeIs('agent.logout')) active @endif">
                     <a href="{{ route('agent.logout') }}">
                         <i class="fal fa-sign-out"></i>

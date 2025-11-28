@@ -322,7 +322,7 @@
                                                 placeholder="Enter Address" value="{{ $property->address }}">
 
                                         </div>
-                                    </div> 
+                                    </div>
                                      <div class="col-lg-12 hideNotes" style="display:{{ !in_array($property->purpose, ['franchiese', 'business_for_sale']) ? 'none' : 'block' }}">
                                         <div class="form-group">
                                             <label>{{ __('Notes') }} *</label>
@@ -330,7 +330,7 @@
                                                 placeholder="Enter Notes"  value="{{ $property->notes }}">
 
                                         </div>
-                                    </div>   
+                                    </div>
 
                                     <div class="col-lg-3">
                                         <div class="form-group">
@@ -517,7 +517,7 @@
                                                                     placeholder="Enter Property Name"
                                                                     value="{{ $peopertyContent ? $peopertyContent->title : '' }}">
                                                             </div>
-                                                        </div>  
+                                                        </div>
 
                                                     </div>
                                                     <div class="row">
@@ -746,15 +746,15 @@
         var galleryImages = {{ $currentPackage->number_of_property_gallery_images - count($galleryImages) }};
         var getLocationByAreaUrl = "{{ route('admin.property_specification.get_location_by_area') }}";
 
-        
+
         $('#purpose').on('change', function() {
             const val = this.value;
             const hideFields = val === 'franchiese' || val === 'business_for_sale';
-            
+
             // toggle visibility
             $('.hideBath, .hideSqft').toggle(!hideFields);
             $('.hideNotes').toggle(hideFields);
-             
+
             // reset values
             $('input[name="bath"], input[name="area"]').val(0);
             $('input[name="notes"]').val('');

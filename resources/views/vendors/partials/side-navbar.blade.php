@@ -120,7 +120,8 @@
                      @elseif (request()->routeIs('vendor.property_inventory.edit')) active
                      @elseif (request()->routeIs('vendor.property_inventory.settings')) active
                       @elseif(request()->routeIs('vendor.property_inventory.type')) active
-                      @elseif(request()->routeIs('vendor.property_inventory.manage_status_property')) active @endif">
+                      @elseif(request()->routeIs('vendor.property_inventory.manage_status_property')) active
+                      @elseif(request()->routeIs('vendor.property_inventory.converted_customer')) active @endif">
                         <a data-toggle="collapse" href="#inventoryManagement">
                             <i class="far fa-home"></i>
                             <p>{{ __('Property inventory') }}</p>
@@ -135,6 +136,7 @@
                               @elseif (request()->routeIs('vendor.property_inventory.settings')) show
                               @elseif (request()->routeIs('vendor.property_inventory.edit')) show
                               @elseif (request()->routeIs('vendor.property_inventory.manage_status_property')) show
+                              @elseif (request()->routeIs('vendor.property_inventory.converted_customer')) show
                               @endif
                               ">
                             <ul class="nav nav-collapse">

@@ -78,7 +78,7 @@ class PropertyController extends Controller
             ->where('property_contents.language_id', $language_id)
             ->select('properties.*')
             ->orderBy('id', 'desc')
-            ->paginate(10);
+            ->get();
 
         return view('users.property.index', $data);
     }
@@ -171,7 +171,7 @@ class PropertyController extends Controller
         }
     }
     public function store(PropertyStoreRequest $request)
-    { 
+    {
         DB::transaction(function () use ($request) {
             $user = User::findorFail(Auth::guard('web')->user()->id);
 
@@ -222,7 +222,7 @@ class PropertyController extends Controller
                 'longitude' => $request->longitude,
                 'approve_status' => $approveStatus,
                 'furnishing' => $request->furnishing,
-                'possession_date' => $request->possession_date 
+                'possession_date' => $request->possession_date
             ]);
 
             $slders = $request->slider_images;
@@ -341,7 +341,7 @@ class PropertyController extends Controller
     }
 
     public function update(PropertyUpdateRequest $request, $id)
-    { 
+    {
         DB::transaction(
             function () use ($request, $id) {
                 $languages = Language::all();

@@ -124,7 +124,7 @@ class PropertyController extends Controller
         $data['properties'] = $query->where('property_contents.language_id', $language_id)
             ->select('properties.*')
             ->orderBy('id', 'desc')
-            ->paginate(10);
+            ->get();
 
 
         $data['vendors'] = Vendor::where('id', '!=', 0)->get();
@@ -277,7 +277,7 @@ class PropertyController extends Controller
             if ($request->hasFile('video_image')) {
                 $videoImage = UploadFile::store(public_path('assets/img/property/video/'), $request->video_image);
             }
-            
+
             $bs = Basic::select('property_approval_status')->first();
             if ($bs->property_approval_status == 1) {
                 $approveStatus = 0;
@@ -456,7 +456,7 @@ class PropertyController extends Controller
 
                 if ($request->hasFile('video_image')) {
                     $videoImage = UploadFile::update(public_path('assets/img/property/video/'), $request->video_image, $property->video_image);
-                } 
+                }
 
                 $property->update([
                     'agent_id' => $request->agent_id,

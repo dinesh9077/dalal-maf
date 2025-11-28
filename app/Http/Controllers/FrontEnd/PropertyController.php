@@ -27,6 +27,7 @@ use App\Models\Property\PropertyCategoryContent;
 use App\Models\Property\PropertyContact;
 use App\Models\Property\State;
 use App\Models\Property\StateContent;
+use App\Models\User;
 use App\Models\Vendor;
 use Auth;
 use Carbon\Carbon;
@@ -44,7 +45,7 @@ use View;
 class PropertyController extends Controller
 {
     public function index(Request $request)
-    { 
+    {
         $misc = new MiscellaneousController();
         $language = $misc->getLanguage();
         $information['seoInfo'] = $language->seoInfo()->select('meta_keyword_properties', 'meta_description_properties')->first();
@@ -54,21 +55,21 @@ class PropertyController extends Controller
         }, 'properties'])
         ->where('status', 1)->get();
 
-        // if ($request->has('type')) 
+        // if ($request->has('type'))
         // {
 
         //     $information['categories'] = PropertyCategory::with(['categoryContent' => function ($q) use ($language) {
         //         $q->where('language_id', $language->id);
         //     }, 'properties'])
         //     ->where([['status', 1]])
-        //     ->whereIn('type', $request->type)->get(); 
+        //     ->whereIn('type', $request->type)->get();
         // } else {
         //     $information['categories'] = PropertyCategory::with(['categoryContent' => function ($q) use ($language) {
         //         $q->where('language_id', $language->id);
         //     }, 'properties'])
         //     ->where('status', 1)->get();
         // }
- 
+
         $information['bgImg'] = $misc->getBreadcrumb();
         $information['pageHeading'] = $misc->getPageHeading($language);
         $information['amenities'] = Amenity::where('status', 1)->with(['amenityContent' => function ($q) use ($language) {
@@ -90,7 +91,7 @@ class PropertyController extends Controller
                     ->all();
             }
         }
-         
+
         // Amenities: request 'amenities' is an array of names -> fetch amenity_ids in one query
         $amenityIds = [];
         if ($request->filled('amenities')) {
@@ -106,7 +107,7 @@ class PropertyController extends Controller
                     ->all();
             }
         }
- 
+
         $type = [];
         if ($request->filled('type')) {
             $type = $request->type ?? [];
@@ -125,10 +126,10 @@ class PropertyController extends Controller
         $purpose = ['rent', 'sell', 'buy', 'lease'];
         if ($request->filled('purpose') && $request->purpose == 'franchiese') {
             $purpose = ['franchiese'];
-        } 
+        }
 		if ($request->filled('purpose') && $request->purpose == 'business_for_sale') {
             $purpose = ['business_for_sale'];
-        } 
+        }
         if ($request->filled('purpose') && $request->purpose == 'buy') {
             $purpose = ['sell', 'buy'];
         }
@@ -137,7 +138,7 @@ class PropertyController extends Controller
         }
         if ($request->filled('purpose') && $request->purpose == 'lease') {
             $purpose = ['lease'];
-        } 
+        }
 
         $min = $max = null;
         if ($request->filled('min') && $request->filled('max')) {
@@ -188,7 +189,7 @@ class PropertyController extends Controller
             $listAreaId =  $getArea->id;
         }
 
-        if ($request->filled('sort')) 
+        if ($request->filled('sort'))
         {
             if ($request['sort'] == 'new') {
                 $order_by_column = 'properties.created_at';
@@ -259,8 +260,8 @@ class PropertyController extends Controller
             ->when($type, function ($query) use ($type) {
                 return $query->whereIn('properties.type', $type);
             })
-            ->when($purpose, function ($query) use ($purpose) 
-			{
+            ->when($purpose, function ($query) use ($purpose)
+			      {
                 return $query->whereIn('properties.purpose', $purpose);
             })
             ->when($countryId, function ($query) use ($countryId) {
@@ -274,7 +275,7 @@ class PropertyController extends Controller
             })
             ->when($listAreaId, function ($query) use ($listAreaId) {
                 return $query->where('properties.area_id', $listAreaId);
-            }) 
+            })
             ->when(!empty($categoryIds), function ($query) use ($categoryIds) {
                 return $query->whereIn('properties.category_id', $categoryIds);
             })
@@ -380,16 +381,16 @@ class PropertyController extends Controller
 
         $information['units'] = DB::table('units')->whereStatus(1)->get();
 
-        $min = Property::where([['status', 1], ['approve_status', 1]])->min('price');
-        $max = Property::where([['status', 1], ['approve_status', 1]])->max('price');
-        $information['min'] = intval($min);
-        $information['max'] = intval($max);
+        // $min = Property::where([['status', 1], ['approve_status', 1]])->min('price');
+        // $max = Property::where([['status', 1], ['approve_status', 1]])->max('price');
+        // $information['min'] = intval($min);
+        // $information['max'] = intval($max);
         if ($request->ajax()) {
             $viewContent = View::make('frontend.property.property',  $information);
             $viewContent = $viewContent->render();
 
-            return response()->json(['propertyContents' => $viewContent, 'properties' => $property_contents])->header('Cache-Control', 'no-cache, no-store, must-revalidate');
-        } 
+            return response()->json(['propertyContents' => $viewContent, 'properties' => $property_contents,'min' => $filteredMin,'max' => $filteredMax,'minFormatted' => symbolPrice($filteredMin), 'maxFormatted' => symbolPrice($filteredMax)])->header('Cache-Control', 'no-cache, no-store, must-revalidate');
+        }
         return view('frontend.property.index', $information);
     }
 
@@ -458,23 +459,24 @@ class PropertyController extends Controller
 public function featuredAll($type)
     { 
         $property_contents = Property::where([['properties.status', 1], ['properties.approve_status', 1]])
-		->join('property_contents', 'properties.id', 'property_contents.property_id')
-		->where($type, 1)
-		->get(); 
-		
-		$title = match ($type) {
-			'is_featured' => 'Featured Properties',
-			'is_hot' => 'Hot Properties',
-			'is_recommended' => 'Recommended Properties',
-			'is_fast_selling' => 'Fast Selling Properties',
-			default => 'Properties',
-		};
-        return view('frontend.property.featured',compact('property_contents', 'title')); 
+          ->join('property_contents', 'properties.id', 'property_contents.property_id')
+          ->where($type, 1)
+          ->get();
+
+        $title = match ($type) {
+          'is_featured' => 'Featured Properties',
+          'is_hot' => 'Hot Properties',
+          'is_recommended' => 'Recommended Properties',
+          'is_fast_selling' => 'Fast Selling Properties',
+          default => 'Properties',
+        };
+
+        return view('frontend.property.featured',compact('property_contents', 'title'));
     }
-     
+
     public function details($slug)
     {
-		
+
         $misc = new MiscellaneousController();
         $language = $misc->getLanguage();
         $information['language'] = $language;
@@ -482,7 +484,7 @@ public function featuredAll($type)
         $information['bgImg'] = $misc->getBreadcrumb();
         $information['pageHeading'] = $misc->getPageHeading($language);
         $propertyContent = Content::where('slug', $slug)->firstOrFail();
-		 
+
         $baseQuery = Content::query()
         ->where('property_contents.language_id', $language->id)
         ->where('property_contents.property_id', $propertyContent->property_id)
@@ -490,7 +492,7 @@ public function featuredAll($type)
         ->where([['properties.status', 1]]);
 
         if (!auth()->guard('admin')->check()){
-            $baseQuery->when('properties.vendor_id' != 0, function ($query) { 
+            $baseQuery->when('properties.vendor_id' != 0, function ($query) {
                 $query->leftJoin('memberships', 'properties.vendor_id', '=', 'memberships.vendor_id')
                 ->where(function ($query) {
                     $query->where([
@@ -511,12 +513,13 @@ public function featuredAll($type)
 
         $property = $baseQuery->with(['propertySpacifications', 'galleryImages'])
         ->select('properties.*', 'property_contents.*', 'properties.id as propertyId', 'property_contents.id as contentId')->firstOrFail();
- 
+
         $information['propertyContent'] = $property;
         $information['sliders'] =  $property->galleryImages;
         $information['amenities'] = PropertyAmenity::with(['amenityContent' => function ($q) use ($language) {
             $q->where('language_id', $language->id);
         }])->where('property_id', $property->property_id)->get();
+
         $information['agent'] = Agent::with(['agent_info' => function ($q) use ($language) {
             $q->where('language_id', $language->id);
         }])->find($property->agent_id);
@@ -526,9 +529,11 @@ public function featuredAll($type)
             $q->where('language_id', $language->id);
         }])->find($property->vendor_id);
 
+        $information['user'] = User::find($property->user_id);
+
         $information['admin']  = Admin::where('role_id', null)->first();
- 
- 
+
+
         $information['relatedProperty'] = Property::where([['properties.status', 1], ['properties.approve_status', 1]])->leftJoin('property_contents', 'properties.id', 'property_contents.property_id')
             ->leftJoin('vendors', 'properties.vendor_id', '=', 'vendors.id')
             ->leftJoin('memberships', function ($join) {
@@ -549,14 +554,15 @@ public function featuredAll($type)
             ->where('property_contents.language_id', $language->id)->latest('properties.created_at')
             ->select('properties.*', 'property_contents.title', 'property_contents.slug', 'property_contents.address', 'property_contents.language_id')
             ->take(5)->get();
-			
+
         $information['info'] = Basic::select('google_recaptcha_status')->first();
-		
+
         return view('frontend.property.details', $information);
     }
 
     public function contact(Request $request)
-    {  
+    {
+
         if (!Auth::guard('web')->check() && !Auth::guard('vendor')->check() && !Auth::guard('agent')->check()) {
             // if neither web nor vendor is logged in
             return redirect()->route('user.login')->with('error', 'Please login first');
@@ -583,32 +589,66 @@ public function featuredAll($type)
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
-        if ($request->vendor_id != 0) {
 
-            if ($request->vendor_id) {
-                $vendor = Vendor::find($request->vendor_id);
 
-                if (empty($vendor)) {
+        // if ($request->vendor_id != 0) {
 
-                    return back()->with('error', 'Something went wrong!');
-                }
-                $request['to_mail'] = $vendor->email;
-            }
-            if ($request->agent_id) {
-                $agent = Agent::find($request->agent_id);
-                if (empty($agent)) {
-                    return back()->with('error', 'Something went wrong!');
-                }
-                $request['to_mail'] = $agent->email;
-            }
-        } elseif ($request->vendor_id == 0 && !empty($request->agent_id)) {
+        //     if ($request->vendor_id) {
+        //         $vendor = Vendor::find($request->vendor_id);
+
+        //         if (empty($vendor)) {
+
+        //             return back()->with('error', 'Something went wrong!');
+        //         }
+        //         $request['to_mail'] = $vendor->email;
+        //     }
+        //     if ($request->agent_id) {
+        //         $agent = Agent::find($request->agent_id);
+        //         if (empty($agent)) {
+        //             return back()->with('error', 'Something went wrong!');
+        //         }
+        //         $request['to_mail'] = $agent->email;
+        //     }
+        // } elseif ($request->vendor_id == 0 && !empty($request->agent_id)) {
+        //     $agent = Agent::find($request->agent_id);
+        //     if (empty($agent)) {
+        //         return back()->with('error', 'Something went wrong!');
+        //     }
+        //     $request['to_mail'] = $agent->email;
+        // } elseif ($request->vendor_id == 0 && $request->agent_id == 0  && !empty($request->user_id)) {
+        //     $user = User::find($request->user_id);
+        //     if (empty($user)) {
+        //         return back()->with('error', 'Something went wrong!');
+        //     }
+        //     $request['to_mail'] = $user->email;
+        // } else {
+
+        //     $admin = Admin::where('role_id', null)->first();
+        //     $request['to_mail'] = $admin->email;
+        // }
+
+        if (!empty($request->agent_id)) {
             $agent = Agent::find($request->agent_id);
-            if (empty($agent)) {
+            if (!$agent) {
                 return back()->with('error', 'Something went wrong!');
             }
             $request['to_mail'] = $agent->email;
-        } else {
 
+        } elseif (!empty($request->vendor_id)) {
+            $vendor = Vendor::find($request->vendor_id);
+            if (!$vendor) {
+                return back()->with('error', 'Something went wrong!');
+            }
+            $request['to_mail'] = $vendor->email;
+
+        } elseif (!empty($request->user_id)) {
+            $user = User::find($request->user_id);
+            if (!$user) {
+                return back()->with('error', 'Something went wrong!');
+            }
+            $request['to_mail'] = $user->email;
+
+        } else {
             $admin = Admin::where('role_id', null)->first();
             $request['to_mail'] = $admin->email;
         }
@@ -639,7 +679,7 @@ public function featuredAll($type)
         return back()->with('success', 'Inquiry sent successfully');
     }
     public function contactUser(Request $request)
-    { 
+    {
         $rules = [
             'name' => 'required',
             'email' => 'required|email:rfc,dns',
@@ -840,21 +880,21 @@ public function featuredAll($type)
             ];
         }
 
-        return response()->json($suggestions); 
-    } 
+        return response()->json($suggestions);
+    }
     public function filters(Request $request)
 	{
 			$themeVersion = Basic::query()->pluck('theme_version')->first();
-			
+
 			$secInfo = Section::query()->first();
-			
+
 			$misc = new MiscellaneousController();
-			
+
 			$language = $misc->getLanguage();
-			
+
 			$queryResult['language'] = $language;
-			
-		  
+
+
 			$all_proeprty_categories = PropertyCategory::where('status', 1)
 			->with(['categoryContent' => function ($q) use ($language) {
 				$q->where('language_id', $language->id);
@@ -864,20 +904,20 @@ public function featuredAll($type)
 			}])
 			->orderBy('serial_number', 'asc')
 			->get();
-			 
+
 			$queryResult['all_proeprty_categories'] = $all_proeprty_categories;
-			
-			   
+
+
 			if ($themeVersion == 1 && $secInfo->cities_section_status == 1) {
 				$cities =  City::where([['status', 1], ['featured', 1]])->orderBy('serial_number', 'asc')->get();
 				$cities->map(function ($city) use ($language) {
 					$city['propertyCount'] = $city->cityProperties()->count();
 					$city['name'] = $city->getContent($language->id)->name;
 				});
-				
+
 				$queryResult['cities'] =  $cities;
-			} 
-			
+			}
+
 			// --- Property min & max ---
 			$propertyStats = Property::query()
 				->where('status', 1)
@@ -887,7 +927,7 @@ public function featuredAll($type)
 
 			$queryResult['min'] = (int) $propertyStats->min_price;
 			$queryResult['max'] = (int) $propertyStats->max_price;
- 
+
         return view('frontend.property.filter', $queryResult);
-    } 
+    }
 }

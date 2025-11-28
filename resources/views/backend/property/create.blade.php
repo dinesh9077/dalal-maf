@@ -32,7 +32,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                
+
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-10 offset-lg-1">
@@ -151,7 +151,7 @@
                                             </select>
                                         </div>
 
-                                        
+
 
                                     </div>
                                     <div class="col-lg-3">
@@ -180,7 +180,7 @@
                                                 </option>
                                                 @foreach ($amenities as $amenity)
                                                     <option value="{{ $amenity->id }}">
-                                                        {{ $amenity->amenityContent->name }}</option> 
+                                                        {{ $amenity->amenityContent->name }}</option>
                                                 @endforeach
                                             </select>
 
@@ -611,11 +611,11 @@
         $('#purpose').on('change', function() {
             const val = this.value;
             const hideFields = val === 'franchiese' || val === 'business_for_sale';
-            
+
             // toggle visibility
             $('.hideBath, .hideSqft').toggle(!hideFields);
             $('.hideNotes').toggle(hideFields);
-             
+
             // reset values
             $('input[name="bath"], input[name="area"]').val(0);
             $('input[name="notes"]').val('');

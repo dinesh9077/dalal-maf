@@ -36,7 +36,7 @@ class SupportTicketController extends Controller
           return $query->where('id', 'like', '%' . $ticket_id . '%');
         })
         ->orderByDesc('id')
-        ->paginate(10);
+        ->get();
     } else {
       $collection = SupportTicket::with('vendor')->when($status, function ($query, $status) {
         return $query->where('status',  $status);
@@ -46,7 +46,7 @@ class SupportTicketController extends Controller
         })
         ->where('admin_id', Auth::guard('admin')->user()->id)
         ->orderByDesc('id')
-        ->paginate(10);
+        ->get();
     }
 
 
@@ -201,7 +201,7 @@ class SupportTicketController extends Controller
     //delete all support ticket
     $support_ticket = SupportTicket::where('id', $id)->first();
     if ($support_ticket) {
-      //delete conversation 
+      //delete conversation
       $messages = $support_ticket->messages()->get();
       foreach ($messages as $message) {
         @unlink(public_path('assets/admin/img/support-ticket/') . $message->file);
@@ -220,7 +220,7 @@ class SupportTicketController extends Controller
     foreach ($ids as $id) {
       $support_ticket = SupportTicket::where('id', $id)->first();
       if ($support_ticket) {
-        //delete conversation 
+        //delete conversation
         $messages = $support_ticket->messages()->get();
         foreach ($messages as $message) {
           @unlink(public_path('assets/admin/img/support-ticket/' . $message->file));

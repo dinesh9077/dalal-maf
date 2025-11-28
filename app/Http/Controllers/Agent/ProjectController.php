@@ -68,7 +68,7 @@ class ProjectController extends Controller
             ->where('project_contents.language_id', $language_id)
             ->select('projects.*')
             ->orderBy('id', 'desc')
-            ->paginate(10);
+            ->get();
         return view('agent.project.index', $data);
     }
 

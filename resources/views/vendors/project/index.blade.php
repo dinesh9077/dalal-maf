@@ -58,20 +58,20 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-6">
+                                    {{-- <div class="col-lg-6">
                                           <div class="form-group">
                                         <input type="text" name="title" value="{{ request()->input('title') }}"
                                             class="form-control" placeholder="Title">
                                           </div>
-                                    </div>
+                                    </div> --}}
 
                                 </div>
                             </form>
                         </div>
                         <div class="col-lg-3">
-                              <div class="form-group">
-                            @includeIf('vendors.partials.languages')
-                              </div>
+                              {{-- <div class="form-group">
+                              @includeIf('vendors.partials.languages')
+                              </div> --}}
                         </div>
                         <div class="col-lg-6">
                             <a href="{{ route('vendor.project_management.create_project') }}"
@@ -93,7 +93,7 @@
                                 <h3 class="text-center">{{ __('NO PROJECT ARE FOUND!') }}</h3>
                             @else
                                 <div class="table-responsive">
-                                    <table class="table table-striped mt-3">
+                                    <table class="table table-striped mt-3" id="basic-datatables">
                                         <thead>
                                             <tr>
                                                 <th scope="col">
@@ -224,10 +224,10 @@
                 </div>
 
                 <div class="card-footer">
-                    {{ $projects->appends([
+                    {{-- {{ $projects->appends([
                             'vendor_id' => request()->input('vendor_id'),
                             'title' => request()->input('title'),
-                        ])->links() }}
+                        ])->links() }} --}}
                 </div>
 
             </div>

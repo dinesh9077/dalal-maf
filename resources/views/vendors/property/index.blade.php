@@ -76,19 +76,19 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-lg-3 mt-3 mt-lg-0">
+                                {{-- <div class="col-lg-3 mt-3 mt-lg-0">
                                     <div class="form-group" style="padding: 0px !important;">
                                         <input type="text" name="title" value="{{ request()->input('title') }}"
                                             class="form-control" placeholder="Title">
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </form>
                     </div>
                     <div class="col-lg-2">
-                        <div class="form-group" style="height: 42.19px; padding: 0px !important;">
+                        {{-- <div class="form-group" style="height: 42.19px; padding: 0px !important;">
                             @includeIf('vendors.partials.languages')
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="col-lg-4 mt-3 mt-lg-0">
                         <a href="{{ route('vendor.property_management.type') }}"
@@ -109,8 +109,8 @@
                         @if (count($properties) == 0)
                         <h3 class="text-center">{{ __('NO PROPERTY FOUND!') }}</h3>
                         @else
-                        <div class="table-responsive new-v-table">
-                            <table class="table table-striped">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="basic-datatables-property">
                                 <thead>
                                     <tr>
                                         <th scope="col">
@@ -191,7 +191,7 @@
                                             <span class="badge badge-danger">{{ __('Rejected') }}</span>
                                             @endif
                                         </td>
-                                         
+
                                         <td>
                                             <form id="statusForm{{ $property->id }}" class="d-inline-block"  style="margin: 0px;"
                                                 action="{{ route('vendor.property_management.update_status') }}"
@@ -261,14 +261,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="card-footer">
-                    {{ $properties->appends([
-                            'vendor_id' => request()->input('vendor_id'),
-                            'title' => request()->input('title'),
-                        ])->links() }}
-                </div> -->
-
         </div>
     </div>
 </div>

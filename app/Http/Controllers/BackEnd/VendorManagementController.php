@@ -107,7 +107,7 @@ class VendorManagementController extends Controller
         })
         ->where('id', '!=', 0)
         ->orderBy('id', 'desc')
-        ->paginate(10);
+        ->get();
 
         $packages = Package::query()->where('status', '1')->get();
         return view('backend.end-user.vendor.index', compact('vendors','packages'));
@@ -144,7 +144,7 @@ class VendorManagementController extends Controller
           })
           ->orderBy('vendor_kycs.id', 'desc')
           ->select('vendors.*') // important: avoid selecting vendorkyc fields unless needed
-          ->paginate(10);
+          ->get();
 
       return view('backend.end-user.vendor.kyc-list', compact('vendors'));
     }

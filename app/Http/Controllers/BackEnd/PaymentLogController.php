@@ -33,7 +33,7 @@ class PaymentLogController extends Controller
         })
             ->where('vendor_id', '!=', 0)
             ->orderBy('id', 'DESC')
-            ->paginate(10);
+            ->get();
         return view('backend.payment_log.index', $data);
     }
 

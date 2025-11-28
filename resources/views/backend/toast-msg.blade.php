@@ -1,47 +1,47 @@
 <script>
-	@if(Session::has('info'))
-	$.toast({
-		text: "{{ session('info') }}",
-		position:"top-right",
-		loaderBg:"#3b98b5",
-		icon:"info",
-		hideAfter:3e3,
-		stack:1
-	})
-	@endif
+	// @if(Session::has('info'))
+	// $.toast({
+	// 	text: "{{ session('info') }}",
+	// 	position:"top-right",
+	// 	loaderBg:"#3b98b5",
+	// 	icon:"info",
+	// 	hideAfter:3e3,
+	// 	stack:1
+	// })
+	// @endif
 
-	@if(Session::has('error'))
-		$.toast({
-			text: "{{ session('error') }}",
-			position: "top-right",
-			loaderBg: "#bf441d",
-			icon: "error",
-			hideAfter: 3e3,
-			stack: 1
-		})
-	@endif
+	// @if(Session::has('error'))
+	// 	$.toast({
+	// 		text: "{{ session('error') }}",
+	// 		position: "top-right",
+	// 		loaderBg: "#bf441d",
+	// 		icon: "error",
+	// 		hideAfter: 3e3,
+	// 		stack: 1
+	// 	})
+	// @endif
 
-    @if(Session::has('success'))
-	$.toast({
-		text: "{{ session('success') }}",
-		position: "top-right",
-		loaderBg: "#5ba035",
-		icon: "success",
-		hideAfter: 3e3,
-		stack: 1
-	})
-    @endif
+  //   @if(Session::has('success'))
+	// $.toast({
+	// 	text: "{{ session('success') }}",
+	// 	position: "top-right",
+	// 	loaderBg: "#5ba035",
+	// 	icon: "success",
+	// 	hideAfter: 3e3,
+	// 	stack: 1
+	// })
+  //   @endif
 
-	@if(Session::has('warning'))
-	$.toast({
-		text: "{{ session('warning') }}",
-		position: "top-right",
-		loaderBg: "#da8609",
-		icon: "warning",
-		hideAfter: 3e3,
-		stack: 1
-	})
-	@endif
+	// @if(Session::has('warning'))
+	// $.toast({
+	// 	text: "{{ session('warning') }}",
+	// 	position: "top-right",
+	// 	loaderBg: "#da8609",
+	// 	icon: "warning",
+	// 	hideAfter: 3e3,
+	// 	stack: 1
+	// })
+	// @endif
 
 	function toastrMsg(type,msg)
 	{

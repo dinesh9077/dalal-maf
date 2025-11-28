@@ -12,7 +12,7 @@ class VerifyCsrfToken extends Middleware
    * @var array
    */
   protected $except = [
- 
+
 
     '/*paytm/payment-status*',
     '/vendor/membership/mercadopago/cancel',
@@ -37,5 +37,6 @@ class VerifyCsrfToken extends Middleware
     '/vendor/property-management/featured/razorpay/notify',
     '/vendor/property-management/featured/mercadopago/notify',
     '*/vendor/property-management/featured/paytm/notify*',
+    '/remove-visitor'
   ];
 }

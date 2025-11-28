@@ -59,7 +59,34 @@
   @yield('variables')
   @yield('script')
 	<script>
-		let modalOpen = false;
+    function sendHeartbeat() {
+        fetch('{{ route("visitors.update") }}', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        })
+        .then(res => {
+            if (!res.ok) {
+                // prevent JS crash
+                console.warn("Heartbeat request failed:", res.status);
+            }
+        })
+        .catch(err => {
+            // prevent JS crash
+            console.warn("Heartbeat error ignored:", err);
+        });
+    }
+
+    // When tab/window closes, call leave endpoint
+    // window.addEventListener('beforeunload', function () {
+    //     navigator.sendBeacon('{{ route("visitors.leave") }}');
+    // });
+
+    // setInterval(sendHeartbeat, 30000);
+		// sendHeartbeat();
+
+    let modalOpen = false;
 
 		function closemodal() {
 			setTimeout(function() {
@@ -67,26 +94,7 @@
 			}, 1000)
 		}
 
-    function sendHeartbeat() {
-        fetch('{{ route("visitors.update") }}', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            }
-        });
-    }
-
-        // Send heartbeat every 30 seconds
-        setInterval(sendHeartbeat, 30000);
-        sendHeartbeat(); // send immediately on page load
-
-        // When tab/window closes, call leave endpoint
-        window.addEventListener('beforeunload', function () {
-            navigator.sendBeacon('{{ route("visitors.leave") }}');
-        });
-
-
-	</script>
+</script>
   @include('backend.toast-msg')
   <div id="modal-view-render"> </div>
 </body>

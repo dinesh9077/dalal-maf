@@ -51,7 +51,7 @@
             max-width: 100%;
         }
 
-        
+
     :root {
         --color-primary: {
                 {
@@ -662,14 +662,14 @@
 								toastr.success(response.message);
                     }
 
-                } else {
-							if (window.toastr) {
-								toastr.error(response.message || 'Action failed');
-							}
-                }
-            },
-            error: function(xhr) {
-                if (xhr.status === 401) {
+						} else {
+							// if (window.toastr) {
+							// 	toastr.error(response.message || 'Action failed');
+							// }
+						}
+					},
+					error: function(xhr) {
+						if (xhr.status === 401) {
 							if (window.toastr) toastr.warning('Please login to use wishlist.');
                     $('#customerPhoneModal').modal('show');
 						} else {

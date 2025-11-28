@@ -35,7 +35,7 @@
                             <div class="card-title d-inline-block">{{ __('Properties') }}</div>
                         </div>
 
-                        <div class="col-lg-3">
+                        {{-- <div class="col-lg-3">
                             <form action="{{ route($search_url) }}" method="get"
                                 id="carSearchForm">
                                 <div class="row">
@@ -53,7 +53,7 @@
                             <div class="form-group">
                                 @includeIf('agent.partials.languages')
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-3 mt-2 mt-lg-0">
                             <a href="{{ route('agent.property_management.type') }}"
                                 class="btn btn-primary btn-sm float-lg-right"><i class="fas fa-plus"></i>
@@ -74,7 +74,7 @@
                                 <h3 class="text-center">{{ __('NO PROPERTIY FOUND!') }}</h3>
                             @else
                                 <div class="table-responsive">
-                                    <table class="table table-striped mt-3">
+                                    <table class="table table-striped mt-3" id="basic-datatables">
                                         <thead>
                                             <tr>
                                                 <th scope="col">
@@ -82,6 +82,8 @@
                                                 </th>
                                                 <th scope="col">{{ __('Title') }}</th>
                                                 <th scope="col">{{ __('Type') }}</th>
+                                                <th scope="col">{{ __('Category') }}</th>
+                                                <th scope="col">{{ __('Purpose') }}</th>
                                                 <th scope="col">{{ __('City') }}</th>
                                                 <th scope="col">{{ __('Area') }}</th>
                                                 <th scope="col">{{ __('Approval Status') }}</th>
@@ -123,6 +125,8 @@
                                                     <td>
                                                         {{ $property->type }}
                                                     </td>
+                                                    <td> {{ $property->categoryContent?->name }} </td>
+                                                    <td> {{ $property->purpose }} </td>
                                                     <td>
                                                         {{ $property->cityContent->name }}
                                                     </td>
@@ -207,12 +211,12 @@
                     </div>
                 </div>
 
-                <div class="card-footer">
+                {{-- <div class="card-footer">
                     {{ $properties->appends([
                             'vendor_id' => request()->input('vendor_id'),
                             'title' => request()->input('title'),
                         ])->links() }}
-                </div>
+                </div> --}}
 
             </div>
         </div>

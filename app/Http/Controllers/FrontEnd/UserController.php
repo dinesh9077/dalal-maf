@@ -1,7 +1,7 @@
 <?php
-	
+
 	namespace App\Http\Controllers\FrontEnd;
-	
+
 	use App\Http\Controllers\Controller;
 	use App\Http\Controllers\FrontEnd\MiscellaneousController;
 	use App\Http\Helpers\BasicMailer;
@@ -30,7 +30,7 @@
 	use Laravel\Socialite\Facades\Socialite;
 	use App\Http\Controllers\Vendor\VendorController;
 	use App\Models\Vendor;
-	
+
 	class UserController extends Controller
 	{
 		public function __construct()
@@ -38,43 +38,43 @@
 			$bs = DB::table('basic_settings')
 			->select('facebook_app_id', 'facebook_app_secret', 'google_client_id', 'google_client_secret')
 			->first();
-			
+
 			Config::set('services.facebook.client_id', $bs->facebook_app_id);
 			Config::set('services.facebook.client_secret', $bs->facebook_app_secret);
 			Config::set('services.facebook.redirect', url('user/login/facebook/callback'));
-			
+
 			Config::set('services.google.client_id', $bs->google_client_id);
 			Config::set('services.google.client_secret', $bs->google_client_secret);
 			Config::set('services.google.redirect', url('login/google/callback'));
 		}
-		
+
 		public function login(Request $request)
 		{
 			$misc = new MiscellaneousController();
-			
+
 			$language = $misc->getLanguage();
-			
+
 			$queryResult['seoInfo'] = $language->seoInfo()->select('meta_keyword_login', 'meta_description_login')->first();
-			
+
 			$queryResult['pageHeading'] = $misc->getPageHeading($language);
-			
+
 			$queryResult['bgImg'] = $misc->getBreadcrumb();
-			
+
 			// get the status of digital product (exist or not in the cart)
 			if (!empty($request->input('digital_item'))) {
 				$queryResult['digitalProductStatus'] = $request->input('digital_item');
 			}
-			
+
 			$queryResult['bs'] = Basic::query()->select('google_recaptcha_status', 'facebook_login_status', 'google_login_status')->first();
-			
+
 			return view('frontend.user.login', $queryResult);
 		}
-		
+
 		public function redirectToFacebook()
 		{
 			return Socialite::driver('facebook')->redirect();
 		}
-		
+
 		public function handleFacebookCallback(Request $request)
 		{
 			if ($request->has('error_code')) {
@@ -83,17 +83,17 @@
 			}
 			return $this->authenticationViaProvider('facebook');
 		}
-		
+
 		public function redirectToGoogle()
 		{
 			return Socialite::driver('google')->redirect();
 		}
-		
+
 		public function handleGoogleCallback()
 		{
 			return $this->authenticationViaProvider('google');
 		}
-		
+
 		public function authenticationViaProvider($driver)
 		{
 			// get the url from session which will be redirect after login
@@ -102,42 +102,42 @@
 				} else {
 				$redirectURL = route('index');
 			}
-			
+
 			$responseData = Socialite::driver($driver)->user();
 			$userInfo = $responseData->user;
-			
+
 			$isUser = User::query()->where('email', '=', $userInfo['email'])->first();
-			
+
 			if (!empty($isUser)) {
 				// log in
 				if ($isUser->status == 1) {
 					Auth::guard('web')->login($isUser);
-					
+
 					return redirect($redirectURL);
 					} else {
 					Session::flash('error', 'Sorry, your account has been deactivated.');
-					
+
 					return redirect()->route('user.login');
 				}
 				} else {
 				// get user avatar and save it
 				$avatar = $responseData->getAvatar();
 				$fileContents = file_get_contents($avatar);
-				
+
 				$avatarName = $responseData->getId() . '.jpg';
 				$path = public_path('assets/img/users/');
-				
+
 				file_put_contents($path . $avatarName, $fileContents);
-				
+
 				// sign up
 				$user = new User();
-				
+
 				if ($driver == 'facebook') {
 					$user->name = $userInfo['name'];
 					} else {
 					$user->name = $userInfo['given_name'];
 				}
-				
+
 				$user->image = $avatarName;
 				$user->username = $userInfo['id'];
 				$user->email = $userInfo['email'];
@@ -146,16 +146,16 @@
 				$user->provider = ($driver == 'facebook') ? 'facebook' : 'google';
 				$user->provider_id = $userInfo['id'];
 				$user->save();
-				
+
 				Auth::guard('web')->login($user);
-				
+
 				return redirect($redirectURL);
 			}
 		}
-		
+
 		public function loginSubmit(Request $request)
 		{
-			
+
 			if (Auth::guard('vendor')->check()) {
 				Auth::guard('vendor')->logout();
 				Session::forget('vendor_secret_login');
@@ -167,86 +167,86 @@
 				} else {
 				$redirectURL = null;
 			}
-			 
+
 			$rules = [
 				'email' => 'required',
 				'password' => 'required'
 			];
-			
+
 			$info = Basic::select('google_recaptcha_status')->first();
 			if ($info->google_recaptcha_status == 1) {
 				$rules['g-recaptcha-response'] = 'required|captcha';
 			}
-			
+
 			$messages = [];
-			
+
 			if ($info->google_recaptcha_status == 1) {
 				$messages['g-recaptcha-response.required'] = 'Please verify that you are not a robot.';
 				$messages['g-recaptcha-response.captcha'] = 'Captcha error! try again later or contact site admin.';
 			}
-			
+
 			$validator = Validator::make($request->all(), $rules, $messages);
-			
+
 			if ($validator->fails()) {
 				return redirect()->route('user.login')->withErrors($validator->errors())->withInput();
 			}
-			
+
 			// get the email and password which has provided by the user
 			$credentials = $request->only('email', 'password');
-			
+
 			// login attempt
 			if (Auth::guard('web')->attempt($credentials)) {
 				$authUser = Auth::guard('web')->user();
 				// second, check whether the user's account is active or not
 				if ($authUser->email_verified_at == null) {
 					Session::flash('error', 'Please verify your email address');
-					
+
 					// logout auth user as condition not satisfied
 					Auth::guard('web')->logout();
-					
+
 					return redirect()->back();
 				}
 				if ($authUser->status == 0) {
 					Session::flash('error', 'Sorry, your account has been deactivated');
-					
+
 					// logout auth user as condition not satisfied
 					Auth::guard('web')->logout();
-					
+
 					return redirect()->back();
 				}
-				
+
 				// otherwise, redirect auth user to next url
 				if (is_null($redirectURL)) {
 					return redirect()->route('index');
 					} else {
 					// before, redirect to next url forget the session value
 					$request->session()->forget('redirectTo');
-					
+
 					return redirect($redirectURL);
 				}
 				} else {
 				Session::flash('error', 'Incorrect email or password');
-				
+
 				return redirect()->back();
 			}
 		}
-		
+
 		public function forgetPassword()
 		{
 			$misc = new MiscellaneousController();
-			
+
 			$language = $misc->getLanguage();
-			
+
 			$queryResult['seoInfo'] = $language->seoInfo()->select('meta_keyword_forget_password', 'meta_description_forget_password')->first();
-			
+
 			$queryResult['pageHeading'] = $misc->getPageHeading($language);
-			
+
 			$queryResult['bgImg'] = $misc->getBreadcrumb();
 			$queryResult['bs'] = Basic::query()->select('google_recaptcha_status', 'facebook_login_status', 'google_login_status')->first();
-			
+
 			return view('frontend.user.forget-password', $queryResult);
 		}
-		
+
 		public function forgetPasswordMail(Request $request)
 		{
 			$rules = [
@@ -256,122 +256,122 @@
 			new MatchEmailRule('user')
 			]
 			];
-			
+
 			$info = Basic::select('google_recaptcha_status')->first();
 			if ($info->google_recaptcha_status == 1) {
 				$rules['g-recaptcha-response'] = 'required|captcha';
 			}
-			
+
 			$messages = [];
-			
+
 			if ($info->google_recaptcha_status == 1) {
 				$messages['g-recaptcha-response.required'] = 'Please verify that you are not a robot.';
 				$messages['g-recaptcha-response.captcha'] = 'Captcha error! try again later or contact site admin.';
 			}
-			
+
 			$validator = Validator::make($request->all(), $rules, $messages);
-			
+
 			if ($validator->fails()) {
 				return redirect()->back()->withErrors($validator->errors())->withInput();
 			}
-			
+
 			$user = User::query()->where('email', '=', $request->email)->first();
-			
+
 			// store user email in session to use it later
 			$request->session()->put('userEmail', $user->email);
-			
+
 			// get the mail template information from db
 			$mailTemplate = MailTemplate::query()->where('mail_type', '=', 'reset_password')->first();
 			$mailData['subject'] = $mailTemplate->mail_subject;
 			$mailBody = $mailTemplate->mail_body;
-			
+
 			// get the website title info from db
 			$info = Basic::select('website_title')->first();
-			
+
 			$name = $user->username;
-			
+
 			$link = '<a href=' . url("user/reset-password") . '>Click Here</a>';
-			
+
 			$mailBody = str_replace('{customer_name}', $name, $mailBody);
 			$mailBody = str_replace('{password_reset_link}', $link, $mailBody);
 			$mailBody = str_replace('{website_title}', $info->website_title, $mailBody);
-			
+
 			$mailData['body'] = $mailBody;
-			
+
 			$mailData['recipient'] = $user->email;
-			
+
 			$mailData['sessionMessage'] = 'A mail has been sent to your email address';
-			
+
 			BasicMailer::sendMail($mailData);
-			
+
 			return redirect()->back();
 		}
-		
+
 		public function resetPassword()
 		{
 			$misc = new MiscellaneousController();
-			
+
 			$bgImg = $misc->getBreadcrumb();
-			
+
 			return view('frontend.user.reset-password', compact('bgImg'));
 		}
-		
+
 		public function resetPasswordSubmit(Request $request)
 		{
 			if ($request->session()->has('userEmail')) {
 				// get the user email from session
 				$emailAddress = $request->session()->get('userEmail');
-				
+
 				$rules = [
 				'new_password' => 'required|confirmed',
 				'new_password_confirmation' => 'required'
 				];
-				
+
 				$messages = [
 				'new_password.confirmed' => 'Password confirmation failed.',
 				'new_password_confirmation.required' => 'The confirm new password field is required.'
 				];
-				
+
 				$validator = Validator::make($request->all(), $rules, $messages);
-				
+
 				if ($validator->fails()) {
 					return redirect()->back()->withErrors($validator->errors());
 				}
-				
+
 				$user = User::query()->where('email', '=', $emailAddress)->first();
-				
+
 				$user->update([
 				'password' => Hash::make($request->new_password)
 				]);
-				
+
 				Session::flash('success', 'Password updated successfully.');
 				} else {
 				Session::flash('error', 'Something went wrong!');
 			}
-			
+
 			return redirect()->route('user.login');
 		}
-		
+
 		public function signup()
-		{ 
+		{
 			$misc = new MiscellaneousController();
-			
+
 			$language = $misc->getLanguage();
-			
+
 			$queryResult['seoInfo'] = $language->seoInfo()->select('meta_keyword_signup', 'meta_description_signup')->first();
-			
+
 			$queryResult['pageHeading'] = $misc->getPageHeading($language);
-			
+
 			$queryResult['bgImg'] = $misc->getBreadcrumb();
-			
+
 			$queryResult['recaptchaInfo'] = Basic::select('google_recaptcha_status')->first();
-			
+
 			return view('frontend.user.signup', $queryResult);
 		}
-		
+
 		public function signupSubmit(Request $request)
-		{ 
-			try { 
+		{
+			try {
 				// Common validation rules
 				$rules = [
 					'usertype' => 'required|string',
@@ -380,11 +380,11 @@
 
 				// If vendor (builder) — handle separately
 				if ($request->usertype === 'Builder')
-				{ 
+				{
 					$vendorController = new VendorController();
 					return $vendorController->create($request);
 				}
-	
+
 				// --- USER SIGNUP LOGIC ---
 				$info = Basic::select('google_recaptcha_status', 'website_title')->first();
 
@@ -409,18 +409,18 @@
 				if ($validator->fails()) {
 					return redirect()->back()->withErrors($validator)->withInput();
 				}
-				
+
 				if ($request->username == 'admin') {
 					Session::flash('username_error', 'You can not use admin as a username!');
 					return redirect()->back();
 				}
-				
+
 				// --- Check if user with same phone already exists ---
-				$user = User::where('phone', $request->phone)->first();  
+				$user = User::where('phone', $request->phone)->first();
 				if (!$user) {
 					return redirect()->back()->with('error', 'Something went wrong.')->withInput();
 				}
-		
+
 				$user->username = $request->username;
 				$user->email = $request->email;
 				$user->phone = $request->phone;
@@ -428,10 +428,10 @@
 				$user->email_verified_at = Carbon::now();
 				$user->user_type = $request->usertype;
 				$user->save();
-				
+
 				Session::forget('login_phone');
 				Auth::login($user);
-				
+
 				// Flash message and redirect
 				Session::flash('success', 'Signup successful!.');
 				return redirect()->route('user.dashboard');
@@ -441,7 +441,7 @@
 			}
 		}
 
-		
+
 		public function signupVerify($id)
 		{
 			$user = User::where('id', $id)->firstOrFail();
@@ -450,46 +450,46 @@
 			Auth::login($user);
 			return redirect()->route('user.dashboard');
 		}
-		
+
 		public function redirectToDashboard()
 		{
 			$misc = new MiscellaneousController();
-			
+
 			$language = $misc->getLanguage();
-			
+
 			$queryResult['language'] = $language;
-			
+
 			$queryResult['bgImg'] = $misc->getBreadcrumb();
 			$queryResult['pageHeading'] = $misc->getPageHeading($language);
-			
+
 			$user = Auth::guard('web')->user();
-			
+
 			$queryResult['authUser'] = $user;
 			$queryResult['wishlists'] = Wishlist::where('user_id', $user->id)
 			->get();
-			
+
 			return view('frontend.user.dashboard', $queryResult);
 		}
-		
+
 		public function editProfile()
 		{
-			
+
 			$misc = new MiscellaneousController();
-			
+
 			$queryResult['bgImg'] = $misc->getBreadcrumb();
 			$language = $misc->getLanguage();
 			$queryResult['pageHeading'] = $misc->getPageHeading($language);
-			
+
 			$queryResult['authUser'] = Auth::guard('web')->user();
 			//Front side user edit
 			// return view('frontend.user.edit-profile', $queryResult);
-			
+
 			//User Panel edit User
 			return view('users.edit-profile', $queryResult);
 		}
-		
+
 		public function updateProfile(Request $request)
-		{ 
+		{
 			$request->validate([
 			'name' => 'required',
 			'username' => [
@@ -503,7 +503,7 @@
 			Rule::unique('users', 'email')->ignore(Auth::guard('web')->user()->id)
 			],
 			]);
-			
+
 			$authUser = Auth::guard('web')->user();
 			$in = $request->all();
 			$file = $request->file('image');
@@ -515,14 +515,14 @@
 				$file->move($directory, $fileName);
 				$in['image'] = $fileName;
 			}
-			
+
 			$authUser->update($in);
-			
+
 			Session::flash('success', 'Your profile has been updated successfully.');
-			
+
 			return redirect()->back();
 		}
-		
+
 		public function sendPhoneOtp(Request $request)
 		{
 			// Check if user exists
@@ -565,17 +565,17 @@
 		}
 
 		public function resendPhoneOtp(Request $request)
-		{ 
-			$phone = $request->phone; 
+		{
+			$phone = $request->phone;
 			if(empty($phone))
 			{
 				return response()->json([
-					'message' => 'Phone Number is required.', 
+					'message' => 'Phone Number is required.',
 				]);
 			}
 			$now = now();
-			$expiresAt = $now->copy()->addMinutes(10);  
-			
+			$expiresAt = $now->copy()->addMinutes(10);
+
 			$otp = rand(1000, 9999);
 			$smsContent = "Use OTP $otp to log in securely. This code is valid for 10 minutes. Keep it confidential._ Team Dalal Maf";
 
@@ -591,28 +591,28 @@
 
 			DB::table('otp_verification')->updateOrInsert(
 				['phone' => $phone],
-				[ 
+				[
 					'phone' => $phone,
 					'otp' => $otp,
-					'otp_at' => null,           
+					'otp_at' => null,
 					'expires_at' => $expiresAt,
 					'updated_at' => $now,
-					'created_at' => $now,          
+					'created_at' => $now,
 				]
 			);
-  
+
 			return response()->json([
 				'message' => 'OTP sent successfully.',
-				'expires_at' => $expiresAt->toIso8601String(), 
+				'expires_at' => $expiresAt->toIso8601String(),
 			]);
 		}
 
 		public function verifyPhoneOtp(Request $request)
-		{ 
+		{
 			try {
 				$phone = $request->phone;
-				$otp = $request->otp; 
-				
+				$otp = $request->otp;
+
 				// Fetch latest OTP record
 				$otpRecord = DB::table('otp_verification')
 					->where('phone', $phone)
@@ -627,7 +627,7 @@
 				if (isset($otpRecord->expires_at) && now()->gt($otpRecord->expires_at)) {
 					return response()->json(['message' => 'OTP has expired. Please request a new one.'], 410);
 				}
-				
+
 				if ($otpRecord->otp != $otp) {
 					return response()->json(['message' => 'Invalid OTP.'], 422);
 				}
@@ -639,7 +639,7 @@
 
 				$vendor = Auth::guard('web')->user();
 				$vendor->update(['phone' => $request->phone]);
-				
+
 				// Auth::guard('web')->logout();
 
 				// // Invalidate session and regenerate CSRF token for security
@@ -663,18 +663,18 @@
 		public function changePassword()
 		{
 			$misc = new MiscellaneousController();
-			
+
 			$bgImg = $misc->getBreadcrumb();
 			$language = $misc->getLanguage();
 			$pageHeading = $misc->getPageHeading($language);
-			
+
 			//Front side user edit
 			// return view('frontend.user.change-password', compact('bgImg', 'pageHeading'));
-			
+
 			//User Panel edit User
 			return view('users.change-password', compact('bgImg', 'pageHeading'));
 		}
-		
+
 		public function updatePassword(Request $request)
 		{
 			$rules = [
@@ -685,29 +685,29 @@
 			'new_password' => 'required|confirmed',
 			'new_password_confirmation' => 'required'
 			];
-			
+
 			$messages = [
 			'new_password.confirmed' => 'Password confirmation failed.',
 			'new_password_confirmation.required' => 'The confirm new password field is required.'
 			];
-			
+
 			$validator = Validator::make($request->all(), $rules, $messages);
-			
+
 			if ($validator->fails()) {
 				return redirect()->back()->withErrors($validator->errors());
 			}
-			
+
 			$user = Auth::guard('web')->user();
-			
+
 			$user->update([
 			'password' => Hash::make($request->new_password)
 			]);
-			
+
 			Session::flash('success', 'Password updated successfully.');
-			
+
 			return redirect()->back();
 		}
-		
+
 		//wishlist
 		public function wishlist()
 		{
@@ -716,20 +716,20 @@
 			$language = $misc->getLanguage();
 			$information['language'] = $language;
 			$information['pageHeading'] = $misc->getPageHeading($language);
-			
+
 			$queryResult['language'] = $language;
 			$user_id = Auth::guard('web')->user()->id;
-			$wishlists = Wishlist::where('user_id', $user_id)->paginate(10);
+			$wishlists = Wishlist::where('user_id', $user_id)->get();
 			$information['bgImg'] = $bgImg;
 			$information['wishlists'] = $wishlists;
-			
+
 			//Front side user edit
 			// return view('frontend.user.wishlist', $information);
-			
+
 			//User Panel edit User
 			return view('users.wishlist', $information);
 		}
-		
+
 		public function inquiry()
 		{
 			$misc = new MiscellaneousController();
@@ -737,7 +737,7 @@
 			$language = $misc->getLanguage();
 			$information['language'] = $language;
 			$information['pageHeading'] = $misc->getPageHeading($language);
-			
+
 			$queryResult['language'] = $language;
 			$user_id = Auth::guard('web')->user()->id;
 			$inquiry = PropertyContact::where('inquiry_by_user', $user_id)->get();
@@ -745,9 +745,9 @@
 			$information['inquiries'] = $inquiry;
 			return view('frontend.user.inquiry', $information);
 		}
-		
-		
-		//add to wishlist 
+
+
+		//add to wishlist
 		public function add_to_wishlist(Request $request, $id)
 		{
 			try {
@@ -841,7 +841,7 @@
 			}
 		}
 
-		
+
 		//remove_wishlist
 		public function remove_wishlist($id)
 		{
@@ -925,36 +925,36 @@
 			}
 		}
 
-		
+
 		public function wishListCount()
 		{
-			$count = 0;  
+			$count = 0;
 			if (Auth::guard('web')->check()) {
-				$count = Wishlist::where('user_id', Auth::guard('web')->id())->count(); 
+				$count = Wishlist::where('user_id', Auth::guard('web')->id())->count();
 			} elseif (Auth::guard('vendor')->check()) {
-				$count = Wishlist::where('vendor_id', Auth::guard('vendor')->id())->count(); 
+				$count = Wishlist::where('vendor_id', Auth::guard('vendor')->id())->count();
 			}elseif (Auth::guard('agent')->check()) {
-				$count = Wishlist::where('agent_id', Auth::guard('agent')->id())->count(); 
+				$count = Wishlist::where('agent_id', Auth::guard('agent')->id())->count();
 			}
- 
+
 			return response()->json([
 				'status' => 'success',
-				'count' => $count, 
+				'count' => $count,
 			]);
-		} 
-		
+		}
+
 		public function logoutSubmit(Request $request)
 		{
 			Auth::guard('web')->logout();
 			Session::forget('secret_login');
-			
+
 			if ($request->session()->has('redirectTo')) {
 				$request->session()->forget('redirectTo');
 			}
-			
+
 			return redirect()->route('index');
 		}
-		
+
 		public function sendOtp(Request $request)
 		{
 			// Check if user exists
@@ -965,17 +965,17 @@
 				$user = Vendor::where('phone', $request->phone)->first();
 				$type = 'vendor';
 			}
-			
+
 			$withoutLogin = null;
-			
+
 			if (!$user) {
 				$user = Agent::where('phone', $request->phone)->first();
 				$withoutLogin = $user ? "agent" : null;
 			}
-			 
+
 			// If not found in either table, create in the correct one
 			if (!$user && !$withoutLogin) {
-				$user = new User(); 
+				$user = new User();
 				$user->phone = $request->phone;
 				$user->status = 1;
 				$user->is_new = "0";
@@ -988,7 +988,7 @@
 
 			// Send via MsgClub helper
 			$result = msgClubSendSms($request->phone, $smsContent);
-		 
+
 			if (!$result) {
 				return response()->json([
 					'message' => 'OTP sending failed.',
@@ -1012,24 +1012,24 @@
 					'created_at' => now(),
 				]
 			);
-			
+
 			return response()->json([
 				'message' => 'OTP sent successfully.'
 			]);
 		}
 
 		public function resendOtp(Request $request)
-		{ 
-			$phone = $request->phone; 
+		{
+			$phone = $request->phone;
 			if(empty($phone))
 			{
 				return response()->json([
-					'message' => 'Phone Number is required.', 
+					'message' => 'Phone Number is required.',
 				]);
 			}
 			$now = now();
-			$expiresAt = $now->copy()->addMinutes(10);  
-			
+			$expiresAt = $now->copy()->addMinutes(10);
+
 			$otp = rand(1000, 9999);
 			$smsContent = "Use OTP $otp to log in securely. This code is valid for 10 minutes. Keep it confidential._ Team Dalal Maf";
 
@@ -1045,19 +1045,19 @@
 
 			DB::table('otp_verification')->updateOrInsert(
 				['phone' => $phone],
-				[ 
+				[
 					'phone' => $phone,
 					'otp' => $otp,
-					'otp_at' => null,           
+					'otp_at' => null,
 					'expires_at' => $expiresAt,
 					'updated_at' => $now,
-					'created_at' => $now,          
+					'created_at' => $now,
 				]
 			);
-  
+
 			return response()->json([
 				'message' => 'OTP sent successfully.',
-				'expires_at' => $expiresAt->toIso8601String(), 
+				'expires_at' => $expiresAt->toIso8601String(),
 			]);
 		}
 
@@ -1067,7 +1067,7 @@
 				$phone = $request->phone;
 				$otp = $request->otp;
 				$from = $request->input('from');
- 
+
 				// Find user in both guards
 				$user = User::where('phone', $phone)->first();
 				$userType = 'user';
@@ -1076,13 +1076,13 @@
 					$user = Vendor::where('phone', $phone)->first();
 					$userType = 'vendor';
 				}
-				
+
 				$withoutLogin = null;
 				if (!$user) {
 					$user = Agent::where('phone', $request->phone)->first();
 					$withoutLogin = $user ? "agent" : null;
 				}
-				
+
 				if (!$user) {
 					return response()->json(['message' => 'User not found.'], 404);
 				}
@@ -1101,7 +1101,7 @@
 				if (isset($otpRecord->expires_at) && now()->gt($otpRecord->expires_at)) {
 					return response()->json(['message' => 'OTP has expired. Please request a new one.'], 410);
 				}
-				
+
 				if ($otpRecord->otp != $otp) {
 					return response()->json(['message' => 'Invalid OTP.'], 422);
 				}
@@ -1113,23 +1113,23 @@
 
 				// Log in user
 				$guard = $userType === 'vendor' ? ($withoutLogin ? 'agent' : 'vendor') : 'web';
-				
+
 				// Determine redirect route
 				if (empty($user->email) && !$withoutLogin) {
 					$route = route('user.signup');
 					session(['login_phone' => $phone]);
-				} 
-				elseif ($from === 'post_property') 
+				}
+				elseif ($from === 'post_property')
 				{
 					$route = $guard === 'vendor'
 						? ($withoutLogin ? route('agent.property_management.type') : route('vendor.property_management.type'))
-						: route('user.property_management.type'); 
+						: route('user.property_management.type');
 						Auth::guard($guard)->login($user);
 				} else {
-					$route = $userType === 'vendor' ? ($withoutLogin ? url('agent/dashboard') : url('vendor/dashboard')) : route('user.dashboard');  
+					$route = $userType === 'vendor' ? ($withoutLogin ? url('agent/dashboard') : url('vendor/dashboard')) : route('user.dashboard');
 					Auth::guard($guard)->login($user);
-				} 
-				 
+				}
+
 				return response()->json([
 					'message' => 'OTP verified successfully.',
 					'url' => $route
@@ -1142,8 +1142,8 @@
 					'error' => config('app.debug') ? $e->getMessage() : null
 				], 500);
 			}
-		} 
-		
+		}
+
 		public function dashboard()
 		{
 			$user_id = Auth::guard('web')->user()->id;
@@ -1152,20 +1152,20 @@
 		    $information['totalTickets'] = SupportTicket::where([['user_id', Auth::guard('web')->user()->id], ['user_type', 'user']])->count();
 			$information['totalWishlist'] = Wishlist::where([['user_id', Auth::guard('web')->user()->id]])->count();
 
-			
+
 			$totalProperties = DB::table('properties')
 			->select(DB::raw('month(created_at) as month'), DB::raw('count(id) as total'))
 			->groupBy('month')
 			->where('user_id', $user_id)
 			->whereYear('created_at', '=', date('Y'))
 			->get();
-			 
+
 			$months = [];
 			$totalPropertyArr = [];
-			
-			$heroImg = Basic::query()->pluck('hero_static_img')->first(); 
+
+			$heroImg = Basic::query()->pluck('hero_static_img')->first();
 			$information['heroImg'] = $heroImg ? json_decode($heroImg, true) : [];
-	   
+
 			//event icome calculation
 			for ($i = 1; $i <= 12; $i++) {
 				// get all 12 months name
@@ -1173,7 +1173,7 @@
 				$dateObj = DateTime::createFromFormat('!m', $monthNum);
 				$monthName = $dateObj->format('M');
 				array_push($months, $monthName);
-				
+
 				// get all 12 months's property posts
 				$propertyFound = false;
 				foreach ($totalProperties as $totalProperty) {
@@ -1187,7 +1187,7 @@
 					array_push($totalPropertyArr, 0);
 				}
 			}
-			
+
 			$information['monthArr'] = $months;
 			$information['totalPropertiesArr'] = $totalPropertyArr;
 			return view('users.index', $information);

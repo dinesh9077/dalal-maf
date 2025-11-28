@@ -7,7 +7,7 @@ use App\Http\Controllers\FrontEnd\MiscellaneousController;
 use App\Http\Helpers\VendorPermissionHelper;
 use App\Models\Agent;
 use App\Models\BasicSettings\Basic;
-use App\Models\BasicSettings\MailTemplate; 
+use App\Models\BasicSettings\MailTemplate;
 use App\Models\Language;
 use App\Models\Membership;
 use App\Models\Package;
@@ -17,7 +17,7 @@ use App\Models\SupportTicket;
 use App\Models\Vendor;
 use App\Models\User;
 use App\Models\VendorInfo;
-use App\Models\VendorKYC; 
+use App\Models\VendorKYC;
 use App\Rules\MatchEmailRule;
 use App\Rules\MatchOldPasswordRule;
 use Carbon\Carbon;
@@ -34,9 +34,9 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule; 
-use App\Http\Controllers\Vendor\VendorCheckoutController; 
-use Illuminate\Support\Facades\Cache;   
+use Illuminate\Validation\Rule;
+use App\Http\Controllers\Vendor\VendorCheckoutController;
+use Illuminate\Support\Facades\Cache;
 
 class VendorController extends Controller
 {
@@ -57,10 +57,10 @@ class VendorController extends Controller
 
         return view('frontend.vendor.auth.register', $queryResult);
     }
-	
+
     //create
     public function create(Request $request)
-    { 
+    {
         $rules = [
             'username' => 'required|unique:vendors',
             'email' => 'required|email|unique:vendors',
@@ -94,7 +94,7 @@ class VendorController extends Controller
         $in = $request->all();
         $setting = DB::table('basic_settings')->where('uniqid', 12345)->select('vendor_email_verification', 'vendor_admin_approval')->first();
 
-        if ($setting->vendor_email_verification == 1) 
+        if ($setting->vendor_email_verification == 1)
 		{
             // first, get the mail template information from db
             $mailTemplate = MailTemplate::where('mail_type', 'verify_email')->first();
@@ -141,7 +141,7 @@ class VendorController extends Controller
                     return back();
                 }
             }
- 
+
             $in['status'] = 0;
         } else {
             Session::flash('success', 'Sign up successfully completed.Please Login Now');
@@ -154,14 +154,14 @@ class VendorController extends Controller
         $in['user_type'] = $request->usertype;
         $in['phone'] = $request->phone;
         $in['email_verified_at'] = now();
-		
+
         $vendor = Vendor::create($in);
 
         Auth::guard('vendor')->login($vendor);
         $misc = new MiscellaneousController();
 
         $language = $misc->getLanguage();
-   
+
         VendorInfo::create([
             'vendor_id' => $vendor->id,
             'language_id' => $language->id,
@@ -185,7 +185,7 @@ class VendorController extends Controller
         $vendor = $controller->store($package, $transaction_id, $transaction_details, $request['price'], $bs, $password);
 
         $user = User::where('phone', $request->phone)->delete();
-          
+
         return redirect()->route('vendor.login');
     }
 
@@ -617,7 +617,7 @@ class VendorController extends Controller
 
     //update_profile
     public function update_profile(Request $request, Vendor $vendor)
-    { 
+    {
         $vendor = Auth::guard('vendor')->user();
         $id = $vendor->id;
 
@@ -650,8 +650,8 @@ class VendorController extends Controller
                 'The Name field is required for ' . $language->name . ' language.';
         }
 
-        $validator = Validator::make($request->all(), $rules, $messages); 
-         
+        $validator = Validator::make($request->all(), $rules, $messages);
+
         if ($validator->fails()) {
             return Response::json([
                 'status' => 'validation',
@@ -660,7 +660,7 @@ class VendorController extends Controller
         }
 
 
-        $in = $request->all(); 
+        $in = $request->all();
         $file = $request->file('photo');
         if ($file) {
             $extension = $file->getClientOriginalExtension();
@@ -710,7 +710,7 @@ class VendorController extends Controller
             $vendorInfo->details = $request[$language->code . '_details'];
             $vendorInfo->save();
         }
- 
+
         Session::flash('success', 'Vendor updated successfully!');
 
         return Response::json(['status' => 'success'], 200);
@@ -1025,7 +1025,7 @@ class VendorController extends Controller
         })
             ->where('vendor_id', Auth::guard('vendor')->user()->id)
             ->orderBy('id', 'DESC')
-            ->paginate(10);
+            ->get();
         return view('vendors.payment_log', $data);
     }
 }

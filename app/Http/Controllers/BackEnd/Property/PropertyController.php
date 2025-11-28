@@ -48,7 +48,8 @@
 	use Response;
 	use Validator;
 	use App\Exports\PropertiesExport;
-	use Maatwebsite\Excel\Facades\Excel;
+use App\Models\User;
+use Maatwebsite\Excel\Facades\Excel;
 
 	class PropertyController extends Controller
 	{
@@ -123,9 +124,24 @@
 
 			$language_id = $language->id;
 			$vendor_id = $title = $purpose = $category = $city = null;
-			if (request()->filled('vendor_id')) {
-				$vendor_id = $request->vendor_id;
-			}
+      $agent_id = null;
+      $user_id = null;
+
+      if (request()->filled('vendor_id')) {
+          $filter = $request->vendor_id;
+          if (str_starts_with($filter, 'vendor_')) {
+              $vendor_id = str_replace('vendor_', '', $filter);
+          } elseif (str_starts_with($filter, 'agent_')) {
+              $agent_id = str_replace('agent_', '', $filter);
+          } elseif (str_starts_with($filter, 'user_')) {
+              $user_id = str_replace('user_', '', $filter);
+          } elseif ($filter == 'admin') {
+              // For admin, we'll show all properties that don't have a vendor/agent/user
+              $vendor_id = null;
+              $agent_id = null;
+              $user_id = null;
+          }
+      }
 			if (request()->filled('title')) {
 				$title = $request->title;
 			}
@@ -159,14 +175,31 @@
 				$query->where('property_type', 'partial');
 			}
 
-			// ✅ Vendor filter
-			$query->when($vendor_id, function ($query) use ($vendor_id) {
-				if ($vendor_id === 'admin') {
-					return $query->where('properties.vendor_id', '0');
-				} else {
-					return $query->where('properties.vendor_id', $vendor_id);
-				}
-			});
+			// ✅ Apply user type filters
+      if ($vendor_id !== null) {
+				$query->where('properties.vendor_id', $vendor_id);
+			} elseif ($agent_id !== null) {
+				$query->where('properties.agent_id', $agent_id);
+			} elseif ($user_id !== null) {
+				$query->where('properties.user_id', $user_id);
+			} elseif (request()->input('vendor_id') === 'admin') {
+				// Explicit admin filter
+         $query->where(function ($q) {
+            $q->where(function ($x) {
+                $x->whereNull('properties.vendor_id')
+                  ->orWhere('properties.vendor_id', 0);
+            })
+            ->where(function ($x) {
+                $x->whereNull('properties.agent_id')
+                  ->orWhere('properties.agent_id', 0);
+            })
+            ->where(function ($x) {
+                $x->whereNull('properties.user_id')
+                  ->orWhere('properties.user_id', 0);
+            });
+        });
+
+			}
 
 			// ✅ Title filter
 			$query->when($title, function ($query) use ($title, $language_id) {
@@ -191,10 +224,27 @@
             ->where('property_contents.language_id', $language_id)
             ->select('properties.*')
             ->orderBy('properties.id', 'desc')
-            ->paginate(10);
+            ->get();
 
 
-			$data['vendors'] = Vendor::where('id', '!=', 0)->get();
+			// $data['vendors'] = Vendor::where('id', '!=', 0)->get();
+
+      $vendorIds = Property::whereNotNull('vendor_id')
+          ->where('vendor_id', '!=', 0)
+          ->distinct()
+          ->pluck('vendor_id');
+
+      $agentIds = Property::whereNotNull('agent_id')
+          ->distinct()
+          ->pluck('agent_id');
+
+      $userIds = Property::whereNotNull('user_id')
+          ->distinct()
+          ->pluck('user_id');
+
+      $data['vendors'] = Vendor::whereIn('id', $vendorIds)->get();
+      $data['agents'] = Agent::whereIn('id', $agentIds)->get();
+      $data['users'] = User::whereIn('id', $userIds)->get();
 
 			$data['featurePricing'] =  FeaturedPricing::where('status', 1)->get();
 			$data['onlineGateways'] = OnlineGateway::query()->where('status', '=', 1)->get();
@@ -358,7 +408,7 @@
 		}
 		public function store(PropertyStoreRequest $request)
 		{
-			DB::transaction(function () use ($request) {
+			  DB::transaction(function () use ($request) {
 
 				$featuredImgURL = $request->featured_image;
 				if (request()->hasFile('featured_image')) {
@@ -464,8 +514,8 @@
 				}
 			});
 			Session::flash('success', 'New Property added successfully!');
-
 			return Response::json(['status' => 'success'], 200);
+
 		}
 
 		public function updateStatus(Request $request)

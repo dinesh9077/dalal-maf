@@ -33,7 +33,7 @@
             </div>
             <div class="col-lg-3">
             </div>
-            <div class="col-lg-4 offset-lg-1 mt-2 mt-lg-0 justify-content-end">
+            {{-- <div class="col-lg-4 offset-lg-1 mt-2 mt-lg-0 justify-content-end">
               <form action="{{ url()->current() }}" class="d-inline-block d-flex">
                 <input class="form-control mr-2" type="text" name="search"
                   placeholder="{{ __('Search by Transaction ID') }}"
@@ -42,7 +42,7 @@
                   value="{{ request()->input('username') ? request()->input('username') : '' }}">
                 <button class="dis-none" type="submit"></button>
               </form>
-            </div>
+            </div> --}}
           </div>
         </div>
         <div class="card-body">
@@ -52,7 +52,7 @@
                 <h3 class="text-center">{{ __('NO MEMBERSHIP FOUND') }}</h3>
               @else
                 <div class="table-responsive">
-                  <table class="table table-striped mt-3">
+                  <table class="table table-striped mt-3" id="basic-datatables">
                     <thead>
                       <tr>
                         <th scope="col">{{ __('Transaction Id') }}</th>
@@ -178,10 +178,10 @@
                               </div>
                               <div class="modal-body">
                                 <h3 class="text-warning">{{ __('User details') }}</h3>
-                                
+
                                 <label>{{ __('Username') }}</label>
                                 <p>{{ !empty($membership->vendor) ? $membership->vendor->username : '-' }}</p>
-                                
+
                                 <label>{{ __('Email') }}</label>
                                 <p>{{ !empty($membership->vendor) ? $membership->vendor->email : '-' }}</p>
                                 <label>{{ __('Phone') }}</label>
@@ -254,11 +254,11 @@
           </div>
         </div>
         <div class="card-footer">
-          <div class="row">
+          {{-- <div class="row">
             <div class="d-inline-block mx-auto">
               {{ $memberships->appends(['search' => request()->input('search'), 'username' => request()->input('username')])->links() }}
             </div>
-          </div>
+          </div> --}}
         </div>
       </div>
     </div>
