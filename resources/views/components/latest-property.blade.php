@@ -3,7 +3,7 @@
             display: flex;
             flex-direction: column;
             background: #fff;
-            border-radius: 12px;
+            border-radius: 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             /* overflow: hidden; */
             transition: all 0.3s ease-in-out;
@@ -50,6 +50,7 @@
             /* flex: 1; */
             overflow: hidden;
             gap: 10px;
+            height: 180px;
         }
 
 
@@ -133,6 +134,7 @@
             padding: 12px 15px;
             border-top: 1px solid #e6e6e6;
             background: #fff;
+            border-radius: 0px 0px 16px 16px;
         }
 
         .latest-footer a {
