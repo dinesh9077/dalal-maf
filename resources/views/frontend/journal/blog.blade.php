@@ -41,8 +41,8 @@
                 @else
                     @foreach ($blogs as $blog)
                         <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                            <article class="card mb-30" style="padding: 10px;">
-                                <div class="card-image">
+                            <article class="new-b-20  card mb-30 " style="padding: 10px;">
+                                <div class="card-image new-b-15">
                                     <a href="{{ route('blog_details', ['slug' => $blog->slug]) }}"
                                         class="lazy-container ratio ratio-16-9">
                                         <img class="lazyload" src="{{ asset('assets/front/images/placeholder.png') }}"

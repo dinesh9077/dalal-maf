@@ -286,14 +286,14 @@
         $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.jpg';
     @endphp
     <!-- <section class="home-banner home-banner-1 relative new-home-hero-color" data-aos="fade-up"> -->
-    <section class="home-banner home-banner-1 relative" data-aos="fade-up">
+    <section class="home-banner home-banner-1 relative">
         <div class="hero-image" id="heroBanner"
             style="background: url('{{ asset('assets/img/hero/static/' . $firstHeroImg) }}'); background-size: cover; background-position: center;">
 
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-xxl-10">
-                        <div class="content mb-30" data-aos="fade-up">
+                        <div class="content mb-30" >
                             <!-- <h1 class="title title-colors">{{ $heroStatic->title }}</h1> -->
                             <!-- <h1 class="title">{{ $heroStatic->title }}</h1> -->
                             <!-- <p class="text title-colors">
@@ -362,7 +362,7 @@
                 }
             @endphp
 
-            <div class="banner-filter-form new-banner-filters-width" data-aos="fade-up">
+            <div class="banner-filter-form new-banner-filters-width" >
                 <div class="tab-content form-wrapper">
 
                     {{-- Tabs --}}
@@ -430,7 +430,7 @@
                                             <label for="search_{{ $key }}">{{ __('Location') }}</label>
                                             <input type="text" id="search_{{ $key }}" name="location"
                                                 class="form-control searchBar" placeholder="{{ __('Enter Location') }}"
-                                                style="box-shadow: none;     border: 1px solid #e4e4e4;    padding: 7.5px  10px;border-radius: 10px;">
+                                                style="box-shadow: none;     border: 1px solid #e4e4e4;    padding: 7.5px  10px; border-radius: 13px;">
                                         </div>
                                     </div>
 
@@ -484,7 +484,7 @@
                                     <div>
                                         <button type="submit"
                                             class="btn btn-primary bg-secondary icon-start new-search-btn"
-                                            style="background-color:#6c603c !important;">
+                                            style="background-color:#6c603c !important; 13px !important;">
                                             <img src="{{ asset('assets/front/images/new-images/search.png') }}"
                                                 alt="Search" class="new-icons-search">
                                         </button>
@@ -508,13 +508,13 @@
     </section>
 
     @if ($featured_properties->isNotEmpty())
-        <section class="product-area popular-product product-1 pt-100 pb-20 relative">
+    <section class="product-area popular-product product-1 pt-70 pb-20 relative">
             <div class="container border-0">
                 <div class="row" style="position: relative;">
                     <div class="section-title mb-10 new-titles position-relative aos-init aos-animate" data-aos="fade-up">
                         <h2 class="title">Featured Properties</h2>
                         <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-desktop"
-                            style="padding: 10px 20px;">View All</a>
+                            style="padding: 8px 20px;">View All</a>
                     </div>
 
 
@@ -538,26 +538,23 @@
                     </div>
 
                     <div style="text-align: center;">
-                 
-
-                        <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 10px 20px;">View All</a>
-
-                   
+                        <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-mobile"
+                            style="padding: 8px 20px;">View All</a>
                     </div>
                 </div>
             </div>
-        </section>
+    </section>
     @endif
 
 
     @if ($hotProperties->isNotEmpty())
-        <section class="product-area featured-product pt-20 pb-10">
-            <div class="container">
+        <section class="product-area featured-product">
+            <div class="container" style="padding-bottom: 15px;">
                 <div class="row" style="position: relative;">
                     <div class="section-title mb-10 new-titles" data-aos="fade-up" style="position: relative;">
                         <h2 class="title" style="text-align : center;">Hot Properties</h2>
                         <a href="{{ url('properties/is_hot/all') }}" class="vs-btn vs-new-set-btn view-all-desktop"
-                            style="padding: 10px 20px;">
+                            style="padding: 8px 20px;">
                             View All
                         </a>
                     </div>
@@ -584,7 +581,7 @@
 
                     <div class="text-center mt-2 mt-sm-2">
                         <a href="{{ url('properties/is_hot/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
-                            style="padding: 10px 20px;">
+                            style="padding: 8px 20px;">
                             View All
                         </a>
                     </div>
@@ -596,14 +593,14 @@
 
 
     @if ($recommendedProperties->isNotEmpty())
-        <section class="product-area featured-product pt-20 pb-20">
+        <section class="product-area featured-product" style="padding-bottom: 13px;">
             <div class="container">
                 <div class="row" style="position: relative;">
                     <div class="section-title  mb-10 new-titles" data-aos="fade-up" style="position: relative;">
                         <h2 class="title" style="text-align : center;">Recommended Properties</h2>
 
                         <a href="{{ url('properties/is_recommended/all') }}"
-                            class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 10px 20px;">View All</a>
+                            class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 8px 20px;">View All</a>
 
                     </div>
 
@@ -629,7 +626,7 @@
 
                     <div class="text-center mt-2 mt-sm-2">
                         <a href="{{ url('properties/is_recommended/all') }}"
-                            class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 10px 20px;">
+                            class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 8px 20px;">
                             View All
                         </a>
                     </div>
@@ -641,7 +638,7 @@
     @endif
 
     @if ($fastSellingProperties->isNotEmpty())
-        <section class="product-area featured-product pt-20 pb-20">
+        <section class="product-area featured-product" style="padding-bottom: 21px;">
             <div class="container">
                 <div class="row" style="position: relative;">
 
@@ -649,7 +646,7 @@
                         <h2 class="title" style="text-align : center;">Fast Selling Properties</h2>
 
                         <a href="{{ url('properties/is_fast_selling/all') }}"
-                            class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 10px 20px;">
+                            class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 8px 20px;">
                             View All
                         </a>
                     </div>
@@ -677,7 +674,7 @@
 
                     <div class="text-center">
                         <a href="{{ url('properties/is_fast_selling/all') }}"
-                            class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 10px 20px;">
+                            class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 8px 20px;">
                             View All
                         </a>
                     </div>
@@ -690,16 +687,46 @@
 
     @if ($secInfo->property_section_status == 1 && $properties->isNotEmpty())
         <section class="product-area popular-product product-1 relative">
-            <img src="{{ asset('assets/front/images/new-images/new-primume-properties.png') }}" alt="" class="new-primume-prop-img">
-            <div class="container pt-30 pb-30">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="section-title aos-init aos-animate" data-aos="fade-up" style="position: relative;">
-                            <h2 class="title">Latest Properties</h2>
-                            <a href="{{ route('frontend.properties', ['sort' => 'new']) }}" class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 10px 20px;">
-                                View All
-                            </a>
+            <img src="{{ asset('assets/front/images/new-images/new-primume-properties.png') }}" alt=""
+                class="new-primume-prop-img">
+            <div class="container pt-20 pb-20">
+                <div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="section-title prop-pad new-titles" data-aos="fade-up" style="position: relative;">
+                                <h2 class="title">{{ $propertySecInfo->title }}</h2>
+
+                                 <a href="{{ url('properties/is_fast_selling/all') }}"
+                            class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 8px 20px;">
+                            View All
+                        </a>
+
+
+                            </div>
                         </div>
+                        <div class="col-12 LP_SLider-div">
+                            <div class="tab-content" data-aos="fade-up">
+                                <div class="row new-padding-width-res " style="position: relative; margin-top : 15px;">
+
+                                    <div class="swiper LP-new-slider">
+                                        <div class="swiper-wrapper">
+                                            @forelse ($properties as $property)
+                                                @if ($property->property_type == 'partial')
+                                                    <div class="swiper-slide">
+                                                        <x-latest-property :property="$property" />
+                                                    </div>
+                                                @endif
+                                            @empty
+                                                <div class="p-3 text-center mb-30">
+                                                    <h3 class="mb-0">{{ __('No Properties Found') }}</h3>
+                                                </div>
+                                            @endforelse
+                                        </div>
+                                    </div>
+
+                                     <div style="text-align: center;">
+                        <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
+                            style="padding: 8px 20px;">View All</a>
                     </div>
                 </div>
                 
@@ -740,13 +767,14 @@
 
 
     <section class="product-area popular-product product-1 relative">
-        <div class="container pt-30 pb-30 ">
+        <div class="container pt-20 pb-20 ">
             <div class="row">
                 <div class="col-12">
                     <div class="section-title  aos-init aos-animate" data-aos="fade-up" style="position: relative;">
                         <h2 class="title">Business For Sale Properties</h2>
 
-                            <a href="{{ route('frontend.properties', ['purpose' => 'business_for_sale', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 10px 20px;">
+                            <a href="{{ route('frontend.properties', ['purpose' => 'business_for_sale', 'sort' => 'latest']) }}"
+                            class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 8px 20px;">
                             View All
                         </a>
 
@@ -775,7 +803,8 @@
                 </div>
 
                  <div style="text-align: center;">
-                        <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 10px 20px;">View All</a>
+                        <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-mobile"
+                            style="padding: 8px 20px;">View All</a>
                     </div>
 
                 <!-- Navigation arrows -->
@@ -791,13 +820,14 @@
 
 
     <section class="product-area popular-product product-1 relative">
-        <div class="container pt-30 pb-30">
+        <div class="container pt-20 pb-20">
             <div class="row" style="position: relative;">
                 <div class="col-12">
                     <div class="section-title mb-10 aos-init aos-animate" data-aos="fade-up" style="position : relative;">
                         <h2 class="title">Franchise Properties</h2>
 
-                           <a href="{{ route('frontend.properties', ['purpose' => 'franchiese', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 10px 20px;">
+                           <a href="{{ route('frontend.properties', ['purpose' => 'franchiese', 'sort' => 'latest']) }}"
+                            class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 8px 20px;">
                             View All
                         </a>
                         <!-- <p class="mt-1" style="font-size:13px; line-height : 1.2;">Join hands with Dala Maaf and become a part of a growing
@@ -823,7 +853,8 @@
                     </div>
 
                      <div style="text-align: center;">
-                        <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 10px 20px;">View All</a>
+                        <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-mobile"
+                            style="padding: 8px 20px;">View All</a>
                     </div>
 
                     <!-- Navigation Buttons -->
@@ -837,9 +868,88 @@
             </div>
         </div>
     </section>
+    
+    
+    
+    @if ($secInfo->cities_section_status == 1)
+        <section class="new-gellary-area pb-30 relative ">
+
+            <!-- <img src="http://127.0.0.1:8000/assets/front/images/new-images/new-primume-properties.png" alt="" class="exp-img"> -->
+
+            <div class="container pt-20 " style="border-top: 2px solid #f4f5f7;">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-title" data-aos="fade-up">
+                            <h2 class="title">{{ $citySecInfo?->subtitle }}</h2>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row ">
+                    <!-- City Card Start -->
+                    @forelse ($cities as $city)
+                        <div class="custom-col-5 mt-3 p-0" data-aos="fade-up">
+                            <a href="{{ route('frontend.properties', ['city' => $city->name]) }}" class="text-center"
+                                style="display: block; text-decoration: none; color: inherit;">
+                                <div class="city-card text-start">
+                                    <img class="lazyload blur-up"
+                                        data-src="{{ asset('assets/img/property-city/' . $city->image) }}">
+                                    <div class="citis-card-de">
+                                        <p>{{ $city->name }}</p>
+                                        <p>
+                                            {{ $city->propertyCount }}
+                                            @if ($city->propertyCount > 0)
+                                                {{ __('Properties') }}
+                                            @else
+                                                {{ __('Property') }}
+                                            @endif
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @empty
+                        <div class="p-3 text-center mb-30 w-100">
+                            <h3 class="mb-0">{{ __('No Cities Found') }}</h3>
+                        </div>
+                    @endforelse
+
+                    {{-- <div class="mt-3" data-aos="fade-up">
+                <div class="city-tag-wrapper" id="cityTagWrapper">
+                    <span class="city-tag">Surat</span>
+                    <span class="city-tag">Thane</span>
+                    <span class="city-tag">New Mumbai</span>
+                    <span class="city-tag">Noida</span>
+                    <span class="city-tag">Nagpur</span>
+                    <span class="city-tag">Varanasi</span>
+                    <span class="city-tag">Bhiwandi</span>
+                    <span class="city-tag">Agra</span>
+                    <span class="city-tag">Ajmer</span>
+                    <span class="city-tag">Akola</span>
+                    <span class="city-tag">Almora</span>
+                    <span class="city-tag">Bharuch</span>
+                    <span class="city-tag">Baroda</span>
+                    <span class="city-tag">Rajkot</span>
+                    <span class="city-tag">Bhavnagar</span>
+				</div>
+
+                </div> --}}
 
 
-    <div class="container pt-30 pb-30 upcoming-projects" data-aos="fade-up" style="border-top: 2px solid #f4f5f7;">
+                </div>
+                        {{-- <div class="text-center" style="margin-top : 30px;">
+                    <a href="http://127.0.0.1:8000/vendors" class="btn btn-lg btn-primary  mb-30" style="background : black;">See All</a>
+                </div> --}}
+
+            </div>
+
+            <img src="{{ asset('assets/front/images/new-images/left-img.png') }}" alt="" class="city-left">
+            <img src="{{ asset('assets/front/images/new-images/right-img.png') }}" alt="" class="city-right">
+        </section>
+    @endif
+
+
+    <div class="container pt-20  upcoming-projects" data-aos="fade-up" style="border-top: 2px solid #f4f5f7;">
 
         <div class="row">
             <div class="col-12">
@@ -937,7 +1047,7 @@
     </section>
 
     @if ($secInfo->why_choose_us_section_status == 1)
-        <section class="new-aps-sections  pt-30 pb-30">
+        <section class="new-aps-sections" style="padding-top: 25px;     padding-bottom: 15px;"> 
             <div class="container">
                 <div class="section-title title-inline    aos-init aos-animate d-flex" data-aos="fade-up">
                     <h2 class="title">Explore Property Types</h2>
@@ -1026,7 +1136,7 @@
         </div>
     </section>
 
-    <section class="why-dlal-dection pt-30 pb-30">
+    <section class="why-dlal-dection pb-30">
         <div class="container">
             <div class="section-title title-inline  aos-init aos-animate d-flex " style="flex-direction: column;"
                 data-aos="fade-up">
@@ -1150,53 +1260,53 @@
     </section>
 
 
-    {{-- <section class="ready-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="re-left-div">
-                    <h5 style="text-transform: capitalize;">
-                        We’re here to help you with all your real estate needs.
-					</h5>
-                    <p>
+   
+ <!--   <div class="container pt-30">-->
+ <!--       <div class="row">-->
+ <!--           <div class="col-lg-6">-->
+ <!--               <div class="re-left-div">-->
+ <!--                   <h5 style="text-transform: capitalize;">-->
+ <!--                       We’re here to help you with all your real estate needs.-->
+	<!--				</h5>-->
+ <!--                   <p>-->
 
-                        Whether you’re buying, selling, renting, or just exploring options — our team is ready to guide you every step of the way.
-					</p>
-				</div>
-			</div>
-            <div class="col-lg-6">
-                <div>
-                    <form class="contact-form">
-                        <h1 class="visit0class">Schudeal a Visit</h1>
-                        <div class="form-group">
-                            <input type="text" placeholder="Your Name*" required>
-                            <span class="icon fa fa-user"></span>
-						</div>
-                        <div class="form-group">
-                            <input type="email" placeholder="Your Email*" required>
-                            <span class="icon fa fa-envelope"></span>
-						</div>
-                        <div class="form-group">
-                            <select required>
-                                <option value="">Real Estate*</option>
-                                <option value="buy">Buy</option>
-                                <option value="sell">Sell</option>
-                                <option value="rent">Rent</option>
-							</select>
-                            <span class="icon dropdown"></span>
-						</div>
-                        <div class="form-group">
-                            <textarea placeholder="Type Your Message*" required></textarea>
-                            <span class="icon fa fa-envelope"></span>
-						</div>
-                        <button type="submit">Submit Message</button>
-					</form>
+ <!--                       Whether you’re buying, selling, renting, or just exploring options — our team is ready to guide you every step of the way.-->
+	<!--				</p>-->
+	<!--			</div>-->
+	<!--		</div>-->
+ <!--           <div class="col-lg-6">-->
+ <!--               <div>-->
+ <!--                   <form class="contact-form new-ppds-rr">-->
+ <!--                       <h1 class="visit0class">Schudeal a Visit</h1>-->
+ <!--                       <div class="form-group">-->
+ <!--                           <input type="text" placeholder="Your Name*" required>-->
+ <!--                           <span class="icon fa fa-user"></span>-->
+	<!--					</div>-->
+ <!--                       <div class="form-group">-->
+ <!--                           <input type="email" placeholder="Your Email*" required>-->
+ <!--                           <span class="icon fa fa-envelope"></span>-->
+	<!--					</div>-->
+ <!--                       <div class="form-group">-->
+ <!--                           <select required>-->
+ <!--                               <option value="">Real Estate*</option>-->
+ <!--                               <option value="buy">Buy</option>-->
+ <!--                               <option value="sell">Sell</option>-->
+ <!--                               <option value="rent">Rent</option>-->
+	<!--						</select>-->
+ <!--                           <span class="icon dropdown"></span>-->
+	<!--					</div>-->
+ <!--                       <div class="form-group">-->
+ <!--                           <textarea placeholder="Type Your Message*" required></textarea>-->
+ <!--                           <span class="icon fa fa-envelope"></span>-->
+	<!--					</div>-->
+ <!--                       <button type="submit">Submit Message</button>-->
+	<!--				</form>-->
 
-				</div>
-			</div>
-		</div>
-	</div>
-</section> --}}
+	<!--			</div>-->
+	<!--		</div>-->
+	<!--	</div>-->
+	<!--</div>-->
+
 
 
     @if ($secInfo->vendor_section_status == 1)
@@ -1256,82 +1366,6 @@
     @endif
 
 
-    @if ($secInfo->cities_section_status == 1)
-        <section class="new-gellary-area pt-30 pb-30 relative ">
-
-            <!-- <img src="http://127.0.0.1:8000/assets/front/images/new-images/new-primume-properties.png" alt="" class="exp-img"> -->
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="section-title" data-aos="fade-up">
-                            <h2 class="title">{{ $citySecInfo?->subtitle }}</h2>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row ">
-                    <!-- City Card Start -->
-                    @forelse ($cities as $city)
-                        <div class="custom-col-5 mt-3 p-0" data-aos="fade-up">
-                            <a href="{{ route('frontend.properties', ['city' => $city->name]) }}" class="text-center"
-                                style="display: block; text-decoration: none; color: inherit;">
-                                <div class="city-card text-start">
-                                    <img class="lazyload blur-up"
-                                        data-src="{{ asset('assets/img/property-city/' . $city->image) }}">
-                                    <div class="citis-card-de">
-                                        <p>{{ $city->name }}</p>
-                                        <p>
-                                            {{ $city->propertyCount }}
-                                            @if ($city->propertyCount > 0)
-                                                {{ __('Properties') }}
-                                            @else
-                                                {{ __('Property') }}
-                                            @endif
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    @empty
-                        <div class="p-3 text-center mb-30 w-100">
-                            <h3 class="mb-0">{{ __('No Cities Found') }}</h3>
-                        </div>
-                    @endforelse
-
-                    {{-- <div class="mt-3" data-aos="fade-up">
-                <div class="city-tag-wrapper" id="cityTagWrapper">
-                    <span class="city-tag">Surat</span>
-                    <span class="city-tag">Thane</span>
-                    <span class="city-tag">New Mumbai</span>
-                    <span class="city-tag">Noida</span>
-                    <span class="city-tag">Nagpur</span>
-                    <span class="city-tag">Varanasi</span>
-                    <span class="city-tag">Bhiwandi</span>
-                    <span class="city-tag">Agra</span>
-                    <span class="city-tag">Ajmer</span>
-                    <span class="city-tag">Akola</span>
-                    <span class="city-tag">Almora</span>
-                    <span class="city-tag">Bharuch</span>
-                    <span class="city-tag">Baroda</span>
-                    <span class="city-tag">Rajkot</span>
-                    <span class="city-tag">Bhavnagar</span>
-				</div>
-
-			</div> --}}
-
-
-                </div>
-                {{-- <div class="text-center" style="margin-top : 30px;">
-            <a href="http://127.0.0.1:8000/vendors" class="btn btn-lg btn-primary  mb-30" style="background : black;">See All</a>
-		</div> --}}
-
-            </div>
-
-            <img src="{{ asset('assets/front/images/new-images/left-img.png') }}" alt="" class="city-left">
-            <img src="{{ asset('assets/front/images/new-images/right-img.png') }}" alt="" class="city-right">
-        </section>
-    @endif
 
     <!-- @if ($secInfo->testimonial_section_status == 1)
     <section class="testimonial-area pt-100 pb-20">
