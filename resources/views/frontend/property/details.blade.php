@@ -53,7 +53,7 @@ $version = $basicInfo->theme_version;
     .modal-content {
         box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
         background: #e7e3d1;
-        border-radius: 12px;
+        border-radius: 20px !important;
         width: 44%;
         margin: auto;
         position: relative;
@@ -636,7 +636,7 @@ $version = $basicInfo->theme_version;
                         <div class="new-details-bg-white">
                             <div class="product-video">
                                 <h3 class="new-title-pps"> {{ __('Video') }}</h3>
-                                <div class="lazy-container radius-lg ratio ratio-16-11 mt-4" style="width: 70%;">
+                                <div class="lazy-container new-b-20 ratio ratio-16-11 mt-4" style="width: 70%;">
                                     <img class="lazyload" src="{{ asset('assets/front/images/placeholder.png') }}"
                                         data-src="{{ $propertyContent->video_image ? asset('assets/img/property/video/' . $propertyContent->video_image) : asset('assets/front/images/placeholder.png') }}">
                                     <a href="{{ $propertyContent->video_url }}"
@@ -653,7 +653,7 @@ $version = $basicInfo->theme_version;
                         <div class="new-details-bg-white">
                             <div class="product-planning mb-40">
                                 <h3 class="new-title-pps">{{ __('Floor Planning') }}</h3>
-                                <div class="lazy-container radius-lg ratio ratio-16-11 border mt-4">
+                                <div class="lazy-container new-b-20 ratio ratio-16-11 border mt-4">
                                     <img class="lazyload" src="assets/images/placeholder.png"
                                         data-src="{{ asset('assets/img/property/plannings/' . $propertyContent->floor_planning_image) }}">
                                 </div>
@@ -665,7 +665,7 @@ $version = $basicInfo->theme_version;
                         <div class="new-details-bg-white">
                             <div class="product-location mb-40">
                                 <h3 class="mb-20 new-title-pps">{{ __('Location') }}</h3>
-                                <div class="lazy-container radius-lg ratio ratio-21-9 border mt-4">
+                                <div class="lazy-container new-b-20 ratio ratio-21-9 border mt-4">
                                     <iframe class="lazyload"
                                         src="https://maps.google.com/maps?q={{ $propertyContent->latitude }},{{ $propertyContent->longitude }}&hl={{ $currentLanguageInfo->code }}&z=14&amp;output=embed"></iframe>
                                 </div>
@@ -854,7 +854,7 @@ $version = $basicInfo->theme_version;
                     </div>
                     @if(!empty($relatedProperty))
                         <aside class="sidebar-widget-area mb-10" data-aos="fade-up">
-                            <div class="widget widget-recent radius-md mb-30  new-widgets-color"
+                            <div class="widget widget-recent new-b-20 mb-30  new-widgets-color"
                                 style="box-shadow: rgba(90, 114, 123, 0.11) 0px 7px 30px 0px;">
 
                                 <h3 class="title">
@@ -869,7 +869,7 @@ $version = $basicInfo->theme_version;
                                         <div class="product-default product-inline mt-20 new-hover">
                                             <figure class="product-img VD_SP_div">
                                                 <a href="{{ route('frontend.property.details', $property->slug) }}"
-                                                    class="lazy-container ratio ratio-1-1 radius-md">
+                                                    class="lazy-container ratio ratio-1-1 new-b-15">
                                                     <img class="lazyload" src="assets/images/placeholder.png"
                                                         data-src="{{ asset('assets/img/property/featureds/' . $property->featured_image) }}">
                                                 </a>

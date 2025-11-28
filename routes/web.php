@@ -44,6 +44,7 @@
 		Route::get('/property/{slug}', 'FrontEnd\PropertyController@details')->name('frontend.property.details');
 		Route::post('/property-contact', 'FrontEnd\PropertyController@contact')->name('property_contact');
 		Route::post('/contact-mail', 'FrontEnd\PropertyController@contactUser')->name('contact_user');
+		Route::get('/properties/latest', 'FrontEnd\PropertyController@featuredAll')->name('frontend.properties.latest');
 		// Properties route
 		Route::get('/projects', 'FrontEnd\ProjectController@index')->name('frontend.projects');
 		Route::get('/project/{slug}', 'FrontEnd\ProjectController@details')->name('frontend.projects.details');

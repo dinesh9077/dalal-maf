@@ -49,9 +49,45 @@ class UserController extends Controller
       return view('backend.end-user.user.index', compact('users'));
   }
 
+  
+public function getCityDetails($cityId)
+{
+    // Get the city content to find the city_id
+    $cityContent = \App\Models\Property\CityContent::findOrFail($cityId);
+    
+    // Get the city with its state and country relationships
+    $city = \App\Models\Property\City::with(['state', 'country'])
+        ->findOrFail($cityContent->city_id);
+    
+    // Get state name
+    $stateName = 'N/A';
+    if ($city->state) {
+        $stateContent = $city->state->stateContents->first();
+        $stateName = $stateContent ? $stateContent->name : $city->state->name;
+    }
+    
+    // Get country name
+    $countryName = 'N/A';
+    if ($city->country) {
+        $countryContent = $city->country->countryContents->first();
+        $countryName = $countryContent ? $countryContent->name : $city->country->name;
+    }
+    
+    return response()->json([
+        'city_id' => $city->id,
+        'city_name' => $cityContent->name,
+        'state_id' => $city->state ? $city->state->id : null,
+        'state_name' => $stateName,
+        'country_id' => $city->country ? $city->country->id : null,
+        'country_name' => $countryName
+    ]);
+}
   public function create()
   {
-    return view('backend.end-user.user.create');
+    // Load all cities from CityContent for dropdown on create form
+    $cities = \App\Models\Property\CityContent::all();
+
+    return view('backend.end-user.user.create', compact('cities'));
   }
   public function store(Request $request)
   {
@@ -144,8 +180,14 @@ class UserController extends Controller
   public function edit($id)
   {
     $user = User::query()->findOrFail($id);
-    $information['user'] = $user;
-    return view('backend.end-user.user.edit', $information);
+
+    // Load all cities (from contents) for dropdown
+    $cities = \App\Models\Property\CityContent::all();
+
+    return view('backend.end-user.user.edit', [
+      'user' => $user,
+      'cities' => $cities,
+    ]);
   }
 
   public function update(Request $request, $id)
@@ -172,18 +214,32 @@ class UserController extends Controller
       ], 400);
     }
     $file = $request->file('image');
-    $in = $request->all();
+    $user = User::where('id', $id)->firstOrFail();
+
+    // handle image upload if new image provided
     if ($file) {
       $extension = $file->getClientOriginalExtension();
       $directory = public_path('assets/img/users/');
       $fileName = uniqid() . '.' . $extension;
       @mkdir($directory, 0775, true);
       $file->move($directory, $fileName);
-      $in['image'] = $fileName;
+      $user->image = $fileName;
     }
-    $user = User::where('id', $id)->firstOrFail();
-    $in['email'] = $request->email;
-    $user->update($in);
+
+    // only assign real columns on users table (avoid city_id, state_id, etc.)
+    $user->name     = $request->name;
+    $user->username = $request->username;
+    $user->email    = $request->email;
+    $user->phone    = $request->phone;
+    $user->zip_code = $request->zip_code;
+    $user->address  = $request->address;
+
+    // location strings come from dropdown logic
+    $user->city     = $request->city;
+    $user->state    = $request->state;
+    $user->country  = $request->country;
+
+    $user->save();
     Session::flash('success', 'User has been updated successfully.');
     return response()->json(['status' => 'success'], 200);
   }

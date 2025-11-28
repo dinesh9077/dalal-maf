@@ -597,31 +597,40 @@
 		// 	navigator.sendBeacon('{{ route('visitors.leave') }}');
 		// });
 
-		document.addEventListener("DOMContentLoaded", function() {
+			document.addEventListener("DOMContentLoaded", function() {
 
 			// Initialize wishlist count
 			updateWishlistHtml();
 
 			// Function: Update Wishlist Count in Header
-			function updateWishlistHtml() {
-				$.get("{{ route('wishlist.count') }}", function(res) {
-					if (res.status === 'success') {
-						$('.wishlist-count-html').text(res.count);
-					}
-				});
-			}
+	function updateWishlistHtml() {
+    $.get("{{ route('wishlist.count') }}", function(res) {
+        if (res && res.status === 'success') {
+            // Always show: (7)
+            const formatted = '(' + res.count + ')';
 
-			// Handle Wishlist Button Click (Add / Remove)
+            // Header heart icon
+            $('.wishlist-count-html').text(formatted);
+
+            // Dropdown count
+            $('.wishlist-count-dropdown').text(formatted);
+        }
+    });
+}
+
+
+
+    // Handle Wishlist Button Click (Add / Remove)
 			$(document).on('click', '.btn-wishlist', function(e) {
-				e.preventDefault();
-
-				const btn = $(this);
+        e.preventDefault();
+        
+        const btn = $(this);
 				const propertyId = btn.attr('data-id');
 				const action = btn.attr('data-action'); // 'add' or 'remove'
 				const url = btn.attr('data-url'); // endpoint for current action
 
-				$.ajax({
-					url: url,
+        $.ajax({
+            url: url,
 					method: 'GET',
 					data: {
 						_token: "{{ csrf_token() }}",
@@ -629,8 +638,8 @@
 					},
 					beforeSend: function() {
 						btn.prop('disabled', true);
-					},
-					success: function(response) {
+            },
+            success: function(response) {
 						if (response.status === 'success') {
 
 							// Toggle visual and data attributes
@@ -649,9 +658,9 @@
 							updateWishlistHtml();
 
 							// Optional toast notification
-							if (window.toastr) {
+                    if (window.toastr) {
 								toastr.success(response.message);
-							}
+                    }
 
 						} else {
 							// if (window.toastr) {
@@ -662,16 +671,16 @@
 					error: function(xhr) {
 						if (xhr.status === 401) {
 							if (window.toastr) toastr.warning('Please login to use wishlist.');
-							$('#customerPhoneModal').modal('show');
+                    $('#customerPhoneModal').modal('show');
 						} else {
 							if (window.toastr) toastr.error('Something went wrong.');
-						}
-					},
-					complete: function() {
-						btn.prop('disabled', false);
-					}
-				});
-			});
+                }
+            },
+            complete: function() {
+                btn.html(originalHtml).prop('disabled', false);
+            }
+        });
+    });
 
 		});
 
@@ -682,7 +691,7 @@
                 const modalTrigger = new bootstrap.Modal(modal);
                 modalTrigger.show();
             }
-        });
+});
 
     </script>
 

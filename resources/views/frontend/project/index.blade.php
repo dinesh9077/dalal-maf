@@ -110,7 +110,7 @@ $version = $basicInfo->theme_version;
 'subtitle' => __('Projects'),
 ])
 
-<div class="projects-area" style="padding: 10px 0px; margin-top: 130px;">
+<div class="projects-area" style="padding: 10px 0px; margin-top: 30px;">
 
 <a href="https://wa.me/9925133440" target="_blank">
     <div class="whatsapp-btn" data-aos="fade-up">

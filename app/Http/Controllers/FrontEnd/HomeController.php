@@ -168,10 +168,11 @@
 				);
 
 			// ------------------------------------------------------------
-			// 1️⃣ Latest Properties
+			// 1️⃣ Latest Properties (Excluding Business for Sale and Franchise)
 			// ------------------------------------------------------------
 			$queryResult['properties'] = (clone $baseQuery)
         ->distinct('properties.id')
+				->whereNotIn('properties.purpose', ['business_for_sale', 'franchiese'])
 				->latest('properties.created_at')
 				->take(8)
 				->get();
@@ -187,7 +188,7 @@
          ->distinct('properties.id')
 				->latest('properties.created_at')
 				->get();
-
+					
 			// ------------------------------------------------------------
 			// 3️⃣ Franchise
 			// ------------------------------------------------------------

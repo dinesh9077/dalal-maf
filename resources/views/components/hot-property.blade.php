@@ -26,11 +26,10 @@
 
 
     .new-img-p-box {
-        border-radius: 0px;
         height: 150px !important;
         position: relative;
         overflow: hidden;
-        border-radius: 10px;
+        border-radius: 20px;
 
     }
 
@@ -115,11 +114,11 @@
     .PND:hover {}
 </style>
 
-<div {{ $attributes }} style="position: relative; margin-bottom:0; ">
+<div {{ $attributes }} style="position: relative; margin-bottom:0;box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.00);border: 1px solid white;height: 100%; ">
     <div class="PD  mb-0 " style="border-radius: 20px;"
         {{ $animation ? 'data-aos="fade-up" data-aos-delay="100"' : '' }}>
 
-        <div style="padding: 0px;">
+        <div style="background : white; box-shadow : 0px 0px 10px rgba(0,0,0,0.09); border-radius : 20px; ">
 
             <div class="product-image-box new-img-p-box">
 
@@ -172,7 +171,7 @@
             </div>
 
             <a href="{{ route('frontend.property.details', $property->slug ?? $property->propertyContent->slug) }}">
-                <div class="product-new-div PND">
+                <div class="product-new-div PND" style="    padding: 15px;">
                     <h3 class=" product-title">
 
                         {{ Str::limit($property->title ?? $property->propertyContent->title, 30) }}
@@ -180,7 +179,7 @@
 
 
 
-
+                   
 
 
                     <ul class="product-info p-0 list-unstyled d-flex  align-items-center" style="gap:0px;">
@@ -211,11 +210,9 @@
 
                     <div class="button-new-add" style="    margin-top: 5px;padding-top: 5px;">
 
-                    <span class="product-location icon-start " style="color:#091E42 ; font-size : 14px ;">
+ <span class="product-location icon-start " style="color:#091E42 ; font-size : 14px ;">
                         <i class="fal fa-map-marker-alt" style="color:#091E42 ; font-size : 14px  ;     margin-inline-end: 0px;" ></i>
-                       {{ $property->areaContent?->name
-                                                        ? $property->areaContent->name . ', ' . ($property->city?->getContent($property->language_id)?->name ?? '')
-                                                        : ($property->city?->getContent($property->language_id)?->name ?? '') }}
+                        {{ $property->city->getContent($property->language_id)?->name }}
                         {{ $property->isStateActive ? ', ' . $property->state?->getContent($property->language_id)?->name : '' }}
                     </span>
 
@@ -389,7 +386,7 @@
                     </a>
                 </h3>
 
-
+              
 
                  <span class="product-location icon-start">
                     <i class="fal fa-map-marker-alt"></i>
@@ -401,10 +398,10 @@
                     <span class="new-price">
                         {{ $property->price ? symbolPrice($property->price) : __('Negotiable') }}
                     </span>
-                </div>
+                </div> 
 
 
-
+				    
 
                 <ul class="product-info p-0 list-unstyled d-flex  align-items-center" style="gap:0px;">
                     @if (!in_array($property->purpose, ['franchiese', 'business_for_sale']))
