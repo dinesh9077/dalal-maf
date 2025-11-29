@@ -257,9 +257,12 @@ class PropertyController extends Controller
                     });
             })
 
-            ->when($type, function ($query) use ($type) {
-                return $query->whereIn('properties.type', $type);
-            })
+            
+       ->when($type, function ($query) use ($type) {
+    $type = is_array($type) ? $type : [$type];
+    return $query->whereIn('properties.type', $type);
+})
+
             ->when($purpose, function ($query) use ($purpose)
 			      {
                 return $query->whereIn('properties.purpose', $purpose);

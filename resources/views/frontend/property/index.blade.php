@@ -319,6 +319,111 @@ $version = $basicInfo->theme_version;
     .dropdown-max-list li:hover {
         background: #f3f3f3;
     }
+
+    .price-range-filter {
+        width: 100%;
+        padding: 15px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .price-inputs {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .price-input {
+        flex: 1;
+        position: relative;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 8px 10px 8px 25px;
+    }
+
+    .price-input span {
+        position: absolute;
+        left: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+    }
+
+    .price-input input {
+        width: 100%;
+        border: none;
+        outline: none;
+        font-size: 14px;
+    }
+
+    .separator {
+        color: #666;
+    }
+
+    .price-slider {
+        position: relative;
+        height: 5px;
+        background: #e0e0e0;
+        border-radius: 5px;
+        margin: 20px 0;
+    }
+
+    .slider-track {
+        position: absolute;
+        height: 100%;
+        background: #6c603c;
+        left: 0;
+        right: 0;
+        border-radius: 5px;
+    }
+
+    .price-slider input[type="range"] {
+        position: absolute;
+        width: 100%;
+        height: 5px;
+        top: -5px;
+        background: none;
+        pointer-events: none;
+        -webkit-appearance: none;
+    }
+
+    .price-slider input[type="range"]::-webkit-slider-thumb {
+        height: 18px;
+        width: 18px;
+        border-radius: 50%;
+        background: #6c603c;
+        pointer-events: auto;
+        -webkit-appearance: none;
+        cursor: pointer;
+    }
+
+    .price-chart {
+        margin-top: 30px;
+    }
+
+    .chart-bars {
+        display: flex;
+        align-items: flex-end;
+        height: 60px;
+        gap: 2px;
+        margin-bottom: 5px;
+    }
+
+    .chart-bar {
+        flex: 1;
+        background: #e0e0e0;
+        border-radius: 2px;
+        transition: height 0.3s ease;
+    }
+
+    .chart-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        color: #666;
+    }
 </style>
 
 
@@ -366,52 +471,49 @@ $version = $basicInfo->theme_version;
                                     </button>
                                 </h3>
                                 <div id="ranges-min" class="collapse show mt-3">
-                                    <div class="budget-box">
-
-                                        <!-- MIN -->
-                                        <div class="dropdown-min">
-                                            <div class="dropdown-min-selected">No min</div>
-                                            <ul class="dropdown-min-list">
-                                                <li>No min</li>
-                                                <li>5 Lacs</li>
-                                                <li>10 Lacs</li>
-                                                <li>15 Lacs</li>
-                                                <li>20 Lacs</li>
-                                                <li>25 Lacs</li>
-                                                <li>50 Lacs</li>
-                                                <li>1 Crore</li>
-                                                <li>2 Crores</li>
-                                                <li>5 Crores</li>
-                                                <li>10 Crores</li>
-                                            </ul>
+                                    <div class="price-range-filter">
+                                        <div class="price-inputs">
+                                            <div class="price-input">
+                                                <span>₹</span>
+                                                <input type="number" id="minPrice" placeholder="Min" min="0">
+                                            </div>
+                                            <span class="separator">to</span>
+                                            <div class="price-input">
+                                                <span>₹</span>
+                                                <input type="number" id="maxPrice" placeholder="Max">
+                                            </div>
                                         </div>
-
-                                        <span class="sep">–</span>
-
-                                        <!-- MAX -->
-                                        <div class="dropdown-max">
-                                            <div class="dropdown-max-selected">No max</div>
-                                            <ul class="dropdown-max-list">
-                                                <li>No max</li>
-                                                <li>5 Lacs</li>
-                                                <li>10 Lacs</li>
-                                                <li>15 Lacs</li>
-                                                <li>20 Lacs</li>
-                                                <li>25 Lacs</li>
-                                                <li>50 Lacs</li>
-                                                <li>1 Crore</li>
-                                                <li>2 Crores</li>
-                                                <li>5 Crores</li>
-                                                <li>10 Crores</li>
-                                            </ul>
+                                        
+                                        <div class="price-slider">
+                                            <div class="slider-track"></div>
+                                            <input type="range" min="0" max="50000000" value="0" id="slider-min" step="100000">
+                                            <input type="range" min="0" max="50000000" value="50000000" id="slider-max" step="100000">
                                         </div>
-
+                                        
+                                        <div class="price-chart">
+                                            <!-- Price distribution bars (simplified) -->
+                                            <div class="chart-bars">
+                                                <div class="chart-bar" style="height: 20%;"></div>
+                                                <div class="chart-bar" style="height: 40%;"></div>
+                                                <div class="chart-bar" style="height: 60%;"></div>
+                                                <div class="chart-bar" style="height: 80%;"></div>
+                                                <div class="chart-bar" style="height: 100%;"></div>
+                                            </div>
+                                            <div class="chart-labels">
+                                                <span>0</span>
+                                                <span>50L</span>
+                                                <span>1Cr</span>
+                                                <span>2Cr</span>
+                                                <span>5Cr</span>
+                                                <span>10Cr+</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
 
-                             <!-- @if (
+                             {{-- <!-- @if (
                             !request()->has('purpose') ||
                             (request()->has('purpose') && !in_array(request('purpose'), ['franchiese', 'business_for_sale'])))                       
                             <div class="widget widget-select mb-30">
@@ -445,7 +547,7 @@ $version = $basicInfo->theme_version;
                                     </div>
                                 </div>
                             </div>
-                            @endif -->
+                            @endif --> --}}
 
 
                             <!-- PROPERTY INFO -->
@@ -740,14 +842,27 @@ $version = $basicInfo->theme_version;
                                     $selectedTypes = request('type', '');
                                     @endphp
 
+                                    @php
+$selectedTypes = request()->input('type', []);
+if (!is_array($selectedTypes)) {
+    $selectedTypes = [$selectedTypes]; // force array
+}
+@endphp
+
+
                                     <select class="property-select-input select2"
                                         name="type"
-                                        onchange="updateAmenities('type='+this.value, this)">
+                                        id="propertyTypeSelect"
+                                        onchange="updateCategoriesAndAmenities(this.value)">
                                         <option value="">Select Property Type</option>
 
+                                        @php
+                                            $selectedType = request()->input('type');
+                                        @endphp
                                         @foreach (['residential', 'commercial', 'industrial'] as $type)
-                                        <option value="{{ $type }}"
-                                            {{ $selectedTypes == $type ? 'selected' : '' }}>
+                                        <option value="{{ $type }}" {{ $selectedType == $type ? 'selected' : '' }}
+                                           {{ in_array($type, $selectedTypes) ? 'selected' : '' }}
+>
                                             {{ ucwords($type) }}
                                         </option>
                                         @endforeach
@@ -791,7 +906,7 @@ $version = $basicInfo->theme_version;
                     </div>
 
                     {{-- Reset Button --}}
-                    <a href="#" style="width:fit-content; padding:0; border-radius:10px;">
+                    <a href="{{ url()->current() }}" style="width:fit-content; padding:0; border-radius:10px;">
                         <button type="submit" class="btn btn-primary"
                             style="height:42px; width:fit-content; border-radius:13px; font-size:12px;">
                             Reset Filter
@@ -1098,33 +1213,33 @@ function updateURL(queryPart) {
 let url = new URL(window.location.href);
 let [key, value] = queryPart.split("=");
 
-if (value === "" || value === null) {
-url.searchParams.delete(key);
-} else {
-url.searchParams.set(key, value);
-}
+        if (value === "" || value === null) {
+            url.searchParams.delete(key);
+        } else {
+            url.searchParams.set(key, value);
+        }
 
-window.location.href = url.toString();
-}
+        window.location.href = url.toString();
+    }
 
-function resetURL() {
-let base = window.location.href.split("?")[0];
-window.location.href = base;
-}
+    function resetURL() {
+        let base = window.location.href.split("?")[0];
+        window.location.href = base;
+    }
 
-function updateAmenities(param, el) {
-let url = new URL(window.location.href);
-let [key, value] = param.split("=");
+    function updateAmenities(param, el) {
+        let url = new URL(window.location.href);
+        let [key, value] = param.split("=");
 
-if (el.checked) {
-url.searchParams.append(key, value);
-} else {
-let all = url.searchParams.getAll(key);
-url.searchParams.delete(key);
-all.filter(v => v !== value).forEach(v => url.searchParams.append(key, v));
-}
+        if (value === "" || value === null) {
+            url.searchParams.delete(key);
+        } else {
+            url.searchParams.set(key, value);
+        }
 
-window.location.href = url.toString();
-}
-</script>
+        window.location.href = url.toString();
+    }
+
+</script> 
+
 @endsection
