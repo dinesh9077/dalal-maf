@@ -362,14 +362,6 @@ $version = $basicInfo->theme_version;
         color: #666;
     }
 
-    .price-slider {
-        position: relative;
-        height: 5px;
-        background: #e0e0e0;
-        border-radius: 5px;
-        margin: 20px 0;
-    }
-
     .slider-track {
         position: absolute;
         height: 100%;
@@ -377,30 +369,6 @@ $version = $basicInfo->theme_version;
         left: 0;
         right: 0;
         border-radius: 5px;
-    }
-
-    .price-slider input[type="range"] {
-        position: absolute;
-        width: 100%;
-        height: 5px;
-        top: -5px;
-        background: none;
-        pointer-events: none;
-        -webkit-appearance: none;
-    }
-
-    .price-slider input[type="range"]::-webkit-slider-thumb {
-        height: 18px;
-        width: 18px;
-        border-radius: 50%;
-        background: #6c603c;
-        pointer-events: auto;
-        -webkit-appearance: none;
-        cursor: pointer;
-    }
-
-    .price-chart {
-        margin-top: 30px;
     }
 
     .chart-bars {
@@ -418,12 +386,6 @@ $version = $basicInfo->theme_version;
         transition: height 0.3s ease;
     }
 
-    .chart-labels {
-        display: flex;
-        justify-content: space-between;
-        font-size: 10px;
-        color: #666;
-    }
 </style>
 
 
@@ -463,54 +425,37 @@ $version = $basicInfo->theme_version;
                     <div class="offcanvas-body p-1">
                         <aside class="sidebar-widget-area new-color-ngs-property" data-aos="fade-up">
 
-                            <div class="widget widget-select">
-                                <h3 class="title">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#ranges-min" aria-expanded="true" aria-controls="ranges-min">
-                                        {{ __('Property Type') }}
-                                    </button>
-                                </h3>
-                                <div id="ranges-min" class="collapse show mt-3">
-                                    <div class="price-range-filter">
-                                        <div class="price-inputs">
-                                            <div class="price-input">
-                                                <span>₹</span>
-                                                <input type="number" id="minPrice" placeholder="Min" min="0">
-                                            </div>
-                                            <span class="separator">to</span>
-                                            <div class="price-input">
-                                                <span>₹</span>
-                                                <input type="number" id="maxPrice" placeholder="Max">
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="price-slider">
-                                            <div class="slider-track"></div>
-                                            <input type="range" min="0" max="50000000" value="0" id="slider-min" step="100000">
-                                            <input type="range" min="0" max="50000000" value="50000000" id="slider-max" step="100000">
-                                        </div>
-                                        
-                                        <div class="price-chart">
-                                            <!-- Price distribution bars (simplified) -->
-                                            <div class="chart-bars">
-                                                <div class="chart-bar" style="height: 20%;"></div>
-                                                <div class="chart-bar" style="height: 40%;"></div>
-                                                <div class="chart-bar" style="height: 60%;"></div>
-                                                <div class="chart-bar" style="height: 80%;"></div>
-                                                <div class="chart-bar" style="height: 100%;"></div>
-                                            </div>
-                                            <div class="chart-labels">
-                                                <span>0</span>
-                                                <span>50L</span>
-                                                <span>1Cr</span>
-                                                <span>2Cr</span>
-                                                <span>5Cr</span>
-                                                <span>10Cr+</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                           <div class="widget widget-select">
+    <h3 class="title">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+            data-bs-target="#ranges-min" aria-expanded="true" aria-controls="ranges-min">
+            {{ __('Range Type') }}
+        </button>
+    </h3>
+
+        <div id="ranges-min" class="collapse show mt-3">
+            <div class="price-range-filter">
+                <div class="price-inputs">
+
+                    <div class="price-input">
+                        <span>₹</span>
+                        <input type="text" id="minPrice" placeholder="Min"
+                            min="0" value="{{ request('min', $min) }}">
+                    </div>
+
+                    <span class="separator">to</span>
+                    
+                    <div class="price-input">
+                        <span>₹</span>
+                        <input type="text" id="maxPrice" placeholder="Max"
+                            value="{{ request('max', $max) }}">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+</div>
+
 
 
                              {{-- <!-- @if (
@@ -594,6 +539,7 @@ $version = $basicInfo->theme_version;
                                                             value="{{ $unit->id }}"
                                                             {{ in_array($unit->id, $selectedUnitTypes) ? 'checked' : '' }}
                                                             onchange="updateAmenities('unit_type[]={{ $unit->id }}',this)">
+                                                        
                                                         <label for="checkbox{{ $unit->id }}"><span
                                                                 class="animits-div-tab">
                                                                 {{ ucwords($unit->unit_name) }}</span></label>
@@ -604,7 +550,7 @@ $version = $basicInfo->theme_version;
                                         </div>
                                     </div>
                                     @endif
-
+                                    
                                     <!-- Categories -->
                                     <div class="widget widget-categories pt-4 mb-30" >
                                         <h3 class="title">
@@ -657,16 +603,18 @@ $version = $basicInfo->theme_version;
                                         <div id="amenities" class="collapse show">
                                             <div class="accordion-body">
                                                 <div class="custom-checkbox new-animitis-divs">
-
                                                     @php
+                                                   
                                                     $selected_amenities = request()->input('amenities', []);
                                                     if (!is_array($selected_amenities)) {
                                                     $selected_amenities = [$selected_amenities];
                                                     }
                                                     @endphp
-
+                                                   
                                                     @foreach ($amenities as $amenity)
+                                              
                                                     @if ($amenity->amenityContent)
+                                                 
                                                     <div>
                                                         <input class="input-checkbox" type="checkbox"
                                                             name="amenities[]"
@@ -674,6 +622,7 @@ $version = $basicInfo->theme_version;
                                                             value="{{ $amenity->amenityContent->name }}"
                                                             {{ in_array($amenity->amenityContent->name, $selected_amenities) ? 'checked' : '' }}
                                                             onchange="updateAmenities('amenities[]={{ $amenity->amenityContent->name }}',this)">
+                                                            
                                                         <label for="checkbox_am{{ $amenity->id }}"><span
                                                                 class="animits-div-tab">{{ $amenity->amenityContent->name }}</span></label>
                                                     </div>
@@ -764,9 +713,9 @@ $version = $basicInfo->theme_version;
                     <div class="sort-box">
                         <div class="Sort-content">
                             <h6 style="font-size:13px;">
-                                (Found
+                               (Found
                                 <span style="color:black; margin:0px 2px; font-weight:600;">
-                                    4 Properties
+                                    {{ $property_contents->total() }} Properties
                                 </span>)
                             </h6>
                             <div class="sort-toggle" onclick="toggleSortBox()">
@@ -831,44 +780,44 @@ $version = $basicInfo->theme_version;
 
                         </select>
                     </div>
-
+ 
                     {{-- Property Type --}}
                     @if (!request()->has('purpose') || !in_array(request('purpose'), ['franchiese', 'business_for_sale']))
                     <div class="col p-0">
                         <div class="widget property-dropdown-box">
                             <div id="type" class="property-dropdown-collapse collapse show">
                                 <div class="property-dropdown-body">
+                                   
                                     @php
                                     $selectedTypes = request('type', '');
                                     @endphp
-
+    
                                     @php
-$selectedTypes = request()->input('type', []);
-if (!is_array($selectedTypes)) {
-    $selectedTypes = [$selectedTypes]; // force array
-}
-@endphp
+                                    $selectedTypes = request()->input('type', []);
+                                    if (!is_array($selectedTypes)) {
+                                        $selectedTypes = [$selectedTypes]; // force array
+                                    }
+                                    @endphp
 
 
                                     <select class="property-select-input select2"
                                         name="type"
-                                        id="propertyTypeSelect"
-                                        onchange="updateCategoriesAndAmenities(this.value)">
-                                        <option value="">Select Property Type</option>
-
+                                         onchange="updateURL('type='+$(this).val())"
+                                        id="propertyTypeSelect">
+                                        
+                                        <option value="">Select Property Type</option> 
+                                       
                                         @php
                                             $selectedType = request()->input('type');
                                         @endphp
                                         @foreach (['residential', 'commercial', 'industrial'] as $type)
                                         <option value="{{ $type }}" {{ $selectedType == $type ? 'selected' : '' }}
-                                           {{ in_array($type, $selectedTypes) ? 'selected' : '' }}
->
+                                           {{ in_array($type, $selectedTypes) ? 'selected' : '' }}>
                                             {{ ucwords($type) }}
                                         </option>
                                         @endforeach
-
+                                      
                                     </select>
-
                                 </div>
                             </div>
                         </div>
@@ -906,12 +855,20 @@ if (!is_array($selectedTypes)) {
                     </div>
 
                     {{-- Reset Button --}}
-                    <a href="{{ url()->current() }}" style="width:fit-content; padding:0; border-radius:10px;">
-                        <button type="submit" class="btn btn-primary"
+             <a href="javascript:void(0)" 
+   onclick="resetURL()" 
+   style="width:fit-content; padding:0; border-radius:10px;">
+    <button type="button" class="btn btn-primary"
+        style="height:42px; width:fit-content; border-radius:13px; font-size:12px;">
+        Reset Filter
+    </button>
+</a>
+   {{-- <a href="{{ url()->current() }}" style="width:fit-content; padding:0; border-radius:10px;">
+                        <button type=onclick="resetURL()" type="button" class="btn btn-primary"
                             style="height:42px; width:fit-content; border-radius:13px; font-size:12px;">
                             Reset Filter
                         </button>
-                    </a>
+                    </a> --}}
 
                     {{-- Mobile Filter Button --}}
                     <button type="button" class="filter-btn"
@@ -1086,7 +1043,7 @@ if (!is_array($selectedTypes)) {
     eventCapture();
 
     function getTypesFromUrl() {
-        return new URLSearchParams(window.location.search).getAll('type[]') || [];
+        return new URLSearchParams(window.location.search).getAll('type') || [];
     }
 
     function collectCheckedValues(paramName) {
@@ -1101,7 +1058,7 @@ if (!is_array($selectedTypes)) {
         const url = "{{ route('frontend.types-wise-load-data') }}";
         const params = new URLSearchParams();
 
-        types.forEach(t => params.append('type[]', t));
+        types.forEach(t => params.append('type', t));
         categories.forEach(c => params.append('category[]', c));
         amenities.forEach(a => params.append('amenities[]', a));
 
@@ -1111,6 +1068,8 @@ if (!is_array($selectedTypes)) {
             success: function(res) {
                 $('#amenities').html(res.amenities_html);
                 $('#categories').html(res.categories_html);
+             
+
             }
         });
     }
@@ -1207,38 +1166,113 @@ if (!is_array($selectedTypes)) {
             maxList.style.display = "none";
         });
     });
-</script>
-<script>
-function updateURL(queryPart) {
-let url = new URL(window.location.href);
-let [key, value] = queryPart.split("=");
 
-        if (value === "" || value === null) {
-            url.searchParams.delete(key);
-        } else {
-            url.searchParams.set(key, value);
+// function updateURL(queryPart) {
+// let url = new URL(window.location.href);
+// let [key, value] = queryPart.split("=");
+
+//         if (value === "" || value === null) {
+//             url.searchParams.delete(key);
+//         } else {
+//             url.searchParams.set(key, value);
+//         }
+
+//         window.location.href = url.toString();
+//     }
+
+//     function resetURL() {
+//         let base = window.location.href.split("?")[0];
+//         window.location.href = base;
+//     }
+
+//     function updateAmenities(param, el) {
+//         let url = new URL(window.location.href);
+//         let [key, value] = param.split("=");
+
+//         if (value === "" || value === null) {
+//             url.searchParams.delete(key);
+//         } else {
+//             url.searchParams.set(key, value);
+//         }
+
+//         window.location.href = url.toString();
+//     }
+
+//     function updateCategoriesAndAmenities(typeValue) {
+
+//     let url = new URL(window.location.href);
+
+//     // Purane type[] delete
+//     url.searchParams.delete('type[]');
+//     url.searchParams.delete('amenities[]');
+//     url.searchParams.delete('category[]');
+
+//     // Naya type add
+//     if (typeValue) {
+//         url.searchParams.append('type[]', typeValue);
+//     }
+
+//     // Page reload for backend filter
+//     window.location.href = url.toString();
+// }
+
+document.getElementById("minPrice").addEventListener("change", applyRangeFilter);
+document.getElementById("maxPrice").addEventListener("change", applyRangeFilter);
+
+function applyRangeFilter() {
+
+    let min = document.getElementById("minPrice").value.trim();
+    let max = document.getElementById("maxPrice").value.trim();
+
+    let url = new URL(window.location.href);
+
+    // --- FIXED LOGIC ---
+    if (min !== "") url.searchParams.set("min", min);
+    else url.searchParams.delete("min");
+
+    if (max !== "") url.searchParams.set("max", max);
+    else url.searchParams.delete("max");
+
+    // Smooth URL update (NO RELOAD)
+    history.pushState({}, "", url.toString());
+
+    // Trigger your filter refresh
+    eventCapture();
+
+    // Trigger same reload mechanism your other filters use
+    if (typeof properties !== "undefined") {
+        $('.filter-input').trigger("keyup"); // THIS FIXES MIN NOT FIRING
+    }
+}
+
+function updateRangeByType() {
+    let url = "{{ route('frontend.types-wise-load-data') }}";
+    let params = new URLSearchParams(window.location.search);
+
+    $.ajax({
+        url: url + "?" + params.toString(),
+        method: "GET",
+        success: function(res) {
+
+            // ---- UPDATE price range from response ----
+            if (res.min_price !== undefined && res.max_price !== undefined) {
+                // Set values in inputs
+                document.getElementById("minPrice").value = res.min_price;
+                document.getElementById("maxPrice").value = res.max_price;
+
+                // Update URL smoothly
+                let current = new URL(window.location.href);
+                current.searchParams.set("min", res.min_price);
+                current.searchParams.set("max", res.max_price);
+                history.pushState({}, "", current.toString());
+            }
+
+            // ---- Update categories & amenities (already in your code) ----
+            $('#amenities').html(res.amenities_html);
+            $('#categories').html(res.categories_html);
         }
-
-        window.location.href = url.toString();
-    }
-
-    function resetURL() {
-        let base = window.location.href.split("?")[0];
-        window.location.href = base;
-    }
-
-    function updateAmenities(param, el) {
-        let url = new URL(window.location.href);
-        let [key, value] = param.split("=");
-
-        if (value === "" || value === null) {
-            url.searchParams.delete(key);
-        } else {
-            url.searchParams.set(key, value);
-        }
-
-        window.location.href = url.toString();
-    }
+    });
+}
 
 </script> 
 

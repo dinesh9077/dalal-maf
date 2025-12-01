@@ -32,17 +32,17 @@ function pushAndFetch(url) {
 function updateURL(data)
 {
   $(".request-loader").addClass("show");
-
+  
   const [rawName, rawVal = ""] = String(data).split("=");
   const name = decodeURIComponent(rawName);
   const value = decodeURIComponent(rawVal);
 
   let url = getURL();
-
   if (name === "type") {
     reset(); // preserves original behavior
     getCategories(value);
   } else if (name === "category") {
+    // console.log('category')
     // keep type, reset others (as your original logic intended)
     reset();
     const current = getURL();
@@ -78,6 +78,7 @@ function updateURL(data)
   }
 
   pushAndFetch(url);
+  eventCapture();
 }
 
 // Remove a single query param everywhere and push state
@@ -89,6 +90,7 @@ function requestArrayRmvfromUrl(requestName) {
 
 // Amenities toggler (multi-value, idempotent)
 function updateAmenities(data, checkbox) {
+  
   const url = getURL();
   const [rawName, rawVal = ""] = String(data).split("=");
   const name = decodeURIComponent(rawName);
@@ -110,8 +112,7 @@ function updateAmenities(data, checkbox) {
 
   $(".request-loader").addClass("show");
   pushAndFetch(url);
-
-  eventCapture();
+ 
 }
 
 // -----------------------------

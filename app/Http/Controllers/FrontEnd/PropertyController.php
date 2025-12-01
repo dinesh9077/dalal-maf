@@ -108,9 +108,9 @@ class PropertyController extends Controller
             }
         }
 
-        $type = [];
+        $type = '';
         if ($request->filled('type')) {
-            $type = $request->type ?? [];
+            $type = $request->type ?? '';
         }
 
         $unitTypes = [];
@@ -255,13 +255,11 @@ class PropertyController extends Controller
                     ->orWhere(function ($query) {
                         $query->where('vendors.status', '=', 1)->whereNotNull('memberships.id');
                     });
-            })
-
+            }) 
             
-       ->when($type, function ($query) use ($type) {
-    $type = is_array($type) ? $type : [$type];
-    return $query->whereIn('properties.type', $type);
-})
+            ->when($type, function ($query) use ($type) { 
+                return $query->where('properties.type', $type);
+            })
 
             ->when($purpose, function ($query) use ($purpose)
 			      {
@@ -284,7 +282,7 @@ class PropertyController extends Controller
             })
             ->when(!empty($amenityIds), function ($query) use ($amenityIds) {
                 $query->whereHas(
-                'proertyAmenities',
+                'propertyAmenities',
                 function ($q) use ($amenityIds) {
                     $q->whereIn('amenity_id', $amenityIds);
                 },
@@ -392,18 +390,19 @@ class PropertyController extends Controller
             $viewContent = View::make('frontend.property.property',  $information);
             $viewContent = $viewContent->render();
 
-            return response()->json(['propertyContents' => $viewContent, 'properties' => $property_contents,'min' => $filteredMin,'max' => $filteredMax,'minFormatted' => symbolPrice($filteredMin), 'maxFormatted' => symbolPrice($filteredMax)])->header('Cache-Control', 'no-cache, no-store, must-revalidate');
+            return response()->json(['propertyContents' => $viewContent]);
         }
+        
         return view('frontend.property.index', $information);
     }
 
     public function loadCategoryAmenitiesTypes(Request $request)
     {
         // Read types from request; ensure it's always an array
-        $types = $request->input('type', []);
-        if (!is_array($types)) {
-            $types = [$types];
-        }
+        $type = $request->input('type');
+        // if (!is_array($types)) {
+        //     $types = [$types];
+        // }
 
         $misc = new MiscellaneousController();
         $language = $misc->getLanguage();
@@ -416,8 +415,8 @@ class PropertyController extends Controller
             'properties'
         ])->where('status', 1);
 
-        if (!empty($types)) {
-            $categoriesQuery->whereIn('type', $types);
+        if (!empty($type)) {
+            $categoriesQuery->where('type', $type);
         }
 
         $categories = $categoriesQuery->get();
@@ -431,19 +430,14 @@ class PropertyController extends Controller
             ])
             ->orderBy('serial_number');
 
-        if (!empty($types)) {
-            if (!empty($types)) {
-                $amenitiesQuery->where(function ($q) use ($types) {
-                    foreach ($types as $type) {
-                        // orWhereJsonContains available in Laravel 8+. If not, use orWhereRaw with JSON_CONTAINS
-                        $q->orWhereJsonContains('types', $type);
-                    }
-                });
-            }
+        if (!empty($type)) { 
+            $amenitiesQuery->where(function ($q) use ($type) {
+                $q->whereJsonContains('types', $type);
+            }); 
         }
 
         $amenities = $amenitiesQuery->get();
-
+ 
         // Render blade partials to HTML strings
         $categoriesHtml = view('frontend.property.categories-list', compact('categories'))->render();
         $amenitiesHtml = view('frontend.property.amenities-list', compact('amenities'))->render();
@@ -835,6 +829,38 @@ public function featuredAll($type)
         }
 
         return Response::json(['categories' => $categories], 200);
+    }
+
+    public function getAmenities(Request $request)
+    {
+        $misc = new MiscellaneousController();
+        $language = $misc->getLanguage();
+        if ($request->type != 'all') {
+           $allAmenities = Amenity::where('status', 1)
+                    ->with(['amenityContent' => function ($q) use ($language) {
+                        $q->where('language_id', $language->id);
+                    }])
+                    ->get();
+
+                $filtered = $allAmenities->filter(function ($amenity) use ($request) {
+
+                    $types = json_decode($amenity->types, true);   // First decode outer quotes
+
+                    // If still nested JSON (double encoded) → decode again
+                    if (is_string($types)) {
+                        $types = json_decode($types, true);
+                    }
+
+                    return in_array($request->type, $types ?? []);
+                })->values();
+        } else {
+            $allAmenities = Amenity::where('status', 1)
+                ->with(['amenityContent' => function ($q) use ($language) {
+                    $q->where('language_id', $language->id);
+                }])->get();
+        }
+      
+        return Response::json(['amenities' => $allAmenities], 200);
     }
 
     public function locationSearch(Request $request)
