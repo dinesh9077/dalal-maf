@@ -194,10 +194,10 @@
 
         .dropdown {
             position: relative;
-            width: 180px;
+
             background: #fff;
             border: 1px solid #ddd;
-            padding: 10px 12px;
+
             cursor: pointer;
             border-radius: 13px;
         }
@@ -322,10 +322,6 @@
 
         .price-range-filter {
             width: 100%;
-            padding: 15px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .price-inputs {
@@ -338,8 +334,6 @@
         .price-input {
             flex: 1;
             position: relative;
-            border: 1px solid #ddd;
-            border-radius: 4px;
             padding: 8px 10px 8px 25px;
         }
 
@@ -457,7 +451,7 @@
 
 
 
-                                {{-- <!-- @if (!request()->has('purpose') || (request()->has('purpose') && !in_array(request('purpose'), ['franchiese', 'business_for_sale'])))                       
+                                {{-- <!-- @if (!request()->has('purpose') || (request()->has('purpose') && !in_array(request('purpose'), ['franchiese', 'business_for_sale'])))
                             <div class="widget widget-select mb-30">
                                 <h3 class="title">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -925,7 +919,7 @@
         </div>
     </div>
 </div>
- 
+
 
 @endsection
 
@@ -1179,6 +1173,6 @@
         document.getElementById('maxPrice').addEventListener('input', function() {
             this.value = this.value.replace(/[^0-9]/g, '');
         });
- 
+
     </script>
 @endsection

@@ -37,5 +37,5 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-<link rel="stylesheet" href="{{ asset('assets/css/buttons.datatable.min.css') }}">>
+<link rel="stylesheet" href="{{ asset('assets/css/buttons.datatable.min.css') }}">
 
