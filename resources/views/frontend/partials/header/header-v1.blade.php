@@ -2,7 +2,7 @@
     <img src="{{ asset('assets/img/loaders.gif') }}">
 </div>
 
-<header class="header-area header-1 @if (!request()->routeIs('index')) header-static @endif" data-aos="slide-down">
+<header class="header-area header-1 @if (!request()->routeIs('index')) header-static @endif" >
 
     <div class="mobile-menu">
         <div class="container" style="padding: 10px;">

@@ -84,9 +84,20 @@
                                                         {{ strlen($content->name) > 50 ? mb_substr($content->name, 0, 50, 'UTF-8') . '...' : $content->name }}
                                                     </td>
                                                     <td>
-                                                        {{ $content->amenity->types ? ucwords(implode(', ', $content->amenity->types)) : 'N/A' }}
+                                                        {{-- {{ $content->amenity->types ? ucwords(implode(', ', $content->amenity->types)) : 'N/A' }} --}}
+                                                        @php
+                                                            $types = $content->amenity->types;
+
+                                                            // If types is not array, convert to array
+                                                            if (!is_array($types)) {
+                                                                $types = json_decode($types, true) ?? [];
+                                                            }
+                                                        @endphp
+
+                                                        {{ !empty($types) ? ucwords(implode(', ', $types)) : 'N/A' }}
+
                                                     </td>
-                                                    <td>
+                                                       <td>
                                                         @if ($content->amenity->status == 1)
                                                             <h2 class="d-inline-block"><span
                                                                     class="badge badge-success">{{ __('Active') }}</span>
