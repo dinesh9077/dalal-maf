@@ -426,38 +426,38 @@ $version = $basicInfo->theme_version;
                         <aside class="sidebar-widget-area new-color-ngs-property" data-aos="fade-up">
 
                            <div class="widget widget-select">
-    <h3 class="title">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-            data-bs-target="#ranges-min" aria-expanded="true" aria-controls="ranges-min">
-            {{ __('Range Type') }}
-        </button>
-    </h3>
+                                <h3 class="title">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#ranges-min" aria-expanded="true" aria-controls="ranges-min">
+                                        {{ __('Range Type') }}
+                                    </button>
+                                </h3>
+                                
+                                <div id="ranges-min" class="collapse show mt-3">
+                                    <div class="price-range-filter">
+                                        <div class="price-inputs">
+                                            
+                                            <div class="price-input">
+                                                <span>₹</span>
+                                                <input type="text" id="minPrice" placeholder="Min"
+                                                    min="0" value="{{ request('min', $min) }}">
+                                            </div>
 
-        <div id="ranges-min" class="collapse show mt-3">
-            <div class="price-range-filter">
-                <div class="price-inputs">
+                                            <span class="separator">to</span>
+                                            
+                                            <div class="price-input">
+                                                <span>₹</span>
+                                                <input type="text" id="maxPrice" placeholder="Max"
+                                                    value="{{ request('max', $max) }}">
+                                            </div>
 
-                    <div class="price-input">
-                        <span>₹</span>
-                        <input type="text" id="minPrice" placeholder="Min"
-                            min="0" value="{{ request('min', $min) }}">
-                    </div>
-
-                    <span class="separator">to</span>
-                    
-                    <div class="price-input">
-                        <span>₹</span>
-                        <input type="text" id="maxPrice" placeholder="Max"
-                            value="{{ request('max', $max) }}">
-                    </div>
-
-                </div>
-            </div>
-        </div>
-</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
-
+ 
                              {{-- <!-- @if (
                             !request()->has('purpose') ||
                             (request()->has('purpose') && !in_array(request('purpose'), ['franchiese', 'business_for_sale'])))                       
@@ -855,20 +855,15 @@ $version = $basicInfo->theme_version;
                     </div>
 
                     {{-- Reset Button --}}
-             <a href="javascript:void(0)" 
-   onclick="resetURL()" 
-   style="width:fit-content; padding:0; border-radius:10px;">
-    <button type="button" class="btn btn-primary"
-        style="height:42px; width:fit-content; border-radius:13px; font-size:12px;">
-        Reset Filter
-    </button>
-</a>
-   {{-- <a href="{{ url()->current() }}" style="width:fit-content; padding:0; border-radius:10px;">
-                        <button type=onclick="resetURL()" type="button" class="btn btn-primary"
-                            style="height:42px; width:fit-content; border-radius:13px; font-size:12px;">
-                            Reset Filter
-                        </button>
-                    </a> --}}
+                     <a href="javascript:void(0)" onclick="resetURL()" 
+                        style="width:fit-content; padding:0; border-radius:10px;">
+                         <button type="button" class="btn btn-primary"
+                             style="height:42px; width:fit-content; border-radius:13px; font-size:12px;">
+                             Reset Filter
+                         </button>
+                     </a>
+
+
 
                     {{-- Mobile Filter Button --}}
                     <button type="button" class="filter-btn"
@@ -1166,55 +1161,7 @@ $version = $basicInfo->theme_version;
             maxList.style.display = "none";
         });
     });
-
-// function updateURL(queryPart) {
-// let url = new URL(window.location.href);
-// let [key, value] = queryPart.split("=");
-
-//         if (value === "" || value === null) {
-//             url.searchParams.delete(key);
-//         } else {
-//             url.searchParams.set(key, value);
-//         }
-
-//         window.location.href = url.toString();
-//     }
-
-//     function resetURL() {
-//         let base = window.location.href.split("?")[0];
-//         window.location.href = base;
-//     }
-
-//     function updateAmenities(param, el) {
-//         let url = new URL(window.location.href);
-//         let [key, value] = param.split("=");
-
-//         if (value === "" || value === null) {
-//             url.searchParams.delete(key);
-//         } else {
-//             url.searchParams.set(key, value);
-//         }
-
-//         window.location.href = url.toString();
-//     }
-
-//     function updateCategoriesAndAmenities(typeValue) {
-
-//     let url = new URL(window.location.href);
-
-//     // Purane type[] delete
-//     url.searchParams.delete('type[]');
-//     url.searchParams.delete('amenities[]');
-//     url.searchParams.delete('category[]');
-
-//     // Naya type add
-//     if (typeValue) {
-//         url.searchParams.append('type[]', typeValue);
-//     }
-
-//     // Page reload for backend filter
-//     window.location.href = url.toString();
-// }
+ 
 
 document.getElementById("minPrice").addEventListener("change", applyRangeFilter);
 document.getElementById("maxPrice").addEventListener("change", applyRangeFilter);
@@ -1243,22 +1190,23 @@ function applyRangeFilter() {
     if (typeof properties !== "undefined") {
         $('.filter-input').trigger("keyup"); // THIS FIXES MIN NOT FIRING
     }
-}
+} 
+  document.getElementById('minPrice').addEventListener('input', function () {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
 
-function updateRangeByType() {
-    let url = "{{ route('frontend.types-wise-load-data') }}";
-    let params = new URLSearchParams(window.location.search);
+    document.getElementById('maxPrice').addEventListener('input', function () {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+    function resetURL() {
+    // 1️⃣ All input fields reset
+    $('input[type="text"], input[type="number"]').val('');
 
-    $.ajax({
-        url: url + "?" + params.toString(),
-        method: "GET",
-        success: function(res) {
+    // 2️⃣ All selects reset to first option (Select...)
+    $('select').prop('selectedIndex', 0).trigger('change');
 
-            // ---- UPDATE price range from response ----
-            if (res.min_price !== undefined && res.max_price !== undefined) {
-                // Set values in inputs
-                document.getElementById("minPrice").value = res.min_price;
-                document.getElementById("maxPrice").value = res.max_price;
+    // 3️⃣ All checkboxes reset
+    $('input[type="checkbox"]').prop('checked', false);
 
                 // Update URL smoothly
                 let current = new URL(window.location.href);

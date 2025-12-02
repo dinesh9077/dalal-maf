@@ -41,7 +41,7 @@
 		Route::get('/cities', 'FrontEnd\PropertyController@getCities')->name('frontend.get_cities');
 		Route::get('/areas', 'FrontEnd\PropertyController@getAreas')->name('frontend.get_areas');
 		Route::get('/categories', 'FrontEnd\PropertyController@getCategories')->name('frontend.get_categories');
-		
+
 		Route::get('/property/{slug}', 'FrontEnd\PropertyController@details')->name('frontend.property.details');
 		Route::post('/property-contact', 'FrontEnd\PropertyController@contact')->name('property_contact');
 		Route::post('/contact-mail', 'FrontEnd\PropertyController@contactUser')->name('contact_user');
