@@ -92,7 +92,11 @@
                     </div>
                 </form>
 
-
+                <div style="font-weight:bold;     height: fit-content;
+                background: white;
+                padding: 10px 20px;
+                color: black;
+                border-radius: 20px;" class="mr-4"><a href="{{ route('index') }}" target="_blank">Go To Website</a></div>
                 <li class="nav-item dropdown hidden-caret">
                     <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                         <div class="avatar-sm">

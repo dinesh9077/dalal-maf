@@ -93,6 +93,12 @@
 
                     </button>
                 </li>
+                <div style="font-weight:bold;     height: fit-content;
+                background: white;
+                padding: 10px 20px;
+                color: black;
+                border-radius: 20px;" class="mr-4"><a href="{{ route('index') }}" target="_blank">Go To Website</a></div>
+
                 <!-- <li>
                     <a class="btn btn-primary btn-sm btn-round" target="_blank"
                         href="{{ route('frontend.vendor.details', ['username' => Auth::guard('vendor')->user()->username]) }}"

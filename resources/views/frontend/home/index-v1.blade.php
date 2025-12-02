@@ -283,7 +283,7 @@
         </div>
     </a>
 
-    
+
     @php
         $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.jpg';
     @endphp
@@ -406,10 +406,10 @@
                         <div class="tab-pane fade mt-3 {{ $loop->first ? 'active show' : '' }}" id="{{ $key }}">
                             <form action="{{ route('frontend.properties') }}" method="get" id="{{ $key }}Form">
                                 <input type="hidden" name="purpose" value="{{ strtolower($label) }}">
-                                <input type="hidden" name="min" value="{{ $min }}"
+                                {{-- <input type="hidden" name="min" value="{{ $min }}"
                                     id="min_{{ $key }}">
                                 <input type="hidden" name="max" value="{{ $max }}"
-                                    id="max_{{ $key }}">
+                                    id="max_{{ $key }}"> --}}
 
                                 <div class="grid mt-2">
                                     {{-- City --}}
@@ -471,7 +471,7 @@
                                     </div>
 
                                     {{-- Price Slider --}}
-                                    <div class="grid-item home-des-border">
+                                    {{-- <div class="grid-item home-des-border">
                                         <label style="margin-bottom: 6px;">{{ __('Price') }}:</label>
 
                                         <div data-range-value="filterPriceSlider_{{ $key }}_value"
@@ -480,7 +480,7 @@
                                         </div>
 
                                         <div data-range-slider="filterPriceSlider_{{ $key }}"></div>
-                                    </div>
+                                    </div> --}}
 
                                     {{-- Submit Button --}}
                                     <div>
@@ -560,7 +560,7 @@
                             View All
                         </a>
                     </div>
-                                              
+
                     <div data-aos="fade-up" class="position-relative">
                         <div class="swiper hot-slider">
                             <div class="swiper-wrapper">
@@ -573,7 +573,7 @@
                         </div>
 
                         <div class="swiper-button-prev hot-prev custom-swiper-btn">
-                                                <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">                                    
+                                                <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
                         </div>
                         <div class="swiper-button-next hot-next custom-swiper-btn">
                                                 <img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
@@ -851,9 +851,9 @@
             </div>
         </div>
     </section>
-    
-    
-    
+
+
+
     @if ($secInfo->cities_section_status == 1)
         <section class="new-gellary-area pb-30 relative ">
 
@@ -1030,7 +1030,7 @@
     </section>
 
     @if ($secInfo->why_choose_us_section_status == 1)
-        <section class="new-aps-sections" style="padding-top: 25px;     padding-bottom: 15px;"> 
+        <section class="new-aps-sections" style="padding-top: 25px;     padding-bottom: 15px;">
             <div class="container">
                 <div class="section-title title-inline    aos-init aos-animate d-flex" data-aos="fade-up">
                     <h2 class="title">Explore Property Types</h2>
@@ -1243,7 +1243,7 @@
     </section>
 
 
-   
+
  <!--   <div class="container pt-30">-->
  <!--       <div class="row">-->
  <!--           <div class="col-lg-6">-->
