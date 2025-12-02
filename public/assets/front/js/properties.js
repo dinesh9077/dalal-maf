@@ -126,7 +126,11 @@ function getData(currentURL, page) {
     success: function (data) {
       // Replace properties HTML
       $(".properties").html(data.propertyContents);
-
+      $("#minPrice").val(data.min);
+      $("#maxPrice").val(data.max);
+      $("#total_properties_count_span").text(
+        data.totalPopertiesCount + " Properties"
+      );
       // If you need the list:
       // const properties = data?.properties?.data || [];
       // mapInitialize(properties); // kept commented as in original
@@ -179,7 +183,8 @@ function getCategories(type) {
 // -----------------------------
 // Resets (keep original behavior)
 // -----------------------------
-function resetURL() {
+function resetURL()
+{
   // 1) Capture current purpose BEFORE reset (from URL or form)
   const currentUrl = new URL(
     typeof getURL === "function" ? getURL() : window.location.href
@@ -202,6 +207,11 @@ function resetURL() {
   if (typeof priceRest === "function") {
     priceRest();
   }
+
+ $("#propertyTypeSelect").val("").change();
+ $("#area_id").val("").change();
+ $("#purpose").val("").change();
+ $(".filter-input").val("");
 
   // 4) Hide dependent selects
   $(".state, .city, .area").hide();

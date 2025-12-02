@@ -1,466 +1,463 @@
 @php
-$version = $basicInfo->theme_version;
+    $version = $basicInfo->theme_version;
 @endphp
 @extends("frontend.layouts.layout-v$version")
 
 @section('pageHeading')
-{{ !empty($pageHeading) ? $pageHeading->property_page_title : __('Property') }}
+    {{ !empty($pageHeading) ? $pageHeading->property_page_title : __('Property') }}
 @endsection
 
 @section('metaKeywords')
-@if (!empty($seoInfo))
-{{ $seoInfo->meta_keyword_properties }}
-@endif
+    @if (!empty($seoInfo))
+        {{ $seoInfo->meta_keyword_properties }}
+    @endif
 @endsection
 
 @section('metaDescription')
-@if (!empty($seoInfo))
-{{ $seoInfo->meta_description_properties }}
-@endif
+    @if (!empty($seoInfo))
+        {{ $seoInfo->meta_description_properties }}
+    @endif
 @endsection
 @section('style')
-<meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="Cache-Control" content="no-store" />
 @endsection
 
 @section('content')
-<style>
-    .new-main-navbar {
-        background-color: #6c603c;
-    }
+    <style>
+        .new-main-navbar {
+            background-color: #6c603c;
+        }
 
 
-    .new-round-category-des {
-        border: 1px solid #dcdcdc;
-        padding: 4px 16px;
-        margin: 3px;
-        font-size: 13px;
-        font-weight: 500;
-        border-radius: 50px;
-        height: 20px;
-        background: white;
-        line-height: 2;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-
-
-    .new-round-category-des:hover,
-    .new-round-category-des:active,
-    .new-round-category-des.active {
-        border: 1px solid #a3daff !important;
-        background: #f0f9ff !important;
-    }
-
-
-    .new-animitis-divs {
-        display: flex;
-        flex-wrap: wrap;
-    }
+        .new-round-category-des {
+            border: 1px solid #dcdcdc;
+            padding: 4px 16px;
+            margin: 3px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 50px;
+            height: 20px;
+            background: white;
+            line-height: 2;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
 
 
-    .animits-div-tab {
-        border: 1px solid #dcdcdc;
-        padding: 5px 16px;
-        margin: 4px;
-        font-size: 13px;
-        font-weight: 500;
-        border-radius: 50px;
-        height: 20px;
-        background: white;
-        line-height: 2.5;
-        color: #2b3138;
-        cursor: pointer;
-    }
+        .new-round-category-des:hover,
+        .new-round-category-des:active,
+        .new-round-category-des.active {
+            border: 1px solid #a3daff !important;
+            background: #f0f9ff !important;
+        }
 
 
-    .animits-div-tab:hover,
-    .animits-div-tab:active {
-        border: 1px solid #a3daff !important;
-        background: #f0f9ff !important;
-    }
-
-    input[type="checkbox"]:checked+label .animits-div-tab {
-        border: 1px solid #a3daff !important;
-        background: #f0f9ff !important;
-    }
-
-    .new-items-pricelist {
-        padding: 5px 40px 2px 15px;
-        width: fit-content;
-        border-radius: 8px;
-        background: white;
-        border: 1px solid #dcdcdc;
-        color: #2b3138;
-    }
-
-    .propertyType-div-tab {
-        border: 1px solid #dcdcdc;
-        padding: 1px 17px;
-        margin: 4px;
-        font-size: 13px;
-        font-weight: 500;
-        border-radius: 50px;
-        background: white;
-        line-height: 2.1;
-        color: #2b3138;
-        cursor: pointer;
-    }
+        .new-animitis-divs {
+            display: flex;
+            flex-wrap: wrap;
+        }
 
 
-    .propertyType-div-tab:hover {
-        border: 1px solid #a3daff !important;
-        background: #f0f9ff !important;
-    }
 
-    .btn-check:checked+.propertyType-div-tab {
-        border: 1px solid #a3daff !important;
-        background: #f0f9ff !important;
-        color: #000000ff !important;
-    }
-
-    .purpose-div-tab {
-        border: 1px solid #dcdcdc;
-        padding: 1px 16px;
-        margin: 4px;
-        font-size: 13px;
-        font-weight: 500;
-        border-radius: 36px;
-        background: white;
-        line-height: 2.1;
-        color: #2b3138;
-        cursor: pointer;
-    }
-
-    .purpose-div-tab:hover {
-        border: 1px solid #a3daff !important;
-        background: #f0f9ff !important;
-    }
-
-    .btn-check:checked+.purpose-div-tab {
-        border: 1px solid #a3daff !important;
-        background: #f0f9ff !important;
-        color: #000000ff !important;
-    }
+        .animits-div-tab {
+            border: 1px solid #dcdcdc;
+            padding: 5px 16px;
+            margin: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 50px;
+            height: 20px;
+            background: white;
+            line-height: 2.5;
+            color: #2b3138;
+            cursor: pointer;
+        }
 
 
-    .sidebar-widget-area .widget {
-        padding: 0px;
-        border: none;
-        border-bottom: 1px solid #dcdcdc;
-        padding-bottom: 14px;
-    }
+        .animits-div-tab:hover,
+        .animits-div-tab:active {
+            border: 1px solid #a3daff !important;
+            background: #f0f9ff !important;
+        }
 
-    @media (max-width: 576px) {
-        .product-sort-area .row.justify-content-sm-end {
+        input[type="checkbox"]:checked+label .animits-div-tab {
+            border: 1px solid #a3daff !important;
+            background: #f0f9ff !important;
+        }
+
+        .new-items-pricelist {
+            padding: 5px 40px 2px 15px;
+            width: fit-content;
+            border-radius: 8px;
+            background: white;
+            border: 1px solid #dcdcdc;
+            color: #2b3138;
+        }
+
+        .propertyType-div-tab {
+            border: 1px solid #dcdcdc;
+            padding: 1px 17px;
+            margin: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 50px;
+            background: white;
+            line-height: 2.1;
+            color: #2b3138;
+            cursor: pointer;
+        }
+
+
+        .propertyType-div-tab:hover {
+            border: 1px solid #a3daff !important;
+            background: #f0f9ff !important;
+        }
+
+        .btn-check:checked+.propertyType-div-tab {
+            border: 1px solid #a3daff !important;
+            background: #f0f9ff !important;
+            color: #000000ff !important;
+        }
+
+        .purpose-div-tab {
+            border: 1px solid #dcdcdc;
+            padding: 1px 16px;
+            margin: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 36px;
+            background: white;
+            line-height: 2.1;
+            color: #2b3138;
+            cursor: pointer;
+        }
+
+        .purpose-div-tab:hover {
+            border: 1px solid #a3daff !important;
+            background: #f0f9ff !important;
+        }
+
+        .btn-check:checked+.purpose-div-tab {
+            border: 1px solid #a3daff !important;
+            background: #f0f9ff !important;
+            color: #000000ff !important;
+        }
+
+
+        .sidebar-widget-area .widget {
+            padding: 0px;
+            border: none;
+            border-bottom: 1px solid #dcdcdc;
+            padding-bottom: 14px;
+        }
+
+        @media (max-width: 576px) {
+            .product-sort-area .row.justify-content-sm-end {
+                display: flex;
+                align-items: center;
+                /* justify-content: space-between; */
+                flex-wrap: nowrap;
+            }
+
+            .product-sort-area .col-sm-5,
+            .product-sort-area .col-sm-7 {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+
+            .product-sort-area .col-sm-5 button {
+                width: 100%;
+                padding: 4px 8px;
+                font-size: 13px;
+            }
+
+            .product-sort-area .product-sort-list select {
+                font-size: 13px;
+                padding: 4px 6px;
+            }
+        }
+
+        .select2.select2-container.select2-container--default {
+            padding: 6px 10px !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            top: 0px;
+        }
+
+        .budget-box {
             display: flex;
             align-items: center;
-            /* justify-content: space-between; */
-            flex-wrap: nowrap;
+            gap: 20px;
         }
 
-        .product-sort-area .col-sm-5,
-        .product-sort-area .col-sm-7 {
-            flex: 0 0 50%;
-            max-width: 50%;
+        .dropdown {
+            position: relative;
+            width: 180px;
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 10px 12px;
+            cursor: pointer;
+            border-radius: 13px;
         }
 
-        .product-sort-area .col-sm-5 button {
+        .dropdown-selected {
+            font-size: 14px;
+        }
+
+        .dropdown-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
             width: 100%;
-            padding: 4px 8px;
-            font-size: 13px;
+            max-height: 180px;
+            overflow-y: auto;
+            background: #fff;
+            margin-top: 1px;
+            border: 1px solid #ddd;
+            border-radius: 13px;
+            display: none;
+            z-index: 999;
         }
 
-        .product-sort-area .product-sort-list select {
-            font-size: 13px;
-            padding: 4px 6px;
+        .dropdown-list li {
+            padding: 8px 10px;
+            cursor: pointer;
         }
-    }
 
-    .select2.select2-container.select2-container--default {
-        padding: 6px 10px !important;
-    }
+        .dropdown-list li:hover {
+            background: #f3f3f3;
+        }
 
-    .select2-container--default .select2-selection--single .select2-selection__arrow {
-        top: 0px;
-    }
+        .sep {
+            font-size: 22px;
+        }
 
-    .budget-box {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-    }
+        .custom-dropdown {
+            position: relative;
+            width: 180px;
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 10px 12px;
+            cursor: pointer;
+            border-radius: 13px;
+        }
 
-    .dropdown {
-        position: relative;
-        width: 180px;
-        background: #fff;
-        border: 1px solid #ddd;
-        padding: 10px 12px;
-        cursor: pointer;
-        border-radius: 13px;
-    }
+        .cd-selected {
+            font-size: 14px;
+        }
 
-    .dropdown-selected {
-        font-size: 14px;
-    }
+        .cd-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            max-height: 180px;
+            overflow-y: auto;
+            background: #fff;
+            margin-top: 1px;
+            border: 1px solid #ddd;
+            border-radius: 13px;
+            display: none;
+            z-index: 999;
+        }
 
-    .dropdown-list {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        max-height: 180px;
-        overflow-y: auto;
-        background: #fff;
-        margin-top: 1px;
-        border: 1px solid #ddd;
-        border-radius: 13px;
-        display: none;
-        z-index: 999;
-    }
+        .cd-list li {
+            padding: 8px 10px;
+            cursor: pointer;
+        }
 
-    .dropdown-list li {
-        padding: 8px 10px;
-        cursor: pointer;
-    }
+        .cd-list li:hover {
+            background: #f3f3f3;
+        }
 
-    .dropdown-list li:hover {
-        background: #f3f3f3;
-    }
+        .sep {
+            font-size: 22px;
+            margin: 0 10px;
+        }
 
-    .sep {
-        font-size: 22px;
-    }
+        .dropdown-min,
+        .dropdown-max {
+            position: relative;
+            width: 180px;
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 10px 12px;
+            cursor: pointer;
+            border-radius: 13px;
+        }
 
-    .custom-dropdown {
-        position: relative;
-        width: 180px;
-        background: #fff;
-        border: 1px solid #ddd;
-        padding: 10px 12px;
-        cursor: pointer;
-        border-radius: 13px;
-    }
+        .dropdown-min-selected,
+        .dropdown-max-selected {
+            font-size: 14px;
+        }
 
-    .cd-selected {
-        font-size: 14px;
-    }
+        .dropdown-min-list,
+        .dropdown-max-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            max-height: 180px;
+            overflow-y: auto;
+            background: #fff;
+            margin-top: 1px;
+            border: 1px solid #ddd;
+            border-radius: 13px;
+            display: none;
+            z-index: 999;
+        }
 
-    .cd-list {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        max-height: 180px;
-        overflow-y: auto;
-        background: #fff;
-        margin-top: 1px;
-        border: 1px solid #ddd;
-        border-radius: 13px;
-        display: none;
-        z-index: 999;
-    }
+        .dropdown-min-list li,
+        .dropdown-max-list li {
+            padding: 8px 10px;
+            cursor: pointer;
+        }
 
-    .cd-list li {
-        padding: 8px 10px;
-        cursor: pointer;
-    }
+        .dropdown-min-list li:hover,
+        .dropdown-max-list li:hover {
+            background: #f3f3f3;
+        }
 
-    .cd-list li:hover {
-        background: #f3f3f3;
-    }
+        .price-range-filter {
+            width: 100%;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
 
-    .sep {
-        font-size: 22px;
-        margin: 0 10px;
-    }
+        .price-inputs {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
 
-    .dropdown-min,
-    .dropdown-max {
-        position: relative;
-        width: 180px;
-        background: #fff;
-        border: 1px solid #ddd;
-        padding: 10px 12px;
-        cursor: pointer;
-        border-radius: 13px;
-    }
+        .price-input {
+            flex: 1;
+            position: relative;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 8px 10px 8px 25px;
+        }
 
-    .dropdown-min-selected,
-    .dropdown-max-selected {
-        font-size: 14px;
-    }
+        .price-input span {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
 
-    .dropdown-min-list,
-    .dropdown-max-list {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        max-height: 180px;
-        overflow-y: auto;
-        background: #fff;
-        margin-top: 1px;
-        border: 1px solid #ddd;
-        border-radius: 13px;
-        display: none;
-        z-index: 999;
-    }
+        .price-input input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
 
-    .dropdown-min-list li,
-    .dropdown-max-list li {
-        padding: 8px 10px;
-        cursor: pointer;
-    }
+        .separator {
+            color: #666;
+        }
 
-    .dropdown-min-list li:hover,
-    .dropdown-max-list li:hover {
-        background: #f3f3f3;
-    }
+        .slider-track {
+            position: absolute;
+            height: 100%;
+            background: #6c603c;
+            left: 0;
+            right: 0;
+            border-radius: 5px;
+        }
 
-    .price-range-filter {
-        width: 100%;
-        padding: 15px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            height: 60px;
+            gap: 2px;
+            margin-bottom: 5px;
+        }
 
-    .price-inputs {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 15px;
-    }
-
-    .price-input {
-        flex: 1;
-        position: relative;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        padding: 8px 10px 8px 25px;
-    }
-
-    .price-input span {
-        position: absolute;
-        left: 8px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #666;
-    }
-
-    .price-input input {
-        width: 100%;
-        border: none;
-        outline: none;
-        font-size: 14px;
-    }
-
-    .separator {
-        color: #666;
-    }
-
-    .slider-track {
-        position: absolute;
-        height: 100%;
-        background: #6c603c;
-        left: 0;
-        right: 0;
-        border-radius: 5px;
-    }
-
-    .chart-bars {
-        display: flex;
-        align-items: flex-end;
-        height: 60px;
-        gap: 2px;
-        margin-bottom: 5px;
-    }
-
-    .chart-bar {
-        flex: 1;
-        background: #e0e0e0;
-        border-radius: 2px;
-        transition: height 0.3s ease;
-    }
-
-</style>
+        .chart-bar {
+            flex: 1;
+            background: #e0e0e0;
+            border-radius: 2px;
+            transition: height 0.3s ease;
+        }
+    </style>
 
 
 
 
 
-<a href="https://wa.me/9925133440" target="_blank">
-    <div class="whatsapp-btn" data-aos="fade-up">
-        <img src="{{ asset('assets/front/images/new-images/whatsapp.png') }}" alt="WhatsApp">
+    <a href="https://wa.me/9925133440" target="_blank">
+        <div class="whatsapp-btn" data-aos="fade-up">
+            <img src="{{ asset('assets/front/images/new-images/whatsapp.png') }}" alt="WhatsApp">
+        </div>
+    </a>
+
+
+    <div class="map-area border-top header-next pt-30">
+
     </div>
-</a>
-
-
-<div class="map-area border-top header-next pt-30">
-
-</div>
 
 
 
-<div class="listing-grid header-next pb-10" style="margin-top: 100px;" data-aos="fade-up">
-    <div class="container">
-        <div class="row gx-xl-5">
+    <div class="listing-grid header-next pb-10" style="margin-top: 100px;" data-aos="fade-up">
+        <div class="container">
+            <div class="row gx-xl-5">
 
-            <div class="col-xl-3 ">
-                <div class="widget-offcanvas offcanvas offcanvas-start" tabindex="-1" id="widgetOffcanvas" aria-labelledby="widgetOffcanvas">
+                <div class="col-xl-3 ">
+                    <div class="widget-offcanvas offcanvas offcanvas-start" tabindex="-1" id="widgetOffcanvas"
+                        aria-labelledby="widgetOffcanvas">
 
-                    <div class="offcanvas-header px-20" style="justify-content: space-between;">
-                        <h4 class="offcanvas-title">{{ __('Filter') }}</h4>
-                        <button type="button" data-bs-dismiss="offcanvas" data-bs-target="#widgetOffcanvas"
-                            aria-label="Close"
-                            style="width: fit-content;background: transparent;padding: 0px;">
-                            <i class="fas fa-close" style="color: black;font-size: 22px;"></i>
-                        </button>
-                    </div>
+                        <div class="offcanvas-header px-20" style="justify-content: space-between;">
+                            <h4 class="offcanvas-title">{{ __('Filter') }}</h4>
+                            <button type="button" data-bs-dismiss="offcanvas" data-bs-target="#widgetOffcanvas"
+                                aria-label="Close" style="width: fit-content;background: transparent;padding: 0px;">
+                                <i class="fas fa-close" style="color: black;font-size: 22px;"></i>
+                            </button>
+                        </div>
 
 
-                    <div class="offcanvas-body p-1">
-                        <aside class="sidebar-widget-area new-color-ngs-property" data-aos="fade-up">
+                        <div class="offcanvas-body p-1">
+                            <aside class="sidebar-widget-area new-color-ngs-property" data-aos="fade-up">
 
-                           <div class="widget widget-select">
-                                <h3 class="title">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#ranges-min" aria-expanded="true" aria-controls="ranges-min">
-                                        {{ __('Range Type') }}
-                                    </button>
-                                </h3>
-                                
-                                <div id="ranges-min" class="collapse show mt-3">
-                                    <div class="price-range-filter">
-                                        <div class="price-inputs">
-                                            
-                                            <div class="price-input">
-                                                <span>₹</span>
-                                                <input type="text" id="minPrice" placeholder="Min"
-                                                    min="0" value="{{ request('min', $min) }}">
+                                <div class="widget widget-select">
+                                    <h3 class="title">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#ranges-min" aria-expanded="true" aria-controls="ranges-min">
+                                            {{ __('Range Type') }}
+                                        </button>
+                                    </h3>
+
+                                    <div id="ranges-min" class="collapse show mt-3">
+                                        <div class="price-range-filter">
+                                            <div class="price-inputs">
+
+                                                <div class="price-input">
+                                                    <span>₹</span>
+                                                    <input type="text" id="minPrice" placeholder="Min" min="0"
+                                                        value="{{ request('min', $min) }}">
+                                                </div>
+
+                                                <span class="separator">to</span>
+
+                                                <div class="price-input">
+                                                    <span>₹</span>
+                                                    <input type="text" id="maxPrice" placeholder="Max"
+                                                        value="{{ request('max', $max) }}">
+                                                </div>
+
                                             </div>
-
-                                            <span class="separator">to</span>
-                                            
-                                            <div class="price-input">
-                                                <span>₹</span>
-                                                <input type="text" id="maxPrice" placeholder="Max"
-                                                    value="{{ request('max', $max) }}">
-                                            </div>
-
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
 
- 
-                             {{-- <!-- @if (
-                            !request()->has('purpose') ||
-                            (request()->has('purpose') && !in_array(request('purpose'), ['franchiese', 'business_for_sale'])))                       
+
+                                {{-- <!-- @if (!request()->has('purpose') || (request()->has('purpose') && !in_array(request('purpose'), ['franchiese', 'business_for_sale'])))                       
                             <div class="widget widget-select mb-30">
                                 <h3 class="title">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -495,64 +492,62 @@ $version = $basicInfo->theme_version;
                             @endif --> --}}
 
 
-                            <!-- PROPERTY INFO -->
-                            <form action="{{ route('frontend.properties') }}" method="get" id="searchForm" class="w-100">
+                                <!-- PROPERTY INFO -->
+                                <form action="{{ route('frontend.properties') }}" method="get" id="searchForm"
+                                    class="w-100">
 
-                                @if (
-                                !request()->has('purpose') ||
-                                (request()->has('purpose') && !in_array(request('purpose'), ['franchiese', 'business_for_sale'])))
-                                <div class="widget widget-select mb-30 mt-4">
-                                    <h3 class="title">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#select" aria-expanded="true" aria-controls="select">
-                                            {{ __('Property Info') }}
-                                        </button>
-                                    </h3>
+                                    @if (
+                                        !request()->has('purpose') ||
+                                            (request()->has('purpose') && !in_array(request('purpose'), ['franchiese', 'business_for_sale'])))
+                                        <div class="widget widget-select mb-30 mt-4">
+                                            <h3 class="title">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                    data-bs-target="#select" aria-expanded="true" aria-controls="select">
+                                                    {{ __('Property Info') }}
+                                                </button>
+                                            </h3>
 
-                                    <div id="select" class="widget collapse show">
-                                        <div class="accordion-body"></div>
-                                        <div class="collapse show">
-                                            <div>
-                                                @php
-                                                if (!empty(request()->input('unit_type'))) {
-                                                $selectedUnitTypes = [];
-                                                if (is_array(request()->input('unit_type'))) {
-                                                $selectedUnitTypes = request()->input(
-                                                'unit_type',
-                                                );
-                                                } else {
-                                                array_push(
-                                                $selectedUnitTypes,
-                                                request()->input('unit_type'),
-                                                );
-                                                }
-                                                } else {
-                                                $selectedUnitTypes = [];
-                                                }
-                                                @endphp
-                                                <div class=" custom-checkbox new-animitis-divs">
-                                                    @foreach ($units as $unit)
+                                            <div id="select" class="widget collapse show">
+                                                <div class="accordion-body"></div>
+                                                <div class="collapse show">
                                                     <div>
-                                                        <input class="input-checkbox" type="checkbox"
-                                                            name="unit_type[]"
-                                                            id="checkbox{{ $unit->id }}"
-                                                            value="{{ $unit->id }}"
-                                                            {{ in_array($unit->id, $selectedUnitTypes) ? 'checked' : '' }}
-                                                            onchange="updateAmenities('unit_type[]={{ $unit->id }}',this)">
-                                                        
-                                                        <label for="checkbox{{ $unit->id }}"><span
-                                                                class="animits-div-tab">
-                                                                {{ ucwords($unit->unit_name) }}</span></label>
+                                                        @php
+                                                            if (!empty(request()->input('unit_type'))) {
+                                                                $selectedUnitTypes = [];
+                                                                if (is_array(request()->input('unit_type'))) {
+                                                                    $selectedUnitTypes = request()->input('unit_type');
+                                                                } else {
+                                                                    array_push(
+                                                                        $selectedUnitTypes,
+                                                                        request()->input('unit_type'),
+                                                                    );
+                                                                }
+                                                            } else {
+                                                                $selectedUnitTypes = [];
+                                                            }
+                                                        @endphp
+                                                        <div class=" custom-checkbox new-animitis-divs">
+                                                            @foreach ($units as $unit)
+                                                                <div>
+                                                                    <input class="input-checkbox" type="checkbox"
+                                                                        name="unit_type[]" id="checkbox{{ $unit->id }}"
+                                                                        value="{{ $unit->id }}"
+                                                                        {{ in_array($unit->id, $selectedUnitTypes) ? 'checked' : '' }}
+                                                                        onchange="updateAmenities('unit_type[]={{ $unit->id }}',this)">
+
+                                                                    <label for="checkbox{{ $unit->id }}"><span
+                                                                            class="animits-div-tab">
+                                                                            {{ ucwords($unit->unit_name) }}</span></label>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
                                                     </div>
-                                                    @endforeach
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
                                     @endif
-                                    
+
                                     <!-- Categories -->
-                                    <div class="widget widget-categories pt-4 mb-30" >
+                                    <div class="widget widget-categories pt-4 mb-30">
                                         <h3 class="title">
                                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                                 data-bs-target="#categories" aria-expanded="true"
@@ -564,25 +559,24 @@ $version = $basicInfo->theme_version;
                                             <div class="accordion-body">
                                                 <div class="custom-checkbox new-animitis-divs">
                                                     @php
-                                                    $selectedCategories = request()->input('category', []);
-                                                    if (!is_array($selectedCategories)) {
-                                                    $selectedCategories = [$selectedCategories];
-                                                    }
+                                                        $selectedCategories = request()->input('category', []);
+                                                        if (!is_array($selectedCategories)) {
+                                                            $selectedCategories = [$selectedCategories];
+                                                        }
                                                     @endphp
 
                                                     @foreach ($categories as $category)
-                                                    @if ($category->categoryContent)
-                                                    <div>
-                                                        <input class="input-checkbox" type="checkbox"
-                                                            name="category[]"
-                                                            id="checkbox_cat{{ $category->id }}"
-                                                            value="{{ $category->categoryContent->slug }}"
-                                                            {{ in_array($category->categoryContent->slug, $selectedCategories) ? 'checked' : '' }}
-                                                            onchange="updateAmenities('category[]={{ $category->categoryContent->slug }}',this)">
-                                                        <label for="checkbox_cat{{ $category->id }}"><span
-                                                                class="animits-div-tab">{{ $category->categoryContent->name }}</span></label>
-                                                    </div>
-                                                    @endif
+                                                        @if ($category->categoryContent)
+                                                            <div>
+                                                                <input class="input-checkbox" type="checkbox"
+                                                                    name="category[]" id="checkbox_cat{{ $category->id }}"
+                                                                    value="{{ $category->categoryContent->slug }}"
+                                                                    {{ in_array($category->categoryContent->slug, $selectedCategories) ? 'checked' : '' }}
+                                                                    onchange="updateAmenities('category[]={{ $category->categoryContent->slug }}',this)">
+                                                                <label for="checkbox_cat{{ $category->id }}"><span
+                                                                        class="animits-div-tab">{{ $category->categoryContent->name }}</span></label>
+                                                            </div>
+                                                        @endif
                                                     @endforeach
 
                                                 </div>
@@ -604,29 +598,27 @@ $version = $basicInfo->theme_version;
                                             <div class="accordion-body">
                                                 <div class="custom-checkbox new-animitis-divs">
                                                     @php
-                                                   
-                                                    $selected_amenities = request()->input('amenities', []);
-                                                    if (!is_array($selected_amenities)) {
-                                                    $selected_amenities = [$selected_amenities];
-                                                    }
+
+                                                        $selected_amenities = request()->input('amenities', []);
+                                                        if (!is_array($selected_amenities)) {
+                                                            $selected_amenities = [$selected_amenities];
+                                                        }
                                                     @endphp
-                                                   
+
                                                     @foreach ($amenities as $amenity)
-                                              
-                                                    @if ($amenity->amenityContent)
-                                                 
-                                                    <div>
-                                                        <input class="input-checkbox" type="checkbox"
-                                                            name="amenities[]"
-                                                            id="checkbox_am{{ $amenity->id }}"
-                                                            value="{{ $amenity->amenityContent->name }}"
-                                                            {{ in_array($amenity->amenityContent->name, $selected_amenities) ? 'checked' : '' }}
-                                                            onchange="updateAmenities('amenities[]={{ $amenity->amenityContent->name }}',this)">
-                                                            
-                                                        <label for="checkbox_am{{ $amenity->id }}"><span
-                                                                class="animits-div-tab">{{ $amenity->amenityContent->name }}</span></label>
-                                                    </div>
-                                                    @endif
+                                                        @if ($amenity->amenityContent)
+                                                            <div>
+                                                                <input class="input-checkbox" type="checkbox"
+                                                                    name="amenities[]"
+                                                                    id="checkbox_am{{ $amenity->id }}"
+                                                                    value="{{ $amenity->amenityContent->name }}"
+                                                                    {{ in_array($amenity->amenityContent->name, $selected_amenities) ? 'checked' : '' }}
+                                                                    onchange="updateAmenities('amenities[]={{ $amenity->amenityContent->name }}',this)">
+
+                                                                <label for="checkbox_am{{ $amenity->id }}"><span
+                                                                        class="animits-div-tab">{{ $amenity->amenityContent->name }}</span></label>
+                                                            </div>
+                                                        @endif
                                                     @endforeach
 
                                                 </div>
@@ -635,49 +627,49 @@ $version = $basicInfo->theme_version;
                                     </div>
 
 
-                                     <!-- Pricing Filter -->
+                                    <!-- Pricing Filter -->
                                     <!-- <div class="widget widget-price mb-30">
-                                        <h3 class="title">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#price" aria-expanded="true" aria-controls="price">
-                                                {{ __('Pricing Filter') }}
-                                            </button>
-                                        </h3>
+                                            <h3 class="title">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                    data-bs-target="#price" aria-expanded="true" aria-controls="price">
+                                                    {{ __('Pricing Filter') }}
+                                                </button>
+                                            </h3>
 
-                                        <input type="hidden" name="min" id="min"
-                                            value="{{ request('min', $min) }}">
-                                        <input type="hidden" name="max" id="max"
-                                            value="{{ request('max', $max) }}">
-                                        <input type="hidden" id="o_min" value="{{ $min }}">
-                                        <input type="hidden" id="o_max" value="{{ $max }}">
-                                        <input type="hidden" id="currency_symbol"
-                                            value="{{ $basicInfo->base_currency_symbol }}">
+                                            <input type="hidden" name="min" id="min"
+                                                value="{{ request('min', $min) }}">
+                                            <input type="hidden" name="max" id="max"
+                                                value="{{ request('max', $max) }}">
+                                            <input type="hidden" id="o_min" value="{{ $min }}">
+                                            <input type="hidden" id="o_max" value="{{ $max }}">
+                                            <input type="hidden" id="currency_symbol"
+                                                value="{{ $basicInfo->base_currency_symbol }}">
 
-                                        <div id="price" class="collapse show">
-                                            <div class="accordion-body">
-                                                <div class="price-item">
+                                            <div id="price" class="collapse show">
+                                                <div class="accordion-body">
+                                                    <div class="price-item">
 
-                                                    <div data-range-slider="priceSlider"
-                                                        data-range-min="{{ $min }}"
-                                                        data-range-max="{{ $max }}"
-                                                        data-start-min="{{ request('min', $min) }}"
-                                                        data-start-max="{{ request('max', $max) }}">
-                                                    </div>
+                                                        <div data-range-slider="priceSlider"
+                                                            data-range-min="{{ $min }}"
+                                                            data-range-max="{{ $max }}"
+                                                            data-start-min="{{ request('min', $min) }}"
+                                                            data-start-max="{{ request('max', $max) }}">
+                                                        </div>
 
-                                                    <div class="price-value">
-                                                        <span style="color:#6c603c;">
-                                                            {{ __('Price :') }}
-                                                            <span data-range-value="priceSliderValue">
-                                                                {{ symbolPrice($min) }} -
-                                                                {{ symbolPrice($max) }}
+                                                        <div class="price-value">
+                                                            <span style="color:#6c603c;">
+                                                                {{ __('Price :') }}
+                                                                <span data-range-value="priceSliderValue">
+                                                                    {{ symbolPrice($min) }} -
+                                                                    {{ symbolPrice($max) }}
+                                                                </span>
                                                             </span>
-                                                        </span>
-                                                    </div>
+                                                        </div>
 
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div> -->
+                                        </div> -->
 
                                     <!-- Reset Button -->
                                     <div class="cta">
@@ -686,10 +678,10 @@ $version = $basicInfo->theme_version;
                                             <i class="fal fa-redo"></i>{{ __('Reset Search') }}
                                         </button>
                                     </div>
-                                </div>
+                        </div>
 
 
-                            </form>
+                        </form>
 
                         </aside>
                     </div>
@@ -713,14 +705,15 @@ $version = $basicInfo->theme_version;
                     <div class="sort-box">
                         <div class="Sort-content">
                             <h6 style="font-size:13px;">
-                               (Found
-                                <span style="color:black; margin:0px 2px; font-weight:600;">
-                                    {{ $property_contents->total() }} Properties
+                                (Found
+                                <span id="total_properties_count_span" style="color:black; margin:0px 2px; font-weight:600;">
+                                    {{ $totalPopertiesCount }} Properties
                                 </span>)
                             </h6>
                             <div class="sort-toggle" onclick="toggleSortBox()">
                                 Sort By
-                                <i class="fal fa-angle-down arrow" style="margin-top:4px; margin-right:8px; font-size:20px; margin-left:4px;"></i>
+                                <i class="fal fa-angle-down arrow"
+                                    style="margin-top:4px; margin-right:8px; font-size:20px; margin-left:4px;"></i>
                             </div>
                         </div>
 
@@ -729,15 +722,13 @@ $version = $basicInfo->theme_version;
 
                             <label class="sort-option">
                                 <input type="radio" name="sort" value="new" class="radios"
-                                    onchange="updateURL('sort=new')"
-                                    {{ request('sort') == 'new' ? 'checked' : '' }}>
+                                    onchange="updateURL('sort=new')" {{ request('sort') == 'new' ? 'checked' : '' }}>
                                 Newest
                             </label>
 
                             <label class="sort-option">
                                 <input type="radio" name="sort" value="old" class="radios"
-                                    onchange="updateURL('sort=old')"
-                                    {{ request('sort') == 'old' ? 'checked' : '' }}>
+                                    onchange="updateURL('sort=old')" {{ request('sort') == 'old' ? 'checked' : '' }}>
                                 Oldest
                             </label>
 
@@ -765,109 +756,102 @@ $version = $basicInfo->theme_version;
 
                     {{-- Select Area --}}
                     <div class="col p-0">
-                        <select name="area_id"
-                            class="form-control form-select area_id new-forms-color-pp select2"
-                            style="box-shadow:none; line-height:45px;"
-                            onchange="updateURL('listArea='+$(this).val())">
+                        <select name="area_id" id="area_id" class="form-control form-select area_id new-forms-color-pp select2"
+                            style="box-shadow:none; line-height:45px;" onchange="updateURL('listArea='+$(this).val())">
 
                             <option value="" style="background-color:white;">{{ __('Select Area') }}</option>
 
                             @foreach ($all_areas as $area)
-                            <option value="{{ $area->name }}" style="background-color:white;">
-                                {{ $area->name }}
-                            </option>
+                                <option value="{{ $area->name }}" style="background-color:white;">
+                                    {{ $area->name }}
+                                </option>
                             @endforeach
 
                         </select>
                     </div>
- 
+
                     {{-- Property Type --}}
                     @if (!request()->has('purpose') || !in_array(request('purpose'), ['franchiese', 'business_for_sale']))
-                    <div class="col p-0">
-                        <div class="widget property-dropdown-box">
-                            <div id="type" class="property-dropdown-collapse collapse show">
-                                <div class="property-dropdown-body">
-                                   
-                                    @php
-                                    $selectedTypes = request('type', '');
-                                    @endphp
-    
-                                    @php
-                                    $selectedTypes = request()->input('type', []);
-                                    if (!is_array($selectedTypes)) {
-                                        $selectedTypes = [$selectedTypes]; // force array
-                                    }
-                                    @endphp
+                        <div class="col p-0">
+                            <div class="widget property-dropdown-box">
+                                <div id="type" class="property-dropdown-collapse collapse show">
+                                    <div class="property-dropdown-body">
 
-
-                                    <select class="property-select-input select2"
-                                        name="type"
-                                         onchange="updateURL('type='+$(this).val())"
-                                        id="propertyTypeSelect">
-                                        
-                                        <option value="">Select Property Type</option> 
-                                       
                                         @php
-                                            $selectedType = request()->input('type');
+                                            $selectedTypes = request('type', '');
                                         @endphp
-                                        @foreach (['residential', 'commercial', 'industrial'] as $type)
-                                        <option value="{{ $type }}" {{ $selectedType == $type ? 'selected' : '' }}
-                                           {{ in_array($type, $selectedTypes) ? 'selected' : '' }}>
-                                            {{ ucwords($type) }}
-                                        </option>
-                                        @endforeach
-                                      
-                                    </select>
+
+                                        @php
+                                            $selectedTypes = request()->input('type', []);
+                                            if (!is_array($selectedTypes)) {
+                                                $selectedTypes = [$selectedTypes]; // force array
+                                            }
+                                        @endphp
+
+
+                                        <select class="property-select-input select2" name="type"
+                                            onchange="updateURL('type='+$(this).val())" id="propertyTypeSelect">
+
+                                            <option value="">Select Property Type</option>
+
+                                            @php
+                                                $selectedType = request()->input('type');
+                                            @endphp
+                                            @foreach (['residential', 'commercial', 'industrial'] as $type)
+                                                <option value="{{ $type }}"
+                                                    {{ $selectedType == $type ? 'selected' : '' }}
+                                                    {{ in_array($type, $selectedTypes) ? 'selected' : '' }}>
+                                                    {{ ucwords($type) }}
+                                                </option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     @endif
 
                     {{-- Purpose --}}
                     @if (!request()->has('purpose') || !in_array(request('purpose'), ['business_for_sale', 'franchiese']))
-                    <div class="col p-0">
-                        <select name="purpose"
-                            class="form-control form-select select2"
-                            style="box-shadow:none; line-height:45px; min-width:120px;"
-                            onchange="updateURL('purpose='+$(this).val())">
+                        <div class="col p-0">
+                            <select name="purpose" id="purpose" class="form-control form-select select2"
+                                style="box-shadow:none; line-height:45px; min-width:120px;"
+                                onchange="updateURL('purpose='+$(this).val())">
 
-                            <option value="">Select Purpose</option>
+                                <option value="">Select Purpose</option>
 
-                            <option value="rent" {{ request('purpose') == 'rent' ? 'selected' : '' }}>Rent</option>
-                            <option value="buy" {{ request('purpose') == 'buy' ? 'selected' : '' }}>Buy</option>
-                            <option value="lease" {{ request('purpose') == 'lease' ? 'selected' : '' }}>Lease</option>
+                                <option value="rent" {{ request('purpose') == 'rent' ? 'selected' : '' }}>Rent</option>
+                                <option value="buy" {{ request('purpose') == 'buy' ? 'selected' : '' }}>Buy</option>
+                                <option value="lease" {{ request('purpose') == 'lease' ? 'selected' : '' }}>Lease
+                                </option>
 
-                        </select>
-                    </div>
+                            </select>
+                        </div>
                     @endif
 
                     {{-- Search Field --}}
                     <div class="col p-0" style="position:relative;">
-                        <input type="text"
-                            class="form-control filter-input"
-                            name="title"
-                            placeholder="Enter Properties Name"
-                            value="{{ request('title') }}"
+                        <input type="text" class="form-control filter-input" name="title"
+                            placeholder="Enter Properties Name" value="{{ request('title') }}"
                             style="box-shadow:none; padding-left:33px;">
 
                         <i class="fas fa-search" style="position:absolute; left:10px; top:14px;"></i>
                     </div>
 
                     {{-- Reset Button --}}
-                     <a href="javascript:void(0)" onclick="resetURL()" 
+                    <a href="javascript:void(0)" onclick="resetURL()"
                         style="width:fit-content; padding:0; border-radius:10px;">
-                         <button type="button" class="btn btn-primary"
-                             style="height:42px; width:fit-content; border-radius:13px; font-size:12px;">
-                             Reset Filter
-                         </button>
-                     </a>
+                        <button type="button" class="btn btn-primary"
+                            style="height:42px; width:fit-content; border-radius:13px; font-size:12px;">
+                            Reset Filter
+                        </button>
+                    </a>
 
 
 
                     {{-- Mobile Filter Button --}}
-                    <button type="button" class="filter-btn"
-                        data-bs-toggle="offcanvas"
+                    <button type="button" class="filter-btn" data-bs-toggle="offcanvas"
                         data-bs-target="#widgetOffcanvas">
                         <i class="fa-solid fa-sliders filt-ico"></i>
                     </button>
@@ -888,12 +872,16 @@ $version = $basicInfo->theme_version;
                                         <select class="form-select form_control" name="sort"
                                             onchange="updateURL('sort='+$(this).val())">
 
-                                            <option value="new" {{ request('sort') == 'new' ? 'selected' : '' }}>Newest</option>
-                                            <option value="old" {{ request('sort') == 'old' ? 'selected' : '' }}>Oldest</option>
-                                            <option value="low-to-high" {{ request('sort') == 'low-to-high' ? 'selected' : '' }}>
+                                            <option value="new" {{ request('sort') == 'new' ? 'selected' : '' }}>Newest
+                                            </option>
+                                            <option value="old" {{ request('sort') == 'old' ? 'selected' : '' }}>Oldest
+                                            </option>
+                                            <option value="low-to-high"
+                                                {{ request('sort') == 'low-to-high' ? 'selected' : '' }}>
                                                 Price : Low to High
                                             </option>
-                                            <option value="high-to-low" {{ request('sort') == 'high-to-low' ? 'selected' : '' }}>
+                                            <option value="high-to-low"
+                                                {{ request('sort') == 'high-to-low' ? 'selected' : '' }}>
                                                 Price : High to Low
                                             </option>
 
@@ -905,9 +893,8 @@ $version = $basicInfo->theme_version;
                         </div>
 
                         <div class="col-sm-5 d-md-none">
-                            <button class="btn btn-sm btn-outline icon-end radius-sm mb-15"
-                                type="button" data-bs-toggle="offcanvas"
-                                data-bs-target="#widgetOffcanvas">
+                            <button class="btn btn-sm btn-outline icon-end radius-sm mb-15" type="button"
+                                data-bs-toggle="offcanvas" data-bs-target="#widgetOffcanvas">
                                 {{ __('Filter') }} <i class="fal fa-filter"></i>
                             </button>
                         </div>
@@ -919,13 +906,11 @@ $version = $basicInfo->theme_version;
                 <div class="row properties">
 
                     @forelse ($property_contents as $property_content)
-                    <x-property :property="$property_content"
-                        :animate="false"
-                        class="col-lg-3 col-md-6 mt-4" />
+                        <x-property :property="$property_content" :animate="false" class="col-lg-3 col-md-6 mt-4" />
                     @empty
-                    <div class="col-lg-12">
-                        <h3 class="text-center mt-5">{{ __('NO PROPERTY FOUND') }} !</h3>
-                    </div>
+                        <div class="col-lg-12">
+                            <h3 class="text-center mt-5">{{ __('NO PROPERTY FOUND') }} !</h3>
+                        </div>
                     @endforelse
 
                     {{-- Pagination --}}
@@ -940,288 +925,260 @@ $version = $basicInfo->theme_version;
         </div>
     </div>
 </div>
-
-
-
-
-
+ 
 
 @endsection
 
 @section('script')
-<script>
-    'use strict';
-    var property_contents = @json($property_contents);
-    var properties = property_contents.data;
-    var purpose = @json(request('purpose') ?? '');
-</script>
-<!-- Leaflet Map JS -->
-<script src="{{ asset('/assets/front/js/vendors/leaflet.js') }}"></script>
-<script src="{{ asset('/assets/front/js/vendors/leaflet.markercluster.js') }}"></script>
+    <script>
+        'use strict';
+        var property_contents = @json($property_contents);
+        var properties = property_contents.data;
+        var purpose = @json(request('purpose') ?? '');
+    </script>
+    <!-- Leaflet Map JS -->
+    <script src="{{ asset('/assets/front/js/vendors/leaflet.js') }}"></script>
+    <script src="{{ asset('/assets/front/js/vendors/leaflet.markercluster.js') }}"></script>
 
-<script src="{{ asset('/assets/front/js/properties.js') }}"></script>
-<script>
-    let debounceTimer;
+    <script src="{{ asset('/assets/front/js/properties.js') }}"></script>
+    <script>
+        let debounceTimer;
 
-    $('.filter-input').keyup(function() {
-        const param = $(this).attr('name');
-        const val = $(this).val().trim();
-        clearTimeout(debounceTimer);
+        $('.filter-input').keyup(function() {
+            const param = $(this).attr('name');
+            const val = $(this).val().trim();
+            clearTimeout(debounceTimer);
 
-        debounceTimer = setTimeout(() => {
-            updateURL(`${param}=${encodeURIComponent(val)}`);
-        }, 400);
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-
-        const sliderEl = document.querySelector("[data-range-slider='priceSlider']");
-        if (!sliderEl) return;
-
-        if (!sliderEl.noUiSlider) {
-            noUiSlider.create(sliderEl, {
-                start: [
-                    Number($('#min').val()) || 0,
-                    Number($('#max').val()) || 0
-                ],
-                connect: true,
-                range: {
-                    min: Number($('#o_min').val()) || 0,
-                    max: Number($('#o_max').val()) || 0
-                },
-                step: 1
-            });
-        }
-
-        const inputs = [
-            document.getElementById('min') || null,
-            document.getElementById('max') || null
-        ];
-
-        sliderEl.noUiSlider.on('update', function(values, handle) {
-            const val = Math.round(Number(values[handle]) || 0);
-            const input = inputs[handle];
-            if (input) input.value = val;
-        });
-
-        const $label = $("[data-range-value='priceSliderValue']");
-        const currency = $('#currency_symbol').val() || '';
-
-        const fmt = new Intl.NumberFormat(undefined, {
-            maximumFractionDigits: 0
-        });
-
-        sliderEl.noUiSlider.on('update', function(values) {
-            const minV = Math.round(Number(values[0]) || 0);
-            const maxV = Math.round(Number(values[1]) || 0);
-
-            if ($label.length) {
-                $label.text(`${currency} ${fmt.format(minV)} - ${currency} ${fmt.format(maxV)}`);
-            }
-        });
-
-        let debounceTimer1;
-
-        sliderEl.noUiSlider.on('change', function(values) {
-            const minV = Math.round(+values[0] || 0);
-            const maxV = Math.round(+values[1] || 0);
-
-            clearTimeout(debounceTimer1);
-
-            debounceTimer1 = setTimeout(() => {
-                updateURL(`min=${encodeURIComponent(minV)}`);
-                updateURL(`max=${encodeURIComponent(maxV)}`);
+            debounceTimer = setTimeout(() => {
+                updateURL(`${param}=${encodeURIComponent(val)}`);
             }, 400);
         });
-    });
 
-    eventCapture();
+        document.addEventListener('DOMContentLoaded', function() {
 
-    function getTypesFromUrl() {
-        return new URLSearchParams(window.location.search).getAll('type') || [];
-    }
+            const sliderEl = document.querySelector("[data-range-slider='priceSlider']");
+            if (!sliderEl) return;
 
-    function collectCheckedValues(paramName) {
-        return new URLSearchParams(window.location.search).getAll(paramName) || [];
-    }
+            if (!sliderEl.noUiSlider) {
+                noUiSlider.create(sliderEl, {
+                    start: [
+                        Number($('#min').val()) || 0,
+                        Number($('#max').val()) || 0
+                    ],
+                    connect: true,
+                    range: {
+                        min: Number($('#o_min').val()) || 0,
+                        max: Number($('#o_max').val()) || 0
+                    },
+                    step: 1
+                });
+            }
 
-    function eventCapture() {
-        const types = getTypesFromUrl();
-        const categories = collectCheckedValues('category[]');
-        const amenities = collectCheckedValues('amenities[]');
+            const inputs = [
+                document.getElementById('min') || null,
+                document.getElementById('max') || null
+            ];
 
-        const url = "{{ route('frontend.types-wise-load-data') }}";
-        const params = new URLSearchParams();
+            sliderEl.noUiSlider.on('update', function(values, handle) {
+                const val = Math.round(Number(values[handle]) || 0);
+                const input = inputs[handle];
+                if (input) input.value = val;
+            });
 
-        types.forEach(t => params.append('type', t));
-        categories.forEach(c => params.append('category[]', c));
-        amenities.forEach(a => params.append('amenities[]', a));
+            const $label = $("[data-range-value='priceSliderValue']");
+            const currency = $('#currency_symbol').val() || '';
 
-        $.ajax({
-            url: url + (params.toString() ? ('?' + params.toString()) : ''),
-            method: 'GET',
-            success: function(res) {
-                $('#amenities').html(res.amenities_html);
-                $('#categories').html(res.categories_html);
-             
+            const fmt = new Intl.NumberFormat(undefined, {
+                maximumFractionDigits: 0
+            });
 
+            sliderEl.noUiSlider.on('update', function(values) {
+                const minV = Math.round(Number(values[0]) || 0);
+                const maxV = Math.round(Number(values[1]) || 0);
+
+                if ($label.length) {
+                    $label.text(`${currency} ${fmt.format(minV)} - ${currency} ${fmt.format(maxV)}`);
+                }
+            });
+
+            let debounceTimer1;
+
+            sliderEl.noUiSlider.on('change', function(values) {
+                const minV = Math.round(+values[0] || 0);
+                const maxV = Math.round(+values[1] || 0);
+
+                clearTimeout(debounceTimer1);
+
+                debounceTimer1 = setTimeout(() => {
+                    updateURL(`min=${encodeURIComponent(minV)}`);
+                    updateURL(`max=${encodeURIComponent(maxV)}`);
+                }, 400);
+            });
+        });
+
+        eventCapture();
+
+        function getTypesFromUrl() {
+            return new URLSearchParams(window.location.search).getAll('type') || [];
+        }
+
+        function collectCheckedValues(paramName) {
+            return new URLSearchParams(window.location.search).getAll(paramName) || [];
+        }
+
+        function eventCapture() {
+            const types = getTypesFromUrl();
+            const categories = collectCheckedValues('category[]');
+            const amenities = collectCheckedValues('amenities[]');
+
+            const url = "{{ route('frontend.types-wise-load-data') }}";
+            const params = new URLSearchParams();
+
+            types.forEach(t => params.append('type', t));
+            categories.forEach(c => params.append('category[]', c));
+            amenities.forEach(a => params.append('amenities[]', a));
+
+            $.ajax({
+                url: url + (params.toString() ? ('?' + params.toString()) : ''),
+                method: 'GET',
+                success: function(res) {
+                    $('#amenities').html(res.amenities_html);
+                    $('#categories').html(res.categories_html);
+
+
+                }
+            });
+        }
+    </script>
+
+    <script>
+        document.querySelectorAll(".custom-dropdown").forEach(function(drop) {
+            let selected = drop.querySelector(".cd-selected");
+            let list = drop.querySelector(".cd-list");
+
+            selected.addEventListener("click", function(e) {
+                e.stopPropagation();
+
+                document.querySelectorAll(".cd-list").forEach(function(x) {
+                    if (x !== list) x.style.display = "none";
+                });
+
+                list.style.display = (list.style.display === "block") ? "none" : "block";
+            });
+
+            list.querySelectorAll("li").forEach(function(item) {
+                item.addEventListener("click", function(e) {
+                    e.stopPropagation();
+                    selected.innerText = this.innerText;
+                    list.style.display = "none";
+                });
+            });
+        });
+
+        document.addEventListener("click", function() {
+            document.querySelectorAll(".cd-list").forEach(x => x.style.display = "none");
+        });
+
+        document.addEventListener("click", function(e) {
+            const sortBox = document.getElementById("sortOptionsBox");
+            const toggleBtn = document.querySelector(".sort-toggle");
+
+            if (!sortBox || !toggleBtn) return;
+
+            const clickedInsideBox = sortBox.contains(e.target);
+            const clickedToggle = toggleBtn.contains(e.target);
+
+            if (!clickedInsideBox && !clickedToggle) {
+                sortBox.style.display = "none";
             }
         });
-    }
-</script>
 
-<script>
-    document.querySelectorAll(".custom-dropdown").forEach(function(drop) {
-        let selected = drop.querySelector(".cd-selected");
-        let list = drop.querySelector(".cd-list");
-
-        selected.addEventListener("click", function(e) {
-            e.stopPropagation();
-
-            document.querySelectorAll(".cd-list").forEach(function(x) {
-                if (x !== list) x.style.display = "none";
-            });
-
-            list.style.display = (list.style.display === "block") ? "none" : "block";
-        });
-
-        list.querySelectorAll("li").forEach(function(item) {
-            item.addEventListener("click", function(e) {
-                e.stopPropagation();
-                selected.innerText = this.innerText;
-                list.style.display = "none";
-            });
-        });
-    });
-
-    document.addEventListener("click", function() {
-        document.querySelectorAll(".cd-list").forEach(x => x.style.display = "none");
-    });
-
-    document.addEventListener("click", function(e) {
-        const sortBox = document.getElementById("sortOptionsBox");
-        const toggleBtn = document.querySelector(".sort-toggle");
-
-        if (!sortBox || !toggleBtn) return;
-
-        const clickedInsideBox = sortBox.contains(e.target);
-        const clickedToggle = toggleBtn.contains(e.target);
-
-        if (!clickedInsideBox && !clickedToggle) {
-            sortBox.style.display = "none";
+        function toggleSortBox() {
+            const sortBox = document.getElementById("sortOptionsBox");
+            sortBox.style.display = (sortBox.style.display === "block") ? "none" : "block";
         }
-    });
-
-    function toggleSortBox() {
-        const sortBox = document.getElementById("sortOptionsBox");
-        sortBox.style.display = (sortBox.style.display === "block") ? "none" : "block";
-    }
-</script>
+    </script>
 
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
 
-        // --- MIN DROPDOWN ---
-        const minSelected = document.querySelector(".dropdown-min-selected");
-        const minList = document.querySelector(".dropdown-min-list");
+            // --- MIN DROPDOWN ---
+            const minSelected = document.querySelector(".dropdown-min-selected");
+            const minList = document.querySelector(".dropdown-min-list");
 
-        minSelected.addEventListener("click", function(e) {
-            e.stopPropagation();
-            minList.style.display = minList.style.display === "block" ? "none" : "block";
-        });
-
-        minList.querySelectorAll("li").forEach(item => {
-            item.addEventListener("click", function() {
-                minSelected.textContent = this.textContent;
-                minList.style.display = "none";
+            minSelected.addEventListener("click", function(e) {
+                e.stopPropagation();
+                minList.style.display = minList.style.display === "block" ? "none" : "block";
             });
-        });
+
+            minList.querySelectorAll("li").forEach(item => {
+                item.addEventListener("click", function() {
+                    minSelected.textContent = this.textContent;
+                    minList.style.display = "none";
+                });
+            });
 
 
-        // --- MAX DROPDOWN ---
-        const maxSelected = document.querySelector(".dropdown-max-selected");
-        const maxList = document.querySelector(".dropdown-max-list");
+            // --- MAX DROPDOWN ---
+            const maxSelected = document.querySelector(".dropdown-max-selected");
+            const maxList = document.querySelector(".dropdown-max-list");
 
-        maxSelected.addEventListener("click", function(e) {
-            e.stopPropagation();
-            maxList.style.display = maxList.style.display === "block" ? "none" : "block";
-        });
+            maxSelected.addEventListener("click", function(e) {
+                e.stopPropagation();
+                maxList.style.display = maxList.style.display === "block" ? "none" : "block";
+            });
 
-        maxList.querySelectorAll("li").forEach(item => {
-            item.addEventListener("click", function() {
-                maxSelected.textContent = this.textContent;
+            maxList.querySelectorAll("li").forEach(item => {
+                item.addEventListener("click", function() {
+                    maxSelected.textContent = this.textContent;
+                    maxList.style.display = "none";
+                });
+            });
+
+            // Close all dropdowns on click outside
+            document.addEventListener("click", function() {
+                minList.style.display = "none";
                 maxList.style.display = "none";
             });
         });
 
-        // Close all dropdowns on click outside
-        document.addEventListener("click", function() {
-            minList.style.display = "none";
-            maxList.style.display = "none";
-        });
-    });
- 
 
-document.getElementById("minPrice").addEventListener("change", applyRangeFilter);
-document.getElementById("maxPrice").addEventListener("change", applyRangeFilter);
+        document.getElementById("minPrice").addEventListener("change", applyRangeFilter);
+        document.getElementById("maxPrice").addEventListener("change", applyRangeFilter);
 
-function applyRangeFilter() {
+        function applyRangeFilter() {
 
-    let min = document.getElementById("minPrice").value.trim();
-    let max = document.getElementById("maxPrice").value.trim();
+            let min = document.getElementById("minPrice").value.trim();
+            let max = document.getElementById("maxPrice").value.trim();
 
-    let url = new URL(window.location.href);
+            let url = new URL(window.location.href);
 
-    // --- FIXED LOGIC ---
-    if (min !== "") url.searchParams.set("min", min);
-    else url.searchParams.delete("min");
+            // --- FIXED LOGIC ---
+            if (min !== "") url.searchParams.set("min", min);
+            else url.searchParams.delete("min");
 
-    if (max !== "") url.searchParams.set("max", max);
-    else url.searchParams.delete("max");
+            if (max !== "") url.searchParams.set("max", max);
+            else url.searchParams.delete("max");
 
-    // Smooth URL update (NO RELOAD)
-    history.pushState({}, "", url.toString());
+            // Smooth URL update (NO RELOAD)
+            history.pushState({}, "", url.toString());
 
-    // Trigger your filter refresh
-    eventCapture();
+            // Trigger your filter refresh
+            eventCapture();
 
-    // Trigger same reload mechanism your other filters use
-    if (typeof properties !== "undefined") {
-        $('.filter-input').trigger("keyup"); // THIS FIXES MIN NOT FIRING
-    }
-} 
-  document.getElementById('minPrice').addEventListener('input', function () {
-        this.value = this.value.replace(/[^0-9]/g, '');
-    });
-
-    document.getElementById('maxPrice').addEventListener('input', function () {
-        this.value = this.value.replace(/[^0-9]/g, '');
-    });
-    function resetURL() {
-    // 1️⃣ All input fields reset
-    $('input[type="text"], input[type="number"]').val('');
-
-    // 2️⃣ All selects reset to first option (Select...)
-    $('select').prop('selectedIndex', 0).trigger('change');
-
-    // 3️⃣ All checkboxes reset
-    $('input[type="checkbox"]').prop('checked', false);
-
-                // Update URL smoothly
-                let current = new URL(window.location.href);
-                current.searchParams.set("min", res.min_price);
-                current.searchParams.set("max", res.max_price);
-                history.pushState({}, "", current.toString());
+            // Trigger same reload mechanism your other filters use
+            if (typeof properties !== "undefined") {
+                $('.filter-input').trigger("keyup"); // THIS FIXES MIN NOT FIRING
             }
-
-            // ---- Update categories & amenities (already in your code) ----
-            $('#amenities').html(res.amenities_html);
-            $('#categories').html(res.categories_html);
         }
-    });
-}
+        document.getElementById('minPrice').addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
 
-</script> 
-
+        document.getElementById('maxPrice').addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+ 
+    </script>
 @endsection
