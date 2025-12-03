@@ -5,7 +5,7 @@
 
 <style>
     .new-main-navbar {
-        background-color: #6c603c;
+        background-color: var(--theme-color);
     }
 </style>
 

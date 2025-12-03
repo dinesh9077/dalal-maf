@@ -28,7 +28,7 @@ $version = $basicInfo->theme_version;
 
 <style>
 .new-main-navbar {
-    background-color: #6c603c;
+    background-color: var(--theme-color);
 }
 
 .new-pro-images-grid img {

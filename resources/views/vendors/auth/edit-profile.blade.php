@@ -60,7 +60,7 @@
 }
 
 .login-box .btn-send-otp {
-    background-color: #6c603c;
+    background-color: var(--theme-color);
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -70,19 +70,19 @@
 }
 
 .login-box .btn-send-otp:hover {
-    background-color: #6c603c;
+    background-color: var(--theme-color);
     color: #fff;
 }
 
 .login-box .terms-text {
-    color: #6c603c;
+    color: var(--theme-color);
     font-size: 14px;
     text-align: center;
     cursor: pointer;
 }
 
 .close {
-    background-color: #6c603c !important; 
+    background-color: var(--theme-color) !important; 
     border: none;
     width: 32px;
     height: 32px;
@@ -102,7 +102,7 @@
 }
 
 .close:hover {
-    /* background-color: #6c603c;  */
+    /* background-color: var(--theme-color);  */
 }
 
 .close:hover i {
@@ -151,7 +151,7 @@
 }
 
 .close-btn-login:hover {
-    background: #6c603c;
+    background: var(--theme-color);
 }
 
 .modal-header {
@@ -167,7 +167,7 @@
 #editPhoneNumber {
     cursor: pointer;
     margin-left: 8px;
-    color: #6c603c;
+    color: var(--theme-color);
 }
 
 .otp-input-wrapper input.otp-box-input {
@@ -181,7 +181,7 @@
 }
 
 .otp-input-wrapper input.otp-box-input:focus {
-    border-color: #6c603c;
+    border-color: var(--theme-color);
     box-shadow: 0 0 5px rgba(148, 126, 65, 0.4);
 }
 
@@ -192,7 +192,7 @@
 }
 
 .resend-link {
-    color: #6c603c !important;
+    color: var(--theme-color) !important;
     font-weight: 600;
     cursor: pointer;
 }
@@ -200,7 +200,7 @@
 .verify-btn {
     width: 100%;
     display: block;
-    background: #6c603c !important;
+    background: var(--theme-color) !important;
     color: white;
     padding: 10px;
     font-weight: 600;
@@ -489,7 +489,7 @@
                     </div>
 
                     <button type="button" class="close-btn-login" data-dismiss="modal" aria-label="Close"
-                        style=" width:28px; background-color:#6c603c; position:none; height:28px; border-radius:50%; border:none;  align-items:center; justify-content:center;">
+                        style=" width:28px; background-color:var(--theme-color); position:none; height:28px; border-radius:50%; border:none;  align-items:center; justify-content:center;">
                         <i class="fa fa-times" style="color:#fff;  font-size:14px;"></i>
                     </button>
                 </div>
@@ -510,7 +510,7 @@
                 </h5>
 
                 <button id="verifyOtpBtn" type="button" class="btn verify-btn mt-5"
-                    style="background-color:#6c603c; color:#fff; font-weight:;">
+                    style="background-color:var(--theme-color); color:#fff; font-weight:;">
                     {{ __('Verify') }}
                 </button>
 

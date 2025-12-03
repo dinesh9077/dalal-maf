@@ -135,7 +135,7 @@
 
 .new-main-navbar {
   background-size: cover;
-  background-color: #6c603c;
+  background-color: var(--theme-color);
   /* border-radius: 10px; */
 }
 

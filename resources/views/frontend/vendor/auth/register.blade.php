@@ -50,7 +50,7 @@ $version = $basicInfo->theme_version;
 }
 
 .new-lable-radio input:checked + .radio-box {
-    border: 2px solid #6c603c; /* selected border color */
+    border: 2px solid var(--theme-color); /* selected border color */
     box-shadow: 0 0 8px rgba(255, 102, 0, 0.5);
     background: #fff8f3; /* हल्का सा background highlight */
 }

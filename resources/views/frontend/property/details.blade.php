@@ -28,7 +28,7 @@ $version = $basicInfo->theme_version;
 
 <style>
     .new-main-navbar {
-        background-color: #6c603c;
+        background-color: var(--theme-color);
     }
 
     .new-hover {
@@ -40,7 +40,7 @@ $version = $basicInfo->theme_version;
     }
 
     .hover-btn {
-        background: #6c603c;
+        background: var(--theme-color);
         color: white;
         border: none;
         padding: 6px 10px;
@@ -83,7 +83,7 @@ $version = $basicInfo->theme_version;
     }
 
     .hover-btn {
-        background: #6c603c;
+        background: var(--theme-color);
         color: #fff;
         border: none;
         padding: 6px 10px;
@@ -473,13 +473,13 @@ $version = $basicInfo->theme_version;
 
                                             @if (!Auth::guard('vendor')->check() && !Auth::guard('web')->check())
                                             <button type="button" class="btn btn-md w-100"
-                                                style="background:#6c603c; color:white;" data-bs-toggle="modal"
+                                                style="background:var(--theme-color); color:white;" data-bs-toggle="modal"
                                                 data-bs-target="#customerPhoneModal" data-action="login">
                                                 {{ __('Send inquiry') }}
                                             </button>
                                             @else
                                             <button type="submit" class="btn btn-md w-100"
-                                                style="background:#6c603c; color:white;">
+                                                style="background:var(--theme-color); color:white;">
                                                 {{ __('Send inquiry') }}
                                             </button>
                                             @endif
@@ -832,13 +832,13 @@ $version = $basicInfo->theme_version;
 
                                                     @if (!Auth::guard('vendor')->check() && !Auth::guard('web')->check())
                                                     <button type="button" class="btn btn-md w-100"
-                                                        style="background:#6c603c; color:white;" data-bs-toggle="modal"
+                                                        style="background:var(--theme-color); color:white;" data-bs-toggle="modal"
                                                         data-bs-target="#customerPhoneModal" data-action="login">
                                                         {{ __('Send inquiry') }}
                                                     </button>
                                                     @else
                                                     <button type="submit" class="btn btn-md w-100"
-                                                        style="background:#6c603c; color:white;">
+                                                        style="background:var(--theme-color); color:white;">
                                                         {{ __('Send inquiry') }}
                                                     </button>
                                                     @endif

@@ -20,7 +20,7 @@
 }
 
 .close-btn-login {
-    background-color: #947E41;
+    background-color: var(--theme-color);
     border-radius: 50px;
     width: 17px;
     font-size: 12px;
@@ -33,7 +33,7 @@
 }
 
 .close-btn-login:hover {
-    background-color: #947E41 !important;
+    background-color: var(--theme-color) !important;
     border-radius: 50px;
     width: 17px;
     font-size: 12px;
@@ -115,7 +115,7 @@
 }
 
 .otp-input-wrapper input.otp-box:focus {
-    border-color: #947E41;
+    border-color: var(--theme-color);
     box-shadow: 0 0 3px rgba(148, 126, 65, 0.5);
 }
 </style>
@@ -155,13 +155,13 @@
 
                 <div class="modal-footer" style="border-top:none;">
                     <button id="sendOtp" type="button" class="btn btn-primary btn-sm" disabled
-                        style="background: #6c603c ; margin-top : 20px; ">
+                        style="background: var(--theme-color) ; margin-top : 20px; ">
                         {{ __('Send OTP') }}
                     </button>
                 </div>
                 <a href="{{ url('terms-&-condition')}}" target="_blank" class="text-center d-block"
                     style="margin-top: 20px; font-size:15px; text-align: center;">
-                    <span style="color: #6c603c; margin-left: 5px;">Terms and conditions</span>
+                    <span style="color: var(--theme-color); margin-left: 5px;">Terms and conditions</span>
                 </a>
             </div>
         </div>
@@ -181,7 +181,7 @@
                     <h4 style="color:#000; font-weight:600; margin:0;">
                         <span id="editFrontPhone">+91-7854875487</span>
                         <i class="fa fa-pencil" id="editPhoneNumber"
-                            style="color:#6c603c; font-size:13px; margin-left:4px; cursor:pointer;"></i>
+                            style="color:var(--theme-color); font-size:13px; margin-left:4px; cursor:pointer;"></i>
                     </h4>
                 </div>
                 <button type="button" class="close-btn-login" data-bs-dismiss="modal" aria-label="Close"
@@ -205,7 +205,7 @@
                 <div>
                     <p style="text-align:left; margin-top:5px;">
                         Haven't received yet?
-                        <span id="resendOtp" style="color:#6c603c; cursor:pointer; text-decoration:underline;">
+                        <span id="resendOtp" style="color:var(--theme-color); cursor:pointer; text-decoration:underline;">
                             Resend OTP
                         </span>
                         <span id="otpTimer" style="margin-left:8px; color:#6b7280;"></span>
@@ -223,7 +223,7 @@
 
             <div class="modal-footer" style="border-top:none; margin-bottom:24px;">
                 <button id="verifyOtpBtn" type="button" class="btn btn-primary btn-sm mx-3 mb-3"
-                    style="background: #947E41 !important; margin-top:20px;">
+                    style="background: var(--theme-color) !important; margin-top:20px;">
                     {{ __('Verify') }}
                 </button>
             </div>

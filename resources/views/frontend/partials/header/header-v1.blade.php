@@ -114,7 +114,7 @@
             <nav class="navbar navbar-expand-lg">
 
                 @if (!empty($websiteInfo->logo))
-                <a href="{{ route('index') }}" class="navbar-brand" style="    width: 140px;">
+                <a href="{{ route('index') }}" class="navbar-brand main-logo" style="width: 140px;">
                     <img src="{{ asset('assets/img/' . $websiteInfo->logo) }}">
                 </a>
                 @endif

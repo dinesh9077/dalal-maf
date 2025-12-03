@@ -25,7 +25,7 @@
 @section('content')
     <style>
         .new-main-navbar {
-            background-color: #6c603c;
+            background-color: var(--theme-color);
         }
 
 
@@ -359,7 +359,7 @@
         .slider-track {
             position: absolute;
             height: 100%;
-            background: #6c603c;
+            background: var(--theme-color);
             left: 0;
             right: 0;
             border-radius: 5px;
@@ -651,7 +651,7 @@
                                                         </div>
 
                                                         <div class="price-value">
-                                                            <span style="color:#6c603c;">
+                                                            <span style="color:var(--theme-color);">
                                                                 {{ __('Price :') }}
                                                                 <span data-range-value="priceSliderValue">
                                                                     {{ symbolPrice($min) }} -
