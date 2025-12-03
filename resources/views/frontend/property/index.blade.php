@@ -538,87 +538,88 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+
+                                        <!-- Categories -->
+                                        <div class="widget widget-categories pt-4 mb-30">
+                                            <h3 class="title">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                    data-bs-target="#categories" aria-expanded="true"
+                                                    aria-controls="categories">
+                                                    {{ __('Categories') }}
+                                                </button>
+                                            </h3>
+                                            <div id="categories" class="collapse show">
+                                                <div class="accordion-body">
+                                                    <div class="custom-checkbox new-animitis-divs">
+                                                        @php
+                                                            $selectedCategories = request()->input('category', []);
+                                                            if (!is_array($selectedCategories)) {
+                                                                $selectedCategories = [$selectedCategories];
+                                                            }
+                                                        @endphp
+
+                                                        @foreach ($categories as $category)
+                                                            @if ($category->categoryContent)
+                                                                <div>
+                                                                    <input class="input-checkbox" type="checkbox"
+                                                                        name="category[]" id="checkbox_cat{{ $category->id }}"
+                                                                        value="{{ $category->categoryContent->slug }}"
+                                                                        {{ in_array($category->categoryContent->slug, $selectedCategories) ? 'checked' : '' }}
+                                                                        onchange="updateAmenities('category[]={{ $category->categoryContent->slug }}',this)">
+                                                                    <label for="checkbox_cat{{ $category->id }}"><span
+                                                                            class="animits-div-tab">{{ $category->categoryContent->name }}</span></label>
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Amenities -->
+                                        <div class="widget widget-amenities mb-30">
+                                            <h3 class="title">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                    data-bs-target="#amenities" aria-expanded="true"
+                                                    aria-controls="amenities">
+                                                    {{ __('Amenities') }}
+                                                </button>
+                                            </h3>
+
+                                            <div id="amenities" class="collapse show">
+                                                <div class="accordion-body">
+                                                    <div class="custom-checkbox new-animitis-divs">
+                                                        @php
+
+                                                            $selected_amenities = request()->input('amenities', []);
+                                                            if (!is_array($selected_amenities)) {
+                                                                $selected_amenities = [$selected_amenities];
+                                                            }
+                                                        @endphp
+
+                                                        @foreach ($amenities as $amenity)
+                                                            @if ($amenity->amenityContent)
+                                                                <div>
+                                                                    <input class="input-checkbox" type="checkbox"
+                                                                        name="amenities[]"
+                                                                        id="checkbox_am{{ $amenity->id }}"
+                                                                        value="{{ $amenity->amenityContent->name }}"
+                                                                        {{ in_array($amenity->amenityContent->name, $selected_amenities) ? 'checked' : '' }}
+                                                                        onchange="updateAmenities('amenities[]={{ $amenity->amenityContent->name }}',this)">
+
+                                                                    <label for="checkbox_am{{ $amenity->id }}"><span
+                                                                            class="animits-div-tab">{{ $amenity->amenityContent->name }}</span></label>
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     @endif
-
-                                    <!-- Categories -->
-                                    <div class="widget widget-categories pt-4 mb-30">
-                                        <h3 class="title">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#categories" aria-expanded="true"
-                                                aria-controls="categories">
-                                                {{ __('Categories') }}
-                                            </button>
-                                        </h3>
-                                        <div id="categories" class="collapse show">
-                                            <div class="accordion-body">
-                                                <div class="custom-checkbox new-animitis-divs">
-                                                    @php
-                                                        $selectedCategories = request()->input('category', []);
-                                                        if (!is_array($selectedCategories)) {
-                                                            $selectedCategories = [$selectedCategories];
-                                                        }
-                                                    @endphp
-
-                                                    @foreach ($categories as $category)
-                                                        @if ($category->categoryContent)
-                                                            <div>
-                                                                <input class="input-checkbox" type="checkbox"
-                                                                    name="category[]" id="checkbox_cat{{ $category->id }}"
-                                                                    value="{{ $category->categoryContent->slug }}"
-                                                                    {{ in_array($category->categoryContent->slug, $selectedCategories) ? 'checked' : '' }}
-                                                                    onchange="updateAmenities('category[]={{ $category->categoryContent->slug }}',this)">
-                                                                <label for="checkbox_cat{{ $category->id }}"><span
-                                                                        class="animits-div-tab">{{ $category->categoryContent->name }}</span></label>
-                                                            </div>
-                                                        @endif
-                                                    @endforeach
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Amenities -->
-                                    <div class="widget widget-amenities mb-30">
-                                        <h3 class="title">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#amenities" aria-expanded="true"
-                                                aria-controls="amenities">
-                                                {{ __('Amenities') }}
-                                            </button>
-                                        </h3>
-
-                                        <div id="amenities" class="collapse show">
-                                            <div class="accordion-body">
-                                                <div class="custom-checkbox new-animitis-divs">
-                                                    @php
-
-                                                        $selected_amenities = request()->input('amenities', []);
-                                                        if (!is_array($selected_amenities)) {
-                                                            $selected_amenities = [$selected_amenities];
-                                                        }
-                                                    @endphp
-
-                                                    @foreach ($amenities as $amenity)
-                                                        @if ($amenity->amenityContent)
-                                                            <div>
-                                                                <input class="input-checkbox" type="checkbox"
-                                                                    name="amenities[]"
-                                                                    id="checkbox_am{{ $amenity->id }}"
-                                                                    value="{{ $amenity->amenityContent->name }}"
-                                                                    {{ in_array($amenity->amenityContent->name, $selected_amenities) ? 'checked' : '' }}
-                                                                    onchange="updateAmenities('amenities[]={{ $amenity->amenityContent->name }}',this)">
-
-                                                                <label for="checkbox_am{{ $amenity->id }}"><span
-                                                                        class="animits-div-tab">{{ $amenity->amenityContent->name }}</span></label>
-                                                            </div>
-                                                        @endif
-                                                    @endforeach
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
 
                                     <!-- Pricing Filter -->
