@@ -1064,13 +1064,12 @@
 
 
 
-    <section class="buy-rent-sale-section pt-30 pb-30">
+    <!-- <section class="buy-rent-sale-section pt-30 pb-30">
         <div class="container">
 
             <div class="section-title title-inline mb-3 aos-init aos-animate d-flex" data-aos="fade-up">
                 <h2 class="title">For all your luxury real estate needs, We have got you covered!</h2>
-                <!-- <p style="font-size: 13px; line-height : 1.2;">From finding your dream home with all the luxury amenities to seamless transactions, trust us to handle
-                    every detail with care and expertise.</p> -->
+               
             </div>
 
             <div class="row BSR-main-div">
@@ -1107,9 +1106,9 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
-    <section class="why-dlal-dection pb-30">
+    <section class="why-dlal-dection pb-30" style="padding-top: 17px;">
         <div class="container">
             <div class="section-title title-inline  aos-init aos-animate d-flex " style="flex-direction: column;"
                 data-aos="fade-up">

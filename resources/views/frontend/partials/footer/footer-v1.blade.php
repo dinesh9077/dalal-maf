@@ -1,10 +1,9 @@
 <!-- Footer-area start -->
 @if ($footerSectionStatus == 1)
 
-<footer class="footer-area" style="background-color : #F9F6EE;">
+<footer class="footer-area" style="background-color : black;">
     <div class=" pt-40 pb-40">
         <div class="container">
-
             <div class="row footer-row">
                 <div class="col-lg-7 footer-left">
                     <div class="footer-left-text">
@@ -151,7 +150,7 @@
     </div>
     <div class="copy-right-area ">
         <div class="container">
-            <div class="copy-right-content" style="color: black;">
+            <div class="copy-right-content" style="color: white;">
                 <span> {!! @$footerInfo->copyright_text !!} </span>
             </div>
         </div>
