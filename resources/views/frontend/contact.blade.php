@@ -23,7 +23,7 @@ $version = $basicInfo->theme_version;
 
 <style>
 .new-main-navbar {
-    background-color: #6c603c;
+    background-color: var(--theme-color);
 }
 
 @media(min-width:320px) and (max-width:760px) {

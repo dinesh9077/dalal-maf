@@ -444,7 +444,7 @@
 .pagination .page-item.active .page-link,
 .pagination .page-item:hover .page-link {
   color: var(--color-white);
-  background-color: #6c603c;
+  background-color: var(--theme-color);
   border-radius: 7px !important;
   border-color: var(--border-color);
 }

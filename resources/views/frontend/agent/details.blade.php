@@ -134,7 +134,7 @@
 
                             <div class="d-flex flex-wrap lign-items-center mt-20 gap-15">
                                 @if ($agent->show_phone_number == 1)
-                                    <a href="#" class="btn btn-lg btn-primary" style="background-color: #947E41;">{{ __('Send Email') }}</a>
+                                    <a href="#" class="btn btn-lg btn-primary" style="background-color: var(--theme-color);">{{ __('Send Email') }}</a>
                                 @endif
                                 @if ($agent->show_email_addresss == 1)
                                     <a href="tel:{{ $agent->phone }}"
@@ -325,7 +325,7 @@
                                         </div>
                                     @endif
                                     <button type="submit" onsubmit="$('.request-loader').addClass('show');"
-                                        class="btn btn-md btn-primary w-100" style="background-color: #947E41;">{{ __('Send message') }}</button>
+                                        class="btn btn-md btn-primary w-100" style="background-color: var(--theme-color);">{{ __('Send message') }}</button>
                                 </form>
                             </div>
                         @endif
@@ -359,7 +359,7 @@
                                         placeholder="{{ __('Enter location') }}">
                                 </div>
                                 <button type="submit"
-                                    class="btn btn-md btn-primary w-100" style="background-color: #947E41;">{{ __('Search Now') }}</button>
+                                    class="btn btn-md btn-primary w-100" style="background-color: var(--theme-color);">{{ __('Search Now') }}</button>
                             </form>
                         </div>
                        

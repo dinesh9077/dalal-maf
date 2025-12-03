@@ -317,7 +317,7 @@
 
                     <div class="modal-footer" style="border-top:none;">
                         <button id="sendOtp" type="button" class="btn btn-primary btn-sm"
-                            style="background: #6c603c ; margin-top : 20px; ">
+                            style="background: var(--theme-color) ; margin-top : 20px; ">
                             {{ __('Send OTP') }}
                         </button>
                     </div>
@@ -339,7 +339,7 @@
                     <h4 style="color:#000; font-weight:600; margin:0;">
                         <span id="editFrontPhone">+91-7854875487</span>
                         <i class="fa fa-pencil" id="editPhoneNumber"
-                            style="color:#6c603c; font-size:13px; margin-left:4px; cursor:pointer;"></i>
+                            style="color:var(--theme-color); font-size:13px; margin-left:4px; cursor:pointer;"></i>
                     </h4>
                 </div>
                 <button type="button" class="close-btn-login" data-dismiss="modal" aria-label="Close"
@@ -363,7 +363,7 @@
                 <div>
                     <p style="text-align:left; margin-top:5px;">
                         Haven't received yet? 
-                        <span id="resendOtp" style="color:#6c603c; cursor:pointer; text-decoration:underline;">
+                        <span id="resendOtp" style="color:var(--theme-color); cursor:pointer; text-decoration:underline;">
                             Resend OTP
                         </span>
                         <span id="otpTimer" style="margin-left:8px; color:#6b7280;"></span>
@@ -381,7 +381,7 @@
 
             <div class="modal-footer" style="border-top:none; margin-bottom:24px;">
                 <button id="verifyOtpBtn" type="button" class="btn btn-primary btn-sm mx-3 mb-3"
-                    style="background: #947E41 !important; margin-top:20px;">
+                    style="background: var(--theme-color) !important; margin-top:20px;">
                     {{ __('Verify') }}
                 </button>
             </div>

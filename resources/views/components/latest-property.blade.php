@@ -155,22 +155,22 @@
 
         .latest-footer a.btn-wishlist {
             background-color: #fff;
-            color: #6c603c;
+            color: var(--theme-color);
         }
 
         .latest-footer a.btn-wishlist:hover {
-            background-color: #6c603c;
+            background-color: var(--theme-color);
             color: #fff;
         }
 
         .latest-footer a.btn-wishlist.wishlist-active {
-            background-color: #6c603c;
+            background-color: var(--theme-color);
             color: #fff;
         }
 
         .latest-footer a.view-btn {
-            background-color: #6c603c;
-            border: 1px solid #6c603c;
+            background-color: var(--theme-color);
+            border: 1px solid var(--theme-color);
             color: #fff;
         }
 
@@ -210,7 +210,7 @@
             <div class="latest-details">
                 <h3 class="latest-title">
                     <a href="{{ route('frontend.property.details', $property->slug ?? $property->propertyContent->slug) }}">
-                        {{ Str::limit($property->title ?? $property->propertyContent->title, 15) }}
+                        {{ Str::limit($property->title ?? $property->propertyContent->title, 12) }}
                     </a>
                 </h3>
 

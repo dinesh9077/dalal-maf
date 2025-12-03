@@ -1203,7 +1203,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
     <div class="row">
         <div class="col-12">
-            <div class="#6c603c aos-init aos-animate" data-aos="fade-up">
+            <div class="var(--theme-color) aos-init aos-animate" data-aos="fade-up">
                 <h2 class="title">Upcoming Project</h2>
             </div>
         </div>
@@ -1248,7 +1248,7 @@ $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.
 
         <div class="row">
             <div class="col-12">
-                <div class="#6c603c aos-init aos-animate" data-aos="fade-up">
+                <div class="var(--theme-color) aos-init aos-animate" data-aos="fade-up">
                     <h2 class="title">Our Blogs</h2>
                 </div>
             </div>

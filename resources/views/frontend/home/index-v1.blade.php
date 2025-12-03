@@ -193,8 +193,8 @@
     }
 
     .tabs-wrapper .nav-tabs .nav-link.active {
-        color: #6c603c;
-        border-bottom: 2px solid #6c603c;
+        color: var(--theme-color);
+        border-bottom: 2px solid var(--theme-color);
     }
 
     .post-property-btn {
@@ -207,7 +207,7 @@
     }
 
     .style__postContainerTab {
-        background-color: #6c603c;
+        background-color: var(--theme-color);
         border: none;
         color: #fff;
         padding: 8px 18px;
@@ -287,7 +287,6 @@
     @php
         $firstHeroImg = !empty($heroImg) && is_array($heroImg) ? $heroImg[0] : 'noimage.jpg';
     @endphp
-    <!-- <section class="home-banner home-banner-1 relative new-home-hero-color" data-aos="fade-up"> -->
     <section class="home-banner home-banner-1 relative">
         <div class="hero-image" id="heroBanner"
             style="background: url('{{ asset('assets/img/hero/static/' . $firstHeroImg) }}'); background-size: cover; background-position: center;">
@@ -296,16 +295,7 @@
                 <div class="row align-items-center">
                     <div class="col-xxl-10">
                         <div class="content mb-30" >
-                            <!-- <h1 class="title title-colors">{{ $heroStatic->title }}</h1> -->
-                            <!-- <h1 class="title">{{ $heroStatic->title }}</h1> -->
-                            <!-- <p class="text title-colors">
-
-                                {{ $heroStatic->text }}
-          </p> -->
-                            <!-- <div style="  margin-top: 40px;">
-
-                                <a href="{{ route('frontend.properties') }}" class="home-hero-inq-btn">Make an Inquiry</a>
-          </div> -->
+                         
                         </div>
 
                     </div>
@@ -313,7 +303,7 @@
             </div>
 
 
-            <!-- <img src="{{ asset('assets/front/images/acrs-imag/HOUSE-1.png') }}" class="home-hero-imahes-new" alt=""> -->
+            
 
 
             @php
@@ -486,7 +476,7 @@
                                     <div>
                                         <button type="submit"
                                             class="btn btn-primary bg-secondary icon-start new-search-btn"
-                                            style="background-color:#6c603c !important; 13px !important;">
+                                            style="background-color:var(--theme-color) !important; 13px !important;">
                                             <img src="{{ asset('assets/front/images/new-images/search.png') }}"
                                                 alt="Search" class="new-icons-search">
                                         </button>
@@ -687,7 +677,7 @@
         </section>
     @endif
 
-   @if ($secInfo->property_section_status == 1)
+    @if ($secInfo->property_section_status == 1)
         <section class="product-area popular-product product-1 relative">
             <img src="{{ asset('assets/front/images/new-images/new-primume-properties.png') }}" alt=""
                 class="new-primume-prop-img">
@@ -1243,59 +1233,9 @@
     </section>
 
 
-
- <!--   <div class="container pt-30">-->
- <!--       <div class="row">-->
- <!--           <div class="col-lg-6">-->
- <!--               <div class="re-left-div">-->
- <!--                   <h5 style="text-transform: capitalize;">-->
- <!--                       We’re here to help you with all your real estate needs.-->
-	<!--				</h5>-->
- <!--                   <p>-->
-
- <!--                       Whether you’re buying, selling, renting, or just exploring options — our team is ready to guide you every step of the way.-->
-	<!--				</p>-->
-	<!--			</div>-->
-	<!--		</div>-->
- <!--           <div class="col-lg-6">-->
- <!--               <div>-->
- <!--                   <form class="contact-form new-ppds-rr">-->
- <!--                       <h1 class="visit0class">Schudeal a Visit</h1>-->
- <!--                       <div class="form-group">-->
- <!--                           <input type="text" placeholder="Your Name*" required>-->
- <!--                           <span class="icon fa fa-user"></span>-->
-	<!--					</div>-->
- <!--                       <div class="form-group">-->
- <!--                           <input type="email" placeholder="Your Email*" required>-->
- <!--                           <span class="icon fa fa-envelope"></span>-->
-	<!--					</div>-->
- <!--                       <div class="form-group">-->
- <!--                           <select required>-->
- <!--                               <option value="">Real Estate*</option>-->
- <!--                               <option value="buy">Buy</option>-->
- <!--                               <option value="sell">Sell</option>-->
- <!--                               <option value="rent">Rent</option>-->
-	<!--						</select>-->
- <!--                           <span class="icon dropdown"></span>-->
-	<!--					</div>-->
- <!--                       <div class="form-group">-->
- <!--                           <textarea placeholder="Type Your Message*" required></textarea>-->
- <!--                           <span class="icon fa fa-envelope"></span>-->
-	<!--					</div>-->
- <!--                       <button type="submit">Submit Message</button>-->
-	<!--				</form>-->
-
-	<!--			</div>-->
-	<!--		</div>-->
-	<!--	</div>-->
-	<!--</div>-->
-
-
-
-    @if ($secInfo->vendor_section_status == 1)
+    <!-- @if ($secInfo->vendor_section_status == 1)
         <section class="pt-30 pb-30">
             <div class="container">
-
                 <div class="row">
                     <div class="col-12 button-res">
                         <div class="section-title mb-20" data-aos="fade-up">
@@ -1309,7 +1249,6 @@
                             </div>
                         @endif
                     </div>
-
                     @forelse ($vendors as $vendor)
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="new-company-card" data-aos="fade-up">
@@ -1339,14 +1278,53 @@
                     @if (count($vendors) > 0)
                         <div class="text-center mt-4 view-all-mobile">
                             <a href="{{ route('frontend.vendors') }}" class="btn btn-lg btn-primary mb-30"
-                                style="background-color:#6c603c;">{{ $vendorInfo->btn_name }}</a>
+                                style="background-color:var(--theme-color);">{{ $vendorInfo->btn_name }}</a>
                         </div>
                     @endif
                 </div>
 
             </div>
         </section>
-    @endif
+    @endif -->
+
+    <div class="container pt-20 upcoming-projects" data-aos="fade-up" >
+
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title" data-aos="fade-up">
+                    <h2 class="title">Projects</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+
+            @foreach ($projects->take(3) as $project)
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <a href="{{ route('frontend.projects.details', ['slug' => $project->slug]) }}" style="height : auto;">
+                        <div class="new-up-cards">
+
+                            <img src="{{ asset('assets/img/project/featured/' . $project->featured_image) }}"
+                                alt="Project" class="upcoming-projects-img">
+
+                            <div class="upcomming-card-body">
+                                <h5>{{ \Illuminate\Support\Str::limit($project->title, 25) }}</h5>
+                                <p class="text-muted">{{ \Illuminate\Support\Str::limit($project->address, 30) }}</p>
+                                <h6 class="up-price">
+                                    {{ symbolPrice($project->min_price) }}
+                                    <small class="text-muted">Starting</small>
+                                </h6>
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+            @endforeach
+
+        </div>
+
+    </div>
+
 
 
 
@@ -1510,7 +1488,7 @@
             <!-- Mobile Button -->
             <div class="text-center mt-4 view-all-mobile">
                 <a href="{{ route('blog') }}" class="btn btn-lg btn-primary mb-30"
-                    style="background-color:#6c603c;">All
+                    style="background-color:var(--theme-color);">All
                     Blogs</a>
             </div>
         </div>
@@ -1541,7 +1519,6 @@
             <span>Business for Sell</span>
         </a>
     </div>
-
 
     <a href="javascript:;" class="floating-plus-btn" data-bs-toggle="modal" data-bs-target="#customerPhoneModal"
         data-action="post_property">

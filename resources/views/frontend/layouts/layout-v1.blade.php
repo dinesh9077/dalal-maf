@@ -153,14 +153,14 @@
 
     .menu-item.active,
     .menu-item:hover {
-        color: #6c603c;
+        color: var(--theme-color);
     }
 
     .floating-plus-btn {
         position: fixed;
         bottom: 128px;
         right: 8px;
-        background: #6c603c;
+        background: var(--theme-color);
         color: #fff;
         width: 35px;
         height: 35px;

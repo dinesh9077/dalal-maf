@@ -50,14 +50,14 @@
 
         .nav-tabs .nav-link {
             border: 0;
-            color: #6c603c;
+            color: var(--theme-color);
             padding: 10px 12px;
         }
 
         .nav-tabs .nav-link.active {
-            border-bottom: 2px solid #6c603c;
+            border-bottom: 2px solid var(--theme-color);
             font-weight: 600;
-            color: #6c603c;
+            color: var(--theme-color);
             background: transparent;
         }
 
@@ -67,7 +67,7 @@
             gap: 8px;
             padding: 8px 14px;
             border-radius: 8px;
-            background: #6c603c;
+            background: var(--theme-color);
             color: #fff;
             text-decoration: none;
             border: none;
@@ -99,21 +99,21 @@
 
         .form-group label {
             font-weight: 600;
-            color: #6c603c;
+            color: var(--theme-color);
             font-size: 14px;
         }
 
         /* Price */
         .price-value {
             font-weight: 600;
-            color: #6c603c;
+            color: var(--theme-color);
             font-size: 14px;
             display: inline-block;
             margin-bottom: 8px;
         }
 
         .noUi-connect {
-            background-color: #6c603c;
+            background-color: var(--theme-color);
         }
 
         [data-range-slider] {
@@ -139,7 +139,7 @@
             top: 50%;
             transform: translateY(-50%);
             height: 3px;
-            background: #6c603c;
+            background: var(--theme-color);
             border-radius: 2px;
         }
 
@@ -165,7 +165,7 @@
             height: 12px;
             border-radius: 50%;
             background: #fff;
-            border: 2px solid #6c603c;
+            border: 2px solid var(--theme-color);
             cursor: pointer;
             -webkit-appearance: none;
             margin-top: -5px;
@@ -173,8 +173,8 @@
         }
 
         [data-range-slider] input[type="range"]::-webkit-slider-thumb:hover {
-            background: #6c603c;
-            border-color: #6c603c;
+            background: var(--theme-color);
+            border-color: var(--theme-color);
         }
 
         [data-range-slider] input[type="range"]::-moz-range-thumb {
@@ -182,19 +182,19 @@
             height: 12px;
             border-radius: 50%;
             background: #fff;
-            border: 2px solid #6c603c;
+            border: 2px solid var(--theme-color);
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
         [data-range-slider] input[type="range"]::-moz-range-thumb:hover {
-            background: #6c603c;
-            border-color: #6c603c;
+            background: var(--theme-color);
+            border-color: var(--theme-color);
         }
 
         .new-search-btn {
-            background-color: #6c603c !important;
-            border-color: #6c603c !important;
+            background-color: var(--theme-color) !important;
+            border-color: var(--theme-color) !important;
             border-radius: 8px;
             padding: 10px 16px;
             display: inline-flex;
@@ -261,9 +261,9 @@
         }
 
         .banner-close-btn:hover {
-            background: #6c603c;
+            background: var(--theme-color);
             color: #fff;
-            border-color: #6c603c;
+            border-color: var(--theme-color);
         }
 
         .noUi-horizontal .noUi-handle {
@@ -276,7 +276,7 @@
 
         .noUi-handle {
             background: transparent;
-            border: 3px solid #6c603c;
+            border: 3px solid var(--theme-color);
             border-radius: 50%;
             cursor: pointer;
             box-shadow: none;
@@ -289,8 +289,8 @@
         }
 
         .noUi-handle:hover {
-            background: #6c603c;
-            border-color: #6c603c;
+            background: var(--theme-color);
+            border-color: var(--theme-color);
         }
     </style>
 </head>

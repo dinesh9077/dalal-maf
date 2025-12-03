@@ -50,7 +50,7 @@
     }
 
     /* BOTTOM GRADIENT OVERLAY */
-    .new-img-p-box::after {
+    /* .new-img-p-box::after {
         content: "";
         position: absolute;
         bottom: 0;
@@ -60,7 +60,7 @@
         display: block;
         opacity: .9;
         background-image: linear-gradient(0deg, #000000 0%, rgba(255, 255, 255, 0) 100%);
-    }
+    } */
 
     .HP-lables {
         position: absolute;
@@ -114,7 +114,7 @@
     .PND:hover {}
 </style>
 
-<div {{ $attributes }} style="position: relative; margin-bottom:0;box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.00);border: 1px solid white;height: 100%; ">
+<div {{ $attributes }} class="hot-properties">
     <div class="PD  mb-0 " style="border-radius: 20px;"
         {{ $animation ? 'data-aos="fade-up" data-aos-delay="100"' : '' }}>
 
@@ -309,7 +309,7 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background-color: #6c603c;
+    background-color: var(--theme-color);
     color: #fff;
     transition: all 0.3s ease;
     text-decoration: none;

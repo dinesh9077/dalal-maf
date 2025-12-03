@@ -40,7 +40,7 @@
                                         <div class="row align-items-center">
                                             <div class="col-3">
                                                 <div class="col-icon">
-                                                    <div class="icon-big text-center  bubble-shadow-small" style="background-color: #947E41; color : white; border-radius : 15px;">
+                                                    <div class="icon-big text-center  bubble-shadow-small" style="background-color: var(--theme-color); color : white; border-radius : 15px;">
                                                     <!-- <div class="icon-big text-center icon-success bubble-shadow-small"> -->
                                                         <i class="far fa-building"></i>
                                                     </div>
@@ -71,7 +71,7 @@
                                             <div class="col-3">
                                                 <div class="col-icon ">
                                                 <!-- <div class="col-icon mx-auto">  -->
-                                                    <div class="icon-big text-center  bubble-shadow-small" style="background-color: #947E41; color : white; border-radius : 15px;">
+                                                    <div class="icon-big text-center  bubble-shadow-small" style="background-color: var(--theme-color); color : white; border-radius : 15px;">
                                                     <!-- <div class="icon-big text-center icon-warning bubble-shadow-small" > -->
                                                         <i class="fas fa-home"></i>
                                                     </div>
@@ -102,7 +102,7 @@
                                             <div class="col-3">
                                                 <div class="col-icon ">
                                                 <!-- <div class="col-icon mx-auto">  -->
-                                                    <div class="icon-big text-center  bubble-shadow-small" style="background-color: #947E41; color : white; border-radius : 15px;">
+                                                    <div class="icon-big text-center  bubble-shadow-small" style="background-color: var(--theme-color); color : white; border-radius : 15px;">
                                                     <!-- <div class="icon-big text-center icon-warning bubble-shadow-small" > -->
                                                         <i class="fas fa-industry"></i>
                                                     </div>

@@ -17,7 +17,7 @@
     backdrop-filter: saturate(180%) blur(20px);
     box-shadow: 0px 8px 60px rgba(24, 24, 24, 0.1);
     animation: slideDown 0.5s ease-out 1;
-    background: #6c603c;
+    background: var(--theme-color);
 }
 
 .header-area .more-option {
@@ -92,7 +92,7 @@
 .header-area .nav-link.active::after {
   content: "";
   position: absolute;
-  bottom: 22px; /* text ke thoda niche */
+  bottom: 18px; /* text ke thoda niche */
   left: 50%;
   transform: translateX(-50%);
   width: 23px;
@@ -155,7 +155,7 @@
 
 
 .header-area .main-navbar .menu-dropdown .nav-link:hover {
-   background-color: #6c603c;
+   background-color: var(--theme-color);
 }
 
 .header-area .main-navbar .menu-dropdown .nav-link:hover.toggle i {
@@ -532,7 +532,7 @@
 }
 
 .btn-cus-header{
-    background-color: #6c603c;
+    background-color: var(--theme-color);
    padding: 13px 16px;
     border-radius: 11px;
     /* font-size: 15px; */
@@ -553,7 +553,7 @@
     top: 10px;
 }
 .btn-cus-header-heart:hover{
-    background-color: #6c603c ;
+    background-color: var(--theme-color) ;
       padding: 7.5px 16px;
     border-radius: 8px;
     font-size: 12px;
@@ -762,7 +762,7 @@ width: 38%;
               
 
                 .main-navbar.navbar-scrolled {
-                    background: #6c603c !important;
+                    background: var(--theme-color) !important;
                     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
                 }
 
@@ -783,3 +783,14 @@ width: 38%;
                     display: block;
                 } 
                 }
+
+
+                .main-logo{               
+                background: white;
+                padding-top: 11px !important;
+                padding-bottom: 14px !important;
+                margin-bottom: 12px !important;
+                border-radius: 0px 0px 10px 10px;
+
+                }
+            

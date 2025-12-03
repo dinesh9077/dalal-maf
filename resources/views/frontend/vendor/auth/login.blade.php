@@ -188,7 +188,7 @@ $version = $basicInfo->theme_version;
                     <div>
                         <div class="link go-signup mt-3 text-center">
                             {{ __("Don't Have An Account") . '?' }} <a
-                                href="{{ route('vendor.signup') }}"><span style="color: #6c603c;">{{ __('Sign Up Here') }}</span></a>
+                                href="{{ route('vendor.signup') }}"><span style="color: var(--theme-color);">{{ __('Sign Up Here') }}</span></a>
 
                         </div>
                     </div>
@@ -232,7 +232,7 @@ $version = $basicInfo->theme_version;
 
       <!-- Line -->
       <div class="col-md-1 m-0 p-0 d-none d-md-flex justify-content-center">
-        <div style="height:3px; width:100%; align-self:center; background : #6c603c;"></div>
+        <div style="height:3px; width:100%; align-self:center; background : var(--theme-color);"></div>
       </div>
 
       <!-- Card 2 -->
@@ -251,7 +251,7 @@ $version = $basicInfo->theme_version;
 
       <!-- Line -->
       <div class="col-md-1 m-0 p-0 d-none d-md-flex justify-content-center">
-        <div  style="height:3px; width:100%; align-self:center; background : #6c603c;"></div>
+        <div  style="height:3px; width:100%; align-self:center; background : var(--theme-color);"></div>
       </div>
 
       <!-- Card 3 -->
@@ -268,7 +268,7 @@ $version = $basicInfo->theme_version;
       </div>
 
         <div class="col-md-1 m-0 p-0 d-none d-md-flex justify-content-center">
-        <div  style="height:3px; width:100%; align-self:center; background : #6c603c;"></div>
+        <div  style="height:3px; width:100%; align-self:center; background : var(--theme-color);"></div>
       </div>
 
       <!-- Card 3 -->
@@ -449,19 +449,19 @@ $version = $basicInfo->theme_version;
                         <div class="new-login-highlight-list mt-20 mb-20">
                             <ul>
                                 <li>
-                                   <i class="fas fa-bed" style="color : #6c603c;"></i>
+                                   <i class="fas fa-bed" style="color : var(--theme-color);"></i>
                                     <span>3 Bedrooms.</span>
                                 </li>
                                 <li>
-                                   <i class="fal fa-pencil-ruler" style="color : #6c603c;"></i>
+                                   <i class="fal fa-pencil-ruler" style="color : var(--theme-color);"></i>
                                     <span>Square Feet </span>
                                 </li>
                                 <li>
-                                    <i class="fas fa-bath" style="color : #6c603c;"></i>
+                                    <i class="fas fa-bath" style="color : var(--theme-color);"></i>
                                     <span>Bedrooms</span>
                                 </li>
                                 <li>
-                                   <i class="fas fa-car" style="color : #6c603c;"></i>
+                                   <i class="fas fa-car" style="color : var(--theme-color);"></i>
                                     <span>Car parking</span>
                                 </li>
                             </ul>
