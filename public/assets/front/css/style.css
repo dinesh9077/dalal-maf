@@ -71,6 +71,7 @@
     --bg-light: #F7F9FC !important;
     --gradient-bg: linear-gradient(90deg, var(--color-primary) 14.17%, var(--color-primary-shade) 94.83%);
     --theme-color: #000000;
+    --background-color: #6a6a6a0d;
 }
 
 /* -----------------------------------------
@@ -3952,7 +3953,7 @@ Lazyload CSS
 }
 
 .footer-area .footer-widget h4 {
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     text-transform: uppercase;
     font-weight: bold !important;
     letter-spacing: 1px;
@@ -4009,11 +4010,11 @@ Lazyload CSS
     /* overflow: hidden; */
     margin-bottom: 20px;
     line-height: 1;
-    color: var(--color-gray-1);
+    color: white;
 }
 
 .footer-area .footer-widget .footer-links li a {
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     /* font-weight: 100; */
     font-size: 16px;
     font-weight: 600;
@@ -5912,7 +5913,7 @@ p.cookie-consent__message * {
 
 
 .new-aps-sections {
-    background-color: #F8F7F2;
+    background-color: var(--background-color);
     /* padding-top: 44px; */
 }
 
@@ -6750,7 +6751,7 @@ p.cookie-consent__message * {
 
 .SL-links-title {
     font-size: 23px;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     font-weight: 600 !important;
     font-size: 16px;
     margin: 10px 0px;
@@ -6778,12 +6779,12 @@ p.cookie-consent__message * {
 }
 
 .social-links-btn a {
-    background-color: var(--theme-color);
+    background-color: white;
     height: 35px;
     width: 35px;
     border-radius: 10px;
     font-size: 16px;
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6792,7 +6793,7 @@ p.cookie-consent__message * {
 .mew-lines-add {
     font-size: 16px;
     letter-spacing: 1px;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
 }
 
 
@@ -7702,7 +7703,7 @@ p.cookie-consent__message * {
 .b-s-r-div {
     border: 1px solid #dcdcdc;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
-    background-color: #F8F7F1;
+    background-color: var(--background-color);
     padding: 20px;
     border-radius: 20px;
     height: 100%;
@@ -7779,7 +7780,7 @@ p.cookie-consent__message * {
     height: 80px;
     width: 80px;
     padding: 15px;
-    background-color: #F9F6ED;
+    background-color: var(--background-color);
     border-left: 1px solid #92844425;
     border-bottom: 1px solid #92844425;
     position: absolute;
@@ -7982,6 +7983,7 @@ button:hover {
     border: white;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
+    background-color: white;
     margin-top: 10px;
     justify-content: space-between;
     align-items: center;
@@ -8008,7 +8010,7 @@ button:hover {
     width: 70px;
     padding: 15px;
     border-radius: 50%;
-    background-color: #F8F4E8;
+    background-color: var(--background-color);
 }
 
 .abs-r-i-des-div h6 {
@@ -8077,7 +8079,7 @@ button:hover {
 .header-title-footer {
     font-weight: 800;
     font-size: 45px;
-    color: #000000;
+    color: #ffffff;
     line-height: 1.4;
 }
 
@@ -8091,7 +8093,7 @@ button:hover {
 .header-description {
     font-weight: 400;
     font-size: 14px;
-    color: #000000;
+    color: #ffffff;
     width: 80%;
     margin-bottom: 0;
 }
