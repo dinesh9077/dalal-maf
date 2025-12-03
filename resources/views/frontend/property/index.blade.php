@@ -823,7 +823,7 @@
 
                             </select>
                         </div>
-                    @endif
+                    
 
                     {{-- Search Field --}}
                     <div class="col p-0" style="position:relative;">
@@ -833,7 +833,7 @@
 
                         <i class="fas fa-search" style="position:absolute; left:10px; top:14px;"></i>
                     </div>
-
+@endif
                     {{-- Reset Button --}}
                     <a href="javascript:void(0)" onclick="resetURL()"
                         style="width:fit-content; padding:0; border-radius:10px;">
