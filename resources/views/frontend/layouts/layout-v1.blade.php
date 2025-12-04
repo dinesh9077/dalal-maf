@@ -372,10 +372,10 @@
 
 
 
-    <a href="javascript:;" class="floating-plus-btn" data-bs-toggle="modal"
+    <!-- <a href="javascript:;" class="floating-plus-btn" data-bs-toggle="modal"
                 data-bs-target="#customerPhoneModal" data-action="post_property">
         <i class="fas fa-plus"></i>
-    </a>
+    </a> -->
 
     @includeIf('frontend.partials.header.header-v1')
 

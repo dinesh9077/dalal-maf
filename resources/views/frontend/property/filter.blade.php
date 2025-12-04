@@ -14,6 +14,13 @@
 
 
     <style>
+
+        :root {
+    --theme-color: #000000;
+    --background-color: #6a6a6a0d;
+}
+
+
         body {
             margin: 0;
             background: #f9f9f9;
@@ -36,7 +43,7 @@
         }
 
         .tabs-wrapper {
-            border-bottom: 1px solid #f4f5f7;
+            border-bottom: 2px solid #f4f5f7;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -217,7 +224,7 @@
         @media (max-width: 767px) {
             .tabs-wrapper {
                 flex-wrap: wrap;
-                gap: 8px;
+                gap: 0px;
             }
 
             .post-property-btn {
@@ -229,10 +236,6 @@
             .form-wrapper .grid {
                 grid-template-columns: 1fr;
             }
-
-            .banner-filter-form {
-                width: min(100%, 100%);
-            }
         }
 
         .select2-container {
@@ -242,8 +245,8 @@
 
         .banner-close-btn {
             position: absolute;
-            top: 16px;
-            right: 3px;
+            top: 17px;
+            right: 17px;
             width: 32px;
             height: 32px;
             border-radius: 50%;
@@ -251,7 +254,9 @@
             border: 1px solid #ccc;
             color: #333;
             font-size: 30px;
-            line-height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-align: center;
             cursor: pointer;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -291,6 +296,41 @@
         .noUi-handle:hover {
             background: var(--theme-color);
             border-color: var(--theme-color);
+        }
+
+
+        .select2-container--default .select2-selection--single {
+            border: 1px solid #e4e4e4 !important;
+                height: 36px !important;
+                    border-radius: 11px !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 34px !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow b {
+                top: 63% !important;
+        }
+
+        .search-phone-border-radius{
+            border-radius: 10px !important;
+            height: 34px !important;
+        }
+
+        .select2-container--open .select2-dropdown--below {
+            border: 1px solid #dcdcdc !important;
+            border-radius: 10px !important;
+        }
+
+        .select2-container--default .select2-search--dropdown .select2-search__field {
+            border-radius: 10px !important;
+            border: 1px solid #dcdcdc !important;
+            
+        }
+
+        .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+                background-color: var(--theme-color)!important;
         }
     </style>
 </head>
@@ -412,7 +452,7 @@
                                 <div class="form-group">
                                     <label for="search_{{ $key }}">{{ __('Location') }}</label>
                                     <input type="text" id="search_{{ $key }}" name="location"
-                                        class="form-control searchBar" placeholder="{{ __('Enter Location') }}"
+                                        class="form-control search-phone-border-radius searchBar" placeholder="{{ __('Enter Location') }}"
                                         style="box-shadow:none;">
                                 </div>
                             </div>
@@ -450,7 +490,7 @@
                             </div>
 
                             {{-- Price Slider --}}
-                            <div class="grid-item home-des-border">
+                            <!-- <div class="grid-item home-des-border">
                                 <label class="price-value">
                                     {{ __('Price') }}:<br>
                                     <span data-range-value="filterPriceSlider_{{ $key }}_value">
@@ -458,7 +498,7 @@
                                     </span>
                                 </label>
                                 <div data-range-slider="filterPriceSlider_{{ $key }}"></div>
-                            </div>
+                            </div> -->
 
                             {{-- Submit --}}
                             <div class="d-flex justify-content-end align-items-end">

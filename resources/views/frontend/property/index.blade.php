@@ -347,9 +347,10 @@
 
         .price-input input {
             width: 100%;
-            border: none;
             outline: none;
+            border: 1px solid #dcdcdc;
             font-size: 14px;
+            border-radius: 50px;
         }
 
         .separator {

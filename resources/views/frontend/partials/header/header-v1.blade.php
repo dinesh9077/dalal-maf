@@ -5,10 +5,10 @@
 <header class="header-area header-1 @if (!request()->routeIs('index')) header-static @endif" >
 
     <div class="mobile-menu">
-        <div class="container" style="padding: 10px;">
+        <div class="container" style="padding: 0px 10px;">
             @if (!empty($websiteInfo->logo))
             <a href="{{ route('index') }}">
-                <img src="{{ asset('assets/img/' . $websiteInfo->logo) }}" style="width : 170px;">
+                <img src="{{ asset('assets/img/' . $websiteInfo->logo) }}" class="menu-logo-sides">
             </a>
             @endif
             <div class="mobile-menu-wrapper">
@@ -67,9 +67,9 @@
     }
     @endphp
 
-    <div class="main-responsive-nav ">
+    <div class="main-responsive-nav">
         <div class="container">
-            <div class="logo">
+            <div class="logo new-phone-logo">
                 @if (!empty($websiteInfo->logo))
                 <a href="{{ route('index') }}">
                     <img src="{{ asset('assets/img/' . $websiteInfo->logo) }}">
@@ -87,13 +87,41 @@
                 style="line-height:20px;">
                 <span class="style__postTab">{{ __('Sign In') }}</span>
             </button>
+            <button type="button" class="style__postContainerTab" data-bs-toggle="modal"
+                data-bs-target="#customerPhoneModal" data-action="post_property">
+                <span class="style__postTab">{{ __('Post Property') }}</span>
+            </button>
             @else
+            <button type="button" class="style__postContainerTab p-sn-dds" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <span class="style__postTab">{{ $initial }}</span>
+            </button>
+            <ul class="dropdown-menu" style="border-radius: 10px;">                 
+                 <li><a class="dropdown-item"
+                         href="{{ $dashboardRoute }}">{{ __('Dashboard') }}</a></li>
+                          <li>
+                     @if ($authType != 'guest')
+                     <a href="{{ $authType === 'user'
+                 ? route('user.wishlist')
+                 : ($authType === 'agent'
+                     ? route('vendor.wishlist')
+                     : route('vendor.wishlist')) }}"
+                         class="dropdown-item" title="{{ __('My Wishlist') }}">
+                         My Wishlist
+                        <span class="wishlist-count-dropdown">({{ $wishlistCount }})</span>
+
+                     </a>
+                     @endif
+                 </li>
+                 <li><a class="dropdown-item" href="{{ $logoutRoute }}">{{ __('Logout') }}</a></li>
+                
+            </ul>
             <a class="style__postContainerTab p-sn-dds" href="{{ $postPropertyRoute }}">
                 <span class="style__postTab">{{ __('Post Property') }}</span>
-            </a>
+            </a>  
             @endif
+            <!-- @if ($authType != 'guest')
             <div class="item WI-item">
-                @if ($authType != 'guest')
                 <a href="{{ $authType === 'user'
                         ? route('user.wishlist')
                         : ($authType === 'agent'
@@ -103,11 +131,10 @@
                     <i class="fas fa-heart text-danger"></i>
                     <span class="wishlist-count-html">({{ $wishlistCount }})</span>
                 </a>
-                @endif
             </div>
+            @endif -->
         </div>
     </div>
-
 
     <div id="mainNavbar" class="main-navbar new-main-navbar navbar-transparent">
         <div class="container">
@@ -261,20 +288,9 @@
                         @endif
                     </div> -->
                 </div>
-
-
-
-
-
-
-
-
             </nav>
         </div>
     </div>
-
-
-
 </header>
 <script>
     document.addEventListener('DOMContentLoaded', function() {

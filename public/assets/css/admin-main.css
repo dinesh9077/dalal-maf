@@ -838,12 +838,12 @@ body[data-background-color="white2"] .bootstrap-tagsinput {
 }
 
 .new-background-color{
-  background-color: var(--theme-color) !important;
+  background-color: black !important;
   border-radius: 15px;
 }
 
 .Add-pproperty-button{
-  background-color: var(--theme-color);
+  background-color: black;
   color: white;
   font-size: 13px;
   padding:  10px 20px;
@@ -851,7 +851,7 @@ body[data-background-color="white2"] .bootstrap-tagsinput {
 }
 
 .Add-pproperty-button:hover{
-  background-color: var(--theme-color);
+  background-color: black
   color: white;
   font-size: 13px;
   padding:  10px 20px;
@@ -859,7 +859,7 @@ body[data-background-color="white2"] .bootstrap-tagsinput {
 }
 
 .unit-btn{
-    background-color: var(--theme-color);
+    background-color: black;
     padding: 5px 10px;
     border-radius: 5px;
     margin-left: 10px;
