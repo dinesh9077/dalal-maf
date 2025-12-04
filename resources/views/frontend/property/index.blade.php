@@ -448,6 +448,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                   <span class="text-muted text-danger" id="range-note">Note: Based on your filter, only records with values between {{ request('min', $min) }} and {{ request('max', $max) }} are shown here.</span>
                                 </div>
 
 
@@ -693,7 +694,7 @@
                     <div class="d-flex align-items-center" style="gap: 10px; color:black;">
                         <i class="fas fa-search"></i>
                         <h4 class="mb-0 ml-2">
-                            All Results Matching
+                            {{ $title }}
                         </h4>
                     </div>
 

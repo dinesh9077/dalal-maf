@@ -128,6 +128,8 @@ function getData(currentURL, page) {
       $(".properties").html(data.propertyContents);
       $("#minPrice").val(data.min);
       $("#maxPrice").val(data.max);
+      $("#range-note").text(`Note: Based on your filter, only records with values between ${data.min} and ${data.max} are shown here.`);
+      
       $("#total_properties_count_span").text(
         data.totalPopertiesCount + " Properties"
       );
@@ -194,6 +196,11 @@ function resetURL()
   const purposeBeforeReset =
     currentUrl.searchParams.get("purpose") ||
     (purposeEl ? purposeEl.value : "");
+  
+  const statusTypeEl = document.getElementById("status_type");
+  const statusTypeBeforeReset =
+    currentUrl.searchParams.get("status_type") ||
+    (statusTypeEl ? statusTypeEl.value : "");
 
   // 2) Uncheck all checkboxes inside the form (safer scope)
   if (form) {
@@ -224,6 +231,12 @@ function resetURL()
     clean.searchParams.set("purpose", purposeBeforeReset);
     // Also re-apply to the form control (optional)
     if (purposeEl) purposeEl.value = purposeBeforeReset;
+  }
+
+  if (["is_featured", "is_hot", "is_recommended", "is_fast_selling"].includes(statusTypeBeforeReset)) {
+    clean.searchParams.set("status_type", statusTypeBeforeReset);
+    // Also re-apply to the form control (optional)
+    if (statusTypeEl) statusTypeEl.value = statusTypeBeforeReset;
   }
 
   // 7) Push state + fetch results
