@@ -103,7 +103,7 @@ class PropertyController extends Controller
         $information['amenities'] = Amenity::with(['amenityContent' => function ($q) use ($language) {
             $q->where('language_id', $language->id);
         }])->where('status', 1)->whereJsonContains('types', $request->type)->get();
-        $information['unitTypes'] = Unit::get();
+        $information['unitTypes'] = Unit::orderBy('unit_name', 'asc')->where('status', 1)->get();
         $information['areas'] = Area::where('status', 1)->get();
         return view('users.property.create', $information);
     }
@@ -333,7 +333,7 @@ class PropertyController extends Controller
         }])->where('status', 1)->whereJsonContains('types', $property->type)->get();
         $information['specifications'] = Spacification::where('property_id', $property->id)->get();
         $information['propertyUnities'] = PropertyUnit::where('property_id', $property->id)->get();
-        $information['unitTypes']	= Unit::Where('status',1)->get();
+        $information['unitTypes']	= Unit::orderBy('unit_name', 'asc')->where('status', 1)->get();
         $information['propertyAreas'] = Area::where('city_id', $property->city_id)->get();
 		$information['allAreas'] = Area::get();
 
