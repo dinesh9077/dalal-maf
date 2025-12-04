@@ -87,7 +87,7 @@
                 style="line-height:20px;">
                 <span class="style__postTab">{{ __('Sign In') }}</span>
             </button>
-            <button type="button" class="style__postContainerTab" data-bs-toggle="modal"
+            <button type="button" class="style__postContainerTab new-si-btn-res" data-bs-toggle="modal"
                 data-bs-target="#customerPhoneModal" data-action="post_property">
                 <span class="style__postTab">{{ __('Post Property') }}</span>
             </button>
