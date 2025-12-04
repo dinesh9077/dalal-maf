@@ -288,7 +288,7 @@ use Maatwebsite\Excel\Facades\Excel;
 				} else {
 				$information['url'] = 'admin.property_management.store_property';
 			}
-			$information['unitTypes'] = Unit::get();
+			$information['unitTypes'] = Unit::orderBy('unit_name', 'asc')->where('status', 1)->get();
 			return view('backend.property.create', $information);
 		}
 
@@ -598,7 +598,7 @@ use Maatwebsite\Excel\Facades\Excel;
 			}
 			$information['uploadGImg'] = $uploadGImg;
 			$information['url'] = $this->routeName == 'admin.property_inventory.properties' ? 'admin.property_inventory.update_property' : 'admin.property_management.update_property';
-			$information['unitTypes']	= Unit::Where('status',1)->get();
+			$information['unitTypes']	= Unit::orderBy('unit_name', 'asc')->where('status', 1)->get();
 			return view('backend.property.edit', $information);
 		}
 
