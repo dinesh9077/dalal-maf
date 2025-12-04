@@ -5,7 +5,7 @@
 <style>
 .new-form-designs {
     border: 1px solid var(--border-color);
-    border-radius: 5px;
+    border-radius: 10px;
     height: 39px;
     line-height: 55px;
     padding: 0;
@@ -45,7 +45,7 @@
 }
 
 .close-btn-login:hover {
-    background-color: white !important;
+    background-color: black !important;
     border-radius: 50px;
     width: 17px;
     font-size: 12px;
@@ -54,7 +54,7 @@
     justify-content: center;
     align-items: center;
     opacity: 1;
-    color: black !important;
+    color: white !important;
 }
 
 .model-new {
@@ -167,7 +167,7 @@
 
                 <div class="modal-footer" style="border-top:none;">
                     <button id="sendOtp" type="button" class="btn btn-primary btn-sm w-100"
-                        style="background: var(--theme-color); margin-top: 20px;">
+                        style="background: var(--theme-color); margin-top: 20px;border-radius: 10px;">
                         {{ __('Send OTP') }}
                     </button>
                 </div>
