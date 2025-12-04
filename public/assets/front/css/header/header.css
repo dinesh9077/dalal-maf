@@ -624,11 +624,7 @@ width: 38%;
   width: fit-content;
 }
 
-@media (max-width: 575px) {
-  .style__postContainerTab {
-    padding: 7px;
-  }
-}
+
 
 .style__postContainerTab:hover {
   display: flex;

@@ -399,7 +399,7 @@ class PropertyController extends Controller
             $q->where('language_id', $language->id);
         }])->get();
 
-        $information['units'] = DB::table('units')->whereStatus(1)->get();
+        $information['units'] = DB::table('units')->whereStatus(1)->orderBy('unit_name')->get();
 
         // $min = Property::where([['status', 1], ['approve_status', 1]])->min('price');
         // $max = Property::where([['status', 1], ['approve_status', 1]])->max('price');

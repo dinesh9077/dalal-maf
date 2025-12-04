@@ -889,7 +889,7 @@ class HomeController extends Controller
 	
 	public function unitTypes()
 	{
-		$unitTypes = Unit::Where('status', 1)->get(); 
+		$unitTypes = Unit::Where('status', 1)->orderBy('unit_name')->get(); 
 		return $this->successResponse($unitTypes);
 	}
 	
