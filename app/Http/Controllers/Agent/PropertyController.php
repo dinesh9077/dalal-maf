@@ -130,7 +130,7 @@ class PropertyController extends Controller
         $information['amenities'] = Amenity::with(['amenityContent' => function ($q) use ($language) {
             $q->where('language_id', $language->id);
         }])->where('status', 1)->whereJsonContains('types', $request->type)->get();
-        $information['unitTypes'] = Unit::get();
+        $information['unitTypes'] = Unit::orderBy('unit_name', 'asc')->where('status', 1)->get();
         $information['areas'] = Area::where('status', 1)->get();
         if($this->routeName == 'agent.property_inventory.create_property') {
           $information['url'] = 'agent.property_inventory.store_property';
@@ -373,7 +373,7 @@ class PropertyController extends Controller
         }])->where('status', 1)->whereJsonContains('types', $property->type)->get();
         $information['specifications'] = Spacification::where('property_id', $property->id)->get();
         $information['propertyUnities'] = PropertyUnit::where('property_id', $property->id)->get();
-        $information['unitTypes']	= Unit::Where('status',1)->get();
+        $information['unitTypes']	= Unit::orderBy('unit_name', 'asc')->where('status', 1)->get();
         $information['propertyAreas'] = Area::where('city_id', $property->city_id)->get();
         $information['allAreas'] = Area::get();
         $information['url'] = $this->routeName == 'agent.property_inventory.properties' ? 'agent.property_inventory.update_property' : 'agent.property_management.update_property';

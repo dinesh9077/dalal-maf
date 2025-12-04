@@ -176,7 +176,7 @@ class PropertyController extends Controller
             $q->where('language_id', $language->id);
         }])->where('status', 1)->whereJsonContains('types', $request->type)->get();
         $information['agents'] = Agent::where('vendor_id', Auth::guard('vendor')->user()->id)->get();
-        $information['unitTypes'] = Unit::get();
+        $information['unitTypes'] = Unit::orderBy('unit_name', 'asc')->where('status', 1)->get();
         $information['areas'] = Area::where('status', 1)->get();
         if($this->routeName == 'vendor.property_inventory.create_property') {
           $information['url'] = 'vendor.property_inventory.store_property';
@@ -426,7 +426,7 @@ class PropertyController extends Controller
         $information['specifications'] = Spacification::where('property_id', $property->id)->get();
         $information['agents'] = Agent::where('vendor_id', Auth::guard('vendor')->user()->id)->get();
         $information['propertyUnities'] = PropertyUnit::where('property_id', $property->id)->get();
-        $information['unitTypes']	= Unit::Where('status',1)->get();
+        $information['unitTypes']	= Unit::orderBy('unit_name', 'asc')->where('status', 1)->get();
         $information['propertyAreas'] = Area::where('city_id', $property->city_id)->get();
         $information['url'] = $this->routeName == 'vendor.property_inventory.properties' ? 'vendor.property_inventory.update_property' : 'vendor.property_management.update_property';
 		$information['allAreas'] = Area::get();

@@ -117,6 +117,13 @@ Route::prefix('/admin')->middleware('auth:admin')->group(function () {
     Route::post('/update-amenity', 'BackEnd\Property\AmenityController@update')->name('admin.property_specification.update_amenity');
     Route::post('/delete-amenity', 'BackEnd\Property\AmenityController@destroy')->name('admin.property_specification.delete_amenity');
     Route::post('/bulk-delete-amenity', 'BackEnd\Property\AmenityController@bulkDestroy')->name('admin.property_specification.bulk_delete_amenity');
+ 
+    // property Unit Type route
+    Route::get('/unit-type', 'BackEnd\Property\UnitTypeController@index')->name('admin.property_specification.unit-type');
+    Route::post('/store-unit-type', 'BackEnd\Property\UnitTypeController@store')->name('admin.property_specification.store_unit_type');
+    Route::post('/update-unit-type', 'BackEnd\Property\UnitTypeController@update')->name('admin.property_specification.update_unit_type');
+    Route::post('/delete-unit-type', 'BackEnd\Property\UnitTypeController@destroy')->name('admin.property_specification.delete_unit_type');
+    Route::post('/bulk-delete-unit-type', 'BackEnd\Property\UnitTypeController@bulkDestroy')->name('admin.property_specification.bulk_delete_unit_type');
 
     // property cities route
     Route::get('/cities', 'BackEnd\Property\CityController@index')->name('admin.property_specification.cities');

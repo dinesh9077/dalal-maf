@@ -115,6 +115,7 @@
                           @elseif (request()->routeIs('admin.property_specification.cities')) show
                           @elseif(request()->routeIs('admin.property_specification.amenities'))  show
                           @elseif(request()->routeIs('admin.property_specification.cities'))  show
+                          @elseif(request()->routeIs('admin.property_specification.unit-type'))  show
                           @elseif(request()->routeIs('admin.property_specification.areas'))  show @endif">
                             <ul class="nav nav-collapse">
                                 <li
@@ -137,6 +138,13 @@
                                     <a
                                         href="{{ route('admin.property_specification.amenities', ['language' => $defaultLang->code]) }}">
                                         <span class="sub-item">{{ __('Amenities') }}</span>
+                                    </a>
+                                </li>
+                                 <li
+                                    class="{{ request()->routeIs('admin.property_specification.unit-type') ? 'active' : '' }}">
+                                    <a
+                                        href="{{ route('admin.property_specification.unit-type', ['language' => $defaultLang->code]) }}">
+                                        <span class="sub-item">{{ __('Unit Type') }}</span>
                                     </a>
                                 </li>
                                 @if ($settings->property_country_status == 1)
