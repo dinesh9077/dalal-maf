@@ -4028,7 +4028,7 @@ Lazyload CSS
 }
 
 .footer-area .footer-widget .footer-links li a:hover {
-    color: black;
+    color: rgb(255, 255, 255);
 }
 
 .footer-area .footer-widget .footer-links li:last-child {
@@ -7232,12 +7232,12 @@ p.cookie-consent__message * {
 
     .swiper-button-next,
     .swiper-rtl .swiper-button-prev {
-        right: -10px !important;
+        right: 0px !important;
     }
 
     .swiper-button-prev,
     .swiper-rtl .swiper-button-next {
-        left: -10px !important;
+        left: 0px !important;
     }
 
     .swiper-pagination .swiper-pagination-bullet-active {
@@ -8875,6 +8875,13 @@ button:hover {
     }
 }
 
+@media (max-width : 575px) {
+    .p-sn-dds {
+        display: block !important;
+    }
+}
+
+
 
 .new-menu-toggals {
     display: none;
@@ -8905,7 +8912,6 @@ button:hover {
 }
 
 @media (max-width : 575px) {
-
     .new-si-btn-res {
         display: block;
     }
@@ -9162,6 +9168,12 @@ button:hover {
     border-radius: 35px;
 }
 
+@media(max-width : 400px) {
+    .FTP-box {
+        margin:10px ;
+    }
+}
+
 .FTP-images img {
     border-radius: 35px 0px 0px 35px;
     height: 100%;
@@ -9221,7 +9233,7 @@ button:hover {
     }
 
     .FTP-content {
-        padding: 18px;
+        padding: 10px;
     }
 }
 
@@ -9505,4 +9517,12 @@ gap: 4px;
 .hot-properties:hover{
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.09);
     
+}
+
+.menu-logo-sides{
+    width: 170px;
+    background-color: white;
+        padding: 5px;
+    padding-top: 10px;
+    border-radius: 0px 0px 10px 10px;
 }

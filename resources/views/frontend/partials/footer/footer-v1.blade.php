@@ -124,10 +124,10 @@
                     <div class="footer-widget">
                       <div class="app-logos" style="display : flex; gap: 15px;">
                         <a href="https://play.google.com/store" target="_blank">
-                            <img src="{{ asset('assets/front/images/acrs-imag/playstore (1).png') }}" alt="playstore" style="height: 36px;"> 
+                            <img src="{{ asset('assets/front/images/acrs-imag/play-1.png') }}" alt="playstore" style="height: 36px;border-radius: 10px;"> 
                         </a>
                         <a href="https://play.google.com/store" target="_blank">
-                            <img src="{{ asset('assets/front/images/acrs-imag/appstore.png') }}" alt="appstore"  style="height: 36px;">
+                            <img src="{{ asset('assets/front/images/acrs-imag/play-2.png') }}" alt="appstore"  style="height: 36px;border-radius: 12px;">
                         </a>
                     </div>
                     </div>

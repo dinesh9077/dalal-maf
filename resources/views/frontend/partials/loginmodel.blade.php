@@ -45,7 +45,7 @@
 }
 
 .close-btn-login:hover {
-    background-color: var(--theme-color) !important;
+    background-color: white !important;
     border-radius: 50px;
     width: 17px;
     font-size: 12px;

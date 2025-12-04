@@ -182,13 +182,9 @@ $version = $basicInfo->theme_version;
 @endsection
 
 @section('content')
-@includeIf('frontend.partials.breadcrumb', [
-'breadcrumb' => $bgImg->breadcrumb,
-'title' => !empty($pageHeading) ? $pageHeading->project_page_title : __('Projects'),
-'subtitle' => __('Projects'),
-])
 
-<div class="projects-area" style="padding: 10px 0px; margin-top: 30px;">
+
+<div class="projects-area" style="padding: 10px 0px; margin-top: 120px;">
 
     <a href="https://wa.me/9925133440" target="_blank">
         <div class="whatsapp-btn" data-aos="fade-up">
