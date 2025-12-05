@@ -32,8 +32,8 @@ class VendorCheckoutController extends Controller
     public function checkout(ExtendRequest $request)
     {
         try {
-
-            $offline_payment_gateways = OfflineGateway::all()->pluck('name')->toArray();
+            
+            $offline_payment_gateways = OfflineGateway::all()->pluck('name')->toArray(); 
             $currentLang = session()->has('lang') ?
                 (Language::where('code', session()->get('lang'))->first())
                 : (Language::where('is_default', 1)->first());
@@ -181,7 +181,8 @@ class VendorCheckoutController extends Controller
                 $cancel_url = route('membership.mollie.cancel');
                 $molliePayment = new MollieController();
                 return $molliePayment->paymentProcess($request, $amount, $success_url, $cancel_url, $title, $bs);
-            } elseif (in_array($request->payment_method, $offline_payment_gateways)) {
+            } elseif (in_array($request->payment_method, $offline_payment_gateways)) 
+            {
                 $request['status'] = "0";
                 if ($request->hasFile('receipt')) {
                     $filename = time() . '.' . $request->file('receipt')->getClientOriginalExtension();
@@ -194,12 +195,19 @@ class VendorCheckoutController extends Controller
                 $transaction_id = \App\Http\Helpers\VendorPermissionHelper::uniqidReal(8);
                 $transaction_details = "offline";
                 $password = uniqid('qrcode');
+             
                 $this->store($request, $transaction_id, json_encode($transaction_details), $amount, $bs, $password);
-                return view('vendors.offline-success');
+               
+                return redirect()->route('vendor.plan.offline.success');
             }
         } catch (\Exception $e) {
             Session::flash('warning', 'Something went wrong');
         }
+    }
+
+    public function offlineSuccess()
+    {
+        return view('vendors.offline-success');
     }
 
     public function store($request, $transaction_id, $transaction_details, $amount, $be, $password)

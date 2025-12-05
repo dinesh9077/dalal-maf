@@ -65,21 +65,24 @@ class VendorController extends Controller
             'username' => 'required|unique:vendors',
             'email' => 'required|email|unique:vendors',
             'phone' => 'required',
-            'password' => 'required|confirmed|min:6',
+            'password' => 'required|confirmed|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{8,}$/',
+            'password_confirmation' => 'required',
         ];
 
         $info = Basic::select('google_recaptcha_status')->first();
         if ($info->google_recaptcha_status == 1) {
             $rules['g-recaptcha-response'] = 'required|captcha';
         }
-
-        $messages = [];
-
-        if ($info->google_recaptcha_status == 1) {
-            $messages['g-recaptcha-response.required'] = 'Please verify that you are not a robot.';
-            $messages['g-recaptcha-response.captcha'] = 'Captcha error! try again later or contact site admin.';
-        }
-
+ 
+        $messages = [
+            'password.required' => 'The password field is required.',
+            'password.min' => 'The password must be at least 8 characters long.',
+            'password.regex' => 'The password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@$!%*?&).',
+            'password.confirmed' => 'The password confirmation does not match.',
+            'password_confirmation.required' => 'The confirm password field is required.',
+            'g-recaptcha-response.required' => 'Please verify that you are not a robot.',
+            'g-recaptcha-response.captcha' => 'Captcha error! Try again later or contact site admin.',
+        ];
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
@@ -185,6 +188,25 @@ class VendorController extends Controller
         $vendor = $controller->store($package, $transaction_id, $transaction_details, $request['price'], $bs, $password);
 
         $user = User::where('phone', $request->phone)->delete();
+
+        Session::forget('login_phone');
+        $form = session('form', '');
+        if($form === 'contact_seller')
+        {
+            $currentUrl = session('last_visited_property_url', route('index')); 
+            $route = $currentUrl . '?contact_seller=1';
+            Session::forget('form');
+            return redirect($route);
+        }
+        
+        if ($form === 'wishlist') {
+            $property_id = session('property_id', '');
+            $currentUrl = url()->previous();
+            $route = $currentUrl . '?wishlist=' . $property_id;
+            Session::forget('form');
+            Session::forget('property_id');	
+            return redirect($route);
+        }
 
         return redirect()->route('vendor.login');
     }

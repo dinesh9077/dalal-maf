@@ -60,6 +60,7 @@
                                         <input name="file" type="file" multiple />
                                     </div>
                                 </form>
+                                <p class="text-warning mb-0">Image Size : 400 x 200</p>
                                 <p class="em text-danger mb-0" id="errslider_images"></p>
                             </div>
 
@@ -85,6 +86,7 @@
                                                     <input type="file" class="img-input" name="featured_image">
                                                 </div>
                                             </div>
+                                             <p class="text-warning mb-0">Image Size : 310 x 180</p>
                                         </div>
                                     </div>
 
@@ -103,6 +105,7 @@
                                                     <input type="file" class="img-input2" name="floor_planning_image">
                                                 </div>
                                             </div>
+                                            <p class="text-warning mb-0">Image Size : 900 x 500</p> 
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -120,6 +123,7 @@
                                                     <input type="file" class="img-input3" name="video_image">
                                                 </div>
                                             </div>
+                                            <p class="text-warning mb-0">Image Size : 900 x 500</p>
                                         </div>
                                     </div>
                                 </div>
@@ -195,20 +199,18 @@
                                     </div>
 
                                     <div class="col-lg-3 city">
-                                        <div class="form-group ">
-
-
+                                        <div class="form-group ">  
                                             <label>{{ __('City') }} *</label>
                                             <select onchange="getAreas(event)" name="city_id"
                                                 class="form-control city_id js-example-basic-single3">
                                                 <option selected disabled>{{ __('Select City') }}
                                                 </option>
-                                                @if ($settings->property_state_status == 0 && $settings->property_country_status == 0)
+                                                {{-- @if ($settings->property_state_status == 0 && $settings->property_country_status == 0)
                                                     @foreach ($cities as $city)
                                                         <option value="{{ $city->id }}">
                                                             {{ $city->cityContent->name }}</option>
                                                     @endforeach
-                                                @endif
+                                                @endif --}}
                                             </select>
                                         </div>
                                     </div>
@@ -221,38 +223,32 @@
                                                 class="form-control state_id states js-example-basic-single3">
                                                 <option selected disabled>{{ __('Select State') }}
                                                 </option>
-                                                @foreach ($states as $state)
+                                                {{-- @foreach ($states as $state)
                                                     <option value="{{ $state->id }}">
                                                         {{ $state->stateContent->name }}</option>
-                                                @endforeach
-
+                                                @endforeach --}} 
                                             </select>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-3">
-                                        <div class="form-group">
-
-
+                                        <div class="form-group">  
                                             <label>{{ __('Country') }} *</label>
                                             <select name="country_id"
                                                 class="form-control country js-example-basic-single3">
                                                 <option disabled selected>{{ __('Select Country') }}
-                                                </option>
-
-                                                @foreach ($propertyCountries as $country)
+                                                </option> 
+                                                {{-- @foreach ($propertyCountries as $country)
                                                     <option value="{{ $country->id }}">
                                                         {{ $country->countryContent->name }}</option>
-                                                @endforeach
+                                                @endforeach --}}
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>{{ __('Address') }} *</label>
-                                            <input type="text" class="form-control" name="address"
-                                                placeholder="Enter Address">
-
+                                            <input type="text" class="form-control" name="address" placeholder="Enter Address"> 
                                         </div>
                                     </div>
                                     <div class="col-lg-12 hideNotes">

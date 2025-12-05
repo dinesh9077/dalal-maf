@@ -73,12 +73,8 @@
                                                     {{ __('Choose Image') }}
                                                     <input type="file" class="img-input" name="featured_image">
                                                 </div>
-                                            </div>
-
-<p class="text-warning mb-0">Image Size : 310 x 180</p>
-
-
-
+                                            </div> 
+                                            <p class="text-warning mb-0">Image Size : 310 x 180</p> 
                                         </div>
                                     </div>
 
@@ -97,12 +93,8 @@
                                                     {{ __('Choose Image') }}
                                                     <input type="file" class="img-input2" name="floor_planning_image">
                                                 </div>
-                                            </div>
-
-<p class="text-warning mb-0">Image Size : 900 x 500</p>
-
-
-
+                                            </div> 
+                                            <p class="text-warning mb-0">Image Size : 900 x 500</p> 
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -312,8 +304,8 @@
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="modal-label">Unit Type *</label>
-                                            <a href="javascript:;" onclick="addUnitType()" class="unit-btn"><i
-                                                    class="fas fa-plus-circle" style="color: white;"></i> </a>
+                                            {{-- <a href="javascript:;" onclick="addUnitType()" class="unit-btn"><i
+                                                    class="fas fa-plus-circle" style="color: white;"></i> </a> --}}
                                             <div class="d-flex align-items-center add-property-type">
                                                 <select class="modal-input select2" id="unit_type" name="unit_type[]"
                                                     multiple>

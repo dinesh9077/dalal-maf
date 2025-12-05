@@ -574,19 +574,19 @@ use Maatwebsite\Excel\Facades\Excel;
 			$information['propertyCategories'] = PropertyCategory::where([['type', $property->type], ['status', 1]])->with(['categoryContent' => function ($q) use ($language) {
 				$q->where('language_id', $language->id);
 			}])->get();
-			$information['propertyCountries'] = Country::with(['countryContent' => function ($q) use ($language) {
-				$q->where('language_id', $language->id);
-			}])->get();
-			$information['propertyStates'] = State::where('country_id', $property->country_id)->with(['stateContent' => function ($q) use ($language) {
-				$q->where('language_id', $language->id);
-			}])->get();
+			// $information['propertyCountries'] = Country::with(['countryContent' => function ($q) use ($language) {
+			// 	$q->where('language_id', $language->id);
+			// }])->get();
+			// $information['propertyStates'] = State::where('country_id', $property->country_id)->with(['stateContent' => function ($q) use ($language) {
+			// 	$q->where('language_id', $language->id);
+			// }])->get();
 
-			$information['propertyCities'] = City::where('state_id', $property->state_id)->with(['cityContent' => function ($q) use ($language) {
-				$q->where('language_id', $language->id);
-			}])->get();
+			// $information['propertyCities'] = City::where('state_id', $property->state_id)->with(['cityContent' => function ($q) use ($language) {
+			// 	$q->where('language_id', $language->id);
+			// }])->get();
 
 			$information['propertyAreas'] = Area::where('city_id', $property->city_id)->get();
-			$information['allAreas'] = Area::get();
+			$information['allAreas'] = Area::where('status', 1)->get();
 			$information['propertySettings'] = Basic::select('property_state_status', 'property_country_status')->first();
 			$information['specifications'] = Spacification::where('property_id', $property->id)->get();
 
