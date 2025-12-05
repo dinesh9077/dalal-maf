@@ -5365,7 +5365,9 @@ p.cookie-consent__message * {
 
 /*Large Device*/
 
-
+.footer-logo{
+    width: 200px;
+}
 
 /*Large Device*/
 @media only screen and (min-width: 992px) and (max-width : 1199px) {}
@@ -6530,6 +6532,8 @@ p.cookie-consent__message * {
     background-color: transparent;
     padding-bottom: 10px;
     border-bottom: 1px solid #dcdcdc;
+    box-shadow: none;
+    border-radius: 0px;
 }
 
 .new-contect-design .new-contect-design-send-wrapper {
@@ -8770,6 +8774,14 @@ button:hover {
     width: 80%;
 }
 
+@media(max-width:768px) {
+    .new-contect-design-lorem {
+        width: 90%;
+        font-size: 12px;
+
+    }
+}
+
 @media(min-width:320px) and (max-width:800px) {
     .new-contect-design-lorem {
         margin-top: 10px;
@@ -9673,5 +9685,100 @@ padding-bottom: 21px;
    padding-top: 30px !important;
     padding-bottom: 40px !important; 
 }
+
+
+    .header-title-footer {
+                font-size: 18px;
+    }
+
+    .header-description {
+    font-size: 12px;}
+
+    
+.footer-area .footer-widget ul {
+        display: grid;
+    grid-template-columns: auto auto;
+}
+    .footer-area .footer-widget h4 {
+        font-size: 17px;
+        border-bottom: 5px double #dcdcdc;
+        width: fit-content;
+    }
+
+    .new-city-section {
+    padding:  0px 0px 30px 0px;
+}
+.about-llrs-img {
+    width: 100%;
+}
+.ab-le-title {
+    font-size: 26px;
+
 }
 
+.about-right-pd {
+    padding: 10px;
+    position: relative;
+}
+
+
+.abt-r-i-div {
+            height: 43px;
+        width: 43px;
+        position: absolute;
+        right: 3px;
+        top: 3px;
+}
+
+.abs-r-i-des-div h5 {
+    font-size: 12px;
+}
+
+.about-lrft-sections-new {
+        margin-bottom: 15px;
+    }
+
+    .btn-cus-header{
+        padding: 10px 7px;
+    }
+
+    .new-images-aps-type {
+        width: 80px;
+    }
+}
+
+
+.theam-title-div{
+margin-top : 120px !important;
+}
+
+
+
+@media(max-width : 767px){
+.theam-title-div{
+margin-top : 80px !important;
+}
+  
+}
+
+
+.tinymce-content h3{
+    font-size: 24px;
+}
+
+.tinymce-content p{
+    font-size: 15px;
+}
+
+@media(max-width : 767px){
+ .tinymce-content h3{
+    font-size: 18px;
+}
+
+.tinymce-content p{
+    font-size: 12px;
+    line-height: 1.5;
+}   
+
+
+}

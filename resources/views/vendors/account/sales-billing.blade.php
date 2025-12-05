@@ -28,7 +28,7 @@
                         </div>
                         <div class="col-lg-6">
                             <a href="{{ route('vendor.accounting') }}"
-                                class="btn  btn-sm float-lg-right" style="background-color: var(--theme-color); color : white;"><i class="fas fa-plus"></i>
+                                class="btn btn-primary btn-sm float-lg-right float-left"><i class="fas fa-plus"></i>
                                 {{ __('Add Sale Report') }}</a>
 
                         </div>

@@ -86,9 +86,7 @@ $version = $basicInfo->theme_version;
 <section class="about-section" style="padding:0px 0px;">
     <div class="container">
 
-        <!-- <div class="section-title title-center title-inline mb-40 aos-init aos-animate" data-aos="fade-up" style="margin-top : 150px !important;">
-                        <h2 class="title">About Us</h2>
-            </div> -->
+        
 
         <p class="subtitle" data-aos="fade-up" style="margin-bottom:0px !important;">
             We are Surat’s most reliable real estate experts, dedicated to helping you find the perfect home, office, or investment property. With deep knowledge of Surat’s property market and a client-first approach, we make buying, selling, and investing simple, secure, and successful.
