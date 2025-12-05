@@ -56,6 +56,7 @@
                                         <input name="file" type="file" multiple />
                                     </div>
                                 </form>
+                                <p class="text-warning mb-0">Image Size : 400 x 200</p>
                                 <p class="em text-danger mb-0" id="errslider_images"></p>
                             </div>
 
@@ -81,6 +82,7 @@
                                                     <input type="file" class="img-input" name="featured_image">
                                                 </div>
                                             </div>
+                                            <p class="text-warning mb-0">Image Size : 310 x 180</p>
                                         </div>
                                     </div>
 
@@ -99,6 +101,7 @@
                                                     <input type="file" class="img-input2" name="floor_planning_image">
                                                 </div>
                                             </div>
+                                            <p class="text-warning mb-0">Image Size : 900 x 500</p> 
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -116,6 +119,7 @@
                                                     <input type="file" class="img-input3" name="video_image">
                                                 </div>
                                             </div>
+                                            <p class="text-warning mb-0">Image Size : 900 x 500</p>
                                         </div>
                                     </div>
                                 </div>
@@ -174,23 +178,17 @@
                                             </select>
 
                                         </div>
-                                    </div>
-
-
-
-
-
-
+                                    </div> 
                                     <div class="col-lg-3 area">
                                         <div class="form-group ">
                                             <label>{{ __('Area') }} *</label>
                                             <select name="area_id" class="form-control area_id js-example-basic-single3">
                                                 <option selected disabled>{{ __('Select Area') }}
-                                                </option> 
+                                                </option>
                                                 @foreach ($areas as $area)
-                                                   <option value="{{ $area->id }}">
+                                                    <option value="{{ $area->id }}">
                                                         {{ $area->name }}</option>
-                                                @endforeach 
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -204,10 +202,10 @@
                                                 <option selected disabled>{{ __('Select City') }}
                                                 </option>
 
-                                                @foreach ($cities as $city)
+                                                {{-- @foreach ($cities as $city)
                                                     <option value="{{ $city->id }}">
                                                         {{ $city->cityContent->name }}</option>
-                                                @endforeach
+                                                @endforeach --}}
 
                                             </select>
                                         </div>
@@ -220,10 +218,10 @@
                                                 class="form-control state_id states js-example-basic-single3">
                                                 <option selected disabled>{{ __('Select State') }}
                                                 </option>
-                                                @foreach ($states as $state)
+                                                {{-- @foreach ($states as $state)
                                                     <option value="{{ $state->id }}">
                                                         {{ $state->stateContent->name }}</option>
-                                                @endforeach
+                                                @endforeach --}}
 
                                             </select>
                                         </div>
@@ -238,20 +236,20 @@
                                                 <option disabled selected>{{ __('Select Country') }}
                                                 </option>
 
-                                                @foreach ($propertyCountries as $country)
+                                                {{-- @foreach ($propertyCountries as $country)
                                                     <option value="{{ $country->id }}">
                                                         {{ $country->countryContent->name }}</option>
-                                                @endforeach
+                                                @endforeach --}}
                                             </select>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-12">
-                                        <div class="form-group">  
-                                             <label>{{ __('Address') }} *</label>
+                                        <div class="form-group">
+                                            <label>{{ __('Address') }} *</label>
                                             <input type="text" class="form-control" name="address"
-                                                placeholder="Enter Address"> 
-                                          
+                                                placeholder="Enter Address">
+
                                         </div>
                                     </div>
                                     <div class="col-lg-12 hideNotes">
@@ -261,7 +259,7 @@
                                                 placeholder="Enter Notes">
 
                                         </div>
-                                    </div>  
+                                    </div>
 
                                     <div class="col-lg-3">
                                         <div class="form-group">
@@ -341,7 +339,7 @@
                                                 placeholder="Enter Longitude">
                                         </div>
                                     </div>
- 
+
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>{{ __('Possession Date') }} </label>
@@ -568,11 +566,11 @@
         $('#purpose').on('change', function() {
             const val = this.value;
             const hideFields = val === 'franchiese' || val === 'business_for_sale';
-            
+
             // toggle visibility
             $('.hideBath, .hideSqft').toggle(!hideFields);
             $('.hideNotes').toggle(hideFields);
-             
+
             // reset values
             $('input[name="bath"], input[name="area"]').val(0);
             $('input[name="notes"]').val('');

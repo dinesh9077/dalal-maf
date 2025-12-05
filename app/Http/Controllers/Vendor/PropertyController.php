@@ -163,15 +163,15 @@ class PropertyController extends Controller
         $information['propertyCategories'] = PropertyCategory::where([['type', $request->type], ['status', 1]])->with(['categoryContent' => function ($q) use ($language) {
             $q->where('language_id', $language->id);
         }])->get();
-        $information['propertyCountries'] = Country::with(['countryContent' => function ($q) use ($language) {
-            $q->where('language_id', $language->id);
-        }])->get();
-        $information['states'] = State::with(['stateContent' => function ($q) use ($language) {
-            $q->where('language_id', $language->id);
-        }])->get();
-        $information['cities'] = City::where('status', 1)->with(['cityContent' => function ($q) use ($language) {
-            $q->where('language_id', $language->id);
-        }])->get();
+        // $information['propertyCountries'] = Country::with(['countryContent' => function ($q) use ($language) {
+        //     $q->where('language_id', $language->id);
+        // }])->get();
+        // $information['states'] = State::with(['stateContent' => function ($q) use ($language) {
+        //     $q->where('language_id', $language->id);
+        // }])->get();
+        // $information['cities'] = City::where('status', 1)->with(['cityContent' => function ($q) use ($language) {
+        //     $q->where('language_id', $language->id);
+        // }])->get();
         $information['amenities'] = Amenity::with(['amenityContent' => function ($q) use ($language) {
             $q->where('language_id', $language->id);
         }])->where('status', 1)->whereJsonContains('types', $request->type)->get();
@@ -413,23 +413,23 @@ class PropertyController extends Controller
         $information['propertyCategories'] = PropertyCategory::where([['type', $property->type], ['status', 1]])->with(['categoryContent' => function ($q) use ($language) {
             $q->where('language_id', $language->id);
         }])->get();
-        $information['propertyCountries'] = Country::with(['countryContent' => function ($q) use ($language) {
-            $q->where('language_id', $language->id);
-        }])->get();
-        $information['propertyStates'] = State::where('country_id', $property->country_id)->with(['stateContent' => function ($q) use ($language) {
-            $q->where('language_id', $language->id);
-        }])->get();
+        // $information['propertyCountries'] = Country::with(['countryContent' => function ($q) use ($language) {
+        //     $q->where('language_id', $language->id);
+        // }])->get();
+        // $information['propertyStates'] = State::where('country_id', $property->country_id)->with(['stateContent' => function ($q) use ($language) {
+        //     $q->where('language_id', $language->id);
+        // }])->get();
 
-        $information['propertyCities'] = City::where('state_id', $property->state_id)->with(['cityContent' => function ($q) use ($language) {
-            $q->where('language_id', $language->id);
-        }])->get();
+        // $information['propertyCities'] = City::where('state_id', $property->state_id)->with(['cityContent' => function ($q) use ($language) {
+        //     $q->where('language_id', $language->id);
+        // }])->get();
         $information['specifications'] = Spacification::where('property_id', $property->id)->get();
         $information['agents'] = Agent::where('vendor_id', Auth::guard('vendor')->user()->id)->get();
         $information['propertyUnities'] = PropertyUnit::where('property_id', $property->id)->get();
         $information['unitTypes']	= Unit::orderBy('unit_name', 'asc')->where('status', 1)->get();
         $information['propertyAreas'] = Area::where('city_id', $property->city_id)->get();
         $information['url'] = $this->routeName == 'vendor.property_inventory.properties' ? 'vendor.property_inventory.update_property' : 'vendor.property_management.update_property';
-		$information['allAreas'] = Area::get();
+		$information['allAreas'] = Area::where('status', 1)->get();
 
         return view('vendors.property.edit', $information);
     }

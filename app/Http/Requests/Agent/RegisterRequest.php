@@ -33,7 +33,7 @@ class RegisterRequest extends FormRequest
             'email' => 'required|email:rfc,dns|unique:agents,email',
             'first_name' => 'required',
             'last_name' => 'required',
-            'password' => 'required|confirmed',
+            'password' => 'required|confirmed|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{8,}$/',
             'password_confirmation' => 'required'
         ];
     }
@@ -42,6 +42,9 @@ class RegisterRequest extends FormRequest
     {
         return [
             'username.regex' => 'Space are not allowed in the username field.',
+            'password.required' => 'The password field is required.',
+            'password.min' => 'The password must be at least 8 characters long.',
+            'password.regex' => 'The password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@$!%*?&).',
             'password.confirmed' => 'Password confirmation does not match.',
             'password_confirmation.required' => 'The confirm password field is required.'
         ];
