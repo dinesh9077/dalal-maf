@@ -287,11 +287,14 @@
                     <div class="col-xxl-10">
                         <div class="content mb-30">
 
+                        <div class="content mb-30">
+
                         </div>
 
                     </div>
                 </div>
             </div>
+
 
 
 
