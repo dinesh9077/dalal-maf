@@ -689,9 +689,22 @@
                 modalTrigger.show();
             }
 });
-
+ 
     </script>
 
+    @if(request()->has('wishlist'))
+        <script type="text/javascript"> 
+            const property_id = "{{ request()->get('wishlist') }}"; 
+            setTimeout(() => { 
+                // Target the first (and most relevant) wishlist button with this data-id
+                $('.btn-wishlist[data-id="' + property_id + '"]:first').trigger('click');
+                // Remove wishlist query param from URL after triggering
+                const url = new URL(window.location);
+                url.searchParams.delete('wishlist');
+                window.history.replaceState({}, document.title, url.toString());
+            }, 500); 
+        </script>
+    @endif 
     @includeIf('frontend.partials.scripts.scripts-v1')
     @includeIf('frontend.partials.toastr')
 </body>

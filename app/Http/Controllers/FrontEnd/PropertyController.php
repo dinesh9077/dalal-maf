@@ -385,9 +385,9 @@ class PropertyController extends Controller
         $maxPrice = $statsQuery->whereNotNull('properties.price')
                             ->distinct()
                             ->max('properties.price');
-        $totalCountOfProperties = $statsQuery->distinct()->count();
+        $totalCountOfProperties = $statsQuery->distinct()->get()->count();
 
-        $property_contents = $filterQuery->paginate(12);
+        $property_contents = $filterQuery->distinct()->paginate(12);
 
         $information['property_contents'] = $property_contents;
         $information['contents'] = $property_contents;
@@ -611,13 +611,12 @@ class PropertyController extends Controller
                     ->where('memberships.status', '=', 1)
                     ->where('memberships.start_date', '<=', Carbon::now()->format('Y-m-d'))
                     ->where('memberships.expire_date', '>=', Carbon::now()->format('Y-m-d'));
-            })
-
+            }) 
             ->where(function ($query) {
                 $query->where('properties.vendor_id', '=', 0)
-                    ->orWhere(function ($query) {
-                        $query->where('vendors.status', '=', 1)->whereNotNull('memberships.id');
-                    });
+                ->orWhere(function ($query) {
+                    $query->where('vendors.status', '=', 1)->whereNotNull('memberships.id');
+                });
             })
 
             ->when($type, function ($query) use ($type) {
@@ -737,7 +736,7 @@ class PropertyController extends Controller
                 'property_state_contents.name as state_name',
                 'property_country_contents.name as country_name'
             )
-            ->orderBy($order_by_column, $order);
+            ->orderBy($order_by_column, $order); 
 
         $statsQuery = clone $filterQuery;
         $minPrice = $statsQuery->whereNotNull('properties.price')
@@ -747,10 +746,9 @@ class PropertyController extends Controller
         $maxPrice = $statsQuery->whereNotNull('properties.price')
             ->distinct()
             ->max('properties.price');
-        $totalCountOfProperties = $statsQuery->distinct()->count();
+        $totalCountOfProperties = $statsQuery->distinct()->get()->count();
 
-        $property_contents = $filterQuery->paginate(12);
-
+        $property_contents = $filterQuery->distinct()->paginate(12); 
         $information['property_contents'] = $property_contents;
         $information['contents'] = $property_contents;
 
@@ -952,8 +950,8 @@ class PropertyController extends Controller
             ->select('properties.*', 'property_contents.title', 'property_contents.slug', 'property_contents.address', 'property_contents.language_id')
             ->take(5)->get();
 
-        $information['info'] = Basic::select('google_recaptcha_status')->first();
-
+        $information['info'] = Basic::select('google_recaptcha_status')->first(); 
+        session(['last_visited_property_url' => url()->current()]);
         return view('frontend.property.details', $information);
     }
 
