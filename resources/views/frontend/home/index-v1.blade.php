@@ -285,8 +285,10 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-xxl-10">
-                        <div class="content mb-30" >
-                         
+                        <div class="content mb-30">
+
+                        <div class="content mb-30">
+
                         </div>
 
                     </div>
@@ -294,7 +296,8 @@
             </div>
 
 
-            
+
+
 
 
             @php
@@ -345,7 +348,7 @@
                 }
             @endphp
 
-            <div class="banner-filter-form new-banner-filters-width" >
+            <div class="banner-filter-form new-banner-filters-width">
                 <div class="tab-content form-wrapper">
 
                     {{-- Tabs --}}
@@ -420,8 +423,10 @@
                                     {{-- Property Type --}}
                                     <div class="grid-item home-des-border">
                                         <div class="form-group">
-                                            <label for="type_{{ $key }}" class="icon-end">{{ __('Property Type') }}</label>
-                                            <select name="type[]" id="type_{{ $key }}" data-key="{{ $key }}" class="form-control select2 property_type">
+                                            <label for="type_{{ $key }}"
+                                                class="icon-end">{{ __('Property Type') }}</label>
+                                            <select name="type[]" id="type_{{ $key }}"
+                                                data-key="{{ $key }}" class="form-control select2 property_type">
                                                 <option selected disabled value="">{{ __('Select Property') }}
                                                 </option>
                                                 <option value="all">{{ __('All') }}</option>
@@ -496,8 +501,8 @@
                 <div class="row" style="position: relative;">
                     <div class="section-title mb-10 new-titles position-relative aos-init aos-animate" data-aos="fade-up">
                         <h2 class="title">Featured Properties</h2>
-                        <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-desktop"
-                            style="padding: 8px 20px;">View All</a>
+                        <a href="{{ url('view-all-properties') }}?status_type=is_featured"
+                            class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 8px 20px;">View All</a>
                     </div>
 
 
@@ -513,20 +518,20 @@
                         </div>
 
                         <div class="swiper-button-prev featured-prev custom-swiper-btn">
-                                                <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
+                            <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
                         </div>
                         <div class="swiper-button-next featured-next custom-swiper-btn">
-                                                <img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
+                            <img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
                         </div>
                     </div>
 
                     <div style="text-align: center;">
-                        <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-mobile"
-                            style="padding: 8px 20px;">View All</a>
+                        <a href="{{ url('view-all-properties') }}?status_type=is_featured"
+                            class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 8px 20px;">View All</a>
                     </div>
                 </div>
             </div>
-    </section>
+        </section>
     @endif
 
 
@@ -536,8 +541,8 @@
                 <div class="row" style="position: relative;">
                     <div class="section-title mb-10 new-titles" data-aos="fade-up" style="position: relative;">
                         <h2 class="title" style="text-align : center;">Hot Properties</h2>
-                        <a href="{{ url('properties/is_hot/all') }}" class="vs-btn vs-new-set-btn view-all-desktop"
-                            style="padding: 8px 20px;">
+                        <a href="{{ url('view-all-properties') }}?status_type=is_hot"
+                            class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 8px 20px;">
                             View All
                         </a>
                     </div>
@@ -554,17 +559,15 @@
                         </div>
 
                         <div class="swiper-button-prev hot-prev custom-swiper-btn">
-                                                <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
+                            <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
                         </div>
                         <div class="swiper-button-next hot-next custom-swiper-btn">
-                                                <img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
+                            <img src="{{ asset('assets/front/images/new-images/Right.png') }}" alt="">
                         </div>
                     </div>
-
-
                     <div class="text-center mt-2 mt-sm-2">
-                        <a href="{{ url('properties/is_hot/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
-                            style="padding: 8px 20px;">
+                        <a href="{{ url('view-all-properties') }}?status_type=is_hot"
+                            class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 8px 20px;">
                             View All
                         </a>
                     </div>
@@ -582,7 +585,7 @@
                     <div class="section-title  mb-10 new-titles" data-aos="fade-up" style="position: relative;">
                         <h2 class="title" style="text-align : center;">Recommended Properties</h2>
 
-                        <a href="{{ url('properties/is_recommended/all') }}"
+                        <a href="{{ url('view-all-properties') }}?status_type=is_recommended"
                             class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 8px 20px;">View All</a>
 
                     </div>
@@ -599,22 +602,20 @@
                         </div>
 
                         <div class="swiper-button-prev recommended-prev custom-swiper-btn">
-                                                <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
+                            <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
                         </div>
                         <div class="swiper-button-next recommended-next custom-swiper-btn">
-                                                <img src="{{ asset('assets/front/images/new-images/right.png') }}" alt="">
+                            <img src="{{ asset('assets/front/images/new-images/right.png') }}" alt="">
 
                         </div>
                     </div>
 
                     <div class="text-center mt-2 mt-sm-2">
-                        <a href="{{ url('properties/is_recommended/all') }}"
+                        <a href="{{ url('view-all-properties') }}?status_type=is_recommended"
                             class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 8px 20px;">
                             View All
                         </a>
                     </div>
-
-
                 </div>
             </div>
         </section>
@@ -628,7 +629,7 @@
                     <div class="section-title mb-10 new-titles" data-aos="fade-up" style="position: relative;">
                         <h2 class="title" style="text-align : center;">Fast Selling Properties</h2>
 
-                        <a href="{{ url('properties/is_fast_selling/all') }}"
+                        <a href="{{ url('view-all-properties') }}?status_type=is_fast_selling"
                             class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 8px 20px;">
                             View All
                         </a>
@@ -647,16 +648,16 @@
                         </div>
 
                         <div class="swiper-button-prev fast-prev custom-swiper-btn">
-                                                <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
+                            <img src="{{ asset('assets/front/images/new-images/left.png') }}" alt="">
                         </div>
                         <div class="swiper-button-next fast-next custom-swiper-btn">
-                                                <img src="{{ asset('assets/front/images/new-images/right.png') }}" alt="">
+                            <img src="{{ asset('assets/front/images/new-images/right.png') }}" alt="">
                         </div>
                     </div>
 
 
                     <div class="text-center">
-                        <a href="{{ url('properties/is_fast_selling/all') }}"
+                        <a href="{{ url('view-all-properties') }}?status_type=is_fast_selling"
                             class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 8px 20px;">
                             View All
                         </a>
@@ -676,15 +677,13 @@
                 <div>
                     <div class="row">
                         <div class="col-12">
-                            <div class="section-title  new-titles" data-aos="fade-up" style="position: relative;">
-                                <h2 class="title">{{ $propertySecInfo->title }}</h2>
-
-                                 <a href="{{ url('properties/is_fast_selling/all') }}"
-                            class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 8px 20px;">
-                            View All
-                        </a>
-
-
+                            <div class="section-title new-titles" data-aos="fade-up"
+                                style="position: relative;">
+                                <h2 class="title">{{ $propertySecInfo->title }}</h2> y
+                                <a href="{{ url('view-all-properties') }}?sort=new"
+                                    class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 8px 20px;">
+                                    View All
+                                </a> 
                             </div>
                         </div>
                         <div class="col-12 LP_SLider-div">
@@ -707,10 +706,11 @@
                                         </div>
                                     </div>
 
-                                     <div style="text-align: center;">
-                        <a href="{{ url('properties/is_featured/all') }}" class="vs-btn vs-new-set-btn view-all-mobile"
-                            style="padding: 8px 20px;">View All</a>
-                    </div>
+                                    <div style="text-align: center;">
+                                        <a href="{{ url('view-all-properties') }}?sort=new"
+                                            class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 8px 20px;">View
+                                            All</a>
+                                    </div>
 
 
                                     <div class="LP-new-left-btn">
@@ -737,15 +737,15 @@
                     <div class="section-title  aos-init aos-animate" data-aos="fade-up" style="position: relative;">
                         <h2 class="title">Business For Sale Properties</h2>
 
-                            <a href="{{ route('frontend.properties', ['purpose' => 'business_for_sale', 'sort' => 'latest']) }}"
+                        <a href="{{ route('frontend.properties', ['purpose' => 'business_for_sale', 'sort' => 'latest']) }}"
                             class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 8px 20px;">
                             View All
                         </a>
 
 
                         <!-- <p class="mt-1" style="font-size:13px; line-height : 1.2;">Explore a wide range of businesses up for sale. From retail
-                            outlets to commercial setups, find the right opportunity to invest and grow.
-                        </p> -->
+                                outlets to commercial setups, find the right opportunity to invest and grow.
+                            </p> -->
                     </div>
                 </div>
             </div>
@@ -766,10 +766,10 @@
                     </div>
                 </div>
 
-                 <div style="text-align: center;">
-                        <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-mobile"
-                            style="padding: 8px 20px;">View All</a>
-                    </div>
+                <div style="text-align: center;">
+                    <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}"
+                        class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 8px 20px;">View All</a>
+                </div>
 
                 <!-- Navigation arrows -->
                 <div class="bussiness-f-s-left-btn">
@@ -787,15 +787,16 @@
         <div class="container new-margin-mob-last-pro">
             <div class="row" style="position: relative;">
                 <div class="col-12">
-                    <div class="section-title mb-10 aos-init aos-animate" data-aos="fade-up" style="position : relative;">
+                    <div class="section-title mb-10 aos-init aos-animate" data-aos="fade-up"
+                        style="position : relative;">
                         <h2 class="title">Franchise Properties</h2>
 
-                           <a href="{{ route('frontend.properties', ['purpose' => 'franchiese', 'sort' => 'latest']) }}"
+                        <a href="{{ route('frontend.properties', ['purpose' => 'franchiese', 'sort' => 'latest']) }}"
                             class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 8px 20px;">
                             View All
                         </a>
                         <!-- <p class="mt-1" style="font-size:13px; line-height : 1.2;">Join hands with Dala Maaf and become a part of a growing
-                            network. Unlock business opportunities with our easy-to-start franchise model.</p> -->
+                                network. Unlock business opportunities with our easy-to-start franchise model.</p> -->
                     </div>
                 </div>
 
@@ -816,9 +817,9 @@
                         </div>
                     </div>
 
-                     <div style="text-align: center;">
-                        <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}" class="vs-btn vs-new-set-btn view-all-mobile"
-                            style="padding: 8px 20px;">View All</a>
+                    <div style="text-align: center;">
+                        <a href="{{ route('frontend.properties', ['property_type' => 'partial', 'sort' => 'latest']) }}"
+                            class="vs-btn vs-new-set-btn view-all-mobile" style="padding: 8px 20px;">View All</a>
                     </div>
 
                     <!-- Navigation Buttons -->
@@ -897,7 +898,7 @@
 
 
                 </div>
-                        {{-- <div class="text-center" style="margin-top : 30px;">
+                {{-- <div class="text-center" style="margin-top : 30px;">
                     <a href="http://127.0.0.1:8000/vendors" class="btn btn-lg btn-primary  mb-30" style="background : black;">See All</a>
                 </div> --}}
 
@@ -961,24 +962,24 @@
     </div>
 
     <!-- <section class="city-section">
-        <img src="{{ asset('assets/front/images/acrs-imag/building-vector.png') }}" alt="" class="building-vector">
-        <div class="container">
-            <div class="city-details">
-                <h6>First-time buyer, investor, or renter? Dala Maaf connects you to trusted properties in prime
-                    locations—your real estate partner.</h6>
-                <p>Looking for your dream home, the right investment, or the best rental deal? Dala Maaf makes it simple.
-                    With thousands of verified listings, expert insights, and user-friendly search options, you can buy,
-                    sell, or rent properties with complete confidence.</p>
-                <p>Whether you’re a first-time buyer, an investor, or someone searching for the perfect rental, Dala Maaf
-                    connects you to trusted property options across prime locations. It’s more than a platform—it’s your
-                    partner in real estate.</p>
-                <div style="margin-top: 30px;">
-                    <a href="{{ route('frontend.properties') }}" class="find-your-btn">Find Your Perfect Property with Dala
-                        Maaf</a>
+            <img src="{{ asset('assets/front/images/acrs-imag/building-vector.png') }}" alt="" class="building-vector">
+            <div class="container">
+                <div class="city-details">
+                    <h6>First-time buyer, investor, or renter? Dala Maaf connects you to trusted properties in prime
+                        locations—your real estate partner.</h6>
+                    <p>Looking for your dream home, the right investment, or the best rental deal? Dala Maaf makes it simple.
+                        With thousands of verified listings, expert insights, and user-friendly search options, you can buy,
+                        sell, or rent properties with complete confidence.</p>
+                    <p>Whether you’re a first-time buyer, an investor, or someone searching for the perfect rental, Dala Maaf
+                        connects you to trusted property options across prime locations. It’s more than a platform—it’s your
+                        partner in real estate.</p>
+                    <div style="margin-top: 30px;">
+                        <a href="{{ route('frontend.properties') }}" class="find-your-btn">Find Your Perfect Property with Dala
+                            Maaf</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section> -->
+        </section> -->
 
     <section class="new-city-section" data-aos="fade-up">
         <div class="container">
@@ -1051,48 +1052,48 @@
 
 
     <!-- <section class="buy-rent-sale-section pt-30 pb-30">
-        <div class="container">
+            <div class="container">
 
-            <div class="section-title title-inline mb-3 aos-init aos-animate d-flex" data-aos="fade-up">
-                <h2 class="title">For all your luxury real estate needs, We have got you covered!</h2>
-               
+                <div class="section-title title-inline mb-3 aos-init aos-animate d-flex" data-aos="fade-up">
+                    <h2 class="title">For all your luxury real estate needs, We have got you covered!</h2>
+                   
+                </div>
+
+                <div class="row BSR-main-div">
+                    <div class="col-lg-4 b-s-r-div-main">
+                        <div class="b-s-r-div ">
+                            <img src="{{ asset('assets/front/images/acrs-imag/buy.png') }}" alt=""
+                                class="b-s-r-img">
+                            <h5 class="but-title">Buy</h5>
+                            <p class="but-title-p">Discover thousands of verified listings across residential and commercial
+                                spaces. Find your dream home or perfect investment with our easy-to-use search and trusted
+                                property details.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 b-s-r-div-main">
+                        <div class="b-s-r-div ">
+                            <img src="{{ asset('assets/front/images/acrs-imag/sale.png') }}" alt=""
+                                class="b-s-r-img">
+                            <h5 class="but-title">Sell</h5>
+                            <p class="but-title-p">List your property in minutes and connect with serious buyers. With
+                                DalalMaf’s wide reach and trusted network, selling your property has never been faster or
+                                easier.</p>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4 b-s-r-div-main">
+                        <div class="b-s-r-div ">
+                            <img src="{{ asset('assets/front/images/acrs-imag/rent.png') }}" alt=""
+                                class="b-s-r-img">
+                            <h5 class="but-title">Rent</h5>
+                            <p class="but-title-p">Looking for a home or office on rent? Explore verified rental options that
+                                fit your budget and lifestyle. Hassle-free rentals with trusted landlords, all in one place.</p>
+
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="row BSR-main-div">
-                <div class="col-lg-4 b-s-r-div-main">
-                    <div class="b-s-r-div ">
-                        <img src="{{ asset('assets/front/images/acrs-imag/buy.png') }}" alt=""
-                            class="b-s-r-img">
-                        <h5 class="but-title">Buy</h5>
-                        <p class="but-title-p">Discover thousands of verified listings across residential and commercial
-                            spaces. Find your dream home or perfect investment with our easy-to-use search and trusted
-                            property details.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 b-s-r-div-main">
-                    <div class="b-s-r-div ">
-                        <img src="{{ asset('assets/front/images/acrs-imag/sale.png') }}" alt=""
-                            class="b-s-r-img">
-                        <h5 class="but-title">Sell</h5>
-                        <p class="but-title-p">List your property in minutes and connect with serious buyers. With
-                            DalalMaf’s wide reach and trusted network, selling your property has never been faster or
-                            easier.</p>
-
-                    </div>
-                </div>
-                <div class="col-lg-4 b-s-r-div-main">
-                    <div class="b-s-r-div ">
-                        <img src="{{ asset('assets/front/images/acrs-imag/rent.png') }}" alt=""
-                            class="b-s-r-img">
-                        <h5 class="but-title">Rent</h5>
-                        <p class="but-title-p">Looking for a home or office on rent? Explore verified rental options that
-                            fit your budget and lifestyle. Hassle-free rentals with trusted landlords, all in one place.</p>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
+        </section> -->
 
     <section class="why-dlal-dection">
         <div class="container new-margin-why-d-m">
@@ -1219,60 +1220,60 @@
 
 
     <!-- @if ($secInfo->vendor_section_status == 1)
-        <section class="pt-30 pb-30">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 button-res">
-                        <div class="section-title mb-20" data-aos="fade-up">
-                            <h2 class="title">{{ $vendorInfo?->subtitle }}</h2>
-                        </div>
-
-                        @if (count($vendors) > 0)
-                            <div class="text-center view-all-desktop">
-                                <a href="{{ route('frontend.vendors') }}" class="vs-btn"
-                                    style="padding: 11px 20px;">{{ $vendorInfo->btn_name }}</a>
+    <section class="pt-30 pb-30">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 button-res">
+                            <div class="section-title mb-20" data-aos="fade-up">
+                                <h2 class="title">{{ $vendorInfo?->subtitle }}</h2>
                             </div>
-                        @endif
-                    </div>
-                    @forelse ($vendors as $vendor)
-                        <div class="col-lg-4 col-md-6 col-sm-12">
-                            <div class="new-company-card" data-aos="fade-up">
-                                <div class="logo-container">
-                                    <img class="lazyload"
-                                        data-src="{{ $vendor->photo ? asset('assets/admin/img/vendor-photo/' . $vendor->photo) : asset('assets/img/blank-user.jpg') }}">
+
+                            @if (count($vendors) > 0)
+    <div class="text-center view-all-desktop">
+                                    <a href="{{ route('frontend.vendors') }}" class="vs-btn"
+                                        style="padding: 11px 20px;">{{ $vendorInfo->btn_name }}</a>
                                 </div>
-                                <div class="company-details">
-                                    <h3>{{ $vendor->vendor_info['name'] ?? 'Not Available' }}</h3>
-                                    <div>
-                                        <p class="new-fonts-property">{{ count($vendor->properties) }}
-                                            {{ __('Properties') }}</p>
-                                        <p class="new-fonts-property">{{ count($vendor->agents) }} {{ __('Staffs') }}
-                                        </p>
-                                        <p class="new-fonts-property">{{ count($vendor->projects) }}
-                                            {{ __('Projects') }}</p>
+    @endif
+                        </div>
+                        @forelse ($vendors as $vendor)
+    <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="new-company-card" data-aos="fade-up">
+                                    <div class="logo-container">
+                                        <img class="lazyload"
+                                            data-src="{{ $vendor->photo ? asset('assets/admin/img/vendor-photo/' . $vendor->photo) : asset('assets/img/blank-user.jpg') }}">
+                                    </div>
+                                    <div class="company-details">
+                                        <h3>{{ $vendor->vendor_info['name'] ?? 'Not Available' }}</h3>
+                                        <div>
+                                            <p class="new-fonts-property">{{ count($vendor->properties) }}
+                                                {{ __('Properties') }}</p>
+                                            <p class="new-fonts-property">{{ count($vendor->agents) }} {{ __('Staffs') }}
+                                            </p>
+                                            <p class="new-fonts-property">{{ count($vendor->projects) }}
+                                                {{ __('Projects') }}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     @empty
-                        <div class="p-3 text-center mb-30 w-100">
-                            <h3 class="mb-0">{{ __('No Partners Found') }}</h3>
-                        </div>
-                    @endforelse
+                            <div class="p-3 text-center mb-30 w-100">
+                                <h3 class="mb-0">{{ __('No Partners Found') }}</h3>
+                            </div>
+    @endforelse
 
-                    @if (count($vendors) > 0)
-                        <div class="text-center mt-4 view-all-mobile">
-                            <a href="{{ route('frontend.vendors') }}" class="btn btn-lg btn-primary mb-30"
-                                style="background-color:var(--theme-color);">{{ $vendorInfo->btn_name }}</a>
-                        </div>
-                    @endif
+                        @if (count($vendors) > 0)
+    <div class="text-center mt-4 view-all-mobile">
+                                <a href="{{ route('frontend.vendors') }}" class="btn btn-lg btn-primary mb-30"
+                                    style="background-color:var(--theme-color);">{{ $vendorInfo->btn_name }}</a>
+                            </div>
+    @endif
+                    </div>
+
                 </div>
-
-            </div>
-        </section>
+            </section>
     @endif -->
 
-    <div class="container pt-20 upcoming-projects" data-aos="fade-up" >
+    <div class="container pt-20 upcoming-projects" data-aos="fade-up">
 
         <div class="row">
             <div class="col-12">
@@ -1286,7 +1287,8 @@
 
             @foreach ($projects->take(3) as $project)
                 <div class="col-md-4 col-sm-6 mb-4">
-                    <a href="{{ route('frontend.projects.details', ['slug' => $project->slug]) }}" style="height : auto;">
+                    <a href="{{ route('frontend.projects.details', ['slug' => $project->slug]) }}"
+                        style="height : auto;">
                         <div class="new-up-cards">
 
                             <img src="{{ asset('assets/img/project/featured/' . $project->featured_image) }}"
@@ -1315,114 +1317,114 @@
 
     <!-- @if ($secInfo->testimonial_section_status == 1)
     <section class="testimonial-area pt-100 pb-20">
-        <div class="overlay-bg d-none d-lg-block">
-     <img class="lazyload blur-up" data-src="{{ asset('assets/img/' . $testimonialSecImage) }}">
-        </div>
-        <div class="container">
-     <div class="row align-items-center">
-     <div class="col-lg-4">
-     <div class="content mb-30" data-aos="fade-up">
-     <div class="content-title">
-     <span class="subtitle"><span
-     class="line"></span>{{ $testimonialSecInfo->title }}</span>
-     <h2 class="title">
-     {{ $testimonialSecInfo?->subtitle }}
-     </h2>
-     </div>
-     <p class="text mb-30">
-     {{ $testimonialSecInfo?->content }}
-     </p>
+            <div class="overlay-bg d-none d-lg-block">
+         <img class="lazyload blur-up" data-src="{{ asset('assets/img/' . $testimonialSecImage) }}">
+            </div>
+            <div class="container">
+         <div class="row align-items-center">
+         <div class="col-lg-4">
+         <div class="content mb-30" data-aos="fade-up">
+         <div class="content-title">
+         <span class="subtitle"><span
+         class="line"></span>{{ $testimonialSecInfo->title }}</span>
+         <h2 class="title">
+         {{ $testimonialSecInfo?->subtitle }}
+         </h2>
+         </div>
+         <p class="text mb-30">
+         {{ $testimonialSecInfo?->content }}
+         </p>
 
-     <div class="slider-navigation scroll-animate">
-     <button type="button" title="Slide prev" class="slider-btn slider-btn-prev">
-     <i class="fal fa-angle-left"></i>
-     </button>
-     <button type="button" title="Slide next" class="slider-btn slider-btn-next">
-     <i class="fal fa-angle-right"></i>
-     </button>
-     </div>
-     </div>
-     </div>
-     <div class="col-lg-8" data-aos="fade-up">
-     <div class="swiper" id="testimonial-slider-1">
-     <div class="swiper-wrapper">
-     @forelse ($testimonials as $testimonial)
+         <div class="slider-navigation scroll-animate">
+         <button type="button" title="Slide prev" class="slider-btn slider-btn-prev">
+         <i class="fal fa-angle-left"></i>
+         </button>
+         <button type="button" title="Slide next" class="slider-btn slider-btn-next">
+         <i class="fal fa-angle-right"></i>
+         </button>
+         </div>
+         </div>
+         </div>
+         <div class="col-lg-8" data-aos="fade-up">
+         <div class="swiper" id="testimonial-slider-1">
+         <div class="swiper-wrapper">
+         @forelse ($testimonials as $testimonial)
     <div class="swiper-slide pb-20" data-aos="fade-up">
-     <div class="slider-item">
-     <div class="client-img">
-     <div class="lazy-container ratio ratio-1-1">
-     @if (is_null($testimonial->image))
+         <div class="slider-item">
+         <div class="client-img">
+         <div class="lazy-container ratio ratio-1-1">
+         @if (is_null($testimonial->image))
     <img data-src="{{ asset('assets/img/profile.jpg') }}"
-     class="lazyload">
+         class="lazyload">
 @else
     <img class="lazyload"
-     data-src="{{ asset('assets/img/clients/' . $testimonial->image) }}">
+         data-src="{{ asset('assets/img/clients/' . $testimonial->image) }}">
     @endif
 
 
-     </div>
-     </div>
-     <div class="client-content mt-30">
-     <div class="quote">
-     <p class="text">{{ $testimonial->comment }}</p>
-     </div>
-     <div
-     class="client-info d-flex flex-wrap gap-10 align-items-center justify-content-between">
-     <div class="content">
-     <h6 class="name">{{ $testimonial->name }}</h6>
-     <span class="designation">{{ $testimonial->occupation }}</span>
-     </div>
-     <div class="ratings">
+         </div>
+         </div>
+         <div class="client-content mt-30">
+         <div class="quote">
+         <p class="text">{{ $testimonial->comment }}</p>
+         </div>
+         <div
+         class="client-info d-flex flex-wrap gap-10 align-items-center justify-content-between">
+         <div class="content">
+         <h6 class="name">{{ $testimonial->name }}</h6>
+         <span class="designation">{{ $testimonial->occupation }}</span>
+         </div>
+         <div class="ratings">
 
-     <div class="rate">
-     <div class="rating-icon"
-     style="width: {{ $testimonial->rating * 20 }}%"></div>
-     </div>
-     <span class="ratings-total">({{ $testimonial->rating }}) </span>
-     </div>
-     </div>
-     </div>
-     </div>
-     </div>
+         <div class="rate">
+         <div class="rating-icon"
+         style="width: {{ $testimonial->rating * 20 }}%"></div>
+         </div>
+         <span class="ratings-total">({{ $testimonial->rating }}) </span>
+         </div>
+         </div>
+         </div>
+         </div>
+         </div>
  @empty
-     <div class="bg-light p-3 text-center mb-30 w-100">
-     <h3 class="mb-0"> {{ __('No Testimonials Found') }}</h3>
-     </div>
+         <div class="bg-light p-3 text-center mb-30 w-100">
+         <h3 class="mb-0"> {{ __('No Testimonials Found') }}</h3>
+         </div>
     @endforelse
-     </div>
-     </div>
-     </div>
-     </div>
-        </div>
-     </section>
+         </div>
+         </div>
+         </div>
+         </div>
+            </div>
+         </section>
     @endif -->
 
     <!-- @if ($secInfo->subscribe_section_status == 1)
     <section class="newsletter-area pb-200" data-aos="fade-up">
-        <div class="container">
-     <div class="newsletter-inner px-4">
-     <img class="lazyload bg-img" src="{{ asset('assets/img/' . $subscribeSectionImage) }}">
-     <div class="row justify-content-center text-center" data-aos="fade-up">
-     <div class="col-lg-6 col-xxl-5">
-     <div class="content mb-30">
-     <span class="subtitle color-white mb-10 d-block">{{ $subscribeSecInfo->title }}</span>
-     <h2 class="color-white">{{ $subscribeSecInfo?->subtitle }}</h2>
-     </div>
-     <form id="newsletterForm" class="subscription-form newsletter-form"
-     action="{{ route('store_subscriber') }}" method="POST">
-     @csrf
-     <div class="input-group radius-md">
-     <input class="form-control" placeholder="{{ __('Enter Your Email') }}"
-     type="email" name="email_id" required>
-     <button class="btn btn-lg btn-primary" type="submit">
-     {{ $subscribeSecInfo->btn_name ?? __('Start Now') }}</button>
-     </div>
-     </form>
-     </div>
-     </div>
-     </div>
-        </div>
-     </section>
+            <div class="container">
+         <div class="newsletter-inner px-4">
+         <img class="lazyload bg-img" src="{{ asset('assets/img/' . $subscribeSectionImage) }}">
+         <div class="row justify-content-center text-center" data-aos="fade-up">
+         <div class="col-lg-6 col-xxl-5">
+         <div class="content mb-30">
+         <span class="subtitle color-white mb-10 d-block">{{ $subscribeSecInfo->title }}</span>
+         <h2 class="color-white">{{ $subscribeSecInfo?->subtitle }}</h2>
+         </div>
+         <form id="newsletterForm" class="subscription-form newsletter-form"
+         action="{{ route('store_subscriber') }}" method="POST">
+         @csrf
+         <div class="input-group radius-md">
+         <input class="form-control" placeholder="{{ __('Enter Your Email') }}"
+         type="email" name="email_id" required>
+         <button class="btn btn-lg btn-primary" type="submit">
+         {{ $subscribeSecInfo->btn_name ?? __('Start Now') }}</button>
+         </div>
+         </form>
+         </div>
+         </div>
+         </div>
+            </div>
+         </section>
     @endif -->
 
 
@@ -1506,9 +1508,9 @@
     </div>
 
     <!-- <a href="javascript:;" class="floating-plus-btn" data-bs-toggle="modal" data-bs-target="#customerPhoneModal"
-        data-action="post_property">
-        <i class="fas fa-plus"></i>
-    </a> -->
+            data-action="post_property">
+            <i class="fas fa-plus"></i>
+        </a> -->
 
 
 
@@ -1527,41 +1529,42 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script>
-      $(document).ready(function () {
-        // allCategories = [{id:1, name:"", slug:"", type:"residential"}, ...]
-        var allCategories = @json($all_proeprty_categories);
+        $(document).ready(function() {
+            // allCategories = [{id:1, name:"", slug:"", type:"residential"}, ...]
+            var allCategories = @json($all_proeprty_categories);
 
-        // Property type change
-        $('.property_type').on('change', function() {
-            const selectedType = $(this).val();
-            const key = $(this).data('key'); // same row key
-            const categorySelect = $('#category_' + key);
+            // Property type change
+            $('.property_type').on('change', function() {
+                const selectedType = $(this).val();
+                const key = $(this).data('key'); // same row key
+                const categorySelect = $('#category_' + key);
 
-            let filtered = [];
+                let filtered = [];
 
-            // If NOT "all", filter categories by type
-            if (selectedType !== "all") {
-                filtered = allCategories.filter(cat => cat.type === selectedType);
-            } else {
-                filtered = allCategories; // show all
-            }
-            // Generate option HTML
-            let options = `<option selected disabled value="">Select Category</option>`;
-            options += `<option value="all">All</option>`;
+                // If NOT "all", filter categories by type
+                if (selectedType !== "all") {
+                    filtered = allCategories.filter(cat => cat.type === selectedType);
+                } else {
+                    filtered = allCategories; // show all
+                }
+                // Generate option HTML
+                let options = `<option selected disabled value="">Select Category</option>`;
+                options += `<option value="all">All</option>`;
 
-            filtered.forEach(cat => {
-                options += `<option value="${cat.category_content.slug}">${cat.category_content.name}</option>`;
+                filtered.forEach(cat => {
+                    options +=
+                        `<option value="${cat.category_content.slug}">${cat.category_content.name}</option>`;
+                });
+
+                categorySelect.html(options);
+
+                // Refresh Select2 (if used)
+                if (categorySelect.hasClass('select2')) {
+                    categorySelect.val('').trigger('change');
+                }
             });
 
-            categorySelect.html(options);
-
-            // Refresh Select2 (if used)
-            if (categorySelect.hasClass('select2')) {
-                categorySelect.val('').trigger('change');
-            }
         });
-
-    });
         // apartment slide ===============
         $(document).ready(function() {
             const $slider = $('.aps-slider');

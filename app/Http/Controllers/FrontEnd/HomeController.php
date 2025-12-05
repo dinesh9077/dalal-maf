@@ -35,8 +35,7 @@
 	use Illuminate\Support\Facades\Cache;
 
 	class HomeController extends Controller
-	{
-
+	{ 
 		public function index(Request $request)
 		{
 			$themeVersion = Basic::query()->pluck('theme_version')->first();
@@ -353,15 +352,13 @@
 				$queryResult['whyChooseUsImg'] = Basic::query()->select('why_choose_us_section_img1', 'why_choose_us_section_img2', 'why_choose_us_section_video_link')->first();
 				$queryResult['whyChooseUsInfo'] =  WhyChooseUs::where('language_id', $language->id)->first();
 			}
-
-
+ 
 			if ($themeVersion == 1 && $secInfo->cities_section_status == 1) {
 				$cities =  City::where([['status', 1], ['featured', 1]])->orderBy('serial_number', 'asc')->get();
 				$cities->map(function ($city) use ($language) {
 					$city['propertyCount'] = $city->cityProperties()->count();
 					$city['name'] = $city->getContent($language->id)->name;
-				});
-
+				}); 
 				$queryResult['cities'] =  $cities;
 			}
 
