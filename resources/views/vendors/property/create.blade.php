@@ -34,8 +34,8 @@
         <div class="col-md-12">
             <div class="card">
                 <!-- <div class="card-header">
-                    <div class="card-title d-inline-block">{{ __('Add Porperty') }}</div>
-                </div> -->
+                        <div class="card-title d-inline-block">{{ __('Add Porperty') }}</div>
+                    </div> -->
 
                 <div class="card-body">
                     <div class="row">
@@ -58,11 +58,11 @@
                                         <input name="file" type="file" multiple />
                                     </div>
                                 </form>
+                                <p class="text-warning mb-0">Image Size : 400 x 200</p>
                                 <p class="em text-danger mb-0" id="errslider_images"></p>
                             </div>
 
-                            <form id="carForm" action="{{ route($url) }}"
-                                method="POST" enctype="multipart/form-data">
+                            <form id="carForm" action="{{ route($url) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="type" value="{{ request()->type }}">
                                 <div id="sliders"></div>
@@ -82,6 +82,7 @@
                                                     <input type="file" class="img-input" name="featured_image">
                                                 </div>
                                             </div>
+                                              <p class="text-warning mb-0">Image Size : 310 x 180</p>
                                         </div>
                                     </div>
 
@@ -100,6 +101,7 @@
                                                     <input type="file" class="img-input2" name="floor_planning_image">
                                                 </div>
                                             </div>
+                                             <p class="text-warning mb-0">Image Size : 900 x 500</p> 
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -117,6 +119,7 @@
                                                     <input type="file" class="img-input3" name="video_image">
                                                 </div>
                                             </div>
+                                            <p class="text-warning mb-0">Image Size : 900 x 500</p>
                                         </div>
                                     </div>
                                 </div>
@@ -185,10 +188,10 @@
                                             <select name="area_id" class="form-control area_id js-example-basic-single3">
                                                 <option selected disabled>{{ __('Select Area') }}
                                                 </option>
-                                                    @foreach ($areas as $area)
-                                                        <option value="{{ $area->id }}">
-                                                            {{ $area->name }}</option>
-                                                    @endforeach
+                                                @foreach ($areas as $area)
+                                                    <option value="{{ $area->id }}">
+                                                        {{ $area->name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -196,17 +199,18 @@
                                     <div class="col-lg-3 city">
                                         <div class="form-group ">
                                             <label>{{ __('City') }} *</label>
-                                            <select onchange="getAreas(event)" name="city_id" class="form-control city_id js-example-basic-single3">
+                                            <select onchange="getAreas(event)" name="city_id"
+                                                class="form-control city_id js-example-basic-single3">
                                                 <option disabled selected>{{ __('Select City') }}
                                                 </option>
-                                                    @foreach ($cities as $city)
-                                                        <option value="{{ $city->id }}">
-                                                            {{ $city->cityContent->name }}</option>
-                                                    @endforeach
+                                                {{-- @foreach ($cities as $city)
+                                                    <option value="{{ $city->id }}">
+                                                        {{ $city->cityContent->name }}</option>
+                                                @endforeach --}}
                                             </select>
                                         </div>
                                     </div>
- 
+
                                     <div class="col-lg-3 state">
                                         <div class="form-group  ">
 
@@ -215,15 +219,14 @@
                                                 class="form-control state_id states js-example-basic-single3">
                                                 <option selected disabled>{{ __('Select State') }}
                                                 </option>
-                                                @foreach ($states as $state)
+                                                {{-- @foreach ($states as $state)
                                                     <option value="{{ $state->id }}">
                                                         {{ $state->stateContent->name }}</option>
-                                                @endforeach
-
+                                                @endforeach --}} 
                                             </select>
                                         </div>
-                                    </div> 
- 
+                                    </div>
+
                                     <div class="col-lg-3">
                                         <div class="form-group">
 
@@ -234,20 +237,20 @@
                                                 <option disabled selected>{{ __('Select Country') }}
                                                 </option>
 
-                                                @foreach ($propertyCountries as $country)
+                                                {{-- @foreach ($propertyCountries as $country)
                                                     <option value="{{ $country->id }}">
                                                         {{ $country->countryContent->name }}</option>
-                                                @endforeach
+                                                @endforeach --}}
                                             </select>
                                         </div>
-                                    </div> 
-                                    
+                                    </div>
+
                                     <div class="col-lg-12">
-                                        <div class="form-group">  
-                                             <label>{{ __('Address') }} *</label>
+                                        <div class="form-group">
+                                            <label>{{ __('Address') }} *</label>
                                             <input type="text" class="form-control" name="address"
-                                                placeholder="Enter Address"> 
-                                          
+                                                placeholder="Enter Address">
+
                                         </div>
                                     </div>
                                     <div class="col-lg-12 hideNotes">
@@ -296,30 +299,23 @@
                                     </div>
 
                                     <div class="col-lg-3">
-                                      <div class="form-group">
-                                        <label class="modal-label">Unit Type *</label>
-                                        <a href="javascript:;" onclick="addUnitType()" class="unit-btn "><i class="fas fa-plus-circle" style="color: white;"></i>
-                                        </a>
-                                        <div class="d-flex align-items-center add-property-type" style="">
-                                          <select class="modal-input select2" id="unit_type" name="unit_type[]" multiple >
-                                            @foreach($unitTypes as $unitType)
-                                              <option value="{{$unitType->id}}">{{$unitType->unit_name}}</option>
-                                            @endforeach
-                                          </select>
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                    <div class="col-lg-3">
                                         <div class="form-group">
-                                            <label>{{ __('Status') }} *</label>
-                                            <select name="status" id="" class="form-control">
-                                                <option value="1">{{ __('Active') }}</option>
-                                                <option value="0">{{ __('Inactive') }}</option>
-                                            </select>
+                                            <label class="modal-label">Unit Type *</label>
+                                            {{-- <a href="javascript:;" onclick="addUnitType()" class="unit-btn "><i
+                                                    class="fas fa-plus-circle" style="color: white;"></i>
+                                            </a> --}}
+                                            <div class="d-flex align-items-center add-property-type" style="">
+                                                <select class="modal-input select2" id="unit_type" name="unit_type[]"
+                                                    multiple>
+                                                    @foreach ($unitTypes as $unitType)
+                                                        <option value="{{ $unitType->id }}">{{ $unitType->unit_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-
+ 
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>{{ __('Latitude') }} </label>
@@ -336,22 +332,7 @@
                                         </div>
                                     </div>
 
-                                    {{-- <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label for="">{{ __('Staff') }}</label>
-                                            <select name="agent_id" class="form-control js-example-basic-single3">
-                                                <option value="" selected>{{ __('Select Agent') }}
-                                                </option>
-                                                @foreach ($agents as $agent)
-                                                    <option value="{{ $agent->id }}">{{ $agent->username }}</option>
-                                                @endforeach
-                                            </select>
-                                            <p class="text-warning">
-                                                {{ __('if you do not select any staff, then this property will be listed under you') }}
-                                            </p>
-                                        </div>
-                                    </div> --}}
-
+                                     
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>{{ __('Possession Date') }} </label>
@@ -363,7 +344,8 @@
                                         <div class="form-group">
                                             <label for="">{{ __('Furnishing') }}</label>
                                             <select name="furnishing" class="form-control js-example-basic-single3">
-                                                <option value="" selected>{{ __('Please Select a furnishing') }} </option>
+                                                <option value="" selected>{{ __('Please Select a furnishing') }}
+                                                </option>
                                                 <option value="Unfurnished">Unfurnished</option>
                                                 <option value="Semi-Furnished">Semi-Furnished</option>
                                                 <option value="Fully-Furnished">Fully-Furnished </option>
@@ -371,7 +353,31 @@
 
                                         </div>
                                     </div>
-
+                                    
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>{{ __('Status') }} *</label>
+                                            <select name="status" id="" class="form-control">
+                                                <option value="1">{{ __('Active') }}</option>
+                                                <option value="0">{{ __('Inactive') }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label for="">{{ __('Staff') }}</label>
+                                            <select name="agent_id" class="form-control js-example-basic-single3">
+                                                <option value="" selected>{{ __('Select Staff') }}
+                                                </option>
+                                                @foreach ($agents as $agent)
+                                                    <option value="{{ $agent->id }}">{{ $agent->username }}</option>
+                                                @endforeach
+                                            </select>
+                                            <p class="text-warning">
+                                                {{ __('if you do not select any staff, then this property will be listed under you') }}
+                                            </p>
+                                        </div>
+                                    </div>
 
 
                                 </div>
@@ -405,7 +411,7 @@
                                                                     placeholder="Enter Property Name">
                                                             </div>
                                                         </div>
- 
+
                                                     </div>
 
                                                     <div class="row">
@@ -589,11 +595,11 @@
         $('#purpose').on('change', function() {
             const val = this.value;
             const hideFields = val === 'franchiese' || val === 'business_for_sale';
-            
+
             // toggle visibility
             $('.hideBath, .hideSqft').toggle(!hideFields);
             $('.hideNotes').toggle(hideFields);
-             
+
             // reset values
             $('input[name="bath"], input[name="area"]').val(0);
             $('input[name="notes"]').val('');

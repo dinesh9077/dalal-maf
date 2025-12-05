@@ -99,12 +99,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if(session('success'))
-                                      <div class="alert alert-success alert-dismissible fade show">
-                                          {{ session('success') }}
-                                          <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                      </div>
-                                  @endif
+                                @if (session('success'))
+                                    <div class="alert alert-success alert-dismissible fade show">
+                                        {{ session('success') }}
+                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    </div>
+                                @endif
 
                                 <form action="{{ route('admin.property.imagesstore') }}" id="my-dropzone"
                                     enctype="multipart/formdata" class="dropzone create">
@@ -115,13 +115,12 @@
                                     <input type="hidden" value="{{ $property->id }}" name="property_id">
                                 </form>
                                 <p class="em text-danger mb-0" id="errslider_images"></p>
-                                                    <p class="text-warning mb-0">Image Size : 400 x 200</p>
+                                <p class="text-warning mb-0">Image Size : 400 x 200</p>
 
                             </div>
 
-                            <form id="carForm"
-                                action="{{ route($url, $property->id) }}"
-                                method="POST" enctype="multipart/form-data">
+                            <form id="carForm" action="{{ route($url, $property->id) }}" method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="property_id" value="{{ $property->id }}">
                                 <input type="hidden" name="type" value="{{ $property->type }}">
@@ -141,7 +140,7 @@
                                                     <input type="file" class="img-input" name="featured_image">
                                                 </div>
                                             </div>
-                                <p class="text-warning mb-0">Image Size :  310 x 180</p>
+                                            <p class="text-warning mb-0">Image Size : 310 x 180</p>
 
                                         </div>
                                     </div>
@@ -165,7 +164,7 @@
                                                     <input type="file" class="img-input2" name="floor_planning_image">
                                                 </div>
                                             </div>
-<p class="text-warning mb-0">Image Size :  900 x 500</p>
+                                            <p class="text-warning mb-0">Image Size : 900 x 500</p>
 
                                         </div>
                                     </div>
@@ -189,7 +188,7 @@
                                                     <input type="file" class="img-input3" name="video_image">
                                                 </div>
                                             </div>
-<p class="text-warning mb-0">Image Size :  900 x 500</p>
+                                            <p class="text-warning mb-0">Image Size : 900 x 500</p>
 
                                         </div>
                                     </div>
@@ -219,13 +218,15 @@
                                                 {{-- <option value="buy" @if ($property->purpose == 'buy') selected @endif>
                                                     {{ __('Buy') }}
                                                 </option> --}}
-                                                 <option value="lease" @if ($property->purpose == 'lease') selected @endif>
+                                                <option value="lease" @if ($property->purpose == 'lease') selected @endif>
                                                     {{ __('Lease') }}
                                                 </option>
-                                                <option value="franchiese" @if ($property->purpose == 'franchiese') selected @endif>
+                                                <option value="franchiese"
+                                                    @if ($property->purpose == 'franchiese') selected @endif>
                                                     {{ __('Franchiese') }}
                                                 </option>
-                                                <option value="business_for_sale" @if ($property->purpose == 'business_for_sale') selected @endif>
+                                                <option value="business_for_sale"
+                                                    @if ($property->purpose == 'business_for_sale') selected @endif>
                                                     {{ __('Business For Sale') }}
                                                 </option>
                                             </select>
@@ -270,77 +271,76 @@
                                     </div>
 
                                     <div class="col-lg-3 area">
-                                      <div class="form-group">
-                                          <label>{{ __('Area') }} *</label>
-                                          <select name="area_id" class="form-control area_id js-example-basic-single">
-                                              <option value="">{{ __('Select Area') }}</option>
-                                              @foreach ($allAreas as $area)
-                                                   <option value="{{ $area->id }}"
+                                        <div class="form-group">
+                                            <label>{{ __('Area') }} *</label>
+                                            <select name="area_id" class="form-control area_id js-example-basic-single">
+                                                <option value="">{{ __('Select Area') }}</option>
+                                                @foreach ($allAreas as $area)
+                                                    <option value="{{ $area->id }}"
                                                         {{ $property->area_id == $area->id ? 'selected' : '' }}>
                                                         {{ $area->name }}</option>
-                                              @endforeach
-                                          </select>
-                                      </div>
-                                  </div>
-
-                                  <div class="col-lg-3 state">
-                                      <div class="form-group">
-                                          <label>{{ __('State') }} *</label>
-                                          <select name="state_id" class="form-control state_id js-example-basic-single3">
-                                              <option value="">{{ __('Select State') }}</option>
-                                              @if ($property->state_id)
-                                                  <option value="{{ $property->state_id }}" selected>
-                                                      {{ $property->state?->stateContent?->name }}
-                                                  </option>
-                                              @endif
-                                          </select>
-                                      </div>
-                                  </div>
-
-                                  <div class="col-lg-3 city">
-                                      <div class="form-group">
-                                          <label>{{ __('City') }} *</label>
-                                          <select name="city_id" class="form-control city_id js-example-basic-single3">
-                                              <option value="">{{ __('Select City') }}</option>
-                                              @if ($property->city_id)
-                                                  <option value="{{ $property->city_id }}" selected>
-                                                      {{ $property->city?->cityContent?->name }}
-                                                  </option>
-                                              @endif
-                                          </select>
-                                      </div>
-                                  </div>
-
-                                  <div class="col-lg-3 country_old">
-                                      <div class="form-group">
-                                          <label>{{ __('Country') }} *</label>
-                                          <select name="country_id" class="form-control js-example-basic-single3 country">
-                                              <option value="">{{ __('Select Country') }}</option>
-                                              @if ($property->country_id)
-                                                  <option value="{{ $property->country_id }}" selected>
-                                                      {{ $property->country?->countryContent?->name }}
-                                                  </option>
-                                              @endif
-                                          </select>
-                                      </div>
-                                  </div>
-
-                                    <div class="col-lg-12">
-                                        <div
-                                            class="form-group">
-                                            <label>{{ __('Address') . '*' }} </label>
-                                            <input type="text"
-                                                name="address"
-                                                placeholder="Enter Address"
-                                                value="{{ @$property->address }}"
-                                                class="form-control">
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 hideNotes" style="display:{{ !in_array($property->purpose, ['franchiese', 'business_for_sale']) ? 'none' : 'block' }}">
+ 
+                                    <div class="col-lg-3 city">
+                                        <div class="form-group">
+                                            <label>{{ __('City') }} *</label>
+                                            <select name="city_id" class="form-control city_id js-example-basic-single3">
+                                                <option value="">{{ __('Select City') }}</option>
+                                                @if ($property->city_id)
+                                                    <option value="{{ $property->city_id }}" selected>
+                                                        {{ $property->city?->cityContent?->name }}
+                                                    </option>
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3 state">
+                                        <div class="form-group">
+                                            <label>{{ __('State') }} *</label>
+                                            <select name="state_id"
+                                                class="form-control state_id js-example-basic-single3">
+                                                <option value="">{{ __('Select State') }}</option>
+                                                @if ($property->state_id)
+                                                    <option value="{{ $property->state_id }}" selected>
+                                                        {{ $property->state?->stateContent?->name }}
+                                                    </option>
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3 country_old">
+                                        <div class="form-group">
+                                            <label>{{ __('Country') }} *</label>
+                                            <select name="country_id"
+                                                class="form-control js-example-basic-single3 country">
+                                                <option value="">{{ __('Select Country') }}</option>
+                                                @if ($property->country_id)
+                                                    <option value="{{ $property->country_id }}" selected>
+                                                        {{ $property->country?->countryContent?->name }}
+                                                    </option>
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>{{ __('Address') . '*' }} </label>
+                                            <input type="text" name="address" placeholder="Enter Address"
+                                                value="{{ @$property->address }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 hideNotes"
+                                        style="display:{{ !in_array($property->purpose, ['franchiese', 'business_for_sale']) ? 'none' : 'block' }}">
                                         <div class="form-group">
                                             <label>{{ __('Notes') }} *</label>
                                             <input type="text" class="form-control" name="notes"
-                                                placeholder="Enter Notes"  value="{{ $property->notes }}">
+                                                placeholder="Enter Notes" value="{{ $property->notes }}">
 
                                         </div>
                                     </div>
@@ -365,7 +365,8 @@
                                                     value="{{ $property->beds }}" placeholder="Enter number of bed">
                                             </div>
                                         </div> --}}
-                                        <div class="col-lg-3 hideBath" style="display:{{ in_array($property->purpose, ['franchiese', 'business_for_sale']) ? 'none' : 'block' }}">
+                                        <div class="col-lg-3 hideBath"
+                                            style="display:{{ in_array($property->purpose, ['franchiese', 'business_for_sale']) ? 'none' : 'block' }}">
                                             <div class="form-group">
                                                 <label>{{ __('Baths') }} *</label>
                                                 <input type="text" class="form-control" name="bath"
@@ -374,7 +375,8 @@
                                         </div>
                                     @endif
 
-                                    <div class="col-lg-3 hideSqft" style="display:{{ in_array($property->purpose, ['franchiese', 'business_for_sale']) ? 'none' : 'block' }}">
+                                    <div class="col-lg-3 hideSqft"
+                                        style="display:{{ in_array($property->purpose, ['franchiese', 'business_for_sale']) ? 'none' : 'block' }}">
                                         <div class="form-group">
                                             <label>{{ __('Area (sqft)') }} *</label>
                                             <input type="text" class="form-control" name="area"
@@ -383,24 +385,25 @@
                                     </div>
 
                                     <div class="col-lg-3">
-                                      <div class="form-group">
-                                        <label class="modal-label">Unit Type <span class="text-danger">*</span></label>
-                                        <div class="d-flex align-items-center add-property-type">
-                                        <select name="unit_type[]" class="form-control js-example-basic-single2"
-                                                multiple="multiple">
-                                                <option value="" disabled>
-                                                    {{ __('Please Select Unit Type') }}
-                                                </option>
-                                                @foreach ($unitTypes as $unitType)
-                                                    <option value="{{ $unitType->id }}"
-                                                        @foreach ($propertyUnities as $propertyUnity)
+                                        <div class="form-group">
+                                            <label class="modal-label">Unit Type <span
+                                                    class="text-danger">*</span></label>
+                                            <div class="d-flex align-items-center add-property-type">
+                                                <select name="unit_type[]" class="form-control js-example-basic-single2"
+                                                    multiple="multiple">
+                                                    <option value="" disabled>
+                                                        {{ __('Please Select Unit Type') }}
+                                                    </option>
+                                                    @foreach ($unitTypes as $unitType)
+                                                        <option value="{{ $unitType->id }}"
+                                                            @foreach ($propertyUnities as $propertyUnity)
                                                             {{ $propertyUnity->unit_id == $unitType->id ? 'selected' : '' }} @endforeach>
-                                                        {{ $unitType->unit_name }}</option>
-                                                @endforeach
-                                            </select>
+                                                            {{ $unitType->unit_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
-                                      </div>
-                                  </div>
+                                    </div>
 
                                     <div class="col-lg-3">
                                         <div class="form-group">
@@ -450,7 +453,8 @@
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>{{ __('Possession Date') }} </label>
-                                            <input type="date" class="form-control" name="possession_date" value="{{ $property->possession_date }}">
+                                            <input type="date" class="form-control" name="possession_date"
+                                                value="{{ $property->possession_date }}">
                                         </div>
                                     </div>
 
@@ -459,9 +463,14 @@
                                             <label for="">{{ __('Furnishing') }}</label>
                                             <select name="furnishing" class="form-control js-example-basic-single1">
                                                 <option value="">{{ __('Please Select a furnishing') }} </option>
-                                                <option value="Unfurnished" @if ($property->furnishing == 'Unfurnished') selected @endif>Unfurnished</option>
-                                                <option value="Semi-Furnished" @if ($property->furnishing == 'Semi-Furnished') selected @endif>Semi-Furnished</option>
-                                                <option value="Fully-Furnished" @if ($property->furnishing == 'Fully-Furnished') selected @endif>Fully-Furnished </option>
+                                                <option value="Unfurnished"
+                                                    @if ($property->furnishing == 'Unfurnished') selected @endif>Unfurnished</option>
+                                                <option value="Semi-Furnished"
+                                                    @if ($property->furnishing == 'Semi-Furnished') selected @endif>Semi-Furnished
+                                                </option>
+                                                <option value="Fully-Furnished"
+                                                    @if ($property->furnishing == 'Fully-Furnished') selected @endif>Fully-Furnished
+                                                </option>
                                             </select>
 
                                         </div>
@@ -475,7 +484,8 @@
                                     <div class="col-lg-3">
                                         <div class="form-group agent @if (empty($property->agent_id)) d-none @endif">
                                             <label for="">{{ __('Staff') }}</label>
-                                            <select name="agent_id" class="form-control agent_id js-example-basic-single1">
+                                            <select name="agent_id"
+                                                class="form-control agent_id js-example-basic-single1">
                                                 <option value="" selected>{{ __('Please Select') }}
                                                 </option>
                                                 @foreach ($agents as $agent)
@@ -759,7 +769,7 @@
 
         let galleryImages = {{ $uploadGImg }};
 
-         $('#purpose').on('change', function() {
+        $('#purpose').on('change', function() {
             const val = this.value;
             const hideFields = val === 'franchiese' || val === 'business_for_sale';
 
@@ -775,5 +785,4 @@
     <script type="text/javascript" src="{{ asset('assets/js/admin-partial.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/admin-dropzone.js') }}"></script>
     <script src="{{ asset('assets/js/property.js') }}"></script>
-
 @endsection

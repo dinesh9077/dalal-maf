@@ -118,15 +118,15 @@ class PropertyController extends Controller
         $information['propertyCategories'] = PropertyCategory::where([['type', $request->type], ['status', 1]])->with(['categoryContent' => function ($q) use ($language) {
             $q->where('language_id', $language->id);
         }])->get();
-        $information['propertyCountries'] = Country::with(['countryContent' => function ($q) use ($language) {
-            $q->where('language_id', $language->id);
-        }])->get();
-        $information['states'] = State::with(['stateContent' => function ($q) use ($language) {
-            $q->where('language_id', $language->id);
-        }])->get();
-        $information['cities'] = City::where('status', 1)->with(['cityContent' => function ($q) use ($language) {
-            $q->where('language_id', $language->id);
-        }])->get();
+        // $information['propertyCountries'] = Country::with(['countryContent' => function ($q) use ($language) {
+        //     $q->where('language_id', $language->id);
+        // }])->get();
+        // $information['states'] = State::with(['stateContent' => function ($q) use ($language) {
+        //     $q->where('language_id', $language->id);
+        // }])->get();
+        // $information['cities'] = City::where('status', 1)->with(['cityContent' => function ($q) use ($language) {
+        //     $q->where('language_id', $language->id);
+        // }])->get();
         $information['amenities'] = Amenity::with(['amenityContent' => function ($q) use ($language) {
             $q->where('language_id', $language->id);
         }])->where('status', 1)->whereJsonContains('types', $request->type)->get();
@@ -375,7 +375,7 @@ class PropertyController extends Controller
         $information['propertyUnities'] = PropertyUnit::where('property_id', $property->id)->get();
         $information['unitTypes']	= Unit::orderBy('unit_name', 'asc')->where('status', 1)->get();
         $information['propertyAreas'] = Area::where('city_id', $property->city_id)->get();
-        $information['allAreas'] = Area::get();
+        $information['allAreas'] = Area::where('status', 1)->get();
         $information['url'] = $this->routeName == 'agent.property_inventory.properties' ? 'agent.property_inventory.update_property' : 'agent.property_management.update_property';
         $information['admin_url'] = 'agent.admin.property_inventory.store_property';
         return view('agent.property.edit', $information);

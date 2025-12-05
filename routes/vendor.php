@@ -47,6 +47,7 @@ Route::prefix('vendor')->middleware('auth:vendor', 'Deactive')->group(function (
   Route::get('/package-list', 'Vendor\BuyPlanController@index')->name('vendor.plan.extend.index');
   Route::get('/package/checkout/{package_id}', 'Vendor\BuyPlanController@checkout')->name('vendor.plan.extend.checkout');
   Route::post('/package/checkout', 'Vendor\VendorCheckoutController@checkout')->name('vendor.plan.checkout');
+  Route::get('/package/offline-success', 'Vendor\VendorCheckoutController@offlineSuccess')->name('vendor.plan.offline.success');
 
   Route::post('/payment/instructions', 'Vendor\VendorCheckoutController@paymentInstruction')->name('vendor.payment.instructions');
 

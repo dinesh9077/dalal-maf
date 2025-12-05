@@ -354,18 +354,12 @@
 
 		public function signup()
 		{
-			$misc = new MiscellaneousController();
-
-			$language = $misc->getLanguage();
-
-			$queryResult['seoInfo'] = $language->seoInfo()->select('meta_keyword_signup', 'meta_description_signup')->first();
-
-			$queryResult['pageHeading'] = $misc->getPageHeading($language);
-
-			$queryResult['bgImg'] = $misc->getBreadcrumb();
-
-			$queryResult['recaptchaInfo'] = Basic::select('google_recaptcha_status')->first();
-
+			$misc = new MiscellaneousController(); 
+			$language = $misc->getLanguage(); 
+			$queryResult['seoInfo'] = $language->seoInfo()->select('meta_keyword_signup', 'meta_description_signup')->first(); 
+			$queryResult['pageHeading'] = $misc->getPageHeading($language); 
+			$queryResult['bgImg'] = $misc->getBreadcrumb(); 
+			$queryResult['recaptchaInfo'] = Basic::select('google_recaptcha_status')->first(); 
 			return view('frontend.user.signup', $queryResult);
 		}
 
@@ -391,7 +385,7 @@
 				$rules = array_merge($rules, [
 					'username' => 'required|max:255|unique:users,username',
 					'email' => 'required|email:rfc,dns|max:255|unique:users,email',
-					'password' => 'required|confirmed|min:6',
+					'password' => 'required|confirmed|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{8,}$/',
 					'password_confirmation' => 'required',
 				]);
 
@@ -400,10 +394,14 @@
 				}
 
 				$messages = [
+					'password.required' => 'The password field is required.',
+					'password.min' => 'The password must be at least 8 characters long.',
+					'password.regex' => 'The password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@$!%*?&).',
+					'password.confirmed' => 'The password confirmation does not match.',
 					'password_confirmation.required' => 'The confirm password field is required.',
 					'g-recaptcha-response.required' => 'Please verify that you are not a robot.',
 					'g-recaptcha-response.captcha' => 'Captcha error! Try again later or contact site admin.',
-				];
+				];	
 
 				$validator = Validator::make($request->all(), $rules, $messages);
 				if ($validator->fails()) {
@@ -997,20 +995,24 @@
 				$user->status = 1;
 				$user->is_new = "0";
 				$user->save();
-			}
+			} 
+ 
+			// Check if local testing mode is enabled
+			$isLocalTest = env('OTP_LOCAL_TEST', false);
 
-			// Generate OTP
-			$otp = rand(1000, 9999);
+			$otp = !$isLocalTest ? rand(1000, 9999) : 1234;
 			$smsContent = "Use OTP $otp to log in securely. This code is valid for 10 minutes. Keep it confidential._ Team Dalal Maf";
 
-			// Send via MsgClub helper
-			$result = msgClubSendSms($request->phone, $smsContent);
+			// Send via MsgClub helper only if not in local test mode
+			if (!$isLocalTest) {
+				$result = msgClubSendSms($request->phone, $smsContent);
 
-			if (!$result) {
-				return response()->json([
-					'message' => 'OTP sending failed.',
-					'otp' => $otp
-				]);
+				if (!$result) {
+					return response()->json([
+						'message' => 'OTP sending failed.',
+						'otp' => $otp
+					]);
+				}
 			}
 
 			// Calculate expiry (10 minutes)
@@ -1030,9 +1032,13 @@
 				]
 			);
 
-			return response()->json([
-				'message' => 'OTP sent successfully.'
-			]);
+			// Return response with OTP in local test mode
+			$response = ['message' => 'OTP sent successfully.'];
+			if ($isLocalTest) {
+				$response['otp'] = $otp;
+			}
+
+			return response()->json($response);
 		}
 
 		public function resendOtp(Request $request)
@@ -1046,18 +1052,23 @@
 			}
 			$now = now();
 			$expiresAt = $now->copy()->addMinutes(10);
+ 
+			// Check if local testing mode is enabled
+			$isLocalTest = env('OTP_LOCAL_TEST', false);
 
-			$otp = rand(1000, 9999);
+			$otp = !$isLocalTest ? rand(1000, 9999) : 1234;
 			$smsContent = "Use OTP $otp to log in securely. This code is valid for 10 minutes. Keep it confidential._ Team Dalal Maf";
+ 
+			// Send via MsgClub helper only if not in local test mode
+			if (!$isLocalTest) {
+				$result = msgClubSendSms($request->phone, $smsContent);
 
-			// Send via MsgClub helper
-			$result = msgClubSendSms($request->phone, $smsContent);
-
-			if (!$result) {
-				return response()->json([
-					'message' => 'OTP sending failed.',
-					'otp' => $otp
-				]);
+				if (!$result) {
+					return response()->json([
+						'message' => 'OTP sending failed.',
+						'otp' => $otp
+					]);
+				}
 			}
 
 			DB::table('otp_verification')->updateOrInsert(
@@ -1072,10 +1083,16 @@
 				]
 			);
 
-			return response()->json([
+			// Return response with OTP in local test mode
+			$response = [
 				'message' => 'OTP sent successfully.',
 				'expires_at' => $expiresAt->toIso8601String(),
-			]);
+			];
+			if ($isLocalTest) {
+				$response['otp'] = $otp;
+			}
+
+			return response()->json($response);
 		}
 
 		public function verifyOtp(Request $request)
@@ -1100,11 +1117,11 @@
 					$user = Agent::where('phone', $request->phone)->first();
 					$withoutLogin = $user ? "agent" : null;
 				}
-
+			 
 				if (!$user) {
 					return response()->json(['message' => 'User not found.'], 404);
 				}
-
+				
 				// Fetch latest OTP record
 				$otpRecord = DB::table('otp_verification')
 					->where('phone', $phone)
