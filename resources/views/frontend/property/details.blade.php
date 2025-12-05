@@ -776,6 +776,13 @@
                             <br>
                             <span> {{ __('Whatsapp') }} </span>
                         </div>
+                       <div class="action-btn">
+                            <a class="whatsapp btn copyBtn" style="background: gray;" href="javascript:void(0);">
+                                <i class="fa-solid fa-copy"></i>
+                            </a>
+                            <br>
+                            <span>{{ __('Copy') }}</span>
+                        </div>
 
                     </div>
                 </div>
@@ -800,6 +807,21 @@
                 window.history.replaceState({}, document.title, url.toString());
             }, 500); 
         @endif 
+
+
+        // === copy icon
+
+         document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector(".copyBtn").addEventListener("click", function () {
+            navigator.clipboard.writeText(window.location.href)
+                .then(() => {
+                    alert("Link Copied!");
+                })
+                .catch(err => {
+                    console.log("Copy failed", err);
+                });
+        });
+    });
 
     </script>
 @endsection

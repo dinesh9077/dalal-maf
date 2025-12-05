@@ -986,7 +986,7 @@ body {
 .sidebar[data-background-color="white"] .nav-collapse {
   margin-top: 0px;
   margin-bottom: 15px;
-  padding-bottom: 15px;
+  /* padding-bottom: 15px; */
   padding-top: 10px;
 }
 
@@ -1015,6 +1015,7 @@ body {
   margin-left: 25px;
   opacity: .85;
   color: black;
+  width:  100%;
 }
 
 .sidebar .nav-collapse li a .sub-item:before,

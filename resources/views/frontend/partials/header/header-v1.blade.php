@@ -1,3 +1,18 @@
+<style>  .wishlist-count-html1 {
+                    position: absolute;
+                        top: -8px;
+                        right: 2px;
+                    background: #e74c3c;
+                    color: #fff;
+                    border-radius: 50%;
+                    font-size: 11px;
+                    padding: 5px 5px;
+                    min-width: 16px;
+                    text-align: center;
+                    line-height: 1;
+                }
+              </style>
+
 <div class="request-loader">
     <img src="{{ asset('assets/img/loaders.gif') }}">
 </div>
@@ -97,23 +112,24 @@
                     <span class="style__postTab">{{ $initial }}</span>
             </button>
             <ul class="dropdown-menu" style="border-radius: 10px;">                 
-                 <li><a class="dropdown-item"
+                 <li>
+                    <a class="dropdown-item"
                          href="{{ $dashboardRoute }}">{{ __('Dashboard') }}</a></li>
-                          <li>
-                     @if ($authType != 'guest')
-                     <a href="{{ $authType === 'user'
-                 ? route('user.wishlist')
-                 : ($authType === 'agent'
-                     ? route('vendor.wishlist')
-                     : route('vendor.wishlist')) }}"
-                         class="dropdown-item" title="{{ __('My Wishlist') }}">
-                         My Wishlist
-                        <span class="wishlist-count-dropdown">({{ $wishlistCount }})</span>
+                          <li style="display: flex;">
+                        @if ($authType != 'guest')
+                        <a href="{{ $authType === 'user'? route('user.wishlist') : ($authType === 'agent'? route('vendor.wishlist') : route('vendor.wishlist')) }}" class="dropdown-item" title="{{ __('My Wishlist') }}">
+                            My Wishlist
+                            <span class="wishlist-count-dropdown">({{ $wishlistCount }})</span>
 
-                     </a>
-                     @endif
+                            
+
+
+                        </a>
+                        @endif
                  </li>
-                 <li><a class="dropdown-item" href="{{ $logoutRoute }}">{{ __('Logout') }}</a></li>
+                 <li>
+                    <a class="dropdown-item" href="{{ $logoutRoute }}">{{ __('Logout') }}</a>
+                </li>
                 
             </ul>
             <a class="style__postContainerTab p-sn-dds" href="{{ $postPropertyRoute }}">
@@ -235,23 +251,22 @@
                             </button>
                             <ul class="dropdown-menu" style="border-radius: 10px;">
                                 
-                                <li><a class="dropdown-item"
-                                        href="{{ $dashboardRoute }}">{{ __('Dashboard') }}</a></li>
-                                         <li>
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{{ $dashboardRoute }}">{{ __('Dashboard') }}</a>
+                                </li>
+                                <li style="display: flex;">
                                     @if ($authType != 'guest')
-                                    <a href="{{ $authType === 'user'
-                                ? route('user.wishlist')
-                                : ($authType === 'agent'
-                                    ? route('vendor.wishlist')
-                                    : route('vendor.wishlist')) }}"
-                                        class="dropdown-item" title="{{ __('My Wishlist') }}">
+                                    <a href="{{ $authType === 'user'? route('user.wishlist') : ($authType === 'agent'? route('vendor.wishlist') : route('vendor.wishlist')) }}" class="dropdown-item" >
                                         My Wishlist
-                                       <span class="wishlist-count-dropdown">({{ $wishlistCount }})</span>
 
+                                          <span class="wishlist-count-dropdown">({{ $wishlistCount }})</span>
                                     </a>
                                     @endif
                                 </li>
-                                <li><a class="dropdown-item" href="{{ $logoutRoute }}">{{ __('Logout') }}</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ $logoutRoute }}">{{ __('Logout') }}</a>
+                                </li>
                                
                             </ul>
                         </div>

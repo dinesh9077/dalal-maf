@@ -750,8 +750,8 @@ width: 38%;
 
                 .wishlist-count-html {
                     position: absolute;
-                    top: -5px;
-                    right: -8px;
+                    top: -4px;
+                    right: 5px;
                     background: #e74c3c;
                     color: #fff;
                     border-radius: 50%;

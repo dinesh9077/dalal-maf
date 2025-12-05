@@ -3406,9 +3406,9 @@ Lazyload CSS
 }
 
 
-.product-default .btn-wishlist i {
+/* .product-default .btn-wishlist i {
     transition: font-weight 0.3s ease-out;
-}
+} */
 
 .new-lables {
     position: absolute;
@@ -3480,6 +3480,7 @@ Lazyload CSS
 
 .btn-wishlist:hover i {
     font-weight: 700;
+    color: red;
 }
 
 .product-default .btn-wishlist.wishlist-active i {
@@ -5893,7 +5894,12 @@ p.cookie-consent__message * {
 
 .btn-wishlist {
     background-color: #f2f2f2 !important;
-    color: #000 !important;
+    color: black !important;
+}
+
+.btn-wishlist.wishlist-active i{
+    color: red !important;
+
 }
 
 .btn-wishlist .wishlist-icon {
