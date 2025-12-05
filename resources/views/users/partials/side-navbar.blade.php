@@ -1,8 +1,24 @@
+<style>
+     .main-title {
+        font-size: 16px;
+        color: #494949;
+        font-weight: 550;
+        letter-spacing: 1px;
+        margin: 12px 20px;
+        width: fit-content;
+        padding-bottom: 4px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #494949;
+
+    }
+</style>
+
 <div class="sidebar sidebar-style-2"
     data-background-color="{{'white2' }}">
     <div class="sidebar-wrapper scrollbar scrollbar-inner">
         <div class="sidebar-content">
-            <div class="user">
+            <!-- <div class="user">
                 <div class="avatar-sm float-left mr-2">
                     @if (Auth::guard('web')->user()->image != null)
                         <img src="{{ asset('assets/img/users/' . Auth::guard('web')->user()->image) }}" alt="Web Image"
@@ -18,36 +34,18 @@
                         <span>
                             {{ Auth::guard('web')->user()->username }}
                             <span class="user-level">{{ Auth::guard('web')->user()->user_type }}</span>
-                            <!-- <span class="caret"></span> -->
+                         
                         </span>
                     </a>
 
                     <div class="clearfix"></div>
 
-                    <!-- <div class="collapse in" id="adminProfileMenu">
-                        <ul class="nav">
-                            <li>
-                                <a href="{{ route('user.edit_profile') }}">
-                                    <span class="link-collapse">{{ __('Edit Profile') }}</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('user.change_password') }}">
-                                    <span class="link-collapse">{{ __('Change Password') }}</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('user.logout') }}">
-                                    <span class="link-collapse">{{ __('Logout') }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div> -->
+                    
                 </div>
-            </div>
+            </div> -->
 
+
+            
 
             <ul class="nav nav-primary">
                 {{-- search --}}
@@ -56,11 +54,20 @@
                         <form>
                             <div class="form-group py-0">
                                 <input name="term" type="text" class="form-control sidebar-search ltr"
-                                    placeholder="Search Menu Here...">
+                                    placeholder="Search Menu Here..." style="border-radius: 12px;">
                             </div>
                         </form>
                     </div>
                 </div>
+
+
+                   <!-- ================================================================================================================== -->
+                <!-- ================================================================================================================== -->
+
+
+                <h1 class="main-title">General :</h1>
+
+
 
                 {{-- dashboard --}}
                 <li class="nav-item @if (request()->routeIs('user.dashboard')) active @endif">
@@ -70,6 +77,14 @@
                     </a>
                 </li>
 
+
+                   <!-- ================================================================================================================== -->
+                <!-- ================================================================================================================== -->
+
+
+                <h1 class="main-title">Property Master :</h1>
+
+
                 <li
                     class="nav-item
                      @if (request()->routeIs('user.property_management.create_property')) active
@@ -78,7 +93,7 @@
                      @elseif (request()->routeIs('user.property_management.type')) active @endif">
                     <a data-toggle="collapse" href="#propertyManagement">
                         <i class="fal fa-home"></i>
-                        <p>{{ __('Property Management') }}</p>
+                        <p>{{ __('Properties') }}</p>
                         <span class="caret"></span>
                     </a>
 
@@ -109,12 +124,17 @@
                     </div>
                 </li>
 
-                <li class="nav-item  @if (request()->routeIs('user.inquiry.index')) active @endif">
-                    <a href="{{ route('user.inquiry.index') }}">
-                        <i class="fas fa-comment"></i>
-                        <p>{{ __('Sent Inquiry') }}</p>
-                    </a>
-                </li>
+
+                    <!-- ================================================================================================================== -->
+                    <!-- ================================================================================================================== -->
+
+                    <h1 class="main-title">Support & Resources :</h1>
+
+
+
+
+
+               
 
                 <li class="nav-item @if (request()->routeIs('user.support_ticket')) active
                       @elseif (request()->routeIs('user.support_ticket.message')) active
@@ -147,6 +167,16 @@
                         </ul>
                     </div>
                 </li>
+
+
+                 <li class="nav-item  @if (request()->routeIs('user.inquiry.index')) active @endif">
+                    <a href="{{ route('user.inquiry.index') }}">
+                        <i class="fas fa-comment"></i>
+                        <p>{{ __('Sent Inquiry') }}</p>
+                    </a>
+                </li>
+
+                
 
                 <li class="nav-item  @if (request()->routeIs('user.wishlist')) active @endif">
                     <a href="{{ route('user.wishlist') }}">

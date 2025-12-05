@@ -1,8 +1,24 @@
+<style>
+    .main-title {
+        font-size: 16px;
+        color: #494949;
+        font-weight: 550;
+        letter-spacing: 1px;
+        margin: 12px 20px;
+        width: fit-content;
+        padding-bottom: 4px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #494949;
+
+    }
+</style>
+
 <div class="sidebar sidebar-style-2"
     data-background-color="{{ Session::get('vendor_theme_version') == 'light' ? 'white' : 'dark2' }}">
     <div class="sidebar-wrapper scrollbar scrollbar-inner">
         <div class="sidebar-content">
-            <div class="user">
+            <!-- <div class="user">
                 <div class="avatar-sm float-left mr-2">
                     @if (Auth::guard('vendor')->user()->photo != null)
                         <img src="{{ asset('assets/admin/img/vendor-photo/' . Auth::guard('vendor')->user()->photo) }}"
@@ -17,36 +33,13 @@
                     <a data-toggle="collapse" href="#adminProfileMenu" aria-expanded="true">
                         <span>
                             {{ Auth::guard('vendor')->user()->username }}
-                            <span class="user-level">{{ Auth::guard('vendor')->user()->user_type }}</span>
-                            <!-- <span class="caret"></span> -->
+                            <span class="user-level">{{ Auth::guard('vendor')->user()->user_type }}</span>       
                         </span>
                     </a>
 
                     <div class="clearfix"></div>
-
-                    <!-- <div class="collapse in" id="adminProfileMenu">
-                        <ul class="nav">
-                            <li>
-                                <a href="{{ route('vendor.edit.profile') }}">
-                                    <span class="link-collapse">{{ __('Edit Profile') }}</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('vendor.change_password') }}">
-                                    <span class="link-collapse">{{ __('Change Password') }}</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('vendor.logout') }}">
-                                    <span class="link-collapse">{{ __('Logout') }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div> -->
                 </div>
-            </div>
+            </div> -->
 
 
             <ul class="nav nav-primary">
@@ -56,11 +49,18 @@
                         <form>
                             <div class="form-group py-0">
                                 <input name="term" type="text" class="form-control sidebar-search ltr"
-                                    placeholder="Search Menu Here...">
+                                    placeholder="Search Menu Here..." style="border-radius: 12px;">
                             </div>
                         </form>
                     </div>
                 </div>
+
+
+                   <!-- ================================================================================================================== -->
+                <!-- ================================================================================================================== -->
+
+
+                <h1 class="main-title">General :</h1>
 
                 {{-- dashboard --}}
                 <li class="nav-item @if (request()->routeIs('vendor.dashboard')) active @endif">
@@ -69,6 +69,14 @@
                         <p>{{ __('Dashboard') }}</p>
                     </a>
                 </li>
+
+
+                   <!-- ================================================================================================================== -->
+                <!-- ================================================================================================================== -->
+
+
+                <h1 class="main-title">Property Master :</h1>
+                
 
 
                 @if ($userCurrentPackage)
@@ -81,7 +89,7 @@
                       @elseif(request()->routeIs('vendor.property_management.edit')) active @endif">
                         <a data-toggle="collapse" href="#propertyManagement">
                             <i class="fas fa-home"></i>
-                            <p>{{ __('Property Management') }}</p>
+                            <p>{{ __('Properties') }}</p>
                             <span class="caret"></span>
                         </a>
 
@@ -112,91 +120,8 @@
                         </div>
                     </li>
 
-                            {{-- Property inventory --}}
 
-                    <li class="nav-item
-                     @if (request()->routeIs('vendor.property_inventory.create_property')) active
-                     @elseif (request()->routeIs('vendor.property_inventory.properties')) active
-                     @elseif (request()->routeIs('vendor.property_inventory.edit')) active
-                     @elseif (request()->routeIs('vendor.property_inventory.settings')) active
-                      @elseif(request()->routeIs('vendor.property_inventory.type')) active
-                      @elseif(request()->routeIs('vendor.property_inventory.manage_status_property')) active
-                      @elseif(request()->routeIs('vendor.property_inventory.converted_customer')) active @endif">
-                        <a data-toggle="collapse" href="#inventoryManagement">
-                            <i class="far fa-home"></i>
-                            <p>{{ __('Property inventory') }}</p>
-                            <span class="caret"></span>
-                        </a>
-
-                        <div id="inventoryManagement"
-                            class="collapse
-                              @if (request()->routeIs('vendor.property_inventory.create_property')) show
-                              @elseif (request()->routeIs('vendor.property_inventory.type')) show
-                              @elseif (request()->routeIs('vendor.property_inventory.properties')) show
-                              @elseif (request()->routeIs('vendor.property_inventory.settings')) show
-                              @elseif (request()->routeIs('vendor.property_inventory.edit')) show
-                              @elseif (request()->routeIs('vendor.property_inventory.manage_status_property')) show
-                              @elseif (request()->routeIs('vendor.property_inventory.converted_customer')) show
-                              @endif
-                              ">
-                            <ul class="nav nav-collapse">
-                                <li
-                                    class="{{ request()->routeIs('vendor.property_inventory.create_property') || request()->routeIs('vendor.property_inventory.type') ? 'active' : '' }}">
-                                    <a href="{{ route('vendor.property_inventory.type') }}">
-                                        <span class="sub-item">{{ __('Add Inventory') }}</span>
-                                    </a>
-                                </li>
-
-                                <li
-                                    class="{{ request()->routeIs('vendor.property_inventory.properties') ||
-                                    request()->routeIs('vendor.property_inventory.edit')
-                                        ? 'active'
-                                        : '' }}">
-                                    <a
-                                        href="{{ route('vendor.property_inventory.properties', ['language' => $defaultLang->code]) }}">
-                                        <span class="sub-item">{{ __('Manage Inventory') }}</span>
-                                    </a>
-                                </li>
-                                 <li
-                                    class="{{ request()->routeIs('vendor.property_inventory.manage_status_property') ? 'active' : '' }}">
-                                    <a href="{{ route('vendor.property_inventory.manage_status_property') }}">
-                                        <span class="sub-item">{{ __('Manage Inventory Status') }}</span>
-                                    </a>
-                                </li>
-                                <li
-                                    class="{{ request()->routeIs('vendor.property_inventory.converted_customer') ? 'active' : '' }}">
-                                    <a href="{{ route('vendor.property_inventory.converted_customer') }}">
-                                        <span class="sub-item">{{ __('Converted Customer') }}</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                  {{-- end property management  --}}
-                @endif
-                {{-- @if ($userCurrentPackage)
-                    <li class="nav-item  @if (request()->routeIs('vendor.property_message.index')) active @endif">
-                        <a href="{{ route('vendor.property_message.index') }}">
-                            <i class="fas fa-comment"></i>
-                            <p>{{ __('Property Messages') }}</p>
-                        </a>
-                    </li>
-                @endif --}}
-                <li class="nav-item  @if (request()->routeIs('vendor.inquiry.index')) active @endif">
-                    <a href="{{ route('vendor.inquiry.index') }}">
-                        <i class="fas fa-comment"></i>
-                        <p>{{ __('Sent Inquiry') }}</p>
-                    </a>
-                </li>
-                <li class="nav-item  @if (request()->routeIs('vendor.wishlist')) active @endif">
-                    <a href="{{ route('vendor.wishlist') }}">
-                        <i class="fas fa-heart"></i>
-                        <p>{{ __('Wishlist') }}</p>
-                    </a>
-                </li>
-
-                @if ($userCurrentPackage)
+                     @if ($userCurrentPackage)
                     <li
                         class="nav-item
                      @if (request()->routeIs('vendor.project_management.projects')) active
@@ -204,7 +129,7 @@
                      @elseif (request()->routeIs('vendor.project_management.edit')) active @elseif(request()->routeIs('vendor.project_management.project_types')) active @endif">
                         <a data-toggle="collapse" href="#projectManagement">
                             <i class="fas fa-city"></i>
-                            <p>{{ __('Project Management') }}</p>
+                            <p>{{ __('Project') }}</p>
                             <span class="caret"></span>
                         </a>
 
@@ -235,16 +160,7 @@
                         </div>
                     </li>
 
-                    {{-- Project Management end  --}}
-
-                    {{-- Start Customer  --}}
-                    <li class="nav-item  @if (request()->routeIs('vendor.customer_management.list')) active @endif">
-                        <a href="{{ route('vendor.customer_management.list') }}">
-                            <i class="fal fa-users-cog"></i>
-                            <p> {{ 'Inventory Customers' }} </p>
-                        </a>
-                    </li>
-                   {{-- end Customer  --}}
+                                   
 
                     <li class="nav-item  @if (request()->routeIs('vendor.agent_management.index')) active @endif">
                         <a href="{{ route('vendor.agent_management.index') }}">
@@ -253,7 +169,66 @@
                         </a>
                     </li>
 
-                    {{-- Start Account --}}
+                 
+                @endif
+
+
+
+            
+                    <!-- ================================================================================================================== -->
+                    <!-- ================================================================================================================== -->
+
+
+                <h1 class="main-title">Property Master :</h1>
+
+
+
+                
+
+                  <li class="nav-item {{ request()->routeIs('vendor.property_inventory.create_property') || request()->routeIs('vendor.property_inventory.type') ? 'active' : '' }}">
+                                <a href="{{ route('vendor.property_inventory.type') }}">
+                                     <i class="far fa-home"></i><p >{{ __('Add Full Property ') }}</p>
+                                </a>
+                            </li>
+                            <li
+                                class="nav-item {{ request()->routeIs('vendor.property_inventory.properties') ||
+                                request()->routeIs('vendor.property_inventory.edit')
+                                    ? 'active'
+                                    : '' }}">
+                                <a
+                                    href="{{ route('vendor.property_inventory.properties', ['language' => $defaultLang->code]) }}">
+                                     <i class="far fa-home"></i><p>{{ __('Manage Full Property') }}</p>
+                                </a>
+                            </li>
+                             <li
+                                class="nav-item {{ request()->routeIs('vendor.property_inventory.manage_status_property') ? 'active' : '' }}">
+                                <a href="{{ route('vendor.property_inventory.manage_status_property') }}">
+                                     <i class="far fa-home"></i><p>{{ __('Property Live Status') }}</p>
+                                </a>
+                            </li>
+                            <li
+                                class="nav-item {{ request()->routeIs('vendor.property_inventory.converted_customer') ? 'active' : '' }}">
+                                <a href="{{ route('vendor.property_inventory.converted_customer') }}">
+                                     <i class="far fa-home"></i><p >{{ __('Purchased Customers') }}</p>
+                                </a>
+                            </li>
+
+
+                    {{-- end property management  --}}
+                    @endif
+
+
+                    {{-- Start Customer  --}}
+                    <li class="nav-item  @if (request()->routeIs('vendor.customer_management.list')) active @endif">
+                        <a href="{{ route('vendor.customer_management.list') }}">
+                            <i class="fal fa-users-cog"></i>
+                            <p> {{ 'All Customer List' }} </p>
+                        </a>
+                    </li>
+                   {{-- end Customer  --}}
+
+
+                      {{-- Start Account --}}
                       <li class="nav-item @if (request()->routeIs('vendor.sales-bill.index')) active @endif">
                           <a href="{{ route('vendor.sales-bill.index') }}">
                               <i class="fal fa-university"></i>
@@ -261,8 +236,19 @@
                           </a>
                       </li>
                     {{-- end Account  --}}
+
+
+
+                      <!-- ================================================================================================================== -->
+                    <!-- ================================================================================================================== -->
+
+                    <h1 class="main-title">Support & Resources :</h1>
+
+
+
+                
                     @php
-                        $support_status = DB::table('support_ticket_statuses')->first();
+                    $support_status = DB::table('support_ticket_statuses')->first();
                     @endphp
                     @if ($support_status->support_ticket_status == 'active')
                         {{-- Support Ticket --}}
@@ -299,7 +285,50 @@
                             </div>
                         </li>
                     @endif
-                @endif
+
+
+                    
+
+
+
+                     <!-- ================================================================================================================== -->
+                    <!-- ================================================================================================================== -->
+
+
+                {{-- @if ($userCurrentPackage)
+                    <li class="nav-item  @if (request()->routeIs('vendor.property_message.index')) active @endif">
+                        <a href="{{ route('vendor.property_message.index') }}">
+                            <i class="fas fa-comment"></i>
+                            <p>{{ __('Property Messages') }}</p>
+                        </a>
+                    </li>
+                @endif --}}
+                <li class="nav-item  @if (request()->routeIs('vendor.inquiry.index')) active @endif">
+                    <a href="{{ route('vendor.inquiry.index') }}">
+                        <i class="fas fa-comment"></i>
+                        <p>{{ __('Sent Inquiry') }}</p>
+                    </a>
+                </li>
+                <li class="nav-item  @if (request()->routeIs('vendor.wishlist')) active @endif">
+                    <a href="{{ route('vendor.wishlist') }}">
+                        <i class="fas fa-heart"></i>
+                        <p>{{ __('Wishlist') }}</p>
+                    </a>
+                </li>
+
+
+                  
+
+
+                      <!-- ================================================================================================================== -->
+                    <!-- ================================================================================================================== -->
+
+                    <h1 class="main-title">Package & Payement :</h1>
+
+
+
+
+               
 
 
                 {{-- dashboard --}}
@@ -319,25 +348,6 @@
                         <p>{{ __('Payment Logs') }}</p>
                     </a>
                 </li>
-                {{-- <li class="nav-item @if (request()->routeIs('vendor.edit.profile')) active @endif">
-                    <a href="{{ route('vendor.edit.profile') }}">
-                        <i class="fal fa-user-edit"></i>
-                        <p>{{ __('Edit Profile') }}</p>
-                    </a>
-                </li>
-                <li class="nav-item @if (request()->routeIs('vendor.change_password')) active @endif">
-                    <a href="{{ route('vendor.change_password') }}">
-                        <i class="fal fa-key"></i>
-                        <p>{{ __('Change Password') }}</p>
-                    </a>
-                </li>
-
-                <li class="nav-item @if (request()->routeIs('vendor.logout')) active @endif">
-                    <a href="{{ route('vendor.logout') }}">
-                        <i class="fal fa-sign-out"></i>
-                        <p>{{ __('Logout') }}</p>
-                    </a>
-                </li> --}}
             </ul>
         </div>
     </div>
