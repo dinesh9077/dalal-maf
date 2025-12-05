@@ -679,7 +679,7 @@
                         <div class="col-12">
                             <div class="section-title new-titles" data-aos="fade-up"
                                 style="position: relative;">
-                                <h2 class="title">{{ $propertySecInfo->title }}</h2> y
+                                <h2 class="title">{{ $propertySecInfo->title }}</h2>
                                 <a href="{{ url('view-all-properties') }}?sort=new"
                                     class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 8px 20px;">
                                     View All

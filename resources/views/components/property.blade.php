@@ -91,7 +91,8 @@
 		@endphp
 		@endif
 		@if (!Auth::guard('vendor')->check() && !Auth::guard('web')->check() && !Auth::guard('agent')->check())
-		<a type="button" class="btn-wishlist new-heart-btn" data-bs-toggle="modal" data-bs-target="#customerPhoneModal" data-action="login">
+		<a type="button" class="btn-wishlist new-heart-btn" data-bs-toggle="modal" data-bs-target="#customerPhoneModal"
+                                data-action="wishlist" data-property_id="{{ $property->id}}">
 			<i class="fal fa-heart"></i>
 		</a>
 		@else
