@@ -206,7 +206,7 @@
   color: #334155;
 }
 
-@media(max-width : 500px) {
+@media(max-width : 575px) {
   .section-title .title {
     font-size: 20px;
   }

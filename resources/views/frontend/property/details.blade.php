@@ -284,16 +284,16 @@ $version = $basicInfo->theme_version;
                                     @foreach ($sliders as $index => $slider)
                                     <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
                                         <img src="{{ asset('assets/img/property/slider-images/' . $slider->image) }}"
-                                            class="d-block w-100 rounded" alt="Slider Image {{ $index + 1 }}">
+                                            class="d-block w-100 new-width-set-rounded" alt="Slider Image {{ $index + 1 }}">
                                     </div>
                                     @endforeach
                                 </div>
                                 <!-- Controls -->
-                                <button class="carousel-control-prev" type="button"
+                                <button class="carousel-control-prev new-width-set-lr" type="button"
                                     data-bs-target="#newProImagesCarousel" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon"></span>
                                 </button>
-                                <button class="carousel-control-next" type="button"
+                                <button class="carousel-control-next new-width-set-lr-1" type="button"
                                     data-bs-target="#newProImagesCarousel" data-bs-slide="next">
                                     <span class="carousel-control-next-icon"></span>
                                 </button>
@@ -621,12 +621,11 @@ $version = $basicInfo->theme_version;
                                 <h3 class="mb-20  new-title-pps">{{ __('Amenities') }}</h3>
                                 <ul class="featured-list list-unstyled p-0 mt-20">
                                     @foreach ($amenities as $amenity)
-                                    <li class="d-inline-flex flex-column align-items-center me-3" style="width: 80px;">
+                                    <li class="d-inline-flex flex-column align-items-center me-3 new-aminities-div" style="width: 80px;">
                                         <i class="{{ $amenity->amenity->icon }} mb-1 amenities-icon"></i>
                                         <span class="amenities-title">{{ $amenity->amenityContent?->name }}</span>
                                     </li>
                                     @endforeach
-
                                 </ul>
                             </div>
                         </div>
@@ -651,7 +650,7 @@ $version = $basicInfo->theme_version;
 
                         @if (!empty($propertyContent->floor_planning_image))
                         <div class="new-details-bg-white">
-                            <div class="product-planning mb-40">
+                            <div class="product-planning">
                                 <h3 class="new-title-pps">{{ __('Floor Planning') }}</h3>
                                 <div class="lazy-container new-b-20 ratio ratio-16-11 border mt-4">
                                     <img class="lazyload" src="assets/images/placeholder.png"
@@ -663,9 +662,9 @@ $version = $basicInfo->theme_version;
 
                         @if (!empty($propertyContent->latitude) && !empty($propertyContent->longitude))
                         <div class="new-details-bg-white">
-                            <div class="product-location mb-40">
+                            <div class="product-location">
                                 <h3 class="mb-20 new-title-pps">{{ __('Location') }}</h3>
-                                <div class="lazy-container new-b-20 ratio ratio-21-9 border mt-4">
+                                <div class="lazy-container new-b-20 ratio ratio-21-9 border mt-2">
                                     <iframe class="lazyload"
                                         src="https://maps.google.com/maps?q={{ $propertyContent->latitude }},{{ $propertyContent->longitude }}&hl={{ $currentLanguageInfo->code }}&z=14&amp;output=embed"></iframe>
                                 </div>

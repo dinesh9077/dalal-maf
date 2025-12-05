@@ -3789,7 +3789,7 @@ Lazyload CSS
 
 .product-single .product-single-details .product-location {
     font-size: var(--font-sm);
-    margin-top: 5px;
+    /* margin-top: 5px; */
 }
 
 .product-single .product-single-details .product-info i,
@@ -6923,6 +6923,10 @@ p.cookie-consent__message * {
     color: #212529 !important;
 }
 
+.new-title-pps p{
+    margin-bottom: 0px !important;
+} 
+
 .new-future-tit {
     font-size: 14px;
     color: black;
@@ -7635,7 +7639,7 @@ p.cookie-consent__message * {
 }
 
 .pro-over-detail-box {
-    min-width: 180px;
+    min-width: 115px;
 }
 
 .pro-over-title {
@@ -7675,6 +7679,16 @@ p.cookie-consent__message * {
 
 .new-pro-images-grid .col-md-4 img {
     height: 216px;
+}
+
+@media(max-width : 767px) {
+    .new-pro-images-grid .col-md-8  img {
+        height: 150px;
+    }
+
+    .new-pro-images-grid .col-md-4 img {
+        height: 100px;
+    }
 }
 
 .new-pro-overlay {
@@ -7752,6 +7766,8 @@ p.cookie-consent__message * {
     transition: ease 1s;
 }
 
+
+
 .why-main-div:hover {
     border: 1px solid var(--theme-color);
 
@@ -7774,6 +7790,26 @@ p.cookie-consent__message * {
     font-size: 14px;
     line-height: 1.7;
     width: 80%;
+}
+
+
+@media(max-width : 767px){
+   .why-main-div {
+    margin-top: 15px;
+    padding: 12px;
+}
+
+.why-main-div h6 {
+    font-size: 17px  !important;
+    
+}
+
+.why-main-div p {
+    font-size: 12px;
+    margin-bottom: 0px;
+    line-height: 1.5;
+}
+
 }
 
 .why-main-div .icons {
@@ -8741,9 +8777,9 @@ button:hover {
 }
 
 .ui-menu-item-wrapper {
-
     border-bottom: 1px solid #dcdcdc;
 }
+
 
 .ui-widget.ui-widget-content:hover {
     background-color: white !important;
@@ -8822,16 +8858,6 @@ button:hover {
     }
 }
 
-/*  */
-.prop-pad {
-    margin-top: 0px;
-}
-
-@media(min-width:320px) and (max-width:650px) {
-    .prop-pad {
-        margin-top: 35px;
-    }
-}
 
 .mobile-search {
     display: none;
@@ -9243,6 +9269,12 @@ button:hover {
     margin-top: 130px !important;
 }
 
+@media(max-width : 767px) {
+    .VD-pages {
+        margin-top: 80px !important;
+    }
+}
+
 .share-link .wishlist-active i {
     font-weight: 700;
 }
@@ -9316,10 +9348,11 @@ button:hover {
     position: absolute;
     bottom: 15px;
     z-index: 99;
-    left: 10px;
+    left: 3px;
     color: black !important;
     background: white;
-    padding: 1px 6px;
+    padding: 1px 1px;
+    width: 93%;
     border-radius: 3px;
     font-size: 10px !important;
 }
@@ -9526,3 +9559,119 @@ gap: 4px;
     padding-top: 10px;
     border-radius: 0px 0px 10px 10px;
 }
+
+.new-width-set-lr{
+width: 40px;
+    height: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: black;
+    padding: 10px;
+    left: 14px;
+    border-radius: 10px;
+}
+
+.new-width-set-lr-1{
+width: 40px;
+    height: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: black;
+    padding: 10px;
+    right: 14px;
+    border-radius: 10px;
+}
+
+.new-width-set-rounded{
+    height: 500px;
+    border-radius: 20px !important;
+    object-fit: cover;
+}
+
+.new-aminities-div{
+        margin-bottom: 0px !important;
+}
+
+/* ========================================================== */
+
+.new-margin-mobile-hot-pro{
+    padding-bottom: 15px !important;
+}
+
+.new-margin-mobile-fea-pro{
+    padding-top: 70px;
+    padding-bottom: 20px;
+}
+
+.new-margin-mobile-rec-pro{
+    padding-bottom: 13px;
+    
+}
+
+.new-margin-mobile-fast-sell{
+padding-bottom: 21px;
+}
+
+
+.new-margin-mob-last-pro{
+    padding-top: 20px;
+     padding-bottom: 20px;
+}
+
+.new-margin-exp-type{
+    padding-top: 20px;
+     padding-bottom: 15px;
+}
+
+.new-margin-why-d-m{
+    padding-top: 20px;
+     padding-bottom: 30px;
+}
+
+.new-margin-why-abs{
+   padding-top: 30px;
+     padding-bottom: 40px; 
+}
+
+@media(max-width : 767px){
+.new-margin-mobile-fea-pro{
+       padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.new-margin-mobile-hot-pro{
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+}
+
+.new-margin-mobile-rec-pro{
+    padding-top: 30px !important;
+    padding-bottom: 30px;
+}
+
+.new-margin-mobile-fast-sell{
+  padding-top: 30px !important;
+    padding-bottom: 30px;
+}
+
+.new-margin-mob-last-pro{
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+}
+
+.new-margin-exp-type {
+    padding-top: 30px !important;
+    padding-bottom: 17px !important;
+}
+
+.new-margin-why-d-m{
+   padding-top: 30px !important;
+    padding-bottom: 30px !important; 
+}
+
+.new-margin-why-abs{
+   padding-top: 30px !important;
+    padding-bottom: 40px !important; 
+}
+}
+

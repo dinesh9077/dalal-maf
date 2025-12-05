@@ -43,20 +43,11 @@
 
     .ui-widget.ui-widget-content .ui-menu-item .ui-menu-item-wrapper:hover {
         background: black !important;
-        border: none !important;
+        border-color: none !important;
         color: white !important;
         outline: none !important;
         border-radius: 5px !important;
 
-        .ui-widget.ui-widget-content .ui-menu-item .ui-menu-item-wrapper:hover {
-            background: black !important;
-            border: none !important;
-            color: white !important;
-            outline: none !important;
-            border-radius: 5px !important;
-
-
-        }
     }
 
     .ui-widget.ui-widget-content .ui-menu-item {
@@ -500,8 +491,8 @@
     </section>
 
     @if ($featured_properties->isNotEmpty())
-    <section class="product-area popular-product product-1 pt-70 pb-20 relative">
-            <div class="container border-0">
+    <section class="product-area popular-product product-1 relative new-margin-mobile-fea-pro">
+            <div class="container border-0 ">
                 <div class="row" style="position: relative;">
                     <div class="section-title mb-10 new-titles position-relative aos-init aos-animate" data-aos="fade-up">
                         <h2 class="title">Featured Properties</h2>
@@ -541,7 +532,7 @@
 
     @if ($hotProperties->isNotEmpty())
         <section class="product-area featured-product">
-            <div class="container" style="padding-bottom: 15px;">
+            <div class="container new-margin-mobile-hot-pro">
                 <div class="row" style="position: relative;">
                     <div class="section-title mb-10 new-titles" data-aos="fade-up" style="position: relative;">
                         <h2 class="title" style="text-align : center;">Hot Properties</h2>
@@ -585,8 +576,8 @@
 
 
     @if ($recommendedProperties->isNotEmpty())
-        <section class="product-area featured-product" style="padding-bottom: 13px;">
-            <div class="container">
+        <section class="product-area featured-product " >
+            <div class="container new-margin-mobile-rec-pro">
                 <div class="row" style="position: relative;">
                     <div class="section-title  mb-10 new-titles" data-aos="fade-up" style="position: relative;">
                         <h2 class="title" style="text-align : center;">Recommended Properties</h2>
@@ -630,8 +621,8 @@
     @endif
 
     @if ($fastSellingProperties->isNotEmpty())
-        <section class="product-area featured-product" style="padding-bottom: 21px;">
-            <div class="container">
+        <section class="product-area featured-product">
+            <div class="container new-margin-mobile-fast-sell">
                 <div class="row" style="position: relative;">
 
                     <div class="section-title mb-10 new-titles" data-aos="fade-up" style="position: relative;">
@@ -681,11 +672,11 @@
         <section class="product-area popular-product product-1 relative">
             <img src="{{ asset('assets/front/images/new-images/new-primume-properties.png') }}" alt=""
                 class="new-primume-prop-img">
-            <div class="container pt-20 pb-20">
+            <div class="container new-margin-mob-last-pro">
                 <div>
                     <div class="row">
                         <div class="col-12">
-                            <div class="section-title prop-pad new-titles" data-aos="fade-up" style="position: relative;">
+                            <div class="section-title  new-titles" data-aos="fade-up" style="position: relative;">
                                 <h2 class="title">{{ $propertySecInfo->title }}</h2>
 
                                  <a href="{{ url('properties/is_fast_selling/all') }}"
@@ -740,7 +731,7 @@
 
 
     <section class="product-area popular-product product-1 relative">
-        <div class="container pt-20 pb-20 ">
+        <div class="container new-margin-mob-last-pro">
             <div class="row">
                 <div class="col-12">
                     <div class="section-title  aos-init aos-animate" data-aos="fade-up" style="position: relative;">
@@ -793,7 +784,7 @@
 
 
     <section class="product-area popular-product product-1 relative">
-        <div class="container pt-20 pb-20">
+        <div class="container new-margin-mob-last-pro">
             <div class="row" style="position: relative;">
                 <div class="col-12">
                     <div class="section-title mb-10 aos-init aos-animate" data-aos="fade-up" style="position : relative;">
@@ -845,11 +836,8 @@
 
 
     @if ($secInfo->cities_section_status == 1)
-        <section class="new-gellary-area pb-30 relative ">
-
-            <!-- <img src="http://127.0.0.1:8000/assets/front/images/new-images/new-primume-properties.png" alt="" class="exp-img"> -->
-
-            <div class="container pt-20 " style="border-top: 2px solid #f4f5f7;">
+        <section class="new-gellary-area relative ">
+            <div class="container new-margin-mob-last-pro" style="border-top: 2px solid #f4f5f7;">
                 <div class="row">
                     <div class="col-12">
                         <div class="section-title" data-aos="fade-up">
@@ -859,7 +847,6 @@
 
                 </div>
                 <div class="row ">
-                    <!-- City Card Start -->
                     @forelse ($cities as $city)
                         <div class="custom-col-5 mt-3 p-0" data-aos="fade-up">
                             <a href="{{ route('frontend.properties', ['city' => $city->name]) }}" class="text-center"
@@ -915,14 +902,13 @@
                 </div> --}}
 
             </div>
-
             <img src="{{ asset('assets/front/images/new-images/left-img.png') }}" alt="" class="city-left">
             <img src="{{ asset('assets/front/images/new-images/right-img.png') }}" alt="" class="city-right">
         </section>
     @endif
 
 
-    <div class="container pt-20  upcoming-projects" data-aos="fade-up" style="border-top: 2px solid #f4f5f7;">
+    <div class="container upcoming-projects new-margin-mob-last-pro" data-aos="fade-up" style="border-top: 2px solid #f4f5f7;">
 
         <div class="row">
             <div class="col-12">
@@ -1020,8 +1006,8 @@
     </section>
 
     @if ($secInfo->why_choose_us_section_status == 1)
-        <section class="new-aps-sections" style="padding-top: 25px;     padding-bottom: 15px;">
-            <div class="container">
+        <section class="new-aps-sections" >
+            <div class="container new-margin-exp-type">
                 <div class="section-title title-inline    aos-init aos-animate d-flex" data-aos="fade-up">
                     <h2 class="title">Explore Property Types</h2>
                 </div>
@@ -1108,8 +1094,8 @@
         </div>
     </section> -->
 
-    <section class="why-dlal-dection pb-30" style="padding-top: 17px;">
-        <div class="container">
+    <section class="why-dlal-dection">
+        <div class="container new-margin-why-d-m">
             <div class="section-title title-inline  aos-init aos-animate d-flex " style="flex-direction: column;"
                 data-aos="fade-up">
                 <h2 class="title">Why DalalMaf ?</h2>
@@ -1162,8 +1148,8 @@
         </div>
     </section>
 
-    <section class="about-section-new pt-40 pb-40">
-        <div class="container">
+    <section class="about-section-new ">
+        <div class="container new-margin-why-abs">
             <div class="row">
                 <div class="col-lg-6 about-lrft-sections-new">
                     <img src="{{ asset('assets/front/images/acrs-imag/about-right.png') }}" alt=""
@@ -1486,7 +1472,7 @@
 
             <!-- Mobile Button -->
             <div class="text-center mt-4 view-all-mobile">
-                <a href="{{ route('blog') }}" class="btn btn-lg btn-primary mb-30"
+                <a href="{{ route('blog') }}" class="btn btn-lg btn-primary"
                     style="background-color:var(--theme-color);">All
                     Blogs</a>
             </div>
@@ -1597,11 +1583,17 @@
                     {
                         breakpoint: 992,
                         settings: {
-                            slidesToShow: 2
+                            slidesToShow: 3
                         }
                     },
                     {
                         breakpoint: 576,
+                        settings: {
+                            slidesToShow: 2
+                        }
+                    },
+                      {
+                        breakpoint: 450,
                         settings: {
                             slidesToShow: 1
                         }
