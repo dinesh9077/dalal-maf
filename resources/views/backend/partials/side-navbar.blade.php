@@ -768,9 +768,15 @@
                 @endif
                 {{-- end support tickets  --}}
 
+            <li class="nav-item {{ request()->routeIs('admin.home_page.hero_section.static_version') ? 'active' : '' }}">
+                <a href="{{ route('admin.home_page.hero_section.static_version', ['language' => $defaultLang->code]) }}">
+                    <i class="fal fa-layer-group"></i>
+                    <p>Banner Section</p>
+                </a>
+            </li>
+                
 
-
-                {{-- home page --}}
+                <!-- {{-- home page --}}
                 @if (is_null($roleInfo) || (!empty($rolePermissions) && in_array('Home Page', $rolePermissions)))
                     <li
                         class="nav-item @if (request()->routeIs('admin.home_page.hero_section.slider_version')) active
@@ -801,27 +807,27 @@
 
                         <div id="home_page"
                             class="collapse
-              @if (request()->routeIs('admin.home_page.hero_section.slider_version')) show
+                    @if (request()->routeIs('admin.home_page.hero_section.slider_version')) show
 
-              @elseif (request()->routeIs('admin.home_page.about_section')) show
-              @elseif (request()->routeIs('admin.home_page.category_section')) show
-              @elseif (request()->routeIs('admin.home_page.work_process_section')) show
-              @elseif (request()->routeIs('admin.home_page.feature_section')) show
-              @elseif (request()->routeIs('admin.home_page.counter_section')) show
-              @elseif (request()->routeIs('admin.home_page.testimonial_section')) show
-              @elseif (request()->routeIs('admin.home_page.call_to_action_section')) show
-              @elseif (request()->routeIs('admin.home_page.hero_section.static_version')) show
-              @elseif (request()->routeIs('admin.home_page.about_section')) show
-              @elseif (request()->routeIs('admin.home_page.brand_section')) show
-              @elseif (request()->routeIs('admin.home_page.why_choose_us_section')) show
-              @elseif (request()->routeIs('admin.home_page.city_section')) show
-              @elseif (request()->routeIs('admin.home_page.subscribe_section')) show
-              @elseif (request()->routeIs('admin.home_page.vendor_section')) show
-              @elseif (request()->routeIs('admin.home_page.project_section')) show
-              @elseif (request()->routeIs('admin.home_page.property_section')) show
-              @elseif (request()->routeIs('admin.home_page.section_customization')) show
-              @elseif (request()->routeIs('admin.home_page.pricing_section')) show
-              @elseif (request()->routeIs('admin.home_page.partners')) show @endif">
+                    @elseif (request()->routeIs('admin.home_page.about_section')) show
+                    @elseif (request()->routeIs('admin.home_page.category_section')) show
+                    @elseif (request()->routeIs('admin.home_page.work_process_section')) show
+                    @elseif (request()->routeIs('admin.home_page.feature_section')) show
+                    @elseif (request()->routeIs('admin.home_page.counter_section')) show
+                    @elseif (request()->routeIs('admin.home_page.testimonial_section')) show
+                    @elseif (request()->routeIs('admin.home_page.call_to_action_section')) show
+                    @elseif (request()->routeIs('admin.home_page.hero_section.static_version')) show
+                    @elseif (request()->routeIs('admin.home_page.about_section')) show
+                    @elseif (request()->routeIs('admin.home_page.brand_section')) show
+                    @elseif (request()->routeIs('admin.home_page.why_choose_us_section')) show
+                    @elseif (request()->routeIs('admin.home_page.city_section')) show
+                    @elseif (request()->routeIs('admin.home_page.subscribe_section')) show
+                    @elseif (request()->routeIs('admin.home_page.vendor_section')) show
+                    @elseif (request()->routeIs('admin.home_page.project_section')) show
+                    @elseif (request()->routeIs('admin.home_page.property_section')) show
+                    @elseif (request()->routeIs('admin.home_page.section_customization')) show
+                    @elseif (request()->routeIs('admin.home_page.pricing_section')) show
+                    @elseif (request()->routeIs('admin.home_page.partners')) show @endif">
                             <ul class="nav nav-collapse">
 								<li
 									class="{{ request()->routeIs('admin.home_page.hero_section.static_version') ? 'active' : '' }}">
@@ -830,37 +836,7 @@
 										<span class="sub-item">{{ 'Banner Section' }}</span>
 									</a>
 								</li>
-                               <!-- <li class="submenu">
-                                    <a data-toggle="collapse" href="#hero_section">
-                                        <span class="sub-item">{{ 'Hero Section' }}</span>
-                                        <span class="caret"></span>
-                                    </a>
-
-                                    <div id="hero_section"
-                                        class="collapse
-                                        @if (request()->routeIs('admin.home_page.hero_section.slider_version')) show             @elseif (request()->routeIs('admin.home_page.hero_section.static_version')) show @endif">
-                                        <ul class="nav nav-collapse subnav">
-                                            @if ($settings->theme_version == 2)
-                                                <li
-                                                    class="{{ request()->routeIs('admin.home_page.hero_section.slider_version') ? 'active' : '' }}">
-                                                    <a
-                                                        href="{{ route('admin.home_page.hero_section.slider_version', ['language' => $defaultLang->code]) }}">
-                                                        <span class="sub-item">{{ 'Slider Version' }}</span>
-                                                    </a>
-                                                </li>
-                                            @else
-                                                <li
-                                                    class="{{ request()->routeIs('admin.home_page.hero_section.static_version') ? 'active' : '' }}">
-                                                    <a
-                                                        href="{{ route('admin.home_page.hero_section.static_version', ['language' => $defaultLang->code]) }}">
-                                                        <span class="sub-item">{{ 'Static Version' }}</span>
-                                                    </a>
-                                                </li>
-                                            @endif
-                                        </ul>
-                                    </div>
-                                </li>-->
-
+                              
                                 @if ($settings->theme_version == 2 || $settings->theme_version == 3)
                                     <li
                                         class="{{ request()->routeIs('admin.home_page.category_section') ? 'active' : '' }}">
@@ -1016,7 +992,7 @@
                             </ul>
                         </div>
                     </li>
-                @endif
+                @endif -->
 
 
 
@@ -1024,8 +1000,8 @@
                 @if (is_null($roleInfo) || (!empty($rolePermissions) && in_array('Footer', $rolePermissions)))
                     <li
                         class="nav-item @if (request()->routeIs('admin.footer.logo_and_image')) active
-            @elseif (request()->routeIs('admin.footer.content')) active
-            @elseif (request()->routeIs('admin.footer.quick_links')) active @endif">
+                    @elseif (request()->routeIs('admin.footer.content')) active
+                    @elseif (request()->routeIs('admin.footer.quick_links')) active @endif">
                         <a data-toggle="collapse" href="#footer">
                             <i class="fal fa-shoe-prints"></i>
                             <p>{{ 'Footer' }}</p>
@@ -1034,8 +1010,8 @@
 
                         <div id="footer"
                             class="collapse @if (request()->routeIs('admin.footer.logo_and_image')) show
-              @elseif (request()->routeIs('admin.footer.content')) show
-              @elseif (request()->routeIs('admin.footer.quick_links')) show @endif">
+                        @elseif (request()->routeIs('admin.footer.content')) show
+                        @elseif (request()->routeIs('admin.footer.quick_links')) show @endif">
                             <ul class="nav nav-collapse">
                                 <li class="{{ request()->routeIs('admin.footer.logo_and_image') ? 'active' : '' }}">
                                     <a href="{{ route('admin.footer.logo_and_image') }}">
@@ -1061,12 +1037,15 @@
                     </li>
                 @endif
 
+
+               
+
                 {{-- custom page --}}
                 @if (is_null($roleInfo) || (!empty($rolePermissions) && in_array('Custom Pages', $rolePermissions)))
                     <li
                         class="nav-item @if (request()->routeIs('admin.custom_pages')) active
-            @elseif (request()->routeIs('admin.custom_pages.create_page')) active
-            @elseif (request()->routeIs('admin.custom_pages.edit_page')) active @endif">
+                            @elseif (request()->routeIs('admin.custom_pages.create_page')) active
+                            @elseif (request()->routeIs('admin.custom_pages.edit_page')) active @endif">
                         <a href="{{ route('admin.custom_pages', ['language' => $defaultLang->code]) }}">
                             <i class="la flaticon-file"></i>
                             <p>{{ 'Custom Pages' }}</p>
@@ -1078,9 +1057,9 @@
                 @if (is_null($roleInfo) || (!empty($rolePermissions) && in_array('Blog Management', $rolePermissions)))
                     <li
                         class="nav-item @if (request()->routeIs('admin.blog_management.categories')) active
-            @elseif (request()->routeIs('admin.blog_management.blogs')) active
-            @elseif (request()->routeIs('admin.blog_management.create_blog')) active
-            @elseif (request()->routeIs('admin.blog_management.edit_blog')) active @endif">
+                        @elseif (request()->routeIs('admin.blog_management.blogs')) active
+                        @elseif (request()->routeIs('admin.blog_management.create_blog')) active
+                        @elseif (request()->routeIs('admin.blog_management.edit_blog')) active @endif">
                         <a data-toggle="collapse" href="#blog">
                             <i class="fal fa-blog"></i>
                             <p>{{ 'Blog Management' }}</p>
@@ -1089,10 +1068,10 @@
 
                         <div id="blog"
                             class="collapse
-              @if (request()->routeIs('admin.blog_management.categories')) show
-              @elseif (request()->routeIs('admin.blog_management.blogs')) show
-              @elseif (request()->routeIs('admin.blog_management.create_blog')) show
-              @elseif (request()->routeIs('admin.blog_management.edit_blog')) show @endif">
+                    @if (request()->routeIs('admin.blog_management.categories')) show
+                    @elseif (request()->routeIs('admin.blog_management.blogs')) show
+                    @elseif (request()->routeIs('admin.blog_management.create_blog')) show
+                    @elseif (request()->routeIs('admin.blog_management.edit_blog')) show @endif">
                             <ul class="nav nav-collapse">
                                 <li
                                     class="{{ request()->routeIs('admin.blog_management.categories') ? 'active' : '' }}">
@@ -1106,8 +1085,8 @@
 
                                 <li
                                     class="@if (request()->routeIs('admin.blog_management.blogs')) active
-                  @elseif (request()->routeIs('admin.blog_management.create_blog')) active
-                  @elseif (request()->routeIs('admin.blog_management.edit_blog')) active @endif">
+                            @elseif (request()->routeIs('admin.blog_management.create_blog')) active
+                            @elseif (request()->routeIs('admin.blog_management.edit_blog')) active @endif">
                                     <a
                                         href="{{ route('admin.blog_management.blogs', ['language' => $defaultLang->code]) }}">
                                         <span class="sub-item">{{ 'Posts' }}</span>

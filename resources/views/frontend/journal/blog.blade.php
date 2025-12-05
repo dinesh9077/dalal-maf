@@ -61,7 +61,7 @@
                                     </ul>
                                     <h3 class="card-title">
                                         <a href="{{ route('blog_details', ['slug' => $blog->slug]) }}">
-                                            {{ @$blog->title }}
+                                            {{ Str::limit($blog->title, 35) }}
                                         </a>
                                     </h3>
                                     <p class="card-text">

@@ -184,7 +184,7 @@ $version = $basicInfo->theme_version;
 @section('content')
 
 
-<div class="projects-area" style="padding: 10px 0px; margin-top: 120px;">
+<div class="projects-area theam-title-div">
 
     <a href="https://wa.me/9925133440" target="_blank">
         <div class="whatsapp-btn" data-aos="fade-up">

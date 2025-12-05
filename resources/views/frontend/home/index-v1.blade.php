@@ -1008,17 +1008,17 @@
     @if ($secInfo->why_choose_us_section_status == 1)
         <section class="new-aps-sections" >
             <div class="container new-margin-exp-type">
-                <div class="section-title title-inline    aos-init aos-animate d-flex" data-aos="fade-up">
+                <div class="section-title title-inline  aos-init aos-animate d-flex" data-aos="fade-up">
                     <h2 class="title">Explore Property Types</h2>
                 </div>
 
-                <div class="aps-slide-wrapper " style="margin-top : 12px;" data-aos="fade-up">
+                <div class="aps-slide-wrapper" style="margin-top : 12px;" data-aos="fade-up">
                     <!-- Left Arrow -->
                     <div class="arrow-button arrow-left" id="arrowLeft"><img
                             src="{{ asset('assets/front/images/new-images/left.png') }}" alt=""></div>
 
                     <!-- Slider -->
-                    <div class="aps-slider ">
+                    <div class="aps-slider">
                         @foreach ($all_proeprty_categories as $category)
                             <div class="new-aps-titles-bag">
                                 <a
@@ -1164,7 +1164,7 @@
                         you with verified listings and trusted partners.
                     </p>
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-6">
                             <div class="about-right-pd">
                                 <div class="abs-r-i-des-div">
                                     <h6>{{ $cityCount }}</h6>
@@ -1175,7 +1175,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-6">
                             <div class="about-right-pd">
                                 <div class="abs-r-i-des-div">
                                     <h6>{{ $userCount }}</h6>
@@ -1186,7 +1186,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-6">
                             <div class="about-right-pd">
                                 <div class="abs-r-i-des-div">
                                     <h6>24/7</h6>
@@ -1197,7 +1197,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-6">
                             <div class="about-right-pd">
                                 <div class="abs-r-i-des-div">
                                     <h6>{{ $vendorCount }}</h6>
@@ -1590,12 +1590,6 @@
                         breakpoint: 576,
                         settings: {
                             slidesToShow: 2
-                        }
-                    },
-                      {
-                        breakpoint: 450,
-                        settings: {
-                            slidesToShow: 1
                         }
                     }
                 ]

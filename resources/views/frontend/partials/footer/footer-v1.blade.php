@@ -16,7 +16,7 @@
                     <div class="footer-right-btn">
                         @if (!empty($basicInfo->footer_logo))
                         <a href="{{ route('index') }}">
-                            <img src="{{ asset('assets/img/' . $basicInfo->footer_logo) }}">
+                            <img src="{{ asset('assets/img/' . $basicInfo->footer_logo) }}" class="footer-logo">
                         </a>
                         @endif
                     </div>
@@ -131,7 +131,7 @@
                         </a>
                     </div>
                     </div>
-                    <div class="social-links mx-2">
+                    <div class="social-links">
                         <h1 class="SL-links-title">keep in touch</h1>
                         @if (count($socialMediaInfos) > 0)
                         <div class="social-links-btn">
