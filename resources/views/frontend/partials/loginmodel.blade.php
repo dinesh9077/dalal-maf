@@ -131,7 +131,7 @@
 </style>
 
 
-<div class="modal fade" id="customerPhoneModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="customerPhoneModal" action="" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content model-new" style="box-shadow: 0 8px 12px rgba(31, 92, 163, .2);">
@@ -163,8 +163,7 @@
                             
                         </div>
                     </div>
-                </div>
-
+                </div> 
                 <div class="modal-footer" style="border-top:none;">
                     <button id="sendOtp" type="button" class="btn btn-primary btn-sm w-100"
                         style="background: var(--theme-color); margin-top: 20px;border-radius: 10px;">
@@ -193,7 +192,7 @@
                         {{ __('Verify your number') }}
                     </h4>
                     <h4 style="color:#000; font-weight:600; margin:0;">
-                        <span id="editFrontPhone">+91-7854875487</span>
+                        <span id="editFrontPhone"></span>
                         <i class="fa fa-pencil" id="editPhoneNumber"
                             style="color:var(--theme-color); font-size:13px; margin-left:4px; cursor:pointer;"></i>
                     </h4>
@@ -251,8 +250,10 @@
 $(document).ready(function() {
     $('#customerPhoneModal').on('show.bs.modal', function(event) {
         let button = $(event.relatedTarget);
-        let action = button.data('action');
-        $(this).data('action', action);
+        let action = button.data('action'); 
+        let property_id = button.data('property_id') || ''; 
+        $(this).attr('action', action);
+        $(this).attr('property_id', property_id);
     });
 
     // Phone number input logic with +91 prefix lock
@@ -304,8 +305,9 @@ $(document).ready(function() {
     // === Send OTP ===
     $('#sendOtp').on('click', function() {
         let phone = $('#in_phone').val().replace(prefix, '');
-        let action = $('#customerPhoneModal').data('action');
-
+        let action = $('#customerPhoneModal').attr('action');
+        let property_id = $('#customerPhoneModal').attr('property_id') || '';
+        
         if (!/^\d{10}$/.test(phone)) {
             $('#editErr_in_phone').text('Please enter a valid 10-digit phone number.');
             return;
@@ -314,21 +316,23 @@ $(document).ready(function() {
         $('#editErr_in_phone').text('');
         $(this).prop('disabled', true).text('Sending...');
         $('#editFrontPhone').text('+91-' + phone);
-        $('#editPhoneNumber').attr('data-phone', phone);
-
+        $('#editPhoneNumber').attr('data-phone', phone);  
         $.ajax({
             url: '{{ route("send.otp") }}',
             method: 'POST',
             data: {
                 _token: '{{ csrf_token() }}',
-                phone: phone
+                phone: phone,
+                property_id: property_id,
+                action: action
             },
             success: function(response) {
                 $('#sendOtp').prop('disabled', false).text('Send OTP');
                 $('#customerPhoneModal').modal('hide');
                 $('#otpVerificationModal').modal('show');
-                $('#otpVerificationModal').data('phone', phone);
-                $('#otpVerificationModal').data('action', action);
+                $('#otpVerificationModal').attr('phone', phone);
+                $('#otpVerificationModal').attr('action', action);
+                $('#otpVerificationModal').attr('property_id', property_id);
             },
             error: function(xhr) {
                 $('#editErr_in_phone').text(xhr.responseJSON.message || 'An error occurred.');
@@ -338,10 +342,12 @@ $(document).ready(function() {
     });
 
     // === Verify OTP ===
-    $('#verifyOtpBtn').on('click', function() {
+    $('#verifyOtpBtn').on('click', function() 
+    {
         let otp = $('#customerOtpInput').val();
-        let phone = $('#otpVerificationModal').data('phone');
-        let action = $('#otpVerificationModal').data('action');
+        let phone = $('#otpVerificationModal').attr('phone');
+        let action = $('#otpVerificationModal').attr('action');
+        let property_id = $('#otpVerificationModal').attr('property_id') || '';
 
         if (!otp) {
             $('#otp_error').text('OTP is required.');
@@ -358,10 +364,26 @@ $(document).ready(function() {
                 _token: '{{ csrf_token() }}',
                 phone: phone,
                 otp: otp,
-                from: action
+                property_id: property_id,
+                form: action
             },
-            success: function(response) {
-                window.location.href = response.url;
+            success: function(response)
+            {
+                if(response.form === 'contact_seller')
+                {
+                   window.location.href = response.url;
+                }
+                else if(response.form === 'wishlist')
+                {
+                    $('.btn-wishlist[data-id="' + response.property_id + '"]').trigger('click');
+                    $('#otpVerificationModal').modal('hide');
+                    setTimeout(function() {
+                        window.location.href = response.url;
+                    }, 500);
+                }
+                else{
+                    window.location.href = response.url;
+                }
             },
             error: function(xhr) {
                 $('#otp_error').text(xhr.responseJSON.message || 'Invalid OTP.');
@@ -512,8 +534,11 @@ document.querySelectorAll(".otp-box").forEach((box, index, boxes) => {
 
     $(document).on('click', '#resendOtp', function() {
         if (resendCooldownUntil && Date.now() < resendCooldownUntil) return;
+ 
+        let phone = $('#otpVerificationModal').attr('phone');
+        let action = $('#otpVerificationModal').attr('action');
+        let property_id = $('#otpVerificationModal').attr('property_id') || '';
 
-        const phone = $('#otpVerificationModal').data('phone');
         if (!phone) {
             $('#customerOtpError').text('Phone number missing. Please go back and enter it again.').show();
             return;

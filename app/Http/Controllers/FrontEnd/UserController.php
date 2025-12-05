@@ -430,10 +430,27 @@
 				$user->save();
 
 				Session::forget('login_phone');
+				$form = session('form', '');
 				Auth::login($user);
 
 				// Flash message and redirect
 				Session::flash('success', 'Signup successful!.');
+				if($form === 'contact_seller')
+				{
+					$currentUrl = session('last_visited_property_url', route('index')); 
+					$route = $currentUrl . '?contact_seller=1';
+					Session::forget('form');
+					return redirect($route);
+				}
+			 
+				if ($form === 'wishlist') {
+					$property_id = session('property_id', '');
+					$currentUrl = url()->previous();
+					$route = $currentUrl . '?wishlist=' . $property_id;
+					Session::forget('form');
+					Session::forget('property_id');	
+					return redirect($route);
+				}
 				return redirect()->route('user.dashboard');
 
 			} catch (\Exception $e) {
@@ -956,7 +973,7 @@
 		}
 
 		public function sendOtp(Request $request)
-		{
+		{ 
 			// Check if user exists
 			$user = User::where('phone', $request->phone)->first();
 			$type = 'user';
@@ -1066,8 +1083,9 @@
 			try {
 				$phone = $request->phone;
 				$otp = $request->otp;
-				$from = $request->input('from');
-
+				$form = $request->input('form') ?? '';
+				$property_id = $request->input('property_id') ?? '';
+			 
 				// Find user in both guards
 				$user = User::where('phone', $phone)->first();
 				$userType = 'user';
@@ -1117,22 +1135,35 @@
 				// Determine redirect route
 				if (empty($user->email) && !$withoutLogin) {
 					$route = route('user.signup');
-					session(['login_phone' => $phone]);
+					session(['login_phone' => $phone, "form" => $form, 'property_id' => $property_id]);
 				}
-				elseif ($from === 'post_property')
+				elseif ($form === 'post_property')
 				{
 					$route = $guard === 'vendor'
 						? ($withoutLogin ? route('agent.property_management.type') : route('vendor.property_management.type'))
 						: route('user.property_management.type');
 						Auth::guard($guard)->login($user);
-				} else {
+				} 
+				elseif ($form === 'contact_seller') {
+					$currentUrl = session('last_visited_property_url', route('index')); 
+					$route = $currentUrl . '?contact_seller=1';
+					Auth::guard($guard)->login($user);
+				}
+				elseif ($form === 'wishlist') {
+					$currentUrl = url()->previous(); 
+					$route = $currentUrl . '?wishlist='. $property_id;
+					Auth::guard($guard)->login($user);
+				}
+				else {
 					$route = $userType === 'vendor' ? ($withoutLogin ? url('agent/dashboard') : url('vendor/dashboard')) : route('user.dashboard');
 					Auth::guard($guard)->login($user);
 				}
 
 				return response()->json([
 					'message' => 'OTP verified successfully.',
-					'url' => $route
+					'url' => $route,
+					'form' => $form,
+					'property_id' => $property_id
 				]);
 
 			} catch (\Throwable $e) {

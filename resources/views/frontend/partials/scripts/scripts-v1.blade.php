@@ -31,7 +31,7 @@
 <script src="{{ asset('assets/js/jquery-syotimer.min.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
 {{-- whatsapp init code --}}
-
+ 
 @if ($basicInfo->whatsapp_status == 1)
     <script type="text/javascript">
         var whatsapp_popup = "{{ $basicInfo->whatsapp_popup_status }}";

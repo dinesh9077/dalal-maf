@@ -19,7 +19,7 @@ use App\Models\Property\{
     Area, City, CityContent, Content, Country, CountryContent,
     FeaturedProperty, Property, PropertyAmenity, PropertyCategory,
     PropertyCategoryContent, PropertyContact, State, StateContent,
-	Wishlist, Unit
+	Wishlist
 };
 use App\Models\Project\ProjectContent;
 use App\Models\User;
@@ -69,13 +69,8 @@ class HomeController extends Controller
 		if ($themeVersion != 2) {
 			$queryResult['heroStatic'] = $language->heroStatic()->first();
 			// $queryResult['heroImg'] = Basic::query()->pluck('hero_static_img')->first();
-			$heroImg = Basic::query()->value('hero_static_img');
-			$decoded = $heroImg ? json_decode($heroImg, true) : [];
-
-			$queryResult['heroImg'] = collect($decoded)
-				->map(fn($img) => asset('assets/img/hero/static/' . $img))
-				->toArray();
-
+			$heroImg = Basic::query()->pluck('hero_static_img')->first();
+			$queryResult['heroImg'] = $heroImg ? json_decode($heroImg, true) : [];
 		}
 		
 		if ($secInfo->property_section_status == 1) {
@@ -579,27 +574,19 @@ class HomeController extends Controller
 		if ($request->filled('type')) {
 			$type = $request->type ?? [];
 		}
-		
-		$unitTypes = [];
-        if ($request->filled('unit_type')) {
-            $unitTypes = $request->unit_type ?? [];
-        }
 
         $price = null;
         if ($request->filled('price') && $request->price != 'all') {
             $price = $request->price;
         }
 
-		$purpose = ['rent', 'sell', 'buy', 'lease'];
-		if ($request->filled('purpose') && $request->purpose == 'franchiese') {
-			$purpose = ['franchiese'];
-		}
+        $purpose = ['rent', 'sell', 'buy', 'lease'];
+        if ($request->filled('purpose') && $request->purpose == 'franchiese') {
+            $purpose = ['franchiese'];
+        } 
 		if ($request->filled('purpose') && $request->purpose == 'business_for_sale') {
-			$purpose = ['business_for_sale'];
-		}
-		if ($request->filled('purpose') && $request->purpose == 'buy') {
-			$purpose = ['sell', 'buy'];
-		}
+            $purpose = ['business_for_sale'];
+        }
 
         $min = $max = null;
         if ($request->filled('min') && $request->filled('max')) {
@@ -734,10 +721,6 @@ class HomeController extends Controller
 				'=',
 				count($amenityIds)
 			);
-		})
-		->when(!empty($unitTypes), function ($query) use ($unitTypes) {
-			$unitTypes = array_values(array_unique($unitTypes));
-			$query->whereHas('proertyUnits', fn($q) => $q->whereIn('unit_id', $unitTypes));
 		})
 		->when($price, function ($query) use ($price) {
 			if ($price == 'negotiable') {
@@ -887,12 +870,6 @@ class HomeController extends Controller
 		return $this->successResponse($categories);
 	}
 	
-	public function unitTypes()
-	{
-		$unitTypes = Unit::Where('status', 1)->orderBy('unit_name')->get(); 
-		return $this->successResponse($unitTypes);
-	}
-	
 	public function amenities()
 	{  
 		$misc = new MiscellaneousController();
@@ -910,6 +887,7 @@ class HomeController extends Controller
 		$misc = new MiscellaneousController();
 		$language = $misc->getLanguage();  
 		$propertyContent = Content::where('slug', $slug)->firstOrFail(); 
+
 		$property = Content::query()
 		->where('property_contents.language_id', $language->id)
 		->where('property_contents.property_id', $propertyContent->property_id)
@@ -940,20 +918,14 @@ class HomeController extends Controller
 		$information['amenities'] = PropertyAmenity::with([
 			'amenityContent' => function ($q) use ($language) {
 				$q->where('language_id', $language->id);
-			}, 'amenityContent.amenity'
+			}
 		])->where('property_id', $property->property_id)->get();
-
 		$information['agent'] = Agent::with([
 			'agent_info' => function ($q) use ($language) {
 				$q->where('language_id', $language->id);
 			}
 		])->find($property->agent_id);
 
-		$information['user'] = User::with([
-			'agent_info' => function ($q) use ($language) {
-				$q->where('language_id', $language->id);
-			}
-		])->find($property->agent_id); 
 
 		$information['vendor'] = Vendor::with([
 			'vendor_info' => function ($q) use ($language) {

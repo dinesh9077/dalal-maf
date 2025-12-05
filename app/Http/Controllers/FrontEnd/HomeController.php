@@ -137,44 +137,43 @@
 
 			// Reusable base query builder for all property sections
 			$baseQuery = Property::query()
-				->join('property_contents', 'property_contents.property_id', '=', 'properties.id')
-				->join('property_categories', 'property_categories.id', '=', 'properties.category_id')
-				->leftJoin('memberships', function ($join) {
-					$join->on('properties.vendor_id', '=', 'memberships.vendor_id')
-						 ->where('memberships.status', 1)
-						 ->whereDate('memberships.start_date', '<=', now())
-						 ->whereDate('memberships.expire_date', '>=', now());
-				})
-				->leftJoin('vendors', function ($join) {
-					$join->on('properties.vendor_id', '=', 'vendors.id')
-						 ->where('vendors.status', 1);
-				})
-				->where([
-					['properties.status', 1],
-					['properties.approve_status', 1],
-				])
-				->where('property_contents.language_id', $language->id)
-				->where(function ($query) {
-					$query->whereNotNull('memberships.id')
-						  ->orWhere('properties.vendor_id', 0);
-				})
-				->select(
-					'properties.*',
-					'property_contents.slug',
-					'property_contents.title',
-					'property_contents.address',
-					'property_contents.language_id'
-				);
+			->join('property_contents', 'property_contents.property_id', '=', 'properties.id')
+			->join('property_categories', 'property_categories.id', '=', 'properties.category_id')
+			->leftJoin('memberships', function ($join) {
+				$join->on('properties.vendor_id', '=', 'memberships.vendor_id')
+						->where('memberships.status', 1)
+						->whereDate('memberships.start_date', '<=', now())
+						->whereDate('memberships.expire_date', '>=', now());
+			})
+			->leftJoin('vendors', function ($join) {
+				$join->on('properties.vendor_id', '=', 'vendors.id')
+						->where('vendors.status', 1);
+			})
+			->where([
+				['properties.status', 1],
+				['properties.approve_status', 1],
+			])
+			->where('property_contents.language_id', $language->id)
+			->where(function ($query) {
+				$query->whereNotNull('memberships.id')
+						->orWhere('properties.vendor_id', 0);
+			})
+			->select(
+				'properties.*',
+				'property_contents.slug',
+				'property_contents.title',
+				'property_contents.address',
+				'property_contents.language_id'
+			);
 
 			// ------------------------------------------------------------
 			// 1️⃣ Latest Properties (Excluding Business for Sale and Franchise)
 			// ------------------------------------------------------------
 			$queryResult['properties'] = (clone $baseQuery)
-        ->distinct('properties.id')
-				->whereNotIn('properties.purpose', ['business_for_sale', 'franchiese'])
-				->latest('properties.created_at')
-				->take(8)
-				->get();
+       		->distinct('properties.id') 
+			->latest('properties.created_at')
+			->take(8)
+			->get();
 
 			// ------------------------------------------------------------
 			// 2️⃣ Business for Sale
@@ -184,9 +183,9 @@
 					['properties.purpose', 'business_for_sale'],
 					['properties.property_type', 'partial']
 				])
-         ->distinct('properties.id')
-				->latest('properties.created_at')
-				->get();
+       		->distinct('properties.id')
+			->latest('properties.created_at')
+			->get();
 					
 			// ------------------------------------------------------------
 			// 3️⃣ Franchise
@@ -196,26 +195,26 @@
 					['properties.purpose', 'franchiese'],
 					['properties.property_type', 'partial']
 				])
-        ->distinct('properties.id')
-				->latest('properties.created_at')
-				->get();
+       		->distinct('properties.id')
+			->latest('properties.created_at')
+			->get();
 
 			// ------------------------------------------------------------
 			// 4️⃣ Featured Properties
 			// ------------------------------------------------------------
 			$queryResult['featured_properties'] = (clone $baseQuery)
-				->where('properties.is_featured', 1)
-				->select(
-					'properties.*',
-					'property_contents.slug',
-					'property_contents.title',
-					'property_contents.address',
-					'property_contents.language_id'
-				)
-        ->distinct('properties.id')
-				->inRandomOrder()
-				->take(10)
-				->get();
+			->where('properties.is_featured', 1)
+			->select(
+				'properties.*',
+				'property_contents.slug',
+				'property_contents.title',
+				'property_contents.address',
+				'property_contents.language_id'
+			)
+			->distinct('properties.id')
+			->inRandomOrder()
+			->take(10)
+			->get();
 
 			$queryResult['hotProperties'] = (clone $baseQuery)
 				->where('properties.is_hot', 1)
@@ -226,10 +225,10 @@
 					'property_contents.address',
 					'property_contents.language_id'
 				)
-        ->distinct('properties.id')
-				->inRandomOrder()
-				->take(10)
-				->get();
+      		->distinct('properties.id')
+			->inRandomOrder()
+			->take(10)
+			->get();
 
 			$queryResult['fastSellingProperties'] = (clone $baseQuery)
 				->where('properties.is_fast_selling', 1)
@@ -240,10 +239,10 @@
 					'property_contents.address',
 					'property_contents.language_id'
 				)
-        ->distinct('properties.id')
-				->inRandomOrder()
-				->take(10)
-				->get();
+			->distinct('properties.id')
+			->inRandomOrder()
+			->take(10)
+			->get();
 
 			$queryResult['recommendedProperties'] = (clone $baseQuery)
 				->where('properties.is_recommended', 1)
@@ -254,49 +253,49 @@
 					'property_contents.address',
 					'property_contents.language_id'
 				)
-        ->distinct('properties.id')
-				->inRandomOrder()
-				->take(10)
-				->get();
+			->distinct('properties.id')
+			->inRandomOrder()
+			->take(10)
+			->get();
 
 
-			if ($themeVersion == 1 && $secInfo->project_section_status == 1) {
-
+			if ($themeVersion == 1 && $secInfo->project_section_status == 1)
+			{ 
 				// --- Base query for projects ---
 				$projectBaseQuery = Project::query()
-					->join('project_contents', 'project_contents.project_id', '=', 'projects.id')
-					->leftJoin('memberships', function ($join) {
-						$join->on('projects.vendor_id', '=', 'memberships.vendor_id')
-							->where('memberships.status', 1)
-							->whereDate('memberships.start_date', '<=', now())
-							->whereDate('memberships.expire_date', '>=', now());
-					})
-					->leftJoin('vendors', function ($join) {
-						$join->on('projects.vendor_id', '=', 'vendors.id')
-							->where('vendors.status', 1);
-					})
-					->where([
-						['projects.approve_status', 1],
-						['projects.featured', 1],
-						['project_contents.language_id', $language->id],
-					])
-					->where(function ($query) {
-						$query->whereNotNull('memberships.id')
-							->orWhere('projects.vendor_id', 0);
-					})
-					->where(function ($query) {
-						$query->whereNotNull('vendors.id')
-							->orWhere('projects.vendor_id', 0);
-					})
-					->select(
-						'projects.*',
-						'project_contents.slug',
-						'project_contents.title',
-						'project_contents.address'
-					)
-					->inRandomOrder()
-					->latest('projects.created_at')
-					->take(8);
+				->join('project_contents', 'project_contents.project_id', '=', 'projects.id')
+				->leftJoin('memberships', function ($join) {
+					$join->on('projects.vendor_id', '=', 'memberships.vendor_id')
+					->where('memberships.status', 1)
+					->whereDate('memberships.start_date', '<=', now())
+					->whereDate('memberships.expire_date', '>=', now());
+				})
+				->leftJoin('vendors', function ($join) {
+					$join->on('projects.vendor_id', '=', 'vendors.id')
+					->where('vendors.status', 1);
+				})
+				->where([
+					['projects.approve_status', 1],
+					['projects.featured', 1],
+					['project_contents.language_id', $language->id],
+				])
+				->where(function ($query) {
+					$query->whereNotNull('memberships.id')
+					->orWhere('projects.vendor_id', 0);
+				})
+				->where(function ($query) {
+					$query->whereNotNull('vendors.id')
+					->orWhere('projects.vendor_id', 0);
+				})
+				->select(
+					'projects.*',
+					'project_contents.slug',
+					'project_contents.title',
+					'project_contents.address'
+				)
+				->inRandomOrder()
+				->latest('projects.created_at')
+				->take(8);
 
 				$queryResult['projects'] = $projectBaseQuery->get();
 
