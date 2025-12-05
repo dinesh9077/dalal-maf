@@ -115,8 +115,7 @@
 		
 		// user reset password submit route
 		Route::post('/reset-password-submit', 'FrontEnd\UserController@resetPasswordSubmit')->name('user.reset_password_submit')->withoutMiddleware('change.lang');
-		
-		
+		 
 	});
 	
 	// user redirect to signup page route
