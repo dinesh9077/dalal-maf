@@ -385,9 +385,8 @@ class PropertyController extends Controller
         $maxPrice = $statsQuery->whereNotNull('properties.price')
                             ->distinct()
                             ->max('properties.price');
-        $totalCountOfProperties = $statsQuery->distinct()->get()->count();
-
-        $property_contents = $filterQuery->distinct()->paginate(12);
+        $property_contents = $statsQuery->distinct()->paginate(12);
+        $totalCountOfProperties = $property_contents->total();
 
         $information['property_contents'] = $property_contents;
         $information['contents'] = $property_contents;
@@ -746,9 +745,9 @@ class PropertyController extends Controller
         $maxPrice = $statsQuery->whereNotNull('properties.price')
             ->distinct()
             ->max('properties.price');
-        $totalCountOfProperties = $statsQuery->distinct()->get()->count();
-
-        $property_contents = $filterQuery->distinct()->paginate(12); 
+        $property_contents = $statsQuery->distinct()->paginate(12);
+        $totalCountOfProperties = $property_contents->total();
+        
         $information['property_contents'] = $property_contents;
         $information['contents'] = $property_contents;
 
