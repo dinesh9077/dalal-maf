@@ -393,13 +393,7 @@
     </a>
 
 
-    <div class="map-area border-top header-next pt-30">
-
-    </div>
-
-
-
-    <div class="listing-grid header-next pb-10" style="margin-top: 100px;" data-aos="fade-up">
+    <div class="listing-grid header-next pb-10 theam-title-div" data-aos="fade-up">
         <div class="container">
             <div class="row gx-xl-5">
 

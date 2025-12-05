@@ -278,47 +278,47 @@ $version = $basicInfo->theme_version;
     }
 
     .dropdown-min,
-.dropdown-max {
-    position: relative;
-    width: 180px;
-    background: #fff;
-    border: 1px solid #ddd;
-    padding: 10px 12px;
-    cursor: pointer;
-    border-radius: 13px;
-}
+    .dropdown-max {
+        position: relative;
+        width: 180px;
+        background: #fff;
+        border: 1px solid #ddd;
+        padding: 10px 12px;
+        cursor: pointer;
+        border-radius: 13px;
+    }
 
-.dropdown-min-selected,
-.dropdown-max-selected {
-    font-size: 14px;
-}
+    .dropdown-min-selected,
+    .dropdown-max-selected {
+        font-size: 14px;
+    }
 
-.dropdown-min-list,
-.dropdown-max-list {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    max-height: 180px;
-    overflow-y: auto;
-    background: #fff;
-    margin-top: 1px;
-    border: 1px solid #ddd;
-    border-radius: 13px;
-    display: none;
-    z-index: 999;
-}
+    .dropdown-min-list,
+    .dropdown-max-list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        max-height: 180px;
+        overflow-y: auto;
+        background: #fff;
+        margin-top: 1px;
+        border: 1px solid #ddd;
+        border-radius: 13px;
+        display: none;
+        z-index: 999;
+    }
 
-.dropdown-min-list li,
-.dropdown-max-list li {
-    padding: 8px 10px;
-    cursor: pointer;
-}
+    .dropdown-min-list li,
+    .dropdown-max-list li {
+        padding: 8px 10px;
+        cursor: pointer;
+    }
 
-.dropdown-min-list li:hover,
-.dropdown-max-list li:hover {
-    background: #f3f3f3;
-}
+    .dropdown-min-list li:hover,
+    .dropdown-max-list li:hover {
+        background: #f3f3f3;
+    }
 </style>
 
 
@@ -327,11 +327,6 @@ $version = $basicInfo->theme_version;
         <img src="{{ asset('assets/front/images/new-images/whatsapp.png') }}" alt="WhatsApp">
     </div>
 </a>
-
-
-<div class="map-area border-top header-next pt-30">
-    
-</div>
 
 
 
@@ -362,45 +357,45 @@ $version = $basicInfo->theme_version;
                                 <div id="ranges-min" class="collapse show mt-3">
                                     <div class="budget-box">
 
-    <!-- MIN -->
-    <div class="dropdown-min">
-        <div class="dropdown-min-selected">No min</div>
-        <ul class="dropdown-min-list">
-            <li>No min</li>
-            <li>5 Lacs</li>
-            <li>10 Lacs</li>
-            <li>15 Lacs</li>
-            <li>20 Lacs</li>
-            <li>25 Lacs</li>
-            <li>50 Lacs</li>
-            <li>1 Crore</li>
-            <li>2 Crores</li>
-            <li>5 Crores</li>
-            <li>10 Crores</li>
-        </ul>
-    </div>
+                                        <!-- MIN -->
+                                        <div class="dropdown-min">
+                                            <div class="dropdown-min-selected">No min</div>
+                                            <ul class="dropdown-min-list">
+                                                <li>No min</li>
+                                                <li>5 Lacs</li>
+                                                <li>10 Lacs</li>
+                                                <li>15 Lacs</li>
+                                                <li>20 Lacs</li>
+                                                <li>25 Lacs</li>
+                                                <li>50 Lacs</li>
+                                                <li>1 Crore</li>
+                                                <li>2 Crores</li>
+                                                <li>5 Crores</li>
+                                                <li>10 Crores</li>
+                                            </ul>
+                                        </div>
 
-    <span class="sep">–</span>
+                                        <span class="sep">–</span>
 
-    <!-- MAX -->
-    <div class="dropdown-max">
-        <div class="dropdown-max-selected">No max</div>
-        <ul class="dropdown-max-list">
-            <li>No max</li>
-            <li>5 Lacs</li>
-            <li>10 Lacs</li>
-            <li>15 Lacs</li>
-            <li>20 Lacs</li>
-            <li>25 Lacs</li>
-            <li>50 Lacs</li>
-            <li>1 Crore</li>
-            <li>2 Crores</li>
-            <li>5 Crores</li>
-            <li>10 Crores</li>
-        </ul>
-    </div>
+                                        <!-- MAX -->
+                                        <div class="dropdown-max">
+                                            <div class="dropdown-max-selected">No max</div>
+                                            <ul class="dropdown-max-list">
+                                                <li>No max</li>
+                                                <li>5 Lacs</li>
+                                                <li>10 Lacs</li>
+                                                <li>15 Lacs</li>
+                                                <li>20 Lacs</li>
+                                                <li>25 Lacs</li>
+                                                <li>50 Lacs</li>
+                                                <li>1 Crore</li>
+                                                <li>2 Crores</li>
+                                                <li>5 Crores</li>
+                                                <li>10 Crores</li>
+                                            </ul>
+                                        </div>
 
-</div>
+                                    </div>
 
                                 </div>
                             </div>
@@ -610,7 +605,7 @@ $version = $basicInfo->theme_version;
         <div class="d-flex align-items-center" style="gap: 10px; color:black;">
             <i class="fas fa-search"></i>
             <h4 class="mb-0 ml-2">
-            All Results Matching
+                All Results Matching
             </h4>
         </div>
 
@@ -824,7 +819,6 @@ $version = $basicInfo->theme_version;
 
     </div>
 </div>
-
 </div>
 </div>
 </div>@endsection @section('script') <script>
@@ -839,7 +833,7 @@ $version = $basicInfo->theme_version;
 <script>
     let debounceTimer;
 
-    $('.filter-input').keyup(function () {
+    $('.filter-input').keyup(function() {
         const param = $(this).attr('name');
         const val = $(this).val().trim();
         clearTimeout(debounceTimer);
@@ -849,7 +843,7 @@ $version = $basicInfo->theme_version;
         }, 400);
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
 
         const sliderEl = document.querySelector("[data-range-slider='priceSlider']");
         if (!sliderEl) return;
@@ -874,7 +868,7 @@ $version = $basicInfo->theme_version;
             document.getElementById('max') || null
         ];
 
-        sliderEl.noUiSlider.on('update', function (values, handle) {
+        sliderEl.noUiSlider.on('update', function(values, handle) {
             const val = Math.round(Number(values[handle]) || 0);
             const input = inputs[handle];
             if (input) input.value = val;
@@ -883,9 +877,11 @@ $version = $basicInfo->theme_version;
         const $label = $("[data-range-value='priceSliderValue']");
         const currency = $('#currency_symbol').val() || '';
 
-        const fmt = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 });
+        const fmt = new Intl.NumberFormat(undefined, {
+            maximumFractionDigits: 0
+        });
 
-        sliderEl.noUiSlider.on('update', function (values) {
+        sliderEl.noUiSlider.on('update', function(values) {
             const minV = Math.round(Number(values[0]) || 0);
             const maxV = Math.round(Number(values[1]) || 0);
 
@@ -896,7 +892,7 @@ $version = $basicInfo->theme_version;
 
         let debounceTimer1;
 
-        sliderEl.noUiSlider.on('change', function (values) {
+        sliderEl.noUiSlider.on('change', function(values) {
             const minV = Math.round(+values[0] || 0);
             const maxV = Math.round(+values[1] || 0);
 
@@ -934,7 +930,7 @@ $version = $basicInfo->theme_version;
         $.ajax({
             url: url + (params.toString() ? ('?' + params.toString()) : ''),
             method: 'GET',
-            success: function (res) {
+            success: function(res) {
                 $('#amenities').html(res.amenities_html);
                 $('#categories').html(res.categories_html);
             }
@@ -943,22 +939,22 @@ $version = $basicInfo->theme_version;
 </script>
 
 <script>
-    document.querySelectorAll(".custom-dropdown").forEach(function (drop) {
+    document.querySelectorAll(".custom-dropdown").forEach(function(drop) {
         let selected = drop.querySelector(".cd-selected");
         let list = drop.querySelector(".cd-list");
 
-        selected.addEventListener("click", function (e) {
+        selected.addEventListener("click", function(e) {
             e.stopPropagation();
 
-            document.querySelectorAll(".cd-list").forEach(function (x) {
+            document.querySelectorAll(".cd-list").forEach(function(x) {
                 if (x !== list) x.style.display = "none";
             });
 
             list.style.display = (list.style.display === "block") ? "none" : "block";
         });
 
-        list.querySelectorAll("li").forEach(function (item) {
-            item.addEventListener("click", function (e) {
+        list.querySelectorAll("li").forEach(function(item) {
+            item.addEventListener("click", function(e) {
                 e.stopPropagation();
                 selected.innerText = this.innerText;
                 list.style.display = "none";
@@ -966,11 +962,11 @@ $version = $basicInfo->theme_version;
         });
     });
 
-    document.addEventListener("click", function () {
+    document.addEventListener("click", function() {
         document.querySelectorAll(".cd-list").forEach(x => x.style.display = "none");
     });
 
-    document.addEventListener("click", function (e) {
+    document.addEventListener("click", function(e) {
         const sortBox = document.getElementById("sortOptionsBox");
         const toggleBtn = document.querySelector(".sort-toggle");
 
@@ -992,46 +988,46 @@ $version = $basicInfo->theme_version;
 
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
 
-    // --- MIN DROPDOWN ---
-    const minSelected = document.querySelector(".dropdown-min-selected");
-    const minList = document.querySelector(".dropdown-min-list");
+        // --- MIN DROPDOWN ---
+        const minSelected = document.querySelector(".dropdown-min-selected");
+        const minList = document.querySelector(".dropdown-min-list");
 
-    minSelected.addEventListener("click", function (e) {
-        e.stopPropagation();
-        minList.style.display = minList.style.display === "block" ? "none" : "block";
-    });
-
-    minList.querySelectorAll("li").forEach(item => {
-        item.addEventListener("click", function () {
-            minSelected.textContent = this.textContent;
-            minList.style.display = "none";
+        minSelected.addEventListener("click", function(e) {
+            e.stopPropagation();
+            minList.style.display = minList.style.display === "block" ? "none" : "block";
         });
-    });
+
+        minList.querySelectorAll("li").forEach(item => {
+            item.addEventListener("click", function() {
+                minSelected.textContent = this.textContent;
+                minList.style.display = "none";
+            });
+        });
 
 
-    // --- MAX DROPDOWN ---
-    const maxSelected = document.querySelector(".dropdown-max-selected");
-    const maxList = document.querySelector(".dropdown-max-list");
+        // --- MAX DROPDOWN ---
+        const maxSelected = document.querySelector(".dropdown-max-selected");
+        const maxList = document.querySelector(".dropdown-max-list");
 
-    maxSelected.addEventListener("click", function (e) {
-        e.stopPropagation();
-        maxList.style.display = maxList.style.display === "block" ? "none" : "block";
-    });
+        maxSelected.addEventListener("click", function(e) {
+            e.stopPropagation();
+            maxList.style.display = maxList.style.display === "block" ? "none" : "block";
+        });
 
-    maxList.querySelectorAll("li").forEach(item => {
-        item.addEventListener("click", function () {
-            maxSelected.textContent = this.textContent;
+        maxList.querySelectorAll("li").forEach(item => {
+            item.addEventListener("click", function() {
+                maxSelected.textContent = this.textContent;
+                maxList.style.display = "none";
+            });
+        });
+
+        // Close all dropdowns on click outside
+        document.addEventListener("click", function() {
+            minList.style.display = "none";
             maxList.style.display = "none";
         });
     });
-
-    // Close all dropdowns on click outside
-    document.addEventListener("click", function () {
-        minList.style.display = "none";
-        maxList.style.display = "none";
-    });
-});
 </script>
 @endsection
