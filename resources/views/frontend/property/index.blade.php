@@ -746,20 +746,35 @@
                 <div class="row filter-top-row d-flex align-items-center d-none d-md-flex gap-3">
 
                     {{-- Select Area --}}
-                    <div class="col p-0">
-                        <select name="area_id" id="area_id" class="form-control form-select area_id new-forms-color-pp select2"
-                            style="box-shadow:none; line-height:45px;" onchange="updateURL('listArea='+$(this).val())">
+                    @if (!request()->has('purpose') || !in_array(request('purpose'), ['franchiese', 'business_for_sale']))
+                        <div class="col p-0">
+                            <select name="area_id" id="area_id" class="form-control form-select area_id new-forms-color-pp select2"
+                                style="box-shadow:none; line-height:45px;" onchange="updateURL('listArea='+$(this).val())">
 
-                            <option value="" style="background-color:white;">{{ __('Select Area') }}</option>
+                                <option value="" style="background-color:white;">{{ __('Select Area') }}</option> 
+                                @foreach ($all_areas as $area)
+                                    <option value="{{ $area->id }}" {{ request('listArea') == $area->id ? 'selected' : '' }} style="background-color:white;">
+                                        {{ $area->name }}
+                                    </option>
+                                @endforeach
 
-                            @foreach ($all_areas as $area)
-                                <option value="{{ $area->name }}" style="background-color:white;">
-                                    {{ $area->name }}
-                                </option>
-                            @endforeach
+                            </select>
+                        </div>
+                    @else
+                        <div class="col p-0">
+                            <select name="city" id="city" class="form-control form-select city new-forms-color-pp select2"
+                                style="box-shadow:none; line-height:45px;" onchange="updateURL('city='+$(this).val())">
 
-                        </select>
-                    </div>
+                                <option value="" style="background-color:white;">{{ __('Select City') }}</option> 
+                                @foreach ($all_cities as $city)
+                                    <option value="{{ $city->cityContent->city_id }}" {{ request('city') == $city->cityContent->city_id ? 'selected' : '' }} style="background-color:white;">
+                                        {{ $city->cityContent->name }}
+                                    </option>
+                                @endforeach
+
+                            </select>
+                        </div>
+                    @endif
 
                     {{-- Property Type --}}
                     @if (!request()->has('purpose') || !in_array(request('purpose'), ['franchiese', 'business_for_sale']))

@@ -304,6 +304,9 @@ Route::prefix('/admin')->middleware('auth:admin')->group(function () {
   // customer Management
   Route::prefix('customer-management')->group(function () {
     Route::get('/', 'BackEnd\CustomerController@index')->name('admin.customer_management.index');
+    Route::post('/store', 'BackEnd\CustomerController@store')->name('admin.customer_management.store');
+    Route::post('/update', 'BackEnd\CustomerController@update')->name('admin.customer_management.update'); 
+    Route::post('/destroy', 'BackEnd\CustomerController@destroy')->name('admin.customer_management.destroy');
   });
 
   // user management route start

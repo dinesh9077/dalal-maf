@@ -191,12 +191,14 @@
                                                 <th scope="col">{{ __('Purpose') }}</th>
                                                 <th scope="col">{{ __('City') }}</th>
                                                 <th scope="col">{{ __('Area') }}</th>
-                                                <th scope="col" style="width: 150px;">{{ __('Approval Status') }}</th>
-                                                <th scope="col">{{ __('Featured') }}</th>
-                                                <th scope="col">{{ __('Recommended') }}</th>
-                                                <th scope="col">{{ __('Hot') }}</th>
-                                                <th scope="col">{{ __('Fast Selling') }}</th>
-                                                <th scope="col" style="width: 150px;">{{ __('Status') }}</th>
+                                                @if(isset($is_properties) && $is_properties)
+                                                    <th scope="col" style="width: 150px;">{{ __('Approval Status') }}</th>
+                                                    <th scope="col">{{ __('Featured') }}</th>
+                                                    <th scope="col">{{ __('Recommended') }}</th>
+                                                    <th scope="col">{{ __('Hot') }}</th>
+                                                    <th scope="col">{{ __('Fast Selling') }}</th>
+                                                    <th scope="col" style="width: 150px;">{{ __('Status') }}</th>
+                                                @endif
                                                 <th scope="col">{{ __('Actions') }}</th>
                                             </tr>
                                         </thead>
@@ -252,123 +254,124 @@
                                                     <td>
                                                         {{ $property->areaContent?->name }}
                                                     </td>
-                                                    <td>
+                                                     @if(isset($is_properties) && $is_properties)
+                                                        <td>
 
-                                                        <form class="d-inline-block"
-                                                            action="{{ route('admin.property_management.approve_status') }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            <input type="hidden" name="property"
-                                                                value="{{ $property->id }}">
-                                                            <select
-                                                                onchange="$('.request-loader').addClass('show'); this.form.submit();"
-                                                                class="form-control  @if ($property->approve_status == 1) bg-success @elseif($property->approve_status == 0)
-												                                        bg-warning @else bg-danger @endif form-control-sm"
-                                                                name="approve_status">
-                                                                <option value="2"
-                                                                    {{ $property->approve_status == 2 ? 'selected' : '' }}>
-                                                                    {{ __('Rejected') }}
-                                                                </option>
-                                                                <option value="1"
-                                                                    {{ $property->approve_status == 1 ? 'selected' : '' }}>
-                                                                    {{ __('Approve') }}
-                                                                </option>
-                                                                <option value="0"
-                                                                    {{ $property->approve_status == 0 ? 'selected' : '' }}>
-                                                                    {{ __('Pending') }}
-                                                                </option>
-                                                            </select>
-                                                        </form>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-inline-block">
-                                                            <select
-                                                                class="form-control {{ $property->is_featured == 1 ? 'bg-success' : 'bg-danger' }} form-control-sm"
-                                                                data-id="{{ $property->id }}" data-field="is_featured"
-                                                                onchange="updatePropertyStatus(this)">
-                                                                <option value="0"
-                                                                    {{ $property->is_featured == 0 ? 'selected' : '' }}>No
-                                                                </option>
-                                                                <option value="1"
-                                                                    {{ $property->is_featured == 1 ? 'selected' : '' }}>Yes
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
+                                                            <form class="d-inline-block"
+                                                                action="{{ route('admin.property_management.approve_status') }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                <input type="hidden" name="property"
+                                                                    value="{{ $property->id }}">
+                                                                <select
+                                                                    onchange="$('.request-loader').addClass('show'); this.form.submit();"
+                                                                    class="form-control  @if ($property->approve_status == 1) bg-success @elseif($property->approve_status == 0)
+                                                                                            bg-warning @else bg-danger @endif form-control-sm"
+                                                                    name="approve_status">
+                                                                    <option value="2"
+                                                                        {{ $property->approve_status == 2 ? 'selected' : '' }}>
+                                                                        {{ __('Rejected') }}
+                                                                    </option>
+                                                                    <option value="1"
+                                                                        {{ $property->approve_status == 1 ? 'selected' : '' }}>
+                                                                        {{ __('Approve') }}
+                                                                    </option>
+                                                                    <option value="0"
+                                                                        {{ $property->approve_status == 0 ? 'selected' : '' }}>
+                                                                        {{ __('Pending') }}
+                                                                    </option>
+                                                                </select>
+                                                            </form>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-inline-block">
+                                                                <select
+                                                                    class="form-control {{ $property->is_featured == 1 ? 'bg-success' : 'bg-danger' }} form-control-sm"
+                                                                    data-id="{{ $property->id }}" data-field="is_featured"
+                                                                    onchange="updatePropertyStatus(this)">
+                                                                    <option value="0"
+                                                                        {{ $property->is_featured == 0 ? 'selected' : '' }}>No
+                                                                    </option>
+                                                                    <option value="1"
+                                                                        {{ $property->is_featured == 1 ? 'selected' : '' }}>Yes
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
 
-                                                    <td>
-                                                        <div class="d-inline-block">
-                                                            <select
-                                                                class="form-control {{ $property->is_recommended == 1 ? 'bg-success' : 'bg-danger' }} form-control-sm"
-                                                                data-id="{{ $property->id }}" data-field="is_recommended"
-                                                                onchange="updatePropertyStatus(this)">
-                                                                <option value="0"
-                                                                    {{ $property->is_recommended == 0 ? 'selected' : '' }}>
-                                                                    No</option>
-                                                                <option value="1"
-                                                                    {{ $property->is_recommended == 1 ? 'selected' : '' }}>
-                                                                    Yes</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
+                                                        <td>
+                                                            <div class="d-inline-block">
+                                                                <select
+                                                                    class="form-control {{ $property->is_recommended == 1 ? 'bg-success' : 'bg-danger' }} form-control-sm"
+                                                                    data-id="{{ $property->id }}" data-field="is_recommended"
+                                                                    onchange="updatePropertyStatus(this)">
+                                                                    <option value="0"
+                                                                        {{ $property->is_recommended == 0 ? 'selected' : '' }}>
+                                                                        No</option>
+                                                                    <option value="1"
+                                                                        {{ $property->is_recommended == 1 ? 'selected' : '' }}>
+                                                                        Yes</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
 
-                                                    <td>
-                                                        <div class="d-inline-block">
-                                                            <select
-                                                                class="form-control {{ $property->is_hot == 1 ? 'bg-success' : 'bg-danger' }} form-control-sm"
-                                                                data-id="{{ $property->id }}" data-field="is_hot"
-                                                                onchange="updatePropertyStatus(this)">
-                                                                <option value="0"
-                                                                    {{ $property->is_hot == 0 ? 'selected' : '' }}>No
-                                                                </option>
-                                                                <option value="1"
-                                                                    {{ $property->is_hot == 1 ? 'selected' : '' }}>Yes
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
+                                                        <td>
+                                                            <div class="d-inline-block">
+                                                                <select
+                                                                    class="form-control {{ $property->is_hot == 1 ? 'bg-success' : 'bg-danger' }} form-control-sm"
+                                                                    data-id="{{ $property->id }}" data-field="is_hot"
+                                                                    onchange="updatePropertyStatus(this)">
+                                                                    <option value="0"
+                                                                        {{ $property->is_hot == 0 ? 'selected' : '' }}>No
+                                                                    </option>
+                                                                    <option value="1"
+                                                                        {{ $property->is_hot == 1 ? 'selected' : '' }}>Yes
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
 
-                                                    <td>
-                                                        <div class="d-inline-block">
-                                                            <select
-                                                                class="form-control {{ $property->is_fast_selling == 1 ? 'bg-success' : 'bg-danger' }} form-control-sm"
-                                                                data-id="{{ $property->id }}"
-                                                                data-field="is_fast_selling"
-                                                                onchange="updatePropertyStatus(this)">
-                                                                <option value="0"
-                                                                    {{ $property->is_fast_selling == 0 ? 'selected' : '' }}>
-                                                                    No</option>
-                                                                <option value="1"
-                                                                    {{ $property->is_fast_selling == 1 ? 'selected' : '' }}>
-                                                                    Yes</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
+                                                        <td>
+                                                            <div class="d-inline-block">
+                                                                <select
+                                                                    class="form-control {{ $property->is_fast_selling == 1 ? 'bg-success' : 'bg-danger' }} form-control-sm"
+                                                                    data-id="{{ $property->id }}"
+                                                                    data-field="is_fast_selling"
+                                                                    onchange="updatePropertyStatus(this)">
+                                                                    <option value="0"
+                                                                        {{ $property->is_fast_selling == 0 ? 'selected' : '' }}>
+                                                                        No</option>
+                                                                    <option value="1"
+                                                                        {{ $property->is_fast_selling == 1 ? 'selected' : '' }}>
+                                                                        Yes</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
 
-                                                    <td>
-                                                        <form id="statusForm{{ $property->id }}" class="d-inline-block"
-                                                            action="{{ route('admin.property_management.update_status') }}"
-                                                            method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="propertyId"
-                                                                value="{{ $property->id }}">
+                                                        <td>
+                                                            <form id="statusForm{{ $property->id }}" class="d-inline-block"
+                                                                action="{{ route('admin.property_management.update_status') }}"
+                                                                method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="propertyId"
+                                                                    value="{{ $property->id }}">
 
-                                                            <select
-                                                                class="form-control {{ $property->status == 1 ? 'bg-success' : 'bg-danger' }} form-control-sm"
-                                                                name="status"
-                                                                onchange="document.getElementById('statusForm{{ $property->id }}').submit();">
-                                                                <option value="1"
-                                                                    {{ $property->status == 1 ? 'selected' : '' }}>
-                                                                    {{ __('Active') }}
-                                                                </option>
-                                                                <option value="0"
-                                                                    {{ $property->status == 0 ? 'selected' : '' }}>
-                                                                    {{ __('Inactive') }}
-                                                                </option>
-                                                            </select>
-                                                        </form>
-                                                    </td>
-
+                                                                <select
+                                                                    class="form-control {{ $property->status == 1 ? 'bg-success' : 'bg-danger' }} form-control-sm"
+                                                                    name="status"
+                                                                    onchange="document.getElementById('statusForm{{ $property->id }}').submit();">
+                                                                    <option value="1"
+                                                                        {{ $property->status == 1 ? 'selected' : '' }}>
+                                                                        {{ __('Active') }}
+                                                                    </option>
+                                                                    <option value="0"
+                                                                        {{ $property->status == 0 ? 'selected' : '' }}>
+                                                                        {{ __('Inactive') }}
+                                                                    </option>
+                                                                </select>
+                                                            </form>
+                                                        </td>
+                                                    @endif
                                                     <td>
                                                         <div class="dropdown">
                                                             <button class="btn btn-secondary dropdown-toggle btn-sm"
