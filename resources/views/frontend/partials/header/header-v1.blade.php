@@ -112,21 +112,17 @@
                     <span class="style__postTab">{{ $initial }}</span>
             </button>
             <ul class="dropdown-menu" style="border-radius: 10px;">                 
-                 <li>
-                    <a class="dropdown-item"
-                         href="{{ $dashboardRoute }}">{{ __('Dashboard') }}</a></li>
-                          <li style="display: flex;">
-                        @if ($authType != 'guest')
-                        <a href="{{ $authType === 'user'? route('user.wishlist') : ($authType === 'agent'? route('vendor.wishlist') : route('vendor.wishlist')) }}" class="dropdown-item" title="{{ __('My Wishlist') }}">
-                            My Wishlist
-                            <span class="wishlist-count-dropdown">({{ $wishlistCount }})</span>
-
-                            
-
-
-                        </a>
-                        @endif
-                 </li>
+                <li>
+                    <a class="dropdown-item"  href="{{ $dashboardRoute }}">{{ __('Dashboard') }}</a>
+                </li>
+                        <li style="display: flex;">
+                            @if ($authType != 'guest')
+                            <a href="{{ $authType === 'user'? route('user.wishlist') : ($authType === 'agent'? route('vendor.wishlist') : route('vendor.wishlist')) }}" class="dropdown-item" title="{{ __('My Wishlist') }}">
+                                My Wishlist
+                                <span class="wishlist-count-dropdown">({{ $wishlistCount }})</span>
+                            </a>
+                            @endif
+                        </li>
                  <li>
                     <a class="dropdown-item" href="{{ $logoutRoute }}">{{ __('Logout') }}</a>
                 </li>
@@ -289,8 +285,8 @@
                     </div>
 
                     {{-- Wishlist Icon --}}
-                    <!-- <div class="item position-relative">
-                        @if ($authType != 'guest')
+                    <!-- @if ($authType != 'guest')
+                         <div class="item position-relative">
                             <a href="{{ $authType === 'user'
                                 ? route('user.wishlist')
                                 : ($authType === 'agent'
@@ -300,8 +296,8 @@
                                 <i class="fas fa-heart text-danger"></i>
                                 <span class="wishlist-count-html">0</span>
                             </a>
-                        @endif
-                    </div> -->
+                        </div>
+                    @endif -->
                 </div>
             </nav>
         </div>

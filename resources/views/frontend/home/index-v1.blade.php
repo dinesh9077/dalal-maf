@@ -21,24 +21,17 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 
 <style>
+    
     .ui-widget.ui-widget-content {
         background: white !important;
-        border: 1px solid #dcdcdc !important;
+        border: none !important;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.09) !important;
         font-size: 14px !important;
-        padding: 2px !important;
+        padding: 0px !important;
         color: #2b3138 !important;
         text-transform: capitalize !important;
-        border-radius: 5px !important;
-    }
-
-    .ui-widget.ui-widget-content {
-        background: white !important;
-        border: 1px solid #dcdcdc !important;
-        font-size: 14px !important;
-        padding: 2px !important;
-        color: #2b3138 !important;
-        text-transform: capitalize !important;
-        border-radius: 5px !important;
+        border-radius: 10px !important;
+        overflow: hidden !important;
     }
 
     .ui-widget.ui-widget-content .ui-menu-item .ui-menu-item-wrapper:hover {
@@ -49,6 +42,14 @@
         border-radius: 5px !important;
 
     }
+
+    .ui-widget.ui-widget-content .ui-menu-item .ui-menu-item-wrapper{
+        padding: 10px;
+    }
+
+  .ui-widget.ui-widget-content .ui-menu-item:last-child .ui-menu-item-wrapper {
+    border-bottom: none !important;
+}
 
     .ui-widget.ui-widget-content .ui-menu-item {
         background: white !important;

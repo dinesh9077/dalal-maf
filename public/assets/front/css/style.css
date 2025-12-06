@@ -7692,6 +7692,14 @@ p.cookie-consent__message * {
 }
 
 @media(max-width : 767px) {
+
+    
+.new-pro-images-grid img {
+    height: 150px;
+}
+
+
+
     .new-pro-images-grid .col-md-8  img {
         height: 150px;
     }
