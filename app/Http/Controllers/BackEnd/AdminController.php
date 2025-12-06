@@ -223,98 +223,134 @@ class AdminController extends Controller
   public function updateProfile(Request $request)
   {
     $admin = Auth::guard('admin')->user();
+    $adminId = $admin->id;
+    $languages = Language::all();
 
+    /*
+     * ----------------------
+     * Validation
+     * ----------------------
+     */
     $rules = [];
 
+    // Image rule
     if (is_null($admin->image)) {
-      $rules['image'] = 'required';
-    }
-    if ($request->hasFile('image')) {
-      $rules['image'] = new ImageMimeTypeRule();
+      $rules['image'] = ['required', new ImageMimeTypeRule()];
+    } elseif ($request->hasFile('image')) {
+      $rules['image'] = [new ImageMimeTypeRule()];
     }
 
+    // Unique username & email (ignore current admin)
     $rules['username'] = [
       'required',
-      Rule::unique('admins')->ignore($admin->id)
+      Rule::unique('admins', 'username')->ignore($adminId)
     ];
 
     $rules['email'] = [
       'required',
-      Rule::unique('admins')->ignore($admin->id)
+      Rule::unique('admins', 'email')->ignore($adminId)
     ];
 
-    $languages = Language::get();
+    // Language-specific fields
     foreach ($languages as $language) {
-      $rules[$language->code . '_first_name'] = 'required';
-      $rules[$language->code . '_last_name'] = 'required';
+      $prefix = $language->code . '_';
+
+      $rules[$prefix . 'first_name'] = 'required';
+      $rules[$prefix . 'last_name'] = 'required';
+      // Other fields (country, city, etc.) are optional as before
     }
 
+    // Custom messages
     $messages = [];
-
     foreach ($languages as $language) {
-      $messages[$language->code . '_first_name.required'] = 'The First Name field is required for ' . $language->name . ' language.';
-      $messages[$language->code . '_last_name.required'] = 'The Last Name field is required for ' . $language->name . ' language.';
+      $messages[$language->code . '_first_name.required'] =
+        'The First Name field is required for ' . $language->name . ' language.';
+
+      $messages[$language->code . '_last_name.required'] =
+        'The Last Name field is required for ' . $language->name . ' language.';
     }
 
     $validator = Validator::make($request->all(), $rules, $messages);
 
     if ($validator->fails()) {
-      return redirect()->back()->withErrors($validator->errors());
+      return redirect()->back()
+        ->withErrors($validator)
+        ->withInput();
     }
+
+    /*
+     * ----------------------
+     * Handle image upload
+     * ----------------------
+     */
+    $imageName = $admin->image;
 
     if ($request->hasFile('image')) {
       $newImg = $request->file('image');
       $oldImg = $admin->image;
-      $imageName = UploadFile::update(public_path('assets/img/admins/'), $newImg, $oldImg);
-    }
-    if ($request->show_email_addresss) {
-      $show_email_addresss = 1;
-    } else {
-      $show_email_addresss = 0;
-    }
-    if ($request->show_phone_number) {
-      $show_phone_number = 1;
-    } else {
-      $show_phone_number = 0;
-    }
-    if ($request->show_contact_form) {
-      $show_contact_form = 1;
-    } else {
-      $show_contact_form = 0;
+
+      $imageName = UploadFile::update(
+        public_path('assets/img/admins/'),
+        $newImg,
+        $oldImg
+      );
     }
 
-    $admin->update([
-      // 'first_name' => $request->first_name,
-      // 'last_name' => $request->last_name,
-      'image' => $request->hasFile('image') ? $imageName : $admin->image,
-      'username' => $request->username,
-      'email' => $request->email,
-      'phone' => $request->phone,
-      'show_email_addresss' => $show_email_addresss,
-      'show_phone_number' => $show_phone_number,
-      'show_contact_form' => $show_contact_form,
-      // 'address' => $request->address,
-      // 'details' => $request->details,
-    ]);
+    /*
+     * ----------------------
+     * Boolean flags (checkboxes)
+     * ----------------------
+     */
+    $show_email_addresss = $request->boolean('show_email_addresss');
+    $show_phone_number = $request->boolean('show_phone_number');
+    $show_contact_form = $request->boolean('show_contact_form');
 
-    $adminId = $admin->id;
-    foreach ($languages as $language) {
-      $adminInfo = AdminInfo::where('admin_id', $adminId)->where('language_id', $language->id)->first();
-      if ($adminInfo == NULL) {
-        $adminInfo = new AdminInfo();
+    /*
+     * ----------------------
+     * DB transaction for consistency
+     * ----------------------
+     */
+    DB::transaction(function () use ($request, $admin, $adminId, $languages, $imageName, $show_email_addresss, $show_phone_number, $show_contact_form) {
+      // Update main admin record
+      $admin->update([
+        'first_name' => $request->en_first_name,
+        'last_name' => $request->en_last_name,
+        'image' => $imageName,
+        'username' => $request->username,
+        'email' => $request->email,
+        'phone' => $request->phone,
+        'show_email_addresss' => $show_email_addresss,
+        'show_phone_number' => $show_phone_number,
+        'show_contact_form' => $show_contact_form,
+      ]);
+
+      // Preload all existing AdminInfo rows in one query (avoid N+1)
+      $existingInfos = AdminInfo::where('admin_id', $adminId)
+        ->get()
+        ->keyBy('language_id');
+
+      foreach ($languages as $language) {
+        $langId = $language->id;
+        $prefix = $language->code . '_';
+
+        /** @var \App\Models\AdminInfo|null $adminInfo */
+        $adminInfo = $existingInfos->get($langId) ?? new AdminInfo();
+
+        $adminInfo->language_id = $langId;
+        $adminInfo->admin_id = $adminId;
+        $adminInfo->first_name = $request->input($prefix . 'first_name');
+        $adminInfo->last_name = $request->input($prefix . 'last_name');
+        $adminInfo->country = $request->input($prefix . 'country');
+        $adminInfo->city = $request->input($prefix . 'city');
+        $adminInfo->state = $request->input($prefix . 'state');
+        $adminInfo->zipcode = $request->input($prefix . 'zip_code');
+        $adminInfo->address = $request->input($prefix . 'address');
+        $adminInfo->details = $request->input($prefix . 'details');
+
+        $adminInfo->save();
       }
-      $adminInfo->language_id = $language->id;
-      $adminInfo->admin_id = $adminId;
-      $adminInfo->first_name = $request[$language->code . '_first_name'];
-      $adminInfo->last_name = $request[$language->code . '_last_name'];
-      $adminInfo->country = $request[$language->code . '_country'];
-      $adminInfo->city = $request[$language->code . '_city'];
-      $adminInfo->state = $request[$language->code . '_state'];
-      $adminInfo->zipcode = $request[$language->code . '_zip_code'];
-      $adminInfo->address = $request[$language->code . '_address'];
-      $adminInfo->details = $request[$language->code . '_details'];
-      $adminInfo->save();
-    }
+    });
+
     $request->session()->flash('success', 'Profile updated successfully!');
 
     return redirect()->back();

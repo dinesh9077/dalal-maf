@@ -53,9 +53,8 @@ class PropertyMessageController extends Controller
     }
     public function destroy(Request $request)
     {
-        $message = PropertyContact::where('vendor_id', 0)->find($request->message_id);
-        if ($message) {
-
+        $message = PropertyContact::find($request->message_id); 
+        if ($message) { 
             $message->delete();
         } else {
             Session::flash('warning', 'Something went wrong!');

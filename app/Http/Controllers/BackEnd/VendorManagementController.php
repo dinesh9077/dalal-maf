@@ -530,40 +530,101 @@ class VendorManagementController extends Controller
 
     public function addCurrPackage(Request $request)
     {
-        $vendor_id = $request->vendor_id;
-        $vendor = Vendor::where('id', $vendor_id)->first();
+        $vendorId = (int) $request->vendor_id;
+
+        // Fail fast if vendor or package not found
+        $vendor = Vendor::findOrFail($vendorId);
+        $selectedPackage = Package::findOrFail($request->package_id);
+
+        // You can also cache this if Basic::first() is used a lot
         $bs = Basic::first();
 
-        $selectedPackage = Package::find($request->package_id);
+        // Base date (start of current day)
+        $today = Carbon::today(); // 00:00:00 of today
 
-        // calculate expire date for selected package
-        if ($selectedPackage->term == 'monthly') {
-            $exDate = Carbon::now()->addMonth()->format('d-m-Y');
-        } elseif ($selectedPackage->term == 'yearly') {
-            $exDate = Carbon::now()->addYear()->format('d-m-Y');
-        } elseif ($selectedPackage->term == 'lifetime') {
-            $exDate = Carbon::maxValue()->format('d-m-Y');
+        // Calculate expire date for selected package
+        $expireDate = null;
+
+        switch ($selectedPackage->term) {
+            case 'monthly':
+                $expireDate = $today->copy()->addMonthNoOverflow();
+                break;
+
+            case 'yearly':
+                $expireDate = $today->copy()->addYearNoOverflow();
+                break;
+
+            case 'lifetime':
+                // Same as your previous maxValue(), but more practical (adjust if needed)
+                $expireDate = Carbon::create(2099, 12, 31)->endOfDay();
+                break;
+
+            default:
+                // If term is unknown, log it and bail out
+                Log::warning('Unknown package term when adding current package', [
+                    'package_id' => $selectedPackage->id,
+                    'term' => $selectedPackage->term,
+                ]);
+
+                Session::flash('error', 'Invalid package term. Unable to add package.');
+                return back();
         }
-        // store a new membership for selected package
-        $selectedMemb = Membership::create([
-            'price' => $selectedPackage->price,
-            'currency' => $bs->base_currency_text,
-            'currency_symbol' => $bs->base_currency_symbol,
-            'payment_method' => $request->payment_method,
-            'transaction_id' => uniqid(),
-            'status' => 1,
-            'receipt' => NULL,
-            'transaction_details' => NULL,
-            'settings' => null,
-            'package_id' => $selectedPackage->id,
-            'vendor_id' => $vendor_id,
-            'start_date' => Carbon::parse(Carbon::now()->format('d-m-Y')),
-            'expire_date' => Carbon::parse($exDate),
-            'is_trial' => 0,
-            'trial_days' => 0,
-        ]);
 
-        $this->sendMail($selectedMemb, $selectedPackage, $request->payment_method, $vendor, $bs, 'admin_added_current_package');
+        // Use a transaction to be safe if you extend logic later
+        DB::beginTransaction();
+
+        try {
+            $selectedMemb = Membership::create([
+                'price' => $selectedPackage->price,
+                'currency' => $bs->base_currency_text,
+                'currency_symbol' => $bs->base_currency_symbol,
+                'payment_method' => $request->payment_method,
+                'transaction_id' => uniqid(), // if you need a real txn ID, replace later
+                'status' => 1,
+                'receipt' => null,
+                'transaction_details' => null,
+                'settings' => null,
+                'package_id' => $selectedPackage->id,
+                'vendor_id' => $vendorId,
+                'start_date' => $today,       // same effect as your parse(format)
+                'expire_date' => $expireDate,  // Carbon instance directly
+                'is_trial' => 0,
+                'trial_days' => 0,
+            ]);
+
+            DB::commit();
+
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            Log::error('Failed to add current package', [
+                'vendor_id' => $vendorId,
+                'package_id' => $selectedPackage->id,
+                'message' => $e->getMessage(),
+            ]);
+
+            Session::flash('error', 'Something went wrong while adding the package. Please try again.');
+            return back();
+        }
+
+        // ⚠️ Email is usually the slow part — consider queueing this
+        try {
+            $this->sendMail(
+                $selectedMemb,
+                $selectedPackage,
+                $request->payment_method,
+                $vendor,
+                $bs,
+                'admin_added_current_package'
+            );
+        } catch (\Throwable $e) {
+            Log::warning('Package added but email failed', [
+                'vendor_id' => $vendorId,
+                'package_id' => $selectedPackage->id,
+                'message' => $e->getMessage(),
+            ]);
+            // Don’t block success for mail failure
+        }
 
         Session::flash('success', 'Current Package has been added successfully!');
         return back();
@@ -651,41 +712,105 @@ class VendorManagementController extends Controller
 
     public function removeCurrPackage(Request $request)
     {
-        $vendor_id = $request->vendor_id;
-        $vendor = Vendor::where('id', $vendor_id)->firstOrFail();
-        $currMembership = VendorPermissionHelper::currMembOrPending($vendor_id);
-        $currPackage = Package::select('title')->findOrFail($currMembership->package_id);
-        $nextMembership = VendorPermissionHelper::nextMembership($vendor_id);
-        $bs = Basic::first();
+        $vendorId = (int) $request->vendor_id;
 
-        $today = Carbon::now();
+        // fail fast if vendor not found
+        $vendor = Vendor::findOrFail($vendorId);
 
-        // just expire the current package
-        $currMembership->expire_date = $today->subDay();
-        $currMembership->modified = 1;
-        if ($currMembership->status == 0) {
-            $currMembership->status = 2;
-        }
-        $currMembership->save();
+        // wrap all membership changes in a transaction
+        DB::beginTransaction();
 
-        // if next package exists
-        if (!empty($nextMembership)) {
-            $nextPackage = Package::find($nextMembership->package_id);
+        try {
+            $currMembership = VendorPermissionHelper::currMembOrPending($vendorId);
 
-            $nextMembership->start_date = Carbon::parse(Carbon::today()->format('d-m-Y'));
-            if ($nextPackage->term == 'monthly') {
-                $nextMembership->expire_date = Carbon::parse(Carbon::today()->addMonth()->format('d-m-Y'));
-            } elseif ($nextPackage->term == 'yearly') {
-                $nextMembership->expire_date = Carbon::parse(Carbon::today()->addYear()->format('d-m-Y'));
-            } elseif ($nextPackage->term == 'lifetime') {
-                $nextMembership->expire_date = Carbon::parse(Carbon::maxValue()->format('d-m-Y'));
+            if (!$currMembership) {
+                DB::rollBack();
+                Session::flash('error', 'No current membership found for this vendor.');
+                return back();
             }
-            $nextMembership->save();
+
+            // Only load what you need from package
+            $currPackage = Package::select('id', 'title')->findOrFail($currMembership->package_id);
+            $currPackageTitle = $currPackage->title;
+
+            $nextMembership = VendorPermissionHelper::nextMembership($vendorId);
+
+            // Dates
+            $now = Carbon::now();
+            $yesterday = $now->copy()->subDay()->startOfDay();
+            $today = $now->copy()->startOfDay();
+
+            // Expire current package
+            $currMembership->expire_date = $yesterday;
+            $currMembership->modified = 1;
+
+            // If pending (0), mark as "expired/removed" (2)
+            if ((int) $currMembership->status === 0) {
+                $currMembership->status = 2;
+            }
+            $currMembership->save();
+
+            // If next package exists, activate it immediately
+            if ($nextMembership) {
+                $nextPackage = Package::select('id', 'term')->find($nextMembership->package_id);
+
+                if ($nextPackage) {
+                    $nextMembership->start_date = $today;
+
+                    // Use simple date ops, no extra parse/format
+                    if ($nextPackage->term === 'monthly') {
+                        $nextMembership->expire_date = $today->copy()->addMonthNoOverflow();
+                    } elseif ($nextPackage->term === 'yearly') {
+                        $nextMembership->expire_date = $today->copy()->addYearNoOverflow();
+                    } elseif ($nextPackage->term === 'lifetime') {
+                        // You can also use NULL to mean "no expiry" if your schema supports it
+                        $nextMembership->expire_date = Carbon::create(2099, 12, 31)->endOfDay();
+                    }
+
+                    $nextMembership->save();
+                }
+            }
+
+            // Basic settings: if this is expensive, consider caching
+            $bs = Basic::first();
+
+            DB::commit();
+
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            // Log error for debugging
+            \Log::error('Error removing current package', [
+                'vendor_id' => $vendorId,
+                'message' => $e->getMessage(),
+            ]);
+
+            Session::flash('error', 'Something went wrong while removing the package. Please try again.');
+            return back();
         }
 
-        $this->sendMail(NULL, NULL, $request->payment_method, $vendor, $bs,  'admin_removed_current_package', NULL, $currPackage->title);
+        // ✅ Send email AFTER transaction (and ideally as a queued job)
+        // If sendMail() is heavy, convert it to a queued job for big performance gain.
+        try {
+            $this->sendMail(
+                null,
+                null,
+                $request->payment_method,
+                $vendor,
+                $bs,
+                'admin_removed_current_package',
+                null,
+                $currPackageTitle
+            );
+        } catch (\Throwable $e) {
+            \Log::warning('Package removed but email failed', [
+                'vendor_id' => $vendorId,
+                'message' => $e->getMessage(),
+            ]);
+            // don’t block user for mail failure
+        }
 
-        Session::flash('success', 'Current Package removed successfully!');
+        Session::flash('success', 'Current package removed successfully!');
         return back();
     }
 
