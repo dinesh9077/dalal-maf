@@ -54,22 +54,7 @@ class PropertyController extends Controller
             $q->where('language_id', $language->id);
         }, 'properties'])
         ->where('status', 1)->get();
-
-        // if ($request->has('type'))
-        // {
-
-        //     $information['categories'] = PropertyCategory::with(['categoryContent' => function ($q) use ($language) {
-        //         $q->where('language_id', $language->id);
-        //     }, 'properties'])
-        //     ->where([['status', 1]])
-        //     ->whereIn('type', $request->type)->get();
-        // } else {
-        //     $information['categories'] = PropertyCategory::with(['categoryContent' => function ($q) use ($language) {
-        //         $q->where('language_id', $language->id);
-        //     }, 'properties'])
-        //     ->where('status', 1)->get();
-        // }
-
+ 
         $information['bgImg'] = $misc->getBreadcrumb();
         $information['pageHeading'] = $misc->getPageHeading($language);
         $information['amenities'] = Amenity::where('status', 1)->with(['amenityContent' => function ($q) use ($language) {
@@ -161,13 +146,11 @@ class PropertyController extends Controller
                 $stateId = $state->state_id;
             }
         }
-        if ($request->filled('city') && $request->filled('city') && $request->city != 'all') {
 
-            $city = CityContent::where([['name', $request->city], ['language_id', $language->id]])->first();
-            if ($city) {
-                $cityId = $city->city_id;
-            }
+        if ($request->filled('city')) { 
+            $cityId = $request->city;
         }
+
         if ($request->filled('title')) {
             $title =  $request->title;
         }
@@ -185,9 +168,8 @@ class PropertyController extends Controller
             $area =  $request->area;
         } 
        
-        if ($request->filled('listArea') && $request->filled('listArea') && $request->listArea != 'all') {
-            $getArea = Area::where('name', $request->listArea)->first();
-            $listAreaId =  $getArea->id;
+        if ($request->filled('listArea')) { 
+            $listAreaId =  $request->listArea;
         }
 
         if ($request->filled('sort'))
@@ -386,21 +368,22 @@ class PropertyController extends Controller
                             ->distinct()
                             ->max('properties.price');
         $property_contents = $statsQuery->distinct()->paginate(12);
-        $totalCountOfProperties = $property_contents->total();
+        $totalCountOfProperties = $statsQuery->distinct()->get()->count();
 
         $information['property_contents'] = $property_contents;
         $information['contents'] = $property_contents;
 
         $information['all_areas'] = Area::where('status', 1)->get();
-        $information['all_cities'] = City::where('status', 1)->with(['cityContent' => function ($q) use ($language) {
+        $information['all_cities'] = City::where('status', 1)
+        ->with(['cityContent' => function ($q) use ($language) {
             $q->where('language_id', $language->id);
-        }])->get();
-        $information['all_states'] = State::with(['stateContent' => function ($q) use ($language) {
-            $q->where('language_id', $language->id);
-        }])->get();
-        $information['all_countries'] = Country::with(['countryContent' => function ($q) use ($language) {
-            $q->where('language_id', $language->id);
-        }])->get();
+        }])->get(); 
+        // $information['all_states'] = State::with(['stateContent' => function ($q) use ($language) {
+        //     $q->where('language_id', $language->id);
+        // }])->get();
+        // $information['all_countries'] = Country::with(['countryContent' => function ($q) use ($language) {
+        //     $q->where('language_id', $language->id);
+        // }])->get();
 
         $information['units'] = DB::table('units')->whereStatus(1)->orderBy('unit_name')->get();
 
@@ -547,9 +530,8 @@ class PropertyController extends Controller
             $area = $request->area;
         }
 
-        if ($request->filled('listArea') && $request->filled('listArea') && $request->listArea != 'all') {
-            $getArea = Area::where('name', $request->listArea)->first();
-            $listAreaId = $getArea->id;
+        if ($request->filled('listArea')) {
+            $listAreaId = $request->listArea;
         }
 
         if ($request->filled('sort')) {
@@ -746,8 +728,7 @@ class PropertyController extends Controller
             ->distinct()
             ->max('properties.price');
         $property_contents = $statsQuery->distinct()->paginate(12);
-        $totalCountOfProperties = $property_contents->total();
-        
+        $totalCountOfProperties = $statsQuery->distinct()->get()->count(); 
         $information['property_contents'] = $property_contents;
         $information['contents'] = $property_contents;
 

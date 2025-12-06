@@ -44,8 +44,9 @@ class AppServiceProvider extends ServiceProvider
 
       // send this information to only back-end view files
       View::composer('backend.*', function ($view) {
-        if (Auth::guard('admin')->check() == true) {
-          $authAdmin = Auth::guard('admin')->user();
+        if (Auth::guard('admin')->check() == true) 
+        {
+          $authAdmin = Auth::guard('admin')->user(); 
           $role = null;
 
           if (!is_null($authAdmin->role_id)) {
