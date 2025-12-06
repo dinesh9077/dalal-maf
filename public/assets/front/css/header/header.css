@@ -751,12 +751,12 @@ width: 38%;
                 .wishlist-count-html {
                     position: absolute;
                     top: -4px;
-                    right: 5px;
+                    right: -9px;    
                     background: #e74c3c;
                     color: #fff;
                     border-radius: 50%;
                     font-size: 11px;
-                    padding: 5px 5px;
+                    padding: 4px 3px;
                     min-width: 16px;
                     text-align: center;
                     line-height: 1;

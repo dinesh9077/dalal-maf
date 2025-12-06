@@ -5,7 +5,7 @@
     }
 
     .main-title {
-        font-size: 16px;
+        font-size: 13px;
         color: #494949;
         font-weight: 550;
         letter-spacing: 1px;
@@ -14,7 +14,7 @@
         padding-bottom: 4px;
         display: flex;
         align-items: center;
-        border-bottom: 0.5px solid #494949;
+        border-bottom: 1px solid #494949;
 
     }
 
@@ -52,7 +52,7 @@
                 <!-- ================================================================================================================== -->
                 <!-- ================================================================================================================== -->
 
-                <h1 class="main-title">General :</h1>
+                <h1 class="main-title">General</h1>
                 <!-- {{-- Start dashboard --}} -->
                 <li class="nav-item @if (request()->routeIs('admin.dashboard')) active @endif">
                     <a href="{{ route('admin.dashboard') }}">
@@ -109,7 +109,7 @@
                 <!-- ================================================================================================================== -->
                 <!-- ================================================================================================================== -->
 
-                <h1 class="main-title">Owner & Builder :</h1>
+                <h1 class="main-title">Owner & Builder</h1>
 
 
 
@@ -248,7 +248,7 @@
                 <!-- ================================================================================================================== -->
 
 
-                <h1 class="main-title">Property Master :</h1>
+                <h1 class="main-title">Property Master</h1>
 
                 <!-- {{-- Property specifications --}} -->
                 @if (is_null($roleInfo) || (!empty($rolePermissions) && in_array('Property Features', $rolePermissions)))
@@ -480,7 +480,7 @@
                 <!-- ================================================================================================================== -->
 
 
-                <h1 class="main-title">Inventory & Accounting : </h1>
+                <h1 class="main-title">Inventory & Accounting</h1>
 
                 <!-- {{-- Property inventory --}} -->
                 @php
@@ -505,7 +505,7 @@
                         <a
                             href="{{ route('admin.property_inventory.properties', ['language' => $defaultLang->code]) }}">
                             <i class="la flaticon-paint-palette"></i>
-                            <p>{{ __('Manage Full Property') }}</p>
+                            <p>{{ __(' Manage Full Property') }}</p>
                             <i class="{{ $add_unread__inventory_class }}"
                                 style="margin-left: 10px;"><b>{{ $unreadCountInventory != 0 ? $unreadCountInventory : '' }}</b></i>
                         </a>
@@ -553,7 +553,7 @@
                 <!-- ================================================================================================================== -->
 
 
-                <h1 class="main-title">Package & Payement : </h1>
+                <h1 class="main-title">Package & Payement</h1>
 
                 <!-- {{-- start package management --}} -->
                 @if (is_null($roleInfo) || (!empty($rolePermissions) && in_array('Package Management', $rolePermissions)))
@@ -604,7 +604,7 @@
                 <!-- ================================================================================================================== -->
                 <!-- ================================================================================================================== -->
 
-                <h1 class="main-title">Admin Management : </h1>
+                <h1 class="main-title">Admin Management</h1>
 
                 <!-- {{-- Start admin --}} -->
                 @if (is_null($roleInfo) || (!empty($rolePermissions) && in_array('Admin Management', $rolePermissions)))
@@ -647,7 +647,7 @@
                 <!-- ================================================================================================================== -->
                 <!-- ================================================================================================================== -->
 
-                <h1 class="main-title">Support & Resources : </h1>
+                <h1 class="main-title">Support & Resources</h1>
 
 
                 <!-- {{-- Support Tickets --}} -->
@@ -763,7 +763,7 @@
                 <!-- ================================================================================================================== -->
                 <!-- ================================================================================================================== -->
 
-                <h1 class="main-title">Basic Setting : </h1>
+                <h1 class="main-title">Basic Setting</h1>
 
 
                 <!-- {{-- Start basic settings --}} -->
