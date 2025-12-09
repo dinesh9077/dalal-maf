@@ -1026,12 +1026,11 @@ class PropertyController extends Controller
 	}
 
 	public function propertyFullFloorsPartial(Request $request)
-	{
+	{ 
 		try {
 			$bz_id = auth()->user()->bz_id;
 			$user_id = auth()->user()->id;
-
-
+ 
 			$property_id = $request->property_id;
 			$floors = $request->floors;
 			$floor_number = $request->floor_number;
@@ -1048,7 +1047,7 @@ class PropertyController extends Controller
 			$view = view('backend.property.full_property.property-details', compact('property_id', 'wing_id', 'floor_id', 'floors', 'floor_number', 'units', 'budgets', 'categories', 'flatcount', 'partailsDetails'))->render();
 			return response()->json(['status' => 'success', 'view' => $view]);
 		} catch (\Throwable $e) {
-			dd($e);
+			return response()->json(['status' => 'error', 'msg' => $e->getMessage()]);
 		}
 	}
 
@@ -1358,18 +1357,27 @@ class PropertyController extends Controller
 		$unit_id = $request->unit_id;
 		$property_status = $request->property_status;
 
-		$user = Auth::user();
+		$user = Auth::user(); 
+		$branch_id = $user->branch_id; 
+		$property = Content::select('property_id', 'title')
+		->where('property_id', $property_id)
+		->first(); 
 
-		$branch_id = $user->branch_id;
+		$wings = PrtWing::select('prt_wings.*')
+		->where('prt_wings.property_id', $property_id)
+		->join('prt_floors as prtf', 'prtf.wing_id', '=', 'prt_wings.id')
+		->orderBy('prt_wings.wing_number', 'asc')
+		->get();
 
+ 		$floors = PrtFloor::select('prt_floors.*')
+		->where('prt_floors.wing_id', $request->wing_id)
+		->orderBy('prt_floors.floor_number', 'asc')
+		->get();
 
-		$property = Content::select('property_id', 'title')->where('property_id', $property_id)->first();
+ 		$floor_details = PrtUnit::where('wing_id', $wing_id)
+		->where('floor_id', $floor_id)
+		->get();
 
-		$wings = PrtWing::select('prt_wings.*')->where('prt_wings.property_id', $property_id)->join('prt_floors as prtf', 'prtf.wing_id', '=', 'prt_wings.id')->orderBy('prt_wings.wing_number', 'asc')->get();
-
-		$floors = PrtFloor::select('prt_floors.*')->where('prt_floors.wing_id', $request->wing_id)->orderBy('prt_floors.floor_number', 'asc')->get();
-
-		$floor_details = PrtUnit::where('wing_id', $wing_id)->where('floor_id', $floor_id)->get();
 		$customers = Customer::get();
 
 		$view = view('backend.property.floor-status-change', compact('property', 'wings', 'floors', 'property_id', 'wing_id', 'floor_id', 'floor_details', 'unit_id', 'property_status', 'customers'))->render();
@@ -1378,8 +1386,7 @@ class PropertyController extends Controller
 
 	public function propertyWorkAssignStore(Request $request)
 	{
-		$data = $request->except('_token');
-
+		$data = $request->except('_token'); 
 		$validator = Validator::make($request->all(), [
 			'property_id' => 'required',
 			'wing_id' => 'required',
@@ -1396,30 +1403,26 @@ class PropertyController extends Controller
 
 		try {
 
-			DB::beginTransaction();
-
-			// Update property status in PrtUnit table
-			PrtUnit::where('id', $request->unit_id)
-				->update(['property_status' => $request->property_status]);
+			DB::beginTransaction();  
+			PrtUnit::where('id', operator: $request->unit_id)->update(['property_status' => $request->property_status]);
 
 			// Check if a record already exists in PrtFloorStatus
 			$object = PrtFloorStatus::where('property_id', $request->property_id)
-				->where('wing_id', $request->wing_id)
-				->where('floor_id', $request->floor_id)
-				->where('unit_id', $request->unit_id)
-				->first();
-
-			if ($object) {
-				// Update if record exists
+			->where('wing_id', $request->wing_id)
+			->where('floor_id', $request->floor_id)
+			->where('unit_id', $request->unit_id) 
+			->orderBy('id', 'desc')
+			->first(); 
+			
+			if ($object && ($request->property_status === "Available" || $request->property_status === "Hold")) {
+				$data['property_status'] = "Cancelled"; 
 				Helper::saveData($object, $data);
-			} else {
-				// Create new if record does not exist
+			} else { 
 				$object = new PrtFloorStatus();
 				Helper::saveData($object, $data);
 			}
 
-			DB::commit();
-
+			DB::commit(); 
 			return response()->json([
 				'status' => 'success',
 				'msg' => 'Property Work Assigned Successfully'
