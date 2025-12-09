@@ -181,6 +181,30 @@
     transform: scaleY(0);
 }
 
+
+.menu-dropdown .nav-link.active {
+    color: black !important;
+   
+}
+
+.menu-dropdown{
+     overflow: hidden !important;
+}
+
+.menu-dropdown .nav-link:hover {
+    color: white !important;
+   
+}
+
+
+/* Agar before/after lagta ho to band kar do */
+.menu-dropdown .nav-link.active::before,
+.menu-dropdown .nav-link.active::after {
+    content: none !important;
+}
+
+
+
 .header-area .menu-toggler {
     width: 34px;
     height: 34px;
