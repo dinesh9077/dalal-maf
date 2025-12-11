@@ -1,32 +1,49 @@
+<style>
+     .main-title {
+        font-size: 13px;
+        color: #494949;
+        font-weight: 550;
+        letter-spacing: 1px;
+        margin: 12px 20px;
+        width: fit-content;
+        padding-bottom: 4px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #494949;
+
+    }
+
+</style>
+
 <div class="sidebar sidebar-style-2"
 	data-background-color="{{ Session::get('agent_theme_version') == 'light' ? 'white' : 'dark2' }}">
 	<div class="sidebar-wrapper scrollbar scrollbar-inner">
 		<div class="sidebar-content">
-			<div class="user">
-				<div class="avatar-sm float-left mr-2">
-					@if (Auth::guard('agent')->user()->image != null)
-					<img src="{{ asset('assets/img/agents/' . Auth::guard('agent')->user()->image) }}"
-						alt="Agent Image" class="avatar-img rounded-circle">
-					@else
-					<img src="{{ asset('assets/img/blank-user.jpg') }}" alt=""
-						class="avatar-img rounded-circle">
-					@endif
-				</div>
+			<!--<div class="user">-->
+			<!--	<div class="avatar-sm float-left mr-2">-->
+			<!--		@if (Auth::guard('agent')->user()->image != null)-->
+			<!--		<img src="{{ asset('assets/img/agents/' . Auth::guard('agent')->user()->image) }}"-->
+			<!--			alt="Agent Image" class="avatar-img rounded-circle">-->
+			<!--		@else-->
+			<!--		<img src="{{ asset('assets/img/blank-user.jpg') }}" alt=""-->
+			<!--			class="avatar-img rounded-circle">-->
+			<!--		@endif-->
+			<!--	</div>-->
 
-				<div class="info">
-					<a data-toggle="collapse" href="#adminProfileMenu" aria-expanded="true">
-						<span>
-							{{ Auth::guard('agent')->user()->username }}
-							<span class="user-level">{{ __('Staff') }}</span>
+			<!--	<div class="info">-->
+			<!--		<a data-toggle="collapse" href="#adminProfileMenu" aria-expanded="true">-->
+			<!--			<span>-->
+			<!--				{{ Auth::guard('agent')->user()->username }}-->
+			<!--				<span class="user-level">{{ __('Staff') }}</span>-->
 
-						</span>
-					</a>
+			<!--			</span>-->
+			<!--		</a>-->
 
-					<div class="clearfix"></div>
+			<!--		<div class="clearfix"></div>-->
 
 
-				</div>
-			</div>
+			<!--	</div>-->
+			<!--</div>-->
 
 
 			<ul class="nav nav-primary">
@@ -41,6 +58,8 @@
 						</form>
 					</div>
 				</div>
+				
+				<h1 class="main-title">General</h1>
 
 				{{-- dashboard --}}
 				<li class="nav-item @if (request()->routeIs('agent.dashboard')) active @endif">
@@ -49,6 +68,9 @@
 						<p>{{ __('Dashboard') }}</p>
 					</a>
 				</li>
+				
+				
+				<h1 class="main-title">Property Master</h1>
 
 				@if ($userCurrentPackage)
 				@if(in_array('property_management', Auth::guard('agent')->user()->permissions ?? []))
@@ -60,7 +82,7 @@
 				@elseif (request()->routeIs('agent.property_management.type')) active @endif">
 					<a data-toggle="collapse" href="#propertyManagement">
 						<i class="fal fa-home"></i>
-						<p>{{ __('Property Management') }}</p>
+						<p>{{ __('Properties') }}</p>
 						<span class="caret"></span>
 					</a>
 
@@ -92,6 +114,52 @@
 					</div>
 				</li>
 				@endif
+				
+				
+				{{-- Project management  start --}}
+        		@if(in_array('project', Auth::guard('agent')->user()->permissions ?? []))
+        		<li
+        			class="nav-item
+        				@if (request()->routeIs('agent.project_management.projects')) active
+        				@elseif (request()->routeIs('agent.project_management.create_project')) active
+        				@elseif (request()->routeIs('agent.project_management.edit')) active  @elseif(request()->routeIs('agent.project_management.project_types')) active @endif">
+        			<a data-toggle="collapse" href="#projectManagement">
+        				<i class="fal fa-city"></i>
+        				<p>{{ __('Project') }}</p>
+        				<span class="caret"></span>
+        			</a>
+        
+        			<div id="projectManagement"
+        				class="collapse
+        					@if (request()->routeIs('agent.project_management.create_project')) show
+        					@elseif (request()->routeIs('agent.project_management.projects')) show
+        					@elseif (request()->routeIs('agent.project_management.edit')) show
+        					@elseif(request()->routeIs('agent.project_management.project_types')) show @endif
+        					">
+        				<ul class="nav nav-collapse">
+        
+        					<li
+        						class="{{ request()->routeIs('agent.project_management.create_project') ? 'active' : '' }}">
+        						<a href="{{ route('agent.project_management.create_project') }}">
+        							<span class="sub-item">{{ __('Add Project') }}</span>
+        						</a>
+        					</li>
+        
+        					<li
+        						class="{{ request()->routeIs('agent.project_management.projects') ||
+        							request()->routeIs('agent.project_management.project_types') ||
+        							request()->routeIs('agent.project_management.edit')
+        							? 'active'
+        							: '' }}">
+        						<a
+        							href="{{ route('agent.project_management.projects', ['language' => $defaultLang->code]) }}">
+        							<span class="sub-item">{{ __('Manage Projects') }}</span>
+        						</a>
+        					</li>
+        				</ul>
+        			</div>
+        		</li>
+        		@endif
 
 				{{-- <li class="nav-item  @if (request()->routeIs('agent.property_message.index')) active @endif">
 					<a href="{{ route('agent.property_message.index') }}">
@@ -177,6 +245,12 @@
 		</div>
 		</li>
 		@endif
+		
+		
+	
+		
+		
+                <h1 class="main-title">Inventory & Accounting</h1>
 
 		{{-- end property inventory  --}}
 
@@ -185,7 +259,7 @@
 		<li class="nav-item  @if (request()->routeIs('agent.customer_management.list')) active @endif">
 			<a href="{{ route('agent.customer_management.list') }}">
 				<i class="fal fa-users-cog"></i>
-				<p> {{ 'Inventory Customers' }} </p>
+				<p> {{ 'Purchased Customers' }} </p>
 			</a>
 		</li>
 		@endif
@@ -202,50 +276,8 @@
 		@endif
 		{{-- end Account  --}}
 
-		{{-- Project management  start --}}
-		@if(in_array('project', Auth::guard('agent')->user()->permissions ?? []))
-		<li
-			class="nav-item
-				@if (request()->routeIs('agent.project_management.projects')) active
-				@elseif (request()->routeIs('agent.project_management.create_project')) active
-				@elseif (request()->routeIs('agent.project_management.edit')) active  @elseif(request()->routeIs('agent.project_management.project_types')) active @endif">
-			<a data-toggle="collapse" href="#projectManagement">
-				<i class="fal fa-city"></i>
-				<p>{{ __('Project Management') }}</p>
-				<span class="caret"></span>
-			</a>
+		                <h1 class="main-title">Support & Resources</h1>
 
-			<div id="projectManagement"
-				class="collapse
-					@if (request()->routeIs('agent.project_management.create_project')) show
-					@elseif (request()->routeIs('agent.project_management.projects')) show
-					@elseif (request()->routeIs('agent.project_management.edit')) show
-					@elseif(request()->routeIs('agent.project_management.project_types')) show @endif
-					">
-				<ul class="nav nav-collapse">
-
-					<li
-						class="{{ request()->routeIs('agent.project_management.create_project') ? 'active' : '' }}">
-						<a href="{{ route('agent.project_management.create_project') }}">
-							<span class="sub-item">{{ __('Add Project') }}</span>
-						</a>
-					</li>
-
-					<li
-						class="{{ request()->routeIs('agent.project_management.projects') ||
-							request()->routeIs('agent.project_management.project_types') ||
-							request()->routeIs('agent.project_management.edit')
-							? 'active'
-							: '' }}">
-						<a
-							href="{{ route('agent.project_management.projects', ['language' => $defaultLang->code]) }}">
-							<span class="sub-item">{{ __('Manage Projects') }}</span>
-						</a>
-					</li>
-				</ul>
-			</div>
-		</li>
-		@endif
 
 		<li class="nav-item @if (request()->routeIs('aagent.inquiry')) active @endif">
 			<a href="{{ route('agent.inquiry') }}">
