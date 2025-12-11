@@ -736,7 +736,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-title  aos-init aos-animate" data-aos="fade-up" style="position: relative;">
-                        <h2 class="title">Business For Sale Properties</h2>
+                        <h2 class="title">Business For Sale</h2>
 
                         <a href="{{ route('frontend.properties', ['purpose' => 'business_for_sale', 'sort' => 'latest']) }}"
                             class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 8px 20px;">
@@ -790,7 +790,7 @@
                 <div class="col-12">
                     <div class="section-title mb-10 aos-init aos-animate" data-aos="fade-up"
                         style="position : relative;">
-                        <h2 class="title">Franchise Properties</h2>
+                        <h2 class="title">Franchise</h2>
 
                         <a href="{{ route('frontend.properties', ['purpose' => 'franchiese', 'sort' => 'latest']) }}"
                             class="vs-btn vs-new-set-btn view-all-desktop" style="padding: 8px 20px;">
