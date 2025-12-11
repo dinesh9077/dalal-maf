@@ -58,7 +58,7 @@ class AgentController extends Controller
             return response()->json(['status' => 'error'], 200);
         }
 
-        Session::flash('success', 'New agent added successfully!');
+        Session::flash('success', 'New staff added successfully!');
 
         return response()->json(['status' => 'success'], 200);
     }
@@ -75,7 +75,7 @@ class AgentController extends Controller
             'permissions' => $request->permissions ?? []  // save as JSON
         ]);
 
-        Session::flash('success', 'Agent updated successfully!');
+        Session::flash('success', 'Staff updated successfully!');
 
         return response()->json(['status' => 'success'], 200);
     }

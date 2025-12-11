@@ -131,12 +131,12 @@
                             @error('phone')
                                 <span class="text-danger">{{ $message }}</p>
                             @enderror 
-                            <div class="form-group mb-20 input-box position-relative">  
+                            {{-- <div class="form-group mb-20 input-box position-relative">  
                                 <input type="password" class="form-control" id="password" name="password" placeholder="{{ __('Password') }}" required>  
                                 <span class="toggle-password" onclick="togglePassword('password','eyeIcon1')">
                                     <i class="fa fa-eye" id="eyeIcon1"></i>
                                 </span> 
-                            </div>
+                            </div> --}}
                             {{-- <div class="password-requirements mb-20" style="font-size: 12px; padding: 10px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #ddd;">
                                 <p style="margin: 0 0 8px 0; font-weight: 600; color: #333;">Password Requirements:</p>
                                 <div id="req-length" style="margin: 4px 0; color: #dc3545;">
@@ -155,7 +155,7 @@
                                     <i class="fa fa-times-circle"></i> One special character (@$!%*?&)
                                 </div>
                             </div> --}}
-                            @error('password')
+                            {{-- @error('password')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror 
                             <div class="form-group mb-20 input-box position-relative"> 
@@ -163,7 +163,7 @@
                                 <span class="toggle-password" onclick="togglePassword('password_confirmation','eyeIcon2')">
                                     <i class="fa fa-eye" id="eyeIcon2"></i>
                                 </span> 
-                            </div> 
+                            </div>  --}}
                             @error('password_confirmation')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror 

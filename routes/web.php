@@ -96,7 +96,7 @@
 	Route::prefix('/user')->middleware(['guest:web', 'change.lang'])->group(function () {
 		Route::prefix('/login')->group(function () {
 			// user redirect to login page route
-			Route::get('', 'FrontEnd\UserController@login')->name('user.login');
+			//Route::get('', 'FrontEnd\UserController@login')->name('user.login');
 			Route::post('send-otp', 'FrontEnd\UserController@sendOtp')->name('send.otp');
 			Route::post('resend-otp', 'FrontEnd\UserController@resendOtp')->name('resend.otp');
 			Route::post('verify-otp', 'FrontEnd\UserController@verifyOtp')->name('verify.otp');

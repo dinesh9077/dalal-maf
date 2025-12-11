@@ -385,8 +385,8 @@
 				$rules = array_merge($rules, [
 					'username' => 'required|max:255|unique:users,username',
 					'email' => 'required|email:rfc,dns|max:255|unique:users,email',
-					'password' => 'required|confirmed|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{8,}$/',
-					'password_confirmation' => 'required',
+					// 'password' => 'required|confirmed|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{8,}$/',
+					// 'password_confirmation' => 'required',
 				]);
 
 				if ($info->google_recaptcha_status == 1) {
@@ -422,7 +422,8 @@
 				$user->username = $request->username;
 				$user->email = $request->email;
 				$user->phone = $request->phone;
-				$user->password = Hash::make($request->password);
+				//$user->password = Hash::make($request->password);
+				$user->password = null;
 				$user->email_verified_at = Carbon::now();
 				$user->user_type = $request->usertype;
 				$user->save();
@@ -977,15 +978,22 @@
 			$type = 'user';
 
 			if (!$user) {
-				$user = Vendor::where('phone', $request->phone)->first();
+				$user = Vendor::where('phone', $request->phone)->first(); 
 				$type = 'vendor';
 			}
 
-			$withoutLogin = null;
-
+			$withoutLogin = null; 
 			if (!$user) {
 				$user = Agent::where('phone', $request->phone)->first();
 				$withoutLogin = $user ? "agent" : null;
+			}
+		
+			if($user && $user->status == 0)
+			{ 
+				return response()->json([
+					'status' => 'error', 
+					'message' => 'Your account is currently deactivated.Please contact support for assistance', 
+				]);
 			}
 
 			// If not found in either table, create in the correct one
@@ -1009,6 +1017,7 @@
 
 				if (!$result) {
 					return response()->json([
+						'status' => 'error',
 						'message' => 'OTP sending failed.',
 						'otp' => $otp
 					]);
@@ -1033,7 +1042,7 @@
 			);
 
 			// Return response with OTP in local test mode
-			$response = ['message' => 'OTP sent successfully.'];
+			$response = ['message' => 'OTP sent successfully.', 'status' => 'success'];
 			if ($isLocalTest) {
 				$response['otp'] = $otp;
 			}

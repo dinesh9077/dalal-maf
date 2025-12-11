@@ -159,9 +159,9 @@
                             <span class="phone-flag"> <img src="https://flagcdn.com/w20/in.png" alt="India Flag"
                                         style="width: 24px; height: 16px; border-radius: 2px;"></span>  
                             <input type="text" name="phone" id="in_phone"
-                                class="form-control new-form-designs" value="+91 " />
-                            
+                                class="form-control new-form-designs" value="+91 " /> 
                         </div>
+                         <span class="text-danger" id="err_show"></span>
                     </div>
                 </div> 
                 <div class="modal-footer" style="border-top:none;">
@@ -299,6 +299,7 @@ $(document).ready(function() {
         const phone = $(this).attr('data-phone');
         $('#in_phone').val(prefix + phone);
         $('#customerPhoneModal').modal('show');
+        $('#err_show').text('');
         $('#otpVerificationModal').modal('hide');
     });
 
@@ -327,12 +328,19 @@ $(document).ready(function() {
                 action: action
             },
             success: function(response) {
-                $('#sendOtp').prop('disabled', false).text('Send OTP');
-                $('#customerPhoneModal').modal('hide');
-                $('#otpVerificationModal').modal('show');
-                $('#otpVerificationModal').attr('phone', phone);
-                $('#otpVerificationModal').attr('action', action);
-                $('#otpVerificationModal').attr('property_id', property_id);
+                console.log(response.status)
+                console.log(response.message)
+                if(response.status === "error"){
+                    $('#err_show').text(response.message || 'An error occurred.');
+                    return false;
+                }else{
+                    $('#sendOtp').prop('disabled', false).text('Send OTP');
+                    $('#customerPhoneModal').modal('hide');
+                    $('#otpVerificationModal').modal('show');
+                    $('#otpVerificationModal').attr('phone', phone);
+                    $('#otpVerificationModal').attr('action', action);
+                    $('#otpVerificationModal').attr('property_id', property_id);
+                }
             },
             error: function(xhr) {
                 $('#editErr_in_phone').text(xhr.responseJSON.message || 'An error occurred.');
