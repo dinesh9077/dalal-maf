@@ -5,6 +5,7 @@ namespace App\Http\Requests\Agent;
 use App\Rules\ImageMimeTypeRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use DB;
 
 class updateRequest extends FormRequest
 {
@@ -38,6 +39,30 @@ class updateRequest extends FormRequest
                 'required',
                 'email:rfc,dns',
                 Rule::unique('agents')->ignore($this->id)
+            ],
+            'phone' => [
+                'required',
+                Rule::unique('users', 'phone')->ignore($this->id),  // allow same user phone
+
+                function ($attribute, $value, $fail)  {
+
+                    // Check in VENDORS table
+                    $existsInVendors = DB::table('vendors')
+                        ->where('phone', $value)
+                        ->where('id', '!=', $this->id)
+                        ->exists();
+
+                    // Check in AGENTS table
+                    $existsInAgents = DB::table('agents')
+                        ->where('phone', $value)
+                        ->where('id', '!=', $this->id)
+                        ->exists();
+
+                    // If duplicate found in any other table → fail
+                    if ($existsInVendors || $existsInAgents) {
+                        $fail('The phone number is already registered.');
+                    }
+                }
             ],
         ];
     }

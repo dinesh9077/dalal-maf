@@ -209,8 +209,19 @@ class VendorManagementController extends Controller
         $rules = [
             'username' => "required|unique:vendors|not_in:$admin_username",
             'email' => 'required|email|unique:vendors',
-            'phone' => 'required|phone|unique:vendors',
-            'password' => 'required|min:6',
+            'phone' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    $existsInUsers = DB::table('users')->where('phone', $value)->exists();
+                    $existsInVendors = DB::table('vendors')->where('phone', $value)->exists();
+                    $existsInAgents = DB::table('agents')->where('phone', $value)->exists();
+
+                    if ($existsInUsers || $existsInVendors || $existsInAgents) {
+                        $fail('The phone number is already registered.');
+                    }
+                },
+            ],
+            //'password' => 'required|min:6',
         ]; 
 
         $languages = Language::get();
@@ -400,9 +411,29 @@ class VendorManagementController extends Controller
                 Rule::unique('vendors', 'email')->ignore($id)
             ],
             'phone' => [
-                'required', 
-                Rule::unique('vendors', 'phone')->ignore($id)
-            ]
+                'required',
+                Rule::unique('users', 'phone')->ignore($id),  // allow same user phone
+
+                function ($attribute, $value, $fail) use ($id) {
+
+                    // Check in VENDORS table
+                    $existsInVendors = DB::table('vendors')
+                        ->where('phone', $value)
+                        ->where('id', '!=', $id)
+                        ->exists();
+
+                    // Check in AGENTS table
+                    $existsInAgents = DB::table('agents')
+                        ->where('phone', $value)
+                        ->where('id', '!=', $id)
+                        ->exists();
+
+                    // If duplicate found in any other table → fail
+                    if ($existsInVendors || $existsInAgents) {
+                        $fail('The phone number is already registered.');
+                    }
+                }
+            ],
         ];
 
         if ($request->hasFile('photo')) {

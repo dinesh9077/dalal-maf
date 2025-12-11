@@ -137,13 +137,13 @@
                     </div>
                   </div>
 
-                  <div class="col-lg-4">
+                  {{-- <div class="col-lg-4">
                     <div class="form-group">
                       <label>{{ __('Password') }}</label>
                       <input type="password" class="form-control" name="password">
                       <p id="editErr_password" class="mt-1 mb-0 text-danger em"></p>
                     </div>
-                  </div>
+                  </div> --}}
                 </div>
               </form>
             </div>

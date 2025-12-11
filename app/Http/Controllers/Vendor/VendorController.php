@@ -65,8 +65,8 @@ class VendorController extends Controller
             'username' => 'required|unique:vendors',
             'email' => 'required|email|unique:vendors',
             'phone' => 'required',
-            'password' => 'required|confirmed|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{8,}$/',
-            'password_confirmation' => 'required',
+            // 'password' => 'required|confirmed|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{8,}$/',
+            // 'password_confirmation' => 'required',
         ];
 
         $info = Basic::select('google_recaptcha_status')->first();
@@ -151,7 +151,8 @@ class VendorController extends Controller
         }
 
         $in['status'] = 1;
-        $in['password'] = Hash::make($request->password);
+       // $in['password'] = Hash::make($request->password);
+        $in['password'] = null;
         $in['type'] = $request->type;
         $in['is_new'] = '0';
         $in['user_type'] = $request->usertype;

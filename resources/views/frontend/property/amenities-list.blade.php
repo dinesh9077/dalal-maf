@@ -13,8 +13,8 @@
                            name="amenities[]"
                            id="amenityCheckbox{{ $amenity->id }}"
                            value="{{ $amenity->id }}"
-                           {{ in_array($amenity->amenityContent?->name, $selectedAmenities) ? 'checked' : '' }}
-                           onchange="updateAmenities('amenities[]={{ $amenity->amenityContent?->name }}',this)">
+                           {{ in_array($amenity->id, $selectedAmenities) ? 'checked' : '' }}
+                           onchange="updateAmenities('amenities[]={{ $amenity->id }}',this)">
 
                     <label for="amenityCheckbox{{ $amenity->id }}">
                         <span class="animits-div-tab">{{ $amenity->amenityContent?->name }}</span>

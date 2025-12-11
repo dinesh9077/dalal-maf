@@ -398,7 +398,7 @@
                                                                         <i class="fas fa-edit"></i> {{ __('Edit') }}
                                                                     </span>
                                                                 </a>
-
+                                                               
                                                                 <form class="deleteForm d-inline-block p-0 dropdown-item"
                                                                     action="{{ route('admin.property_management.delete_property') }}"
                                                                     method="post">
@@ -413,6 +413,14 @@
                                                                         </span>
                                                                     </button>
                                                                 </form>
+                                                                 @if(isset($is_properties) && $is_properties)
+                                                                    <a class="dropdown-item convertfullproperty"
+                                                                        href="{{ route("admin.property_management.convert-full-property", $property->id) }}">
+                                                                        <span class="btn-label">
+                                                                            <i class="fas fa-arrow-alt-circle-right"></i> {{ __('Convert Full Property') }}
+                                                                        </span>
+                                                                    </a>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </td>
@@ -660,5 +668,34 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 }
             });
         }
+
+        
+        $('.convertfullproperty').on('click', function (e) {
+            e.preventDefault();
+            $(".request-loader").addClass("show");
+
+            swal({
+            title: 'Are you sure?',
+            text: "You won't to convert full property!",
+            type: 'warning',
+            buttons: {
+                confirm: {
+                text: 'Yes, Convert it',
+                className: 'btn btn-success'
+                },
+                cancel: {
+                    visible: true,
+                    className: 'btn btn-danger'
+                }
+            }
+            }).then((convertit) => {
+            if (convertit) { 
+                window.location.href = $(this).attr('href');
+            } else {
+                swal.close();
+                $(".request-loader").removeClass("show");
+            }
+            });
+        });
     </script>
 @endsection

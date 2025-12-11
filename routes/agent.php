@@ -10,7 +10,7 @@
 	
 	
 	Route::prefix('agent')->middleware('change.lang')->group(function () {
-		Route::get('/login', 'Agent\AgentController@login')->name('agent.login')->middleware('guest:agent');
+		//Route::get('/login', 'Agent\AgentController@login')->name('agent.login')->middleware('guest:agent');
 		Route::post('/login/submit', 'Agent\AgentController@authentication')->name('agent.login_submit');
 		
 		Route::get('/forget-password', 'Agent\AgentController@forget_passord')->name('agent.forget.password');
