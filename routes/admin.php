@@ -353,20 +353,21 @@ Route::prefix('/admin')->middleware('auth:admin')->group(function () {
   // user management route end
 
   // vendor management route start
-  Route::prefix('/vendor-management')->middleware('permission:User Management')->group(function () {
-    Route::get('/settings', 'BackEnd\VendorManagementController@settings')->name('admin.vendor_management.settings');
-    Route::post('/settings/update', 'BackEnd\VendorManagementController@update_setting')->name('admin.vendor_management.setting.update');
+  Route::prefix('/vendor-management')->middleware('permission:User Management')
+  ->group(function () {
+      Route::get('/settings', 'BackEnd\VendorManagementController@settings')->name('admin.vendor_management.settings');
+      Route::post('/settings/update', 'BackEnd\VendorManagementController@update_setting')->name('admin.vendor_management.setting.update');
 
-    Route::get('/add-vendor', 'BackEnd\VendorManagementController@add')->name('admin.vendor_management.add_vendor');
-    Route::post('/save-vendor', 'BackEnd\VendorManagementController@create')->name('admin.vendor_management.save-vendor');
+      Route::get('/add-vendor', 'BackEnd\VendorManagementController@add')->name('admin.vendor_management.add_vendor');
+      Route::post('/save-vendor', 'BackEnd\VendorManagementController@create')->name('admin.vendor_management.save-vendor');
 
-    Route::get('/registered-vendors', 'BackEnd\VendorManagementController@index')->name('admin.vendor_management.registered_vendor');
+      Route::get('/registered-vendors', 'BackEnd\VendorManagementController@index')->name('admin.vendor_management.registered_vendor');
 
-    Route::get('/vendor-kyc', 'BackEnd\VendorManagementController@vendorKyc')->name('admin.vendor_management.vendor_kyc');
-    Route::get('/vendor-kyc-details/{id}', 'BackEnd\VendorManagementController@vendorKycDetails')->name('admin.vendor_management.vendor_kyc_details');
-    Route::post('/change-status', 'BackEnd\VendorManagementController@changeStatus')->name('admin.vendor_management.status_change');
+      Route::get('/vendor-kyc', 'BackEnd\VendorManagementController@vendorKyc')->name('admin.vendor_management.vendor_kyc');
+      Route::get('/vendor-kyc-details/{id}', 'BackEnd\VendorManagementController@vendorKycDetails')->name('admin.vendor_management.vendor_kyc_details');
+      Route::post('/change-status', 'BackEnd\VendorManagementController@changeStatus')->name('admin.vendor_management.status_change');
 
-    Route::prefix('/vendor/{id}')->group(function () {
+      Route::prefix('/vendor/{id}')->group(function () {
 
       Route::post(
         '/update-account-status',

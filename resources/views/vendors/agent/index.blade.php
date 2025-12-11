@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="page-header">
-        <h4 class="page-title">{{ __('Staffs') }}</h4>
+        <h4 class="page-title">{{ __(key: 'Staffs') }}</h4>
         <ul class="breadcrumbs">
             <li class="nav-home">
                 <a href="{{ route('vendor.dashboard') }}">
@@ -44,7 +44,7 @@
                         <div class="col-lg-12">
 
                             @if (count($agents) == 0)
-                                <h3 class="text-center mt-2">{{ __('NO AGENTS FOUND') . '!' }}</h3>
+                                <h3 class="text-center mt-2">{{ __('NO STAFFS FOUND') . '!' }}</h3>
                             @else
                                 <div class="table-responsive">
                                     <table class="table table-striped mt-3" id="basic-datatables">

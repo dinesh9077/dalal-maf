@@ -64,7 +64,7 @@ class PackageController extends Controller
     public function store(PackageStoreRequest $request)
     {
         try {
-
+            
             return DB::transaction(function () use ($request) {
                 Package::create($request->all());
                 Session::flash('success', "Package Created Successfully");

@@ -101,6 +101,10 @@ public function getCityDetails($cityId)
         'required',
         Rule::unique('users', 'email')
       ],
+      'phone' => [
+        'required',
+        Rule::unique('users', 'phone')
+      ],
       'image' => 'required',
       'password' => 'required|min:6',
     ];
@@ -201,6 +205,10 @@ public function getCityDetails($cityId)
       'email' => [
         'required',
         Rule::unique('users', 'email')->ignore($id)
+      ],
+      'phone' => [
+        'required',
+        Rule::unique('users', 'phone')->ignore($id)
       ],
     ];
     if ($request->hasFile('image')) {
