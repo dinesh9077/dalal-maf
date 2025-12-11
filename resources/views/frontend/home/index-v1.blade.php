@@ -405,7 +405,7 @@
                                                 class="form-control select2">
                                                 <option value="">{{ __('Select City') }}</option>
                                                 @foreach ($cities as $city)
-                                                    <option value="{{ $city->name }}">{{ $city->name }}</option>
+                                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

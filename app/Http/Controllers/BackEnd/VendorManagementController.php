@@ -209,9 +209,9 @@ class VendorManagementController extends Controller
         $rules = [
             'username' => "required|unique:vendors|not_in:$admin_username",
             'email' => 'required|email|unique:vendors',
+            'phone' => 'required|phone|unique:vendors',
             'password' => 'required|min:6',
-        ];
-
+        ]; 
 
         $languages = Language::get();
         foreach ($languages as $language) {
@@ -221,9 +221,7 @@ class VendorManagementController extends Controller
         foreach ($languages as $language) {
             $messages[$language->code . '_name.required'] = 'The name feild is required';
         }
-
-
-
+ 
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
@@ -390,8 +388,7 @@ class VendorManagementController extends Controller
     //update
     public function update(Request $request, $id, Vendor $vendor)
     {
-        $rules = [
-
+        $rules = [ 
             'username' => [
                 'required',
                 'not_in:admin',
@@ -401,6 +398,10 @@ class VendorManagementController extends Controller
                 'required',
                 'email',
                 Rule::unique('vendors', 'email')->ignore($id)
+            ],
+            'phone' => [
+                'required', 
+                Rule::unique('vendors', 'phone')->ignore($id)
             ]
         ];
 

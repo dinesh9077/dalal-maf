@@ -1439,8 +1439,7 @@ class PropertyController extends Controller
 	}
 
 	public function addCustomer(Request $request)
-	{
-
+	{ 
 		$validator = Validator::make($request->all(), [
 			'name' => 'required',
 			'email' => 'required|email',

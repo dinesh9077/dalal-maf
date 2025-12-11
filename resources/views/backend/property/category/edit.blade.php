@@ -39,7 +39,18 @@
                         <p id="editErr_image" class="mb-0 text-danger em"></p>
                     </div>
 
-                 
+                    <div class="form-group">
+                        <label for="">{{ __('Type') . '*' }}</label>
+
+                        <select name="type" id="in_type" class="form-control">
+                            <option selected disabled>{{ __('Select a Type') }}</option>
+                            <option value="residential">{{ __('Residential') }}</option>
+                            <option value="commercial">{{ __("Commercial") }}</option>
+                            <option value="industrial">{{ __("Industrial") }}</option>
+
+                        </select>
+                        <p id="err_type" class="mt-2 mb-0 text-danger em"></p>
+                    </div>
 
                     @foreach ($langs as $lan)
                         <div class="form-group {{ $lan->direction == 1 ? 'rtl text-right' : '' }}">

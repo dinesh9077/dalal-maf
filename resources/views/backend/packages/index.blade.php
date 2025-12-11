@@ -240,15 +240,15 @@
                         </div>
 
 
-                        {{-- <div class="form-group">
-                            <label class="form-label">{{ __('Number of Agents') }} *</label>
+                        <div class="form-group">
+                            <label class="form-label">{{ __('Number of Staff') }} *</label>
                             <input type="text" class="form-control" name="number_of_agent"
-                                placeholder="{{ __('Enter how many agents the vendor can add') }}">
+                                placeholder="{{ __('Enter how many staff the vendor can add') }}">
                             <p id="err_number_of_agent" class="mb-0 text-danger em"></p>
                             <p class="text-warning mb-0">
                                 <small>{{ __('Enter 999999, than it will appear as unlimited') }}</small>
                             </p>
-                        </div> --}}
+                        </div>
 
                         <div class="form-group">
                             <label class="form-label">{{ __('Number of Properties') }} *</label>
