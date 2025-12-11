@@ -558,17 +558,20 @@
                                                         @foreach ($categories as $category)
                                                             @if ($category->categoryContent)
                                                                 <div>
-                                                                    <input class="input-checkbox" type="checkbox"
-                                                                        name="category[]" id="checkbox_cat{{ $category->id }}"
-                                                                        value="{{ $category->categoryContent->slug }}"
-                                                                        {{ in_array($category->categoryContent->slug, $selectedCategories) ? 'checked' : '' }}
-                                                                        onchange="updateAmenities('category[]={{ $category->categoryContent->slug }}',this)">
-                                                                    <label for="checkbox_cat{{ $category->id }}"><span
-                                                                            class="animits-div-tab">{{ $category->categoryContent->name }}</span></label>
+                                                                    <input class="input-checkbox category-checkbox"
+                                                                        type="checkbox"
+                                                                        name="category[]"
+                                                                        id="categoryCheckbox{{ $category->id }}"
+                                                                        value="{{ $category->id }}"
+                                                                        {{ in_array($category->id, $selectedCategories) ? 'checked' : '' }}
+                                                                        onchange="updateAmenities('category[]={{ $category->id }}',this)">
+
+                                                                    <label for="categoryCheckbox{{ $category->id }}">
+                                                                        <span class="animits-div-tab">{{ $category->categoryContent?->name }}</span>
+                                                                    </label>
                                                                 </div>
                                                             @endif
                                                         @endforeach
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -601,16 +604,15 @@
                                                                     <input class="input-checkbox" type="checkbox"
                                                                         name="amenities[]"
                                                                         id="checkbox_am{{ $amenity->id }}"
-                                                                        value="{{ $amenity->amenityContent->name }}"
-                                                                        {{ in_array($amenity->amenityContent->name, $selected_amenities) ? 'checked' : '' }}
-                                                                        onchange="updateAmenities('amenities[]={{ $amenity->amenityContent->name }}',this)">
+                                                                        value="{{ $amenity->id }}"
+                                                                        {{ in_array($amenity->id, $selected_amenities) ? 'checked' : '' }}
+                                                                        onchange="updateAmenities('amenities[]={{ $amenity->id }}',this)">
 
                                                                     <label for="checkbox_am{{ $amenity->id }}"><span
                                                                             class="animits-div-tab">{{ $amenity->amenityContent->name }}</span></label>
                                                                 </div>
                                                             @endif
-                                                        @endforeach
-
+                                                        @endforeach 
                                                     </div>
                                                 </div>
                                             </div>

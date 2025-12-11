@@ -74,7 +74,7 @@
                         </div>
                     </div>
 
-                    <div class="row no-gutters">
+                    {{-- <div class="row no-gutters">
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="">{{ __('Password') . '*' }}</label>
@@ -92,7 +92,7 @@
                                 <p id="err_password_confirmation" class="mt-2 mb-0 text-danger em"></p>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="row no-gutters">
                       <div class="col-lg-12">

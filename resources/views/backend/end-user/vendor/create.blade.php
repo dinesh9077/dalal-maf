@@ -77,14 +77,14 @@
                                             <p id="editErr_username" class="mt-1 mb-0 text-danger em"></p>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    {{-- <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>{{ __('Password *') }}</label>
                                             <input type="password" value="" class="form-control" name="password"
                                                 placeholder="{{ __('Enter Password') }} ">
                                             <p id="editErr_password" class="mt-1 mb-0 text-danger em"></p>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>{{ __('Email*') }}</label>
@@ -139,7 +139,7 @@
                                 <div id="accordion" class="mt-5">
                                     @foreach ($languages as $language)
                                         <div class="version">
-                                            <div class="version-header" id="heading{{ $language->id }}">
+                                            {{-- <div class="version-header" id="heading{{ $language->id }}">
                                                 <h5 class="mb-0">
                                                     <button type="button"
                                                         class="btn btn-link {{ $language->direction == 1 ? 'rtl text-right' : '' }}"
@@ -150,7 +150,7 @@
                                                         {{ $language->is_default == 1 ? '(Default)' : '' }}
                                                     </button>
                                                 </h5>
-                                            </div>
+                                            </div> --}}
 
                                             <div id="collapse{{ $language->id }}"
                                                 class="collapse {{ $language->is_default == 1 ? 'show' : '' }}"

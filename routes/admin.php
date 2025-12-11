@@ -176,6 +176,7 @@ Route::prefix('/admin')->middleware('auth:admin')->group(function () {
     Route::post('update/{id}', 'BackEnd\Property\PropertyController@update')->name('admin.property_management.update_property')->middleware('AdminCheckVendorPackage:property,update');
     Route::post('specification/delete', 'BackEnd\Property\PropertyController@specificationDelete')->name('admin.property_management.specification_delete');
     Route::post('/featured-payment', 'BackEnd\Property\PropertyController@featuredPayment')->name('admin.property_management.featured_payment');
+    Route::get('convert-full-property/{id}', 'BackEnd\Property\PropertyController@convertFullProperty')->name('admin.property_management.convert-full-property');
 
     //#========== Property slider image
     Route::post('/img-store', 'BackEnd\Property\PropertyController@imagesstore')->name('admin.property.imagesstore')->middleware('AdminCheckVendorPackage:property,store');

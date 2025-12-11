@@ -27,8 +27,8 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="card-title d-inline-block">{{ __('All Staffs') }}</div>
-                            <!--<span>{{ __('(Login Url:') }} <a target="_blank"
-                                    href="{{ route('agent.login') }}">{{ route('agent.login') }}</a>{{ ')' }}</span>-->
+                            {{-- <!--<span>{{ __('(Login Url:') }} <a target="_blank"
+                                    href="{{ route('agent.login') }}">{{ route('agent.login') }}</a>{{ ')' }}</span>--> --}}
                         </div>
 
                         <div class="col-lg-6 mt-2 mt-lg-0">
@@ -91,8 +91,7 @@
                                                             </select>
                                                         </form>
                                                     </td>
-                                                    <td>
-
+                                                    <td> 
                                                         <div class="dropdown">
                                                             <button class="btn btn-secondary dropdown-toggle btn-sm"
                                                                 type="button" id="dropdownMenuButton"
@@ -113,6 +112,7 @@
                                                                     data-last_name="{{ $agent->last_name }}"
                                                                     data-image="{{ asset('assets/img/agents/' . $agent->image) }}"
                                                                     data-username="{{ $agent->username }}"
+                                                                    data-phone="{{ $agent->phone }}"
                                                                     data-email="{{ $agent->email }}">
 
                                                                     {{ __('Edit') }}
@@ -132,10 +132,7 @@
                                                                     {{ __('Secret Login') }}
                                                                 </a>
                                                             </div>
-                                                        </div>
-
-
-
+                                                        </div>  
                                                     </td>
                                                 </tr>
                                             @endforeach

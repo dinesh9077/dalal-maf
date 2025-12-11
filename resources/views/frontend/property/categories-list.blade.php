@@ -12,9 +12,9 @@
                            type="checkbox"
                            name="category[]"
                            id="categoryCheckbox{{ $category->id }}"
-                           value="{{ $category->categoryContent?->slug }}"
-                           {{ in_array($category->categoryContent?->slug, $selectedCategories) ? 'checked' : '' }}
-                           onchange="updateAmenities('category[]={{ $category->categoryContent?->slug }}',this)">
+                           value="{{ $category->id }}"
+                           {{ in_array($category->id, $selectedCategories) ? 'checked' : '' }}
+                           onchange="updateAmenities('category[]={{ $category->id }}',this)">
 
                     <label for="categoryCheckbox{{ $category->id }}">
                         <span class="animits-div-tab">{{ $category->categoryContent?->name }}</span>

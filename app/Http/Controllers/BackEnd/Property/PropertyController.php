@@ -545,6 +545,14 @@ class PropertyController extends Controller
 		return redirect()->back();
 	}
 
+	public function convertFullProperty($id)
+	{
+		$property = Property::findOrFail($id);
+		$property->update(['property_type' => 'full']); 
+		Session::flash('success', 'Property convert successfully!'); 
+		return redirect()->back();
+	}
+
 	public function approveStatus(Request $request)
 	{
 		$property = Property::findOrFail($request->property);
@@ -1037,7 +1045,7 @@ class PropertyController extends Controller
 			$wing_id = $request->wing_id;
 			$floor_id = $request->floor_id;
 
-			$units = Unit::where('status', 1)->get();
+			$units = Unit::where('status', 1)->orderBy('unit_name')->orderBy('id')->get();
 			$budgets = [];
 			$categories = [];
 

@@ -18,70 +18,70 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
-use Session;
+use Session, DB;
 
 class UserController extends Controller
 {
   public function index(Request $request)
   {
-      $searchKey = null;
+    $searchKey = null;
 
-      if ($request->filled('info')) {
-          $searchKey = $request['info'];
-      }
+    if ($request->filled('info')) {
+      $searchKey = $request['info'];
+    }
 
-      User::where('is_new', '0')->update(['is_new' => '1']);
+    User::where('is_new', '0')->update(['is_new' => '1']);
 
-      $query = User::query()->when($searchKey, function ($query, $searchKey) {
-          return $query->where('username', 'like', '%' . $searchKey . '%')
-              ->orWhere('email', 'like', '%' . $searchKey . '%');
-      });
+    $query = User::query()->when($searchKey, function ($query, $searchKey) {
+      return $query->where('username', 'like', '%' . $searchKey . '%')
+        ->orWhere('email', 'like', '%' . $searchKey . '%');
+    });
 
-      // ✅ Export logic
-      if ($request->has('export') && $request->export == '1') {
-          $users = $query->orderByDesc('id')->get();
-          return Excel::download(new UserExport($users), 'users.xlsx');
-      }
-
-      // ✅ Normal pagination for listing
+    // ✅ Export logic
+    if ($request->has('export') && $request->export == '1') {
       $users = $query->orderByDesc('id')->get();
+      return Excel::download(new UserExport($users), 'users.xlsx');
+    }
 
-      return view('backend.end-user.user.index', compact('users'));
+    // ✅ Normal pagination for listing
+    $users = $query->orderByDesc('id')->get();
+
+    return view('backend.end-user.user.index', compact('users'));
   }
 
-  
-public function getCityDetails($cityId)
-{
+
+  public function getCityDetails($cityId)
+  {
     // Get the city content to find the city_id
     $cityContent = \App\Models\Property\CityContent::findOrFail($cityId);
-    
+
     // Get the city with its state and country relationships
     $city = \App\Models\Property\City::with(['state', 'country'])
-        ->findOrFail($cityContent->city_id);
-    
+      ->findOrFail($cityContent->city_id);
+
     // Get state name
     $stateName = 'N/A';
     if ($city->state) {
-        $stateContent = $city->state->stateContents->first();
-        $stateName = $stateContent ? $stateContent->name : $city->state->name;
+      $stateContent = $city->state->stateContents->first();
+      $stateName = $stateContent ? $stateContent->name : $city->state->name;
     }
-    
+
     // Get country name
     $countryName = 'N/A';
     if ($city->country) {
-        $countryContent = $city->country->countryContents->first();
-        $countryName = $countryContent ? $countryContent->name : $city->country->name;
+      $countryContent = $city->country->countryContents->first();
+      $countryName = $countryContent ? $countryContent->name : $city->country->name;
     }
-    
+
     return response()->json([
-        'city_id' => $city->id,
-        'city_name' => $cityContent->name,
-        'state_id' => $city->state ? $city->state->id : null,
-        'state_name' => $stateName,
-        'country_id' => $city->country ? $city->country->id : null,
-        'country_name' => $countryName
+      'city_id' => $city->id,
+      'city_name' => $cityContent->name,
+      'state_id' => $city->state ? $city->state->id : null,
+      'state_name' => $stateName,
+      'country_id' => $city->country ? $city->country->id : null,
+      'country_name' => $countryName
     ]);
-}
+  }
   public function create()
   {
     // Load all cities from CityContent for dropdown on create form
@@ -103,10 +103,18 @@ public function getCityDetails($cityId)
       ],
       'phone' => [
         'required',
-        Rule::unique('users', 'phone')
+        function ($attribute, $value, $fail) {
+          $existsInUsers = DB::table('users')->where('phone', $value)->exists();
+          $existsInVendors = DB::table('vendors')->where('phone', $value)->exists();
+          $existsInAgents = DB::table('agents')->where('phone', $value)->exists();
+
+          if ($existsInUsers || $existsInVendors || $existsInAgents) {
+            $fail('The phone number is already registered.');
+          }
+        },
       ],
       'image' => 'required',
-      'password' => 'required|min:6',
+      //'password' => 'required|min:6',
     ];
 
     $validator = Validator::make($request->all(), $rules);
@@ -208,7 +216,27 @@ public function getCityDetails($cityId)
       ],
       'phone' => [
         'required',
-        Rule::unique('users', 'phone')->ignore($id)
+        Rule::unique('users', 'phone')->ignore($id),  // allow same user phone
+
+        function ($attribute, $value, $fail) use ($id) {
+
+          // Check in VENDORS table
+          $existsInVendors = DB::table('vendors')
+            ->where('phone', $value)
+            ->where('id', '!=', $id)
+            ->exists();
+
+          // Check in AGENTS table
+          $existsInAgents = DB::table('agents')
+            ->where('phone', $value)
+            ->where('id', '!=', $id)
+            ->exists();
+
+          // If duplicate found in any other table → fail
+          if ($existsInVendors || $existsInAgents) {
+            $fail('The phone number is already registered.');
+          }
+        }
       ],
     ];
     if ($request->hasFile('image')) {
@@ -235,17 +263,17 @@ public function getCityDetails($cityId)
     }
 
     // only assign real columns on users table (avoid city_id, state_id, etc.)
-    $user->name     = $request->name;
+    $user->name = $request->name;
     $user->username = $request->username;
-    $user->email    = $request->email;
-    $user->phone    = $request->phone;
+    $user->email = $request->email;
+    $user->phone = $request->phone;
     $user->zip_code = $request->zip_code;
-    $user->address  = $request->address;
+    $user->address = $request->address;
 
     // location strings come from dropdown logic
-    $user->city     = $request->city;
-    $user->state    = $request->state;
-    $user->country  = $request->country;
+    $user->city = $request->city;
+    $user->state = $request->state;
+    $user->country = $request->country;
 
     $user->save();
     Session::flash('success', 'User has been updated successfully.');

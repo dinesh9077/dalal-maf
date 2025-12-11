@@ -50,13 +50,13 @@
                                 <p id="editErr_email" class="mt-2 mb-0 text-danger em"></p>
                             </div>
                         </div>
-						<!--<div class="col-lg-12">
+						<div class="col-lg-12">
                             <div class="form-group">
                                 <label for="">{{ __('Phone') . '*' }}</label>
-                                <input type="text" class="form-control" name="phone" placeholder="Enter Phone">
-                                <p id="err_phone" class="mt-2 mb-0 text-danger em"></p>
+                                <input type="text" class="form-control" id="in_phone" name="phone" placeholder="Enter Phone">
+                                <p id="editErr_phone" class="mt-2 mb-0 text-danger em"></p>
                             </div>
-                        </div>-->
+                        </div>
                     </div>
 
                     <div class="row no-gutters">

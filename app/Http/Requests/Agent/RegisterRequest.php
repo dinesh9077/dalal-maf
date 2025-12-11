@@ -4,7 +4,7 @@ namespace App\Http\Requests\Agent;
 
 use App\Rules\ImageMimeTypeRule;
 use Illuminate\Foundation\Http\FormRequest;
-
+use DB; 
 class RegisterRequest extends FormRequest
 {
     /**
@@ -33,8 +33,20 @@ class RegisterRequest extends FormRequest
             'email' => 'required|email:rfc,dns|unique:agents,email',
             'first_name' => 'required',
             'last_name' => 'required',
-            'password' => 'required|confirmed|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{8,}$/',
-            'password_confirmation' => 'required'
+            'phone' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    $existsInUsers = DB::table('users')->where('phone', $value)->exists();
+                    $existsInVendors = DB::table('vendors')->where('phone', $value)->exists();
+                    $existsInAgents = DB::table('agents')->where('phone', $value)->exists();
+
+                    if ($existsInUsers || $existsInVendors || $existsInAgents) {
+                        $fail('The phone number is already registered.');
+                    }
+                },
+            ],
+            // 'password' => 'required|confirmed|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{8,}$/',
+            // 'password_confirmation' => 'required'
         ];
     }
 
