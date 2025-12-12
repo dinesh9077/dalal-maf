@@ -160,6 +160,9 @@
         			</div>
         		</li>
         		@endif
+        		
+        		<h1 class="main-title">Inventory & Accounting</h1>
+        		
 
 				{{-- <li class="nav-item  @if (request()->routeIs('agent.property_message.index')) active @endif">
 					<a href="{{ route('agent.property_message.index') }}">
@@ -169,7 +172,7 @@
 				</li> --}}
 
 				{{-- Property inventory --}}
-				@if(in_array('property_inventory', Auth::guard('agent')->user()->permissions ?? []))
+					@if(in_array('property_inventory', Auth::guard('agent')->user()->permissions ?? []))
 				@php
 				$unreadCountInventory = Helper::unreadProeprties('full');
 
@@ -180,77 +183,46 @@
 				}
 				@endphp
 
-				<li class="nav-item
-				@if (request()->routeIs('agent.property_inventory.create_property')) active
-				@elseif (request()->routeIs('agent.property_inventory.properties')) active
-				@elseif (request()->routeIs('agent.property_inventory.edit')) active
-				@elseif (request()->routeIs('agent.property_inventory.settings')) active
-				@elseif(request()->routeIs('agent.property_inventory.type')) active
-				@elseif(request()->routeIs('agent.property_inventory.manage_status_property')) active
-				@elseif(request()->routeIs('agent.property_inventory.converted_customer')) active @endif">
-					<a data-toggle="collapse" href="#inventoryManagement">
-						<i class="far fa-home"></i>
-						<p>{{ __('Property inventory') }}</p><i class="{{ $add_unread__inventory_class }}" style="margin-left: 10px;"><b>{{ $unreadCountInventory != 0 ?  $unreadCountInventory : '' }}</b></i>
-						<span class="caret"></span>
-					</a>
+				
+				<li
+        					class=" nav-item {{ request()->routeIs('agent.property_inventory.create_property') || request()->routeIs('agent.property_inventory.type') ? 'active' : '' }}">
+        					<a href="{{ route('agent.property_inventory.type') }}">
+        					<i class="far fa-home"></i>	<p class="sub-item">{{ __('Add Full Inventory') }}</p>
+        					</a>
+        				</li>
 
-					<div id="inventoryManagement"
-						class="collapse
-					@if (request()->routeIs('agent.property_inventory.create_property')) show
-					@elseif (request()->routeIs('agent.property_inventory.type')) show
-					@elseif (request()->routeIs('agent.property_inventory.properties')) show
-					@elseif (request()->routeIs('agent.property_inventory.settings')) show
-					@elseif (request()->routeIs('agent.property_inventory.edit')) show
-					@elseif (request()->routeIs('agent.property_inventory.manage_status_property')) show
-					@elseif (request()->routeIs('agent.property_inventory.converted_customer')) show
-					@endif
-					">
-						<ul class="nav nav-collapse">
-							{{-- <li
-							class="{{ request()->routeIs('agent.property_inventory.settings') ? 'active' : '' }}">
-							<a href="{{ route('agent.property_inventory.settings') }}">
-								<span class="sub-item">{{ __('Settings') }}</span>
-							</a>
-				</li> --}}
+        				<li
+        					class="nav-item {{ request()->routeIs('agent.property_inventory.properties') ||
+        							request()->routeIs('agent.property_inventory.edit')
+        							? 'active'
+        							: '' }}">
+        					<a
+        						href="{{ route('agent.property_inventory.properties', ['language' => $defaultLang->code]) }}">
+        						<i class="far fa-home"></i><p class="sub-item">{{ __('Manage Full Inventory') }}</p><i class="{{ $add_unread__inventory_class }}" style="margin-left: 10px;"><b>{{ $unreadCountInventory != 0 ?  $unreadCountInventory : '' }}</b></i>
+        					</a>
+        				</li>
 				<li
-					class="{{ request()->routeIs('agent.property_inventory.create_property') || request()->routeIs('agent.property_inventory.type') ? 'active' : '' }}">
-					<a href="{{ route('agent.property_inventory.type') }}">
-						<span class="sub-item">{{ __('Add Inventory') }}</span>
-					</a>
-				</li>
-
-				<li
-					class="{{ request()->routeIs('agent.property_inventory.properties') ||
-							request()->routeIs('agent.property_inventory.edit')
-							? 'active'
-							: '' }}">
-					<a
-						href="{{ route('agent.property_inventory.properties', ['language' => $defaultLang->code]) }}">
-						<span class="sub-item">{{ __('Manage Inventory') }}</span><i class="{{ $add_unread__inventory_class }}" style="margin-left: 10px;"><b>{{ $unreadCountInventory != 0 ?  $unreadCountInventory : '' }}</b></i>
-					</a>
-				</li>
-				<li
-					class="{{ request()->routeIs('agent.property_inventory.manage_status_property') ? 'active' : '' }}">
+					class="nav-item {{ request()->routeIs('agent.property_inventory.manage_status_property') ? 'active' : '' }}">
 					<a href="{{ route('agent.property_inventory.manage_status_property') }}">
-						<span class="sub-item">{{ __('Manage Inventory Status') }}</span>
+						<i class="far fa-home"></i><p class="sub-item">{{ __('Property Live Status') }}</p>
 					</a>
 				</li>
 				<li
-					class="{{ request()->routeIs('agent.property_inventory.converted_customer') ? 'active' : '' }}">
+					class=" nav-item {{ request()->routeIs('agent.property_inventory.converted_customer') ? 'active' : '' }}">
 					<a href="{{ route('agent.property_inventory.converted_customer') }}">
-						<span class="sub-item">{{ __('Converted Customer') }}</span>
+					<i class="far fa-home"></i>	<p class="sub-item">{{ __('Purchased Customers') }}</p>
 					</a>
 				</li>
-			</ul>
-		</div>
+
+
 		</li>
-		@endif
+@endif
+
+				
 		
 		
 	
-		
-		
-                <h1 class="main-title">Inventory & Accounting</h1>
+	
 
 		{{-- end property inventory  --}}
 
@@ -259,7 +231,7 @@
 		<li class="nav-item  @if (request()->routeIs('agent.customer_management.list')) active @endif">
 			<a href="{{ route('agent.customer_management.list') }}">
 				<i class="fal fa-users-cog"></i>
-				<p> {{ 'Purchased Customers' }} </p>
+				<p> {{ 'All Customer List' }} </p>
 			</a>
 		</li>
 		@endif

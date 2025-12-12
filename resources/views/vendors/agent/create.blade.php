@@ -94,31 +94,31 @@
                         </div>
                     </div> --}}
 
-                    <div class="row no-gutters">
+                     <div class="row no-gutters">
                       <div class="col-lg-12">
                           <div class="form-group">
-                              <label for="">{{ __('Permissions')  }}</label>
+                              <label for="">{{ __('Permissions')  }}</label> </br>
                               <div class="selectgroup selectgroup-pills">
                                   <label class="selectgroup-item">
                                       <input type="checkbox" class="selectgroup-input" name="permissions[]"
                                           value="property_management" checked>
-                                      <span class="selectgroup-button">{{ __('Property Management') }}</span>
+                                      <span class="selectgroup-button">{{ __('Property Master') }}</span>
                                   </label>
                                   <label class="selectgroup-item">
                                       <input type="checkbox" class="selectgroup-input" name="permissions[]"
                                           value="property_inventory" checked>
-                                      <span class="selectgroup-button">{{ __('Property Inventory') }}</span>
+                                      <span class="selectgroup-button">{{ __('Inventory & Accounting') }}</span>
                                   </label>
-                                  <label class="selectgroup-item">
-                                      <input type="checkbox" class="selectgroup-input" name="permissions[]"
-                                          value="accounting" checked>
-                                      <span class="selectgroup-button">{{ __('Accounting') }}</span>
-                                  </label>
-                                  <label class="selectgroup-item">
-                                      <input type="checkbox" class="selectgroup-input" name="permissions[]"
-                                          value="project" checked>
-                                      <span class="selectgroup-button">{{ __('Project') }}</span>
-                                  </label>
+                                  <!--<label class="selectgroup-item">-->
+                                  <!--    <input type="checkbox" class="selectgroup-input" name="permissions[]"-->
+                                  <!--        value="accounting" checked>-->
+                                  <!--    <span class="selectgroup-button">{{ __('Accounting') }}</span>-->
+                                  <!--</label>-->
+                                  <!--<label class="selectgroup-item">-->
+                                  <!--    <input type="checkbox" class="selectgroup-input" name="permissions[]"-->
+                                  <!--        value="project" checked>-->
+                                  <!--    <span class="selectgroup-button">{{ __('Project') }}</span>-->
+                                  <!--</label>-->
 
                               </div>
                           </div>
