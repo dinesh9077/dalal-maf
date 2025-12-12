@@ -144,7 +144,7 @@
                     <div id="accordion" class="mt-5">
                       @foreach ($languages as $language)
                         <div class="version">
-                          <div class="version-header" id="heading{{ $language->id }}">
+                          {{-- <div class="version-header" id="heading{{ $language->id }}">
                             <h5 class="mb-0">
                               <button type="button"
                                 class="btn btn-link {{ $language->direction == 1 ? 'rtl text-right' : '' }}"
@@ -155,7 +155,7 @@
                                 {{ $language->is_default == 1 ? '(Default)' : '' }}
                               </button>
                             </h5>
-                          </div>
+                          </div> --}}
 
                           @php
                             $vendor_info = App\Models\VendorInfo::where('vendor_id', $vendor->id)
@@ -399,43 +399,7 @@
                   countryNameInput.value = countryName;
               }
           }
-      });
-
-  document.getElementById('updateBtn').addEventListener('click', function (e) {
-    e.preventDefault();
-
-    let form = document.getElementById('ajaxEditForm');
-    let formData = new FormData(form);
-
-    // Purane errors hatana
-    document.querySelectorAll('.em').forEach(el => el.innerHTML = "");
-
-    fetch(form.action, {
-        method: "POST",
-        body: formData
-    })
-    .then(res => res.json())
-    .then(data => {
-
-        // Validation errors
-        if (data.errors) {
-            Object.keys(data.errors).forEach(key => {
-                let errField = document.getElementById("editErr_" + key);
-                if (errField) {
-                    errField.innerHTML = data.errors[key][0];
-                }
-            });
-        }
-
-        // Success response
-        if (data.success) {
-            toastr.success('Vendor updated successfully!');
-            setTimeout(() => {
-                window.location.href = data.redirect_url;
-            }, 1000);
-        }
-    });
-});
+      }); 
 
     </script>
   @endsection

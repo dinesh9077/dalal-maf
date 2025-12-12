@@ -106,7 +106,8 @@ class PropertyController extends Controller
             ->paginate(10);
 
           $data['url'] = $this->routeName == 'agent.property_inventory.properties' ? 'agent.property_inventory.edit' : 'agent.property_management.edit';
-          $data['search_url'] = $this->routeName == 'vendor.property_inventory.properties' ? 'vendor.property_inventory.properties' : 'vendor.property_management.properties';
+          $data['search_url'] = $this->routeName == 'agent.property_inventory.properties' ? 'agent.property_inventory.properties' : 'agent.property_management.properties';
+        $data['is_properties'] = $this->routeName == 'agent.property_inventory.properties' ? false : true;
         return view('agent.property.index', $data);
     }
     public function create(Request $request)
@@ -347,6 +348,15 @@ class PropertyController extends Controller
 
         return redirect()->back();
     }
+ 
+    public function convertFullProperty($id)
+    {
+        $property = Property::findOrFail($id);
+        $property->update(['property_type' => 'full']);
+        Session::flash('success', 'Property convert successfully!');
+        return redirect()->back();
+    }
+
     public function edit($id)
     {
         $property = Property::with('galleryImages')->where('agent_id', Auth::guard('agent')->user()->id)->findOrFail($id);
@@ -872,7 +882,7 @@ class PropertyController extends Controller
         $wing_id = $request->wing_id;
         $floor_id = $request->floor_id;
 
-        $units = Unit::where('status', 1)->get();
+            $units = Unit::where('status', 1)->orderBy('unit_name')->orderBy('id')->get();
         $budgets = [];
         $categories = [];
 

@@ -198,6 +198,14 @@
                                                                         </span>
                                                                     </button>
                                                                 </form>
+                                                                @if(isset($is_properties) && $is_properties)
+                                                                    <a class="dropdown-item convertfullproperty"
+                                                                        href="{{ route("agent.property_management.convert-full-property", $property->id) }}">
+                                                                        <span class="btn-label">
+                                                                            <i class="fas fa-arrow-alt-circle-right"></i> {{ __('Convert Full Property') }}
+                                                                        </span>
+                                                                    </a>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </td>

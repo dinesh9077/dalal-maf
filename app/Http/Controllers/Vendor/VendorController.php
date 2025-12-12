@@ -424,7 +424,7 @@ class VendorController extends Controller
         $information['totalPropertiesArr'] = $totalPropertyArr;
         $information['totalProjectsArr'] = $totalProjectsArr;
         $information['payment_logs'] = $payment_logs;
-
+       
         return view('vendors.index', $information);
     }
 

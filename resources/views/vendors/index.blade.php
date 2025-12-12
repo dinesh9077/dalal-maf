@@ -12,15 +12,26 @@
         </div>
     @endif
 
-    {{-- @if (Auth::guard('vendor')->user()->is_kyc_approved == 0)
-        <div class="mt-2 mb-4" >
-            <div class="alert text-dark new-vender-title-border" style="align-items: center;display: flex;justify-content: space-between; z-index : 0;">
-                {{ 'Your KYC is pending please submit your KYC details from here!' }}
-                <a get="_blank" href="{{ route('vendor.kyc') }}"
-                    class="btn  btn-sm" style="background-color: black; color : white; border-radius: 10px;" >{{ __('Submit KYC') }}</a>
-            </div>
+    @if (Auth::guard('vendor')->user()->is_kyc_approved == 0)
+        <div class="mt-3 mb-4">
+
+            <marquee behavior="scroll" direction="left" scrollamount="6" onmouseover="this.stop();" onmouseout="this.start();"
+                style="background:#fff4d4; padding:12px 15px; border-radius:8px; font-size:15px;
+                    color:#7a4e00; font-weight:600; border:1px solid #f1d69b; display:block;">
+
+                Your KYC is pending. If you do not upload your KYC documents within 7 days, 
+                your account will be deactivated. For reactivation, you will have to contact the admin.
+
+                <a href="{{ route('vendor.kyc') }}" class="btn btn-sm"
+                    style="background:black; color:white; border-radius:10px; margin-left:15px;">
+                    Submit KYC
+                </a>
+
+            </marquee>
+
         </div>
-    @endif --}}
+    @endif
+
 
     @php
         $vendor = Auth::guard('vendor')->user();

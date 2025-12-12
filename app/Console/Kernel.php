@@ -24,7 +24,8 @@ class Kernel extends ConsoleKernel
    */
   protected function schedule(Schedule $schedule)
   {
-      $schedule->command('visitors:update')->everyMinute();
+    $schedule->command('visitors:update')->everyMinute();
+    $schedule->command('vendors:deactivate-unverified')->daily();
   }
 
   /**

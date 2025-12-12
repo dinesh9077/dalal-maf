@@ -690,7 +690,7 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             }
             }).then((convertit) => {
             if (convertit) { 
-                window.location.href = $(this).attr('href');
+                window.location.href = $(this).attr('href'); 
             } else {
                 swal.close();
                 $(".request-loader").removeClass("show");

@@ -191,13 +191,15 @@ class VendorManagementController extends Controller
         }
 
         $get_kyc_approve = VendorKYC::where('id',$id)->first();
-
-          if($get_kyc_approve->is_pancard == '1' && $get_kyc_approve->is_aadhar == '1' && (empty($get_kyc_approve->gst_number) || $get_kyc_approve->is_gst == '1'))
-          {
-              Vendor::where('id',$get_kyc_approve->user_id)->update([
-                  'is_kyc_approved' => '1',
-              ]);
-          }
+        Vendor::where('id', $get_kyc_approve->user_id)->update([
+            'is_kyc_approved' => '0',
+        ]);
+        if($get_kyc_approve->is_pancard == '1' && $get_kyc_approve->is_aadhar == '1' && (empty($get_kyc_approve->gst_number) || $get_kyc_approve->is_gst == '1'))
+        {
+            Vendor::where('id',$get_kyc_approve->user_id)->update([
+                'is_kyc_approved' => '1',
+            ]);
+        }
 
         return back();
     }
