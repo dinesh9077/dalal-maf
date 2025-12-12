@@ -22,11 +22,11 @@ class AgentController extends Controller
 {
     public function index()
     {
-        $agents = Agent::where('vendor_id', Auth::guard('vendor')->user()->id)->paginate(10);
+        $agents = Agent::where('vendor_id', Auth::guard('vendor')->user()->id)->paginate(10); 
         return view('vendors.agent.index', compact('agents'));
     }
     public function store(RegisterRequest $request)
-    {
+    {  
         DB::beginTransaction();
         $imageName = UploadFile::store(public_path('assets/img/agents/'), $request->file('image'));
         try {
@@ -37,7 +37,8 @@ class AgentController extends Controller
                 'phone' => $request->phone,
                 'image' => $imageName,
                 'status' => 1,
-                'password' => Hash::make($request->password),
+                //'password' => Hash::make($request->password),
+                'password' => null,
                 'permissions'=> $request->permissions ?? []
             ]);
 

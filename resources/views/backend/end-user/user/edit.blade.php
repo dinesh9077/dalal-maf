@@ -314,43 +314,7 @@
               }
           @endif
       });
-
-      // Ensure Update button submits the form
-     document.getElementById('updateBtn').addEventListener('click', function (e) {
-    e.preventDefault();
-
-    let form = document.getElementById('ajaxEditForm');
-    let formData = new FormData(form);
-
-    // पुराने errors हटाओ
-    document.querySelectorAll('.em').forEach(el => el.innerHTML = "");
-
-    fetch(form.action, {
-        method: "POST",
-        body: formData
-    })
-    .then(res => res.json())
-    .then(data => {
-
-        // Validation errors
-        if (data.errors) {
-            Object.keys(data.errors).forEach(key => {
-                let errField = document.getElementById("editErr_" + key);
-                if (errField) {
-                    errField.innerHTML = data.errors[key][0];
-                }
-            });
-        }
-
-        // Success response
-        if (data.success) {
-            toastr.success('User created successfully!');
-            setTimeout(() => {
-                window.location.href = data.redirect_url;
-            }, 1000);
-        }
-    });
-});
+ 
 
     </script>
   @endsection

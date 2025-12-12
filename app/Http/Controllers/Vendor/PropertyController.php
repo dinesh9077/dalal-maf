@@ -149,7 +149,7 @@ class PropertyController extends Controller
 
         $data['url'] = $this->routeName == 'vendor.property_inventory.properties' ? 'vendor.property_inventory.edit' : 'vendor.property_management.edit';
         $data['search_url'] = $this->routeName == 'vendor.property_inventory.properties' ? 'vendor.property_inventory.properties' : 'vendor.property_management.properties';
-
+        $data['is_properties'] = $this->routeName == 'vendor.property_inventory.properties' ? false : true;
         return view('vendors.property.index', $data);
     }
 
@@ -397,6 +397,15 @@ class PropertyController extends Controller
 
         return redirect()->back();
     }
+
+    public function convertFullProperty($id)
+    {
+        $property = Property::findOrFail($id);
+        $property->update(['property_type' => 'full']);
+        Session::flash('success', 'Property convert successfully!');
+        return redirect()->back();
+    }
+    
     public function edit($id)
     {
         $property = Property::with('galleryImages')->where('vendor_id', Auth::guard('vendor')->user()->id)->findOrFail($id);
@@ -905,7 +914,7 @@ class PropertyController extends Controller
         $wing_id = $request->wing_id;
         $floor_id = $request->floor_id;
 
-        $units = Unit::where('status', 1)->get();
+        $units = Unit::where('status', 1)->orderBy('unit_name')->orderBy('id')->get();
         $budgets = [];
         $categories = [];
 

@@ -6,11 +6,10 @@
 		|--------------------------------------------------------------------------
 		| Agent Routes
 		|--------------------------------------------------------------------------
-	*/
-	
+	*/ 
 	
 	Route::prefix('agent')->middleware('change.lang')->group(function () {
-		//Route::get('/login', 'Agent\AgentController@login')->name('agent.login')->middleware('guest:agent');
+		Route::get('/login', 'Agent\AgentController@login')->name('agent.login')->middleware('guest:agent');
 		Route::post('/login/submit', 'Agent\AgentController@authentication')->name('agent.login_submit');
 		
 		Route::get('/forget-password', 'Agent\AgentController@forget_passord')->name('agent.forget.password');
@@ -46,7 +45,8 @@
 				Route::get('/type', 'Agent\PropertyController@type')->name('agent.property_management.type');
 				Route::get('/create', 'Agent\PropertyController@create')->name('agent.property_management.create_property');
 				Route::post('/store', 'Agent\PropertyController@store')->name('agent.property_management.store_property')->middleware('packageLimitsCheck:property,store');
-				
+				Route::get('convert-full-property/{id}', 'Agent\PropertyController@convertFullProperty')->name('agent.property_management.convert-full-property');
+
 				Route::post('/update_featured', 'Agent\PropertyController@updateFeatured')->name('agent.property_management.update_featured');
 				Route::post('update_status', 'Agent\PropertyController@updateStatus')->name('agent.property_management.update_status');
 				Route::get('edit-property/{id}', 'Agent\PropertyController@edit')->name('agent.property_management.edit');

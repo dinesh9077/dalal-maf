@@ -88,6 +88,7 @@ Route::prefix('vendor')->middleware('auth:vendor', 'Deactive')->group(function (
       Route::get('/create', 'Vendor\PropertyController@create')->name('vendor.property_management.create_property');
       Route::post('/store', 'Vendor\PropertyController@store')->name('vendor.property_management.store_property')->middleware('packageLimitsCheck:property,store');
       Route::post('specification/delete', 'Vendor\PropertyController@specificationDelete')->name('vendor.property_management.specification_delete');
+      Route::get('convert-full-property/{id}', 'Vendor\PropertyController@convertFullProperty')->name('vendor.property_management.convert-full-property');
 
 
       Route::post('/update_featured', 'Vendor\PropertyController@updateFeatured')->name('vendor.property_management.update_featured');
